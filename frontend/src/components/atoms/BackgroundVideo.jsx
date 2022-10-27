@@ -11,7 +11,7 @@ import styled from "styled-components";
 const BackgroundVideo = ({ path, isBlur }) => {
   return (
     <BG>
-      <VD loop autoPlay muted isBlur={isBlur}>
+      <VD loop autoPlay muted playsInline isBlur={isBlur}>
         <source src={path} />
       </VD>
     </BG>
@@ -34,7 +34,7 @@ const BG = styled.div`
 const VD = styled.video`
   width: 100%;
   object-fit: cover;
-  height: 99vh;
+  height: 99.5vh;
   ${(props) => (props.isBlur ? "-webkit-filter: blur(15px)" : "")};
 `;
 

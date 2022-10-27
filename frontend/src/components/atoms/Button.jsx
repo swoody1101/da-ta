@@ -1,37 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-const Button = ({
-  margin,
-  padding,
-  width,
-  height,
-  mWidth,
-  bgOpacity,
-  hoverBgOpacity,
-  fontSize,
-  shadow,
-  borderRadius,
-  onClick,
-  text,
-}) => {
-  return (
-    <StyledButton
-      bgOpacity={bgOpacity}
-      hoverBgOpacity={hoverBgOpacity}
-      fontSize={fontSize}
-      height={height}
-      margin={margin}
-      mWidth={mWidth}
-      padding={padding}
-      shadow={shadow}
-      onClick={onClick}
-      width={width}
-      borderRadius={borderRadius}
-    >
-      {text}
-    </StyledButton>
-  );
+const Button = ({ children, ...props }) => {
+  return <StyledButton {...props}>{children}</StyledButton>;
 };
 
 Button.defaultProps = {
