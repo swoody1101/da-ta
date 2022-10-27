@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-const Title = ({ text }) => {
-  return <TitleText>{text}</TitleText>;
+const Title = ({ children, ...props }) => {
+  return <TitleText {...props}>{children}</TitleText>;
 };
 
 Title.defaultProps = {
