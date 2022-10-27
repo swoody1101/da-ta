@@ -23,11 +23,10 @@ public class Letter extends CommonEntity {
     @NotNull
     private String title;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="background_id")
     private Background background;
 
     @NotNull
     private LetterType letterType;
-
 }
