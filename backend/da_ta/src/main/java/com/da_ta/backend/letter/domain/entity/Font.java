@@ -22,10 +22,4 @@ public class Font {
 
     @NotNull
     private String fontName;
-
-    @Builder
-    public Font(Long fontId, String fontName) {
-        this.fontId = fontId;
-        this.fontName = fontName;
-    }
 }
