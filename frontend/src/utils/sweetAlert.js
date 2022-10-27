@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
  * @param title 제목
  * @param text 내용
  */
-export const popSuccessAlert = (title: string, text: string) => {
+export const popSuccessAlert = (title, text) => {
   Swal.fire({
     icon: "success",
     title: title,
@@ -25,11 +25,11 @@ export const popSuccessAlert = (title: string, text: string) => {
  * @param callBackFunction 확인 시 실행할 콜백함수
  */
 export const popConfirmAlert = (
-  title: string,
-  text: string,
-  confirmButtonText?: string,
-  cancelButtonText?: string,
-  callBackFunction?: () => void
+  title,
+  text,
+  confirmButtonText,
+  cancelButtonText,
+  callBackFunction
 ) => {
   Swal.fire({
     icon: "warning",
@@ -38,7 +38,7 @@ export const popConfirmAlert = (
     showCancelButton: true,
     confirmButtonText: confirmButtonText ? confirmButtonText : "확인",
     cancelButtonText: cancelButtonText ? cancelButtonText : "취소",
-  }).then((result: any) => {
+  }).then((result) => {
     if (result.isConfirmed && callBackFunction) callBackFunction();
   });
 };
@@ -48,7 +48,7 @@ export const popConfirmAlert = (
  * @param title 제목
  * @param text 내용
  */
-export const popWarningAlert = (title: string, text: string) => {
+export const popWarningAlert = (title, text) => {
   Swal.fire({
     icon: "warning",
     title: title,
@@ -61,7 +61,7 @@ export const popWarningAlert = (title: string, text: string) => {
  * @param title 제목
  * @param text 내용
  */
-export const popErrorAlert = (title: string, text: string) => {
+export const popErrorAlert = (title, text) => {
   Swal.fire({
     icon: "error",
     title: title,
