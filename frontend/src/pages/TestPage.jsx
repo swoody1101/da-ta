@@ -2,9 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import BackgroundVideo from "../components/atoms/BackgroundVideo";
 import Title from "../components/atoms/Title";
-import Button from "./../components/atoms/Button";
+import Button from "../components/atoms/Button";
+import { MainText } from "../components/atoms/Text";
+import Input from "../components/atoms/Input";
+import DropDownInput from "../components/atoms/DropDownInput";
 
 const TestPage = () => {
+  const list = ["aa", "bbb", "cccc", "d"];
+
   return (
     <>
       <BackgroundVideo
@@ -12,9 +17,8 @@ const TestPage = () => {
         path={`${process.env.PUBLIC_URL}/assets/video/bg1.mp4`}
       />
       <TestContainer>
-        <Title text="제목임다"></Title>
+        <Title>닿다</Title>
         <Button
-          text="보 내 기"
           fontSize="1.5rem"
           height="5rem"
           width="10rem"
@@ -22,7 +26,16 @@ const TestPage = () => {
           onClick={() => alert("hello!")}
           shadow={true}
           hoverBgOpacity="0.5"
-        />
+        >
+          보 내 기
+        </Button>
+        <MainText margin="5rem 0 0 0">
+          안녕하세요!
+          <br />
+          여기는 '닿다'에요
+        </MainText>
+        <Input />
+        <DropDownInput itemList={list}></DropDownInput>
       </TestContainer>
     </>
   );

@@ -1,55 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-interface ButtonStyleProps {
-  margin: string;
-  padding: string;
-  width: string;
-  mWidth?: string;
-  height: string;
-  bgOpacity: string;
-  hoverBgOpacity: string;
-  fontSize: string;
-  shadow: boolean;
-  borderRadius: string;
-}
-
-interface ButtonProps extends ButtonStyleProps {
-  text: string;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
-}
-
-const Button = ({
-  margin,
-  padding,
-  width,
-  height,
-  mWidth,
-  bgOpacity,
-  hoverBgOpacity,
-  fontSize,
-  shadow,
-  borderRadius,
-  onClick,
-  text,
-}: ButtonProps) => {
-  return (
-    <StyledButton
-      bgOpacity={bgOpacity}
-      hoverBgOpacity={hoverBgOpacity}
-      fontSize={fontSize}
-      height={height}
-      margin={margin}
-      mWidth={mWidth}
-      padding={padding}
-      shadow={shadow}
-      onClick={onClick}
-      width={width}
-      borderRadius={borderRadius}
-    >
-      {text}
-    </StyledButton>
-  );
+const Button = ({ children, ...props }) => {
+  return <StyledButton {...props}>{children}</StyledButton>;
 };
 
 Button.defaultProps = {
@@ -64,7 +17,7 @@ Button.defaultProps = {
   borderRadius: "0.5rem",
 };
 
-const StyledButton = styled.button<ButtonStyleProps>`
+const StyledButton = styled.button`
   display: flex;
   background-color: rgba(217, 217, 217, ${(props) => props.bgOpacity});
   margin: ${(props) => props.margin};

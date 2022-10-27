@@ -1,18 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-interface TitleStyleProps {
-  fontSize?: string;
-  fontWeight?: string;
-  color?: string;
-}
-
-interface TitleProps extends TitleStyleProps {
-  text: string;
-}
-
-const Title = ({ text }: TitleProps) => {
-  return <TitleText>{text}</TitleText>;
+const Title = ({ children, ...props }) => {
+  return <TitleText {...props}>{children}</TitleText>;
 };
 
 Title.defaultProps = {
@@ -21,7 +11,7 @@ Title.defaultProps = {
   color: "white",
 };
 
-const TitleText = styled.h1<TitleStyleProps>`
+const TitleText = styled.h1`
   font-size: ${(props) => props.fontSize};
   font-weight: ${(props) => props.fontWeight};
   color: ${(props) => props.color};
