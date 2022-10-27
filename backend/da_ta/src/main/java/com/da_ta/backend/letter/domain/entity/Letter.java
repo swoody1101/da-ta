@@ -5,9 +5,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -15,7 +14,20 @@ import javax.persistence.Entity;
 @Entity
 public class Letter extends CommonEntity {
 
-    private boolean reply_option;
-    private String age_option;
+    @NotNull
+    private boolean replyOption;
+
+    @NotNull
+    private String ageOption;
+
+    @NotNull
     private String title;
+
+    @OneToOne
+    @JoinColumn(name="background_id")
+    private Background background;
+
+    @NotNull
+    private LetterType letterType;
+
 }
