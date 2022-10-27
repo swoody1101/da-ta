@@ -1,7 +1,6 @@
 package com.da_ta.backend.letter.domain.entity;
 
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
