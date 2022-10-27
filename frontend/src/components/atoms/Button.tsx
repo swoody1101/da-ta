@@ -11,6 +11,7 @@ interface ButtonStyleProps {
   hoverBgOpacity: string;
   fontSize: string;
   shadow: boolean;
+  borderRadius: string;
 }
 
 interface ButtonProps extends ButtonStyleProps {
@@ -28,6 +29,7 @@ const Button = ({
   hoverBgOpacity,
   fontSize,
   shadow,
+  borderRadius,
   onClick,
   text,
 }: ButtonProps) => {
@@ -43,6 +45,7 @@ const Button = ({
       shadow={shadow}
       onClick={onClick}
       width={width}
+      borderRadius={borderRadius}
     >
       {text}
     </StyledButton>
@@ -52,12 +55,13 @@ const Button = ({
 Button.defaultProps = {
   bgOpacity: "0",
   hoverBgOpacity: "0",
-  fontSize: "16px",
-  height: "32px",
-  margin: "0px",
-  padding: "0px",
+  fontSize: "1rem",
+  height: "2rem",
+  margin: "0rem",
+  padding: "0rem",
   shadow: false,
-  width: "64px",
+  width: "4rem",
+  borderRadius: "0.5rem",
 };
 
 const StyledButton = styled.button<ButtonStyleProps>`
@@ -72,7 +76,7 @@ const StyledButton = styled.button<ButtonStyleProps>`
     props.shadow ? "drop-shadow(4px 8px 12px rgba(38,38,38,0.5))" : ""};
   cursor: pointer;
   border: 2px solid white;
-  border-radius: 8px;
+  border-radius: ${(props) => props.borderRadius};
   color: white;
   align-items: center;
   justify-content: center;
