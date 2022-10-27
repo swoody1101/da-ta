@@ -27,7 +27,7 @@ public class User extends CommonEntity {
     private String age;
 
     @NotNull
-    private Auth auth;
+    private Role role;
 
     @NotNull
     private boolean isAlertActive;
