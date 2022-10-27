@@ -20,8 +20,7 @@ public class Reply extends CommonEntity {
     private Long originLetterId;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "letter_id")
-    @Column(name = "reply_letter_id")
+    @JoinColumn(name = "reply_letter_id")
     private Letter letter;
 
     private boolean isRead;
