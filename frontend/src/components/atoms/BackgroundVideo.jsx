@@ -3,20 +3,12 @@
  */
 import styled from "styled-components";
 
-interface VideoStyleProps {
-  isBlur: boolean;
-}
-
-interface VideoProps extends VideoStyleProps {
-  path: string;
-}
-
 /**
  *
  * @param path 비디오 경로
  * @param isBlur 블러 여부
  */
-const BackgroundVideo = ({ path, isBlur }: VideoProps) => {
+const BackgroundVideo = ({ path, isBlur }) => {
   return (
     <BG>
       <VD loop autoPlay muted isBlur={isBlur}>
@@ -39,7 +31,7 @@ const BG = styled.div`
   z-index: -1;
 `;
 
-const VD = styled.video<VideoStyleProps>`
+const VD = styled.video`
   width: 100%;
   object-fit: cover;
   height: 99vh;

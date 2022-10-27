@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import BackgroundVideo from "../components/atoms/BackgroundVideo";
 import Title from "../components/atoms/Title";
-import Button from "./../components/atoms/Button";
+import Button from "../components/atoms/Button";
 
 const TestPage = () => {
   return (

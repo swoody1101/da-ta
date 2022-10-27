@@ -14,7 +14,7 @@ export const client = axios.create({
  * 요청 시 인터셉터
  */
 client.interceptors.request.use(
-  (config: any) => {
+  (config) => {
     const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
     const refreshToken = sessionStorage.getItem("REFRESH_TOKEN");
 
@@ -32,7 +32,7 @@ client.interceptors.request.use(
  * 응답 시 인터셉터
  */
 client.interceptors.response.use(
-  (config: any) => {
+  (config) => {
     return config;
   },
   (error) => {
