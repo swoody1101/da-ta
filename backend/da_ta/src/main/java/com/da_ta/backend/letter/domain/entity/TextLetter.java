@@ -1,22 +1,25 @@
 package com.da_ta.backend.letter.domain.entity;
 
-import com.da_ta.backend.common.domain.CommonEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Getter
+@SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AttributeOverride(name ="id", column = @Column(name="text_letter_id"))
+@AttributeOverride(name = "id", column = @Column(name = "text_letter_id"))
 @Entity
-public class TextLetter extends CommonEntity {
+@DiscriminatorValue("Text")
+public class TextLetter extends Letter {
 
     @NotNull
     private String content;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "font_id")
     private Font font;
