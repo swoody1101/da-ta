@@ -1,10 +1,7 @@
-package com.da_ta.backend.user.domain;
+package com.da_ta.backend.account.user.domain;
 
 import com.da_ta.backend.common.domain.CommonEntity;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
@@ -27,10 +24,12 @@ public class User extends CommonEntity {
     private String age;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @NotNull
-    private boolean isAlertActive;
+    @Builder.Default
+    private boolean isAlertActive = true;
 
     @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private BanStatus banStatus;
