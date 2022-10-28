@@ -19,6 +19,7 @@ public class Reply extends CommonEntity {
     @NotNull
     private Long originLetterId;
 
+    @NotNull
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reply_letter_id")
     private Letter letter;
