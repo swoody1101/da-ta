@@ -1,10 +1,7 @@
-package com.da_ta.backend.user.domain;
+package com.da_ta.backend.account.user.domain;
 
 import com.da_ta.backend.common.domain.CommonEntity;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
@@ -18,8 +15,11 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class BanStatus extends CommonEntity {
 
-    private int warningCount;
-    private boolean isBan;
+    @Builder.Default
+    private int warningCount = 0;
+
+    @Builder.Default
+    private boolean isBan = false;
 
     @NotNull
     @OneToOne(fetch = FetchType.LAZY)
