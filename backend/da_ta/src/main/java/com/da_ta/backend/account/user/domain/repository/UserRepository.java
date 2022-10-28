@@ -1,5 +1,6 @@
-package com.da_ta.backend.account.user.domain;
+package com.da_ta.backend.account.user.domain.repository;
 
+import com.da_ta.backend.account.user.domain.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
