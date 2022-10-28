@@ -21,7 +21,7 @@ public class Reply extends CommonEntity {
 
     @NotNull
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reply_letter_id")
+    @JoinColumn(name = "reply_letter_id", unique = true)
     private Letter letter;
 
     private boolean isRead;

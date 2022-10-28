@@ -18,6 +18,6 @@ public class CollectedLetter extends CommonEntity {
 
     @NotNull
     @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "letter_id")
+    @JoinColumn(name = "letter_id", unique = true)
     private Letter letter;
 }
