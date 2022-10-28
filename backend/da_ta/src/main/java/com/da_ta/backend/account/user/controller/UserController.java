@@ -4,6 +4,7 @@ import com.da_ta.backend.account.user.controller.dto.LoginRequest;
 import com.da_ta.backend.account.user.controller.dto.LoginResponse;
 import com.da_ta.backend.account.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,6 @@ public class UserController {
 
     @GetMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
-        return ResponseEntity.ok()
-                .body(userService.login(loginRequest));
+        return new ResponseEntity<>(userService.login(loginRequest), HttpStatus.OK);
     }
 }
