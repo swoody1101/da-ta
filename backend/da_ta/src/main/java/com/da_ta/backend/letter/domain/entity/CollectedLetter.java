@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @SuperBuilder
@@ -15,6 +16,7 @@ import javax.persistence.*;
 @Entity
 public class CollectedLetter extends CommonEntity {
 
+    @NotNull
     @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "letter_id")
     private Letter letter;
