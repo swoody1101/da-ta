@@ -17,6 +17,7 @@ public class UserController {
 
     @GetMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
-        return new ResponseEntity<>(userService.login(loginRequest), HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(userService.login(loginRequest));
     }
 }
