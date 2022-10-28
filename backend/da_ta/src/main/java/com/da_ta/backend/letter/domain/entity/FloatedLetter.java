@@ -1,5 +1,6 @@
 package com.da_ta.backend.letter.domain.entity;
 
+import com.da_ta.backend.account.user.domain.entity.User;
 import com.da_ta.backend.common.domain.CommonEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -22,6 +23,9 @@ public class FloatedLetter extends CommonEntity {
     @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "letter_id", unique = true)
     private Letter letter;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private User user;
 
     @OneToMany(mappedBy = "floatedLetter", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Log> logs = new ArrayList<>();

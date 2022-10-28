@@ -1,5 +1,6 @@
 package com.da_ta.backend.letter.domain.entity;
 
+import com.da_ta.backend.account.user.domain.entity.User;
 import com.da_ta.backend.common.domain.CommonEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -20,4 +21,8 @@ public class CollectedLetter extends CommonEntity {
     @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "letter_id", unique = true)
     private Letter letter;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 }
