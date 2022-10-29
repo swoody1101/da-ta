@@ -4,7 +4,6 @@ import com.da_ta.backend.common.domain.CommonEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.context.annotation.PropertySource;
 
 import javax.persistence.*;
 
