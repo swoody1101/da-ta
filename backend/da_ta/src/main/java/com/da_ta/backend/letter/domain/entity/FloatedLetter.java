@@ -20,11 +20,13 @@ import java.util.List;
 public class FloatedLetter extends CommonEntity {
 
     @NotNull
-    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "letter_id", unique = true)
     private Letter letter;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @NotNull
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id", unique = true)
     private User user;
 
     @OneToMany(mappedBy = "floatedLetter", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
