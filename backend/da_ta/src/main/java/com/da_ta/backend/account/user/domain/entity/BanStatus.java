@@ -1,4 +1,4 @@
-package com.da_ta.backend.account.user.domain;
+package com.da_ta.backend.account.user.domain.entity;
 
 import com.da_ta.backend.common.domain.CommonEntity;
 import lombok.*;
