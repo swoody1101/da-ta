@@ -6,6 +6,7 @@ import Button from "../components/atoms/Button";
 import { MainText } from "../components/atoms/Text";
 import Input from "../components/atoms/Input";
 import DropDownInput from "../components/atoms/DropDownInput";
+import Loading from "./../components/molecules/Loading";
 
 const TestPage = () => {
 	// for DropDown
@@ -13,6 +14,7 @@ const TestPage = () => {
 
 	return (
 		<>
+			{/* <Loading text={"페이지를 불러오는 중입니다..."} /> */}
 			<BackgroundVideo isBlur={true} path={`${process.env.PUBLIC_URL}/assets/video/bg1.mp4`} />
 			<TestContainer>
 				<Title>닿다</Title>
