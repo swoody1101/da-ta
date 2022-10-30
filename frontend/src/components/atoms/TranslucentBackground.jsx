@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
-const TranslucentBackground = ({ children, ...props }) => {
-	return <Container>{children}</Container>;
+const TranslucentBackground = ({ children, onClick, ...props }) => {
+	return <Container onClick={onClick}>{children}</Container>;
 };
 
 const Container = styled.div`
-	position: absolute;
+	position: fixed;
 	width: 100vw;
 	height: 100vh;
 	top: 0;
