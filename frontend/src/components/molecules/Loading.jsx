@@ -2,11 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import TranslucentBackground from "./../atoms/TranslucentBackground";
 
-const Loading = ({ background, text, textBackground }) => {
+const Loading = ({ bgColor, text, textBgColor }) => {
 	return (
-		<TranslucentBackground background={background}>
+		<TranslucentBackground bgColor={bgColor}>
 			<LoadingImg src={`${process.env.PUBLIC_URL}/assets/images/common/loading_spinner2.gif`} alt="로딩중" />
-			{text && <LoadingText textBackground={textBackground}>{text}</LoadingText>}
+			{text && <LoadingText textBgColor={textBgColor}>{text}</LoadingText>}
 		</TranslucentBackground>
 	);
 };
@@ -16,7 +16,7 @@ const LoadingText = styled.div`
 	font-weight: bold;
 	text-align: center;
 	padding: 0.5rem 1rem 0.5rem 1rem;
-	background-color: ${(props) => props.textBackground};
+	background-color: ${(props) => props.textBgColor};
 	border-radius: 16px;
 
 	-webkit-user-select: none;
@@ -26,7 +26,7 @@ const LoadingText = styled.div`
 `;
 
 LoadingText.defaultProps = {
-	textBackground: "rgba(225, 190, 231, 0.7)",
+	textBgColor: "rgba(225, 190, 231, 0.7)",
 };
 
 const LoadingImg = styled.img`

@@ -11,7 +11,7 @@ const Container = styled.div`
 	height: 100vh;
 	top: 0;
 	left: 0;
-	background: ${(props) => props.background};
+	background: ${(props) => props.bgColor};
 	z-index: 1000;
 	display: flex;
 	flex-direction: column;
@@ -20,7 +20,7 @@ const Container = styled.div`
 `;
 
 Container.defaultProps = {
-	background: "rgba(0, 0, 0, 0.5)",
+	bgColor: "rgba(0, 0, 0, 0.5)",
 };
 
 export default TranslucentBackground;
