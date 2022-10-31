@@ -1,5 +1,6 @@
 package com.da_ta.backend.letter.domain.entity;
 
+import com.da_ta.backend.account.user.domain.entity.User;
 import com.da_ta.backend.common.domain.CommonEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -30,4 +31,8 @@ public class Letter extends CommonEntity {
     @ManyToOne
     @JoinColumn(name = "background_id")
     private Background background;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id")
+    private User user;
 }
