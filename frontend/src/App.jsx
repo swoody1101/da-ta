@@ -5,6 +5,7 @@ import "./App.css";
 import LandingPage from "./pages/landing/LandingPage";
 import TestPage from "./pages/TestPage";
 import Background from "./styles/Background";
+import TestBoyeon from './pages/TestBoyeon';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/test" element={<TestPage />} />
+            <Route path="/bytest" element={<TestBoyeon />} />
           </Routes>
         </BrowserRouter>
       </Background>
