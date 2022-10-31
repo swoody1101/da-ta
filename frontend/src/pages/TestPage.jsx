@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import BackgroundVideo from "../components/atoms/BackgroundVideo";
 import Title from "../components/atoms/Title";
@@ -11,15 +11,22 @@ import Header from "../components/atoms/Header";
 import MainNav from "./../components/templates/MainNav";
 import "../utils/progress_bar/loading-bar.js";
 import "../utils/progress_bar/loading-bar.css";
+import { useRecoilState } from "recoil";
+import { loginState } from "./../recoil/Atoms";
 
 const TestPage = () => {
   // for DropDown
   const list = ["aa", "bbb", "cccc", "d"];
   const [percent, setPercent] = useState(50);
+  const [isLogin, setIsLogin] = useRecoilState(loginState);
+
+  useEffect(() => {
+    console.log(isLogin);
+  });
 
   return (
     <>
-      {/* <Loading text={"헤헤ㅔ헿헤헤헿"} /> */}
+      {/* <Loading text={"페이지를 불러오는 중입니다..."} /> */}
       <MainNav />
       <BackgroundVideo
         isBlur={true}
@@ -27,6 +34,7 @@ const TestPage = () => {
       />
       <TestContainer>
         <Title>닿다</Title>
+        {isLogin ? <Title>로그인</Title> : <Title>로그아웃</Title>}
         <Button
           fontSize="1.5rem"
           height="5rem"
@@ -76,7 +84,7 @@ const TestContainer = styled.div`
   margin-top: 6rem;
   align-items: center;
   justify-content: center;
-  background-color: #d1c4e9;
+  // background-color: #d1c4e9;
 `;
 
 const TestBlock = styled.div`
