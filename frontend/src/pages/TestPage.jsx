@@ -15,6 +15,7 @@ import "../utils/progress_bar/loading-bar.css";
 const TestPage = () => {
   // for DropDown
   const list = ["aa", "bbb", "cccc", "d"];
+  const [percent, setPercent] = useState(50);
 
   return (
     <>
@@ -56,10 +57,11 @@ const TestPage = () => {
           <DropDownInput itemList={list}></DropDownInput>
         </TestBlock>
         <TestBlock>
+          <button onClick={() => setPercent(percent + 1)}>클릭</button>
           <ProgressBar
             className="ldBar label-center"
             data-preset="bubble"
-            data-value="80"
+            data-value={`${percent}`}
           ></ProgressBar>
         </TestBlock>
       </TestContainer>

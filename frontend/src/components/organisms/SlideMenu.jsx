@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import {
   faX,
@@ -9,9 +9,18 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
+import Button from "./../atoms/Button";
 
-const SlideMenu = ({ show, setSlideMenuToggle }) => {
+const SlideMenu = ({
+  show,
+  setSlideMenuToggle,
+  handleLogin,
+  handleLogout,
+  isLogin,
+}) => {
   const navigate = useNavigate();
+
+  const [nickname, setNickname] = useState("길가의 돌멩이");
 
   return (
     <>
@@ -21,9 +30,41 @@ const SlideMenu = ({ show, setSlideMenuToggle }) => {
             <FontAwesomeIcon icon={faX} size="lg" />
           </FaWrapper>
         </MenuContent>
+        {isLogin ? (
+          <>
+            <MenuContent jc={false}>
+              안녕하세요!
+              <br />
+              {nickname}님
+            </MenuContent>
+            <MenuContent jc={false}>
+              <Button
+                hoverBgOpacity="0.3"
+                fontSize="1.2rem"
+                height="3rem"
+                width="11rem"
+                onClick={() => handleLogout()}
+              >
+                로그아웃
+              </Button>
+            </MenuContent>
+          </>
+        ) : (
+          <>
+            <MenuContent jc={false}>로그인 해주세요</MenuContent>
+            <MenuContent jc={false}>
+              <Button margin="0 3rem 0 0" onClick={() => handleLogin()}>
+                <img
+                  src={`${process.env.PUBLIC_URL}/assets/images/auth/kakao_login.png`}
+                />
+              </Button>
+            </MenuContent>
+          </>
+        )}
+
         <Spacer />
         <MenuContent jc={true} onClick={() => navigate("/")}>
-          홈{" "}
+          홈
           <FaWrapper>
             <FontAwesomeIcon icon={faHouse} />
           </FaWrapper>
@@ -76,6 +117,8 @@ const MenuContent = styled.div`
   padding: 1.5rem 10% 1.5rem 10%;
   align-items: center;
   justify-content: ${(props) => (props.jc ? "start" : "end")};
+  text-align: end;
+  cursor: pointer;
 `;
 
 const Spacer = styled.div`

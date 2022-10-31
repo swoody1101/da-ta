@@ -36,6 +36,14 @@ const MainNav = () => {
     setHeaderMobileMode(window.innerWidth <= 1280 ? true : false);
   };
 
+  const handleLogin = () => {
+    setIsLogin(true);
+  };
+
+  const handleLogout = () => {
+    setIsLogin(false);
+  };
+
   useEffect(() => {
     handleHeaderMode();
     handleHeaderShow();
@@ -81,6 +89,9 @@ const MainNav = () => {
           <SlideMenu
             show={slideMenuToggle}
             setSlideMenuToggle={setSlideMenuToggle}
+            handleLogin={handleLogin}
+            handleLogout={handleLogout}
+            isLogin={isLogin}
           />
         </HamburgerButtonWrapper>
       ) : (
@@ -97,11 +108,28 @@ const MainNav = () => {
             </HeaderContent>
           </HeaderContents>
           <AuthWrapper>
-            <Button onClick={() => alert("kakao login")}>
-              <img
-                src={`${process.env.PUBLIC_URL}/assets/images/auth/kakao_login.png`}
-              />
-            </Button>
+            {isLogin ? (
+              <>
+                <Button
+                  hoverBgOpacity="0.3"
+                  fontSize="1.2rem"
+                  height="3rem"
+                  width="11rem"
+                  margin="0 -3.5rem 0 0 "
+                  onClick={handleLogout}
+                >
+                  로그아웃
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button onClick={handleLogin}>
+                  <img
+                    src={`${process.env.PUBLIC_URL}/assets/images/auth/kakao_login.png`}
+                  />
+                </Button>
+              </>
+            )}
           </AuthWrapper>
         </>
       )}
