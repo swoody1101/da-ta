@@ -1,9 +1,8 @@
 import React from "react";
+import BackgroundGradient from "../components/atoms/BackgroundGradient";
 
 const TestBoyeon = () => (
-  <>
-    <div>나으 테스트 페이지</div>
-  </>
+  <BackgroundGradient start={'E2AAFD'} end={'FFDFC2'}></BackgroundGradient>
 )
 
 export default TestBoyeon
