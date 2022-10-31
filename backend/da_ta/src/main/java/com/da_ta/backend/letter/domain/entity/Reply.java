@@ -1,5 +1,6 @@
 package com.da_ta.backend.letter.domain.entity;
 
+import com.da_ta.backend.account.user.domain.entity.User;
 import com.da_ta.backend.common.domain.CommonEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -25,4 +26,9 @@ public class Reply extends CommonEntity {
     private Letter letter;
 
     private boolean isRead;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 }
