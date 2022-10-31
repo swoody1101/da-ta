@@ -91,7 +91,7 @@ const MainNav = () => {
             <FontAwesomeIcon
               icon={faBars}
               size="2x"
-              style={{ filter: "drop-shadow(4px 4px 4px black)" }}
+              style={{ filter: "drop-shadow(0.25rem 0.25rem 0.25rem black)" }}
             />
           </Button>
           {slideMenuToggle && (
