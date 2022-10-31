@@ -24,7 +24,6 @@ public class FloatedLetter extends CommonEntity {
     @JoinColumn(name = "letter_id", unique = true)
     private Letter letter;
 
-    @NotNull
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", unique = true)
     private User user;
