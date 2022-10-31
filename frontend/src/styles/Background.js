@@ -9,7 +9,7 @@ const Background = styled.div`
 	top: 0;
 	left: 0;
 	width: 100%;
-	min-height: 80vh;
+	min-height: 100vh;
 `;
 
 export default Background;
