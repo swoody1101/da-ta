@@ -71,11 +71,12 @@ const MainNav = () => {
           <MobileLogo
             src={`${process.env.PUBLIC_URL}/assets/logo/data_logo.png`}
             height="64px"
+            onClick={() => navigate("/")}
           />
         </>
       ) : (
         <>
-          <LogoImage>DA-TA</LogoImage>
+          <LogoImage onClick={() => navigate("/")}>DA-TA</LogoImage>
         </>
       )}
 
@@ -87,7 +88,11 @@ const MainNav = () => {
             height={"4rem"}
             onClick={() => setSlideMenuToggle(true)}
           >
-            <FontAwesomeIcon icon={faBars} size="2x" />
+            <FontAwesomeIcon
+              icon={faBars}
+              size="2x"
+              style={{ filter: "drop-shadow(4px 4px 4px black)" }}
+            />
           </Button>
           {slideMenuToggle && (
             <TranslucentBackground onClick={() => setSlideMenuToggle(false)} />
