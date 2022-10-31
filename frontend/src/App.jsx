@@ -8,6 +8,9 @@ import TestPageYoon from "./pages/TestPageYoon";
 import Background from "./styles/Background";
 import TestBoyeon from "./pages/TestBoyeon";
 import MainNav from "./components/templates/MainNav";
+import LetterWritePage from "./pages/letter_write/LetterWritePage";
+import NotFound from "./pages/error/NotFound";
+import PrivateRoute from "./pages/error/PrivateRoute";
 
 function App() {
   return (
@@ -20,6 +23,12 @@ function App() {
             <Route path="/test" element={<TestPage />} />
             <Route path="/testyoon" element={<TestPageYoon />} />
             <Route path="/bytest" element={<TestBoyeon />} />
+            {/* <Route
+              path="/write"
+              element={<PrivateRoute component={<LetterWritePage />} />}
+            /> */}
+            <Route path="/write" element={<LetterWritePage />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
       </Background>

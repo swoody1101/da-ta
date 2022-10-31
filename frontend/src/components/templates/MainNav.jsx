@@ -13,6 +13,8 @@ import Button from "./../atoms/Button";
 import LogoImage from "./../molecules/LogoImage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { useRecoilState } from "recoil";
+import { loginState } from "./../../recoil/Atoms";
 
 const MainNav = () => {
   const navigate = useNavigate();
@@ -21,7 +23,7 @@ const MainNav = () => {
   const [headerShow, setHeaderShow] = useState(true); // 헤더 show 여부
   const [headerMobileMode, setHeaderMobileMode] = useState(false); // pc모드인지 모바일모드인지 여부
   const [slideMenuToggle, setSlideMenuToggle] = useState(false); // 슬라이딩메뉴 토클
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useRecoilState(loginState);
 
   const handleHeaderShow = () => {
     if (window.scrollY === 0 || window.scrollY - scrollY < 0) {
@@ -50,6 +52,10 @@ const MainNav = () => {
   }, []);
 
   useEffect(() => {
+    console.log(isLogin);
+  }, [isLogin]);
+
+  useEffect(() => {
     window.addEventListener("scroll", handleHeaderShow);
     window.addEventListener("resize", handleHeaderMode);
     return () => {
@@ -65,11 +71,12 @@ const MainNav = () => {
           <MobileLogo
             src={`${process.env.PUBLIC_URL}/assets/logo/data_logo.png`}
             height="64px"
+            onClick={() => navigate("/")}
           />
         </>
       ) : (
         <>
-          <LogoImage>DA-TA</LogoImage>
+          <LogoImage onClick={() => navigate("/")}>DA-TA</LogoImage>
         </>
       )}
 
@@ -81,7 +88,11 @@ const MainNav = () => {
             height={"4rem"}
             onClick={() => setSlideMenuToggle(true)}
           >
-            <FontAwesomeIcon icon={faBars} size="2x" />
+            <FontAwesomeIcon
+              icon={faBars}
+              size="2x"
+              style={{ filter: "drop-shadow(4px 4px 4px black)" }}
+            />
           </Button>
           {slideMenuToggle && (
             <TranslucentBackground onClick={() => setSlideMenuToggle(false)} />
