@@ -7,7 +7,108 @@ import { Wave } from "../components/atoms/Wave";
 const TestBoyeon = () => (
   <>
     <Wraper>
-      <MypageContents>실험용 찍찍</MypageContents>
+      <MypageWebContents>
+        <MypageDiv width={200}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              borderRight: "1px solid black",
+            }}
+          >
+            <div
+              style={{
+                width: "100%",
+                height: "144px",
+                backgroundColor: "bisque",
+                margin: "20px 0 20px 0",
+              }}
+            >
+              첫번째
+            </div>
+            <div
+              style={{
+                width: "100%",
+                height: "144px",
+                backgroundColor: "bisque",
+                margin: "20px 0 20px 0",
+              }}
+            >
+              두번째
+            </div>
+            <div
+              style={{
+                width: "100%",
+                height: "144px",
+                backgroundColor: "bisque",
+                margin: "20px 0 20px 0",
+              }}
+            >
+              세번째
+            </div>
+          </div>
+        </MypageDiv>
+        <MypageDiv width={700}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <div
+              style={{
+                width: "90%",
+                height: "70px",
+                backgroundColor: "bisque",
+                margin: "12px 0 12px 0",
+              }}
+            >
+              글글
+            </div>
+            <div
+              style={{
+                width: "90%",
+                height: "70px",
+                backgroundColor: "bisque",
+                margin: "12px 0 12px 0",
+              }}
+            >
+              글글
+            </div>
+            <div
+              style={{
+                width: "90%",
+                height: "70px",
+                backgroundColor: "bisque",
+                margin: "12px 0 12px 0",
+              }}
+            >
+              글글
+            </div>
+            <div
+              style={{
+                width: "90%",
+                height: "70px",
+                backgroundColor: "bisque",
+                margin: "12px 0 12px 0",
+              }}
+            >
+              글글
+            </div>
+            <div
+              style={{
+                width: "90%",
+                height: "70px",
+                backgroundColor: "bisque",
+                margin: "12px 0 12px 0",
+              }}
+            >
+              글글
+            </div>
+          </div>
+        </MypageDiv>
+      </MypageWebContents>
     </Wraper>
     <Wave opacity={0.5} frequency={16} isRight={true}></Wave>
     <Wave opacity={0.3} frequency={8} isRight={true}></Wave>
@@ -23,7 +124,7 @@ const Wraper = styled.div`
   align-items: center;
 `;
 
-const MypageContents = styled.div`
+const MypageWebContents = styled.div`
   display: flex;
   height: 656px;
   width: 900px;
@@ -32,6 +133,11 @@ const MypageContents = styled.div`
   background-color: #f5f5f5;
   z-index: 1;
   border-radius: 20px;
+`;
+
+const MypageDiv = styled.div`
+  width: ${(props) => props.width}px;
+  background-color: #f5f5f5;
 `;
 
 export default TestBoyeon;
