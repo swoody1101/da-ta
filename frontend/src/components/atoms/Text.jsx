@@ -16,6 +16,23 @@ export const MainText = styled.p`
   font-weight: ${(props) => props.fontWeight};
 `;
 
+export const FooterText = styled.p`
+  display: flex;
+  font-size: 0.5rem;
+  color: white;
+  width: 100%;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin: ${(props) => props.margin};
+  font-weight: ${(props) => props.fontWeight};
+`;
+
+
 MainText.defaultProps = {
   fontWeight: "500",
+};
+
+FooterText.defaultProps = {
+  fontWeight: "100",
 };
