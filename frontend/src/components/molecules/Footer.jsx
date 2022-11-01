@@ -1,3 +1,6 @@
+/**
+ * @author chaeyoon
+ */
 import React from "react";
 import styled from "styled-components";
 import { FooterText } from "../atoms/Text";
