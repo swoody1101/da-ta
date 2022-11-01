@@ -3,21 +3,15 @@ import styled from "styled-components";
 import { BackgroundGradient } from "../components/atoms/BackgroundGradient";
 import { Wave } from "../components/atoms/Wave";
 import { MenuBar } from "../components/molecules/MenuBar";
-import { MypageLetter } from "../components/atoms/MypageLetter";
+import { MypageLetterBox } from "../components/molecules/MypageLetterBox";
 
 //Todo : 해수면 높이 올리기
 const TestBoyeon = () => (
   <>
     <Wraper>
       <MypageWebContents>
-        <MenuBar></MenuBar>
-        <MypageDiv width={700}>
-          <MypageLetter></MypageLetter>
-          <MypageLetter></MypageLetter>
-          <MypageLetter></MypageLetter>
-          <MypageLetter></MypageLetter>
-          <MypageLetter></MypageLetter>
-        </MypageDiv>
+        <MenuBar />
+        <MypageLetterBox />
       </MypageWebContents>
     </Wraper>
     <Wave opacity={0.5} frequency={16} isRight={true}></Wave>
