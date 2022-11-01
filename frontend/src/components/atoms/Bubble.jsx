@@ -1,3 +1,6 @@
+/**
+ * @author chaeyoon
+ */
 import React from "react";
 import styled, { keyframes } from "styled-components";
 
@@ -5,7 +8,6 @@ const Bubble = ({ ...props }) => {
   return (
     <>
         <StyledDiv {...props}></StyledDiv>
-
     </>
   );
 };
