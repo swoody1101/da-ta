@@ -24,4 +24,8 @@ const ContentsBoxDiv = styled.div`
   width: 700px;
   height: 536px;
   background-color: #f5f5f5;
+
+  @media screen and (max-width: 900px) {
+    width: 100%;
+  }
 `;

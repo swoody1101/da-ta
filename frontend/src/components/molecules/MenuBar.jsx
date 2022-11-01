@@ -37,4 +37,9 @@ const MenuBarDiv = styled.div`
   height: 536px;
   background-color: #f5f5f5;
   border-right: 2px solid gray;
+
+  @media screen and (max-width: 900px) {
+    width: 100%;
+    flex-direction: row;
+  }
 `;

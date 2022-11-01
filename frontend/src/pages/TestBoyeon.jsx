@@ -43,6 +43,13 @@ const MypageWebContents = styled.div`
   background-color: #f5f5f5;
   z-index: 1;
   border-radius: 20px;
+
+  @media screen and (max-width: 900px) {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0px;
+    flex-direction: column;
+  }
 `;
 
 export default TestBoyeon;

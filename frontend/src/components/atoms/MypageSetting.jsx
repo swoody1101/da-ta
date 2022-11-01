@@ -63,6 +63,10 @@ const SettingDiv = styled.div`
   background-color: #ffffff;
   border-radius: 5px;
   margin-bottom: 24px;
+
+  @media screen and (max-width: 900px) {
+    width: 90%;
+  }
 `;
 
 const SettingWordsDiv = styled.div`
@@ -72,6 +76,10 @@ const SettingWordsDiv = styled.div`
   justify-content: center;
   align-items: center;
   margin: 0;
+
+  @media screen and (max-width: 900px) {
+    width: 90%;
+  }
 `;
 
 const SettingExpln = styled.p`
@@ -79,9 +87,12 @@ const SettingExpln = styled.p`
   width: 100%;
   height: 20px;
   text-align: start;
-  cursor: pointer;
   color: #444444;
   margin-left: 25px;
+
+  @media screen and (max-width: 900px) {
+    width: 90%;
+  }
 `;
 
 const SettingChange = styled.div`
@@ -93,6 +104,10 @@ const SettingChange = styled.div`
   justify-content: center;
   align-items: center;
   margin: 0;
+
+  @media screen and (max-width: 900px) {
+    width: 90%;
+  }
 `;
 // 아이콘이 들어갈 영역 test코드
 const Aaa = styled.div`
@@ -100,4 +115,8 @@ const Aaa = styled.div`
   height: 80px;
   background-color: bisque;
   margin: 0 0 0 25px;
+
+  @media screen and (max-width: 900px) {
+    display: none;
+  }
 `;
