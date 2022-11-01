@@ -8,18 +8,18 @@ import React from "react";
 import styled from "styled-components";
 import { MypageLetter } from "../atoms/MypageLetter";
 
-export const MypageLetterBox = () => {
+export const MypageContentsBox = () => {
   return (
-    <LetterBoxDiv>
+    <ContentsBoxDiv>
       <MypageLetter></MypageLetter>
       <MypageLetter></MypageLetter>
       <MypageLetter></MypageLetter>
       <MypageLetter></MypageLetter>
-    </LetterBoxDiv>
+    </ContentsBoxDiv>
   );
 };
 
-const LetterBoxDiv = styled.div`
+const ContentsBoxDiv = styled.div`
   display: flex;
   flex-direction: column;
   width: 700px;

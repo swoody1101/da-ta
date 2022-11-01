@@ -1,25 +1,30 @@
 import React from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import BackgroundGradient from "../components/atoms/BackgroundGradient";
 import { Wave } from "../components/atoms/Wave";
 import { MenuBar } from "../components/molecules/MenuBar";
-import { MypageLetterBox } from "../components/molecules/MypageLetterBox";
+import { MypageContentsBox } from "../components/molecules/MypageContentsBox";
 
 //Todo : 해수면 높이 올리기
-const TestBoyeon = () => (
-  <>
-    <Wraper>
-      <MypageWebContents>
-        <MenuBar />
-        <MypageLetterBox />
-      </MypageWebContents>
-    </Wraper>
-    <Wave opacity={0.5} frequency={16} isRight={true}></Wave>
-    <Wave opacity={0.3} frequency={8} isRight={true}></Wave>
-    <Wave opacity={0.4} frequency={13} isRight={false}></Wave>
-    <BackgroundGradient start={"E2AAFD"} end={"FFDFC2"} />
-  </>
-);
+const TestBoyeon = () => {
+  let [selectedIndex, setSelectedIndex] = useState(0);
+
+  return (
+    <>
+      <Wraper>
+        <MypageWebContents>
+          <MenuBar />
+          <MypageContentsBox />
+        </MypageWebContents>
+      </Wraper>
+      <Wave opacity={0.5} frequency={16} isRight={true}></Wave>
+      <Wave opacity={0.3} frequency={8} isRight={true}></Wave>
+      <Wave opacity={0.4} frequency={13} isRight={false}></Wave>
+      <BackgroundGradient start={"E2AAFD"} end={"FFDFC2"} />
+    </>
+  );
+};
 
 const Wraper = styled.div`
   display: flex;
