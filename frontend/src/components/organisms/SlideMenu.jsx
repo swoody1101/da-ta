@@ -22,6 +22,11 @@ const SlideMenu = ({
 
   const [nickname, setNickname] = useState("길가의 돌멩이");
 
+  const handleMenuClick = (goto) => {
+    // setSlideMenuToggle(false);
+    // navigate(goto);
+  };
+
   return (
     <>
       <Container show={show}>
@@ -63,25 +68,25 @@ const SlideMenu = ({
         )}
 
         <Spacer />
-        <MenuContent jc={true} onClick={() => navigate("/")}>
+        <MenuContent jc={true} onClick={handleMenuClick("/")}>
           홈
           <FaWrapper>
             <FontAwesomeIcon icon={faHouse} />
           </FaWrapper>
         </MenuContent>
-        <MenuContent jc={true} onClick={() => navigate("/")}>
+        <MenuContent jc={true} onClick={handleMenuClick("/write")}>
           편지 쓰기
           <FaWrapper>
             <FontAwesomeIcon icon={faPenToSquare} />
           </FaWrapper>
         </MenuContent>
-        <MenuContent jc={true} onClick={() => navigate("/")}>
+        <MenuContent jc={true} onClick={handleMenuClick("/read")}>
           편지 받기
           <FaWrapper>
             <FontAwesomeIcon icon={faEnvelopeOpenText} />
           </FaWrapper>
         </MenuContent>
-        <MenuContent jc={true} onClick={() => navigate("/")}>
+        <MenuContent jc={true} onClick={handleMenuClick("/mypage")}>
           마이페이지
           <FaWrapper>
             <FontAwesomeIcon icon={faGear} />
