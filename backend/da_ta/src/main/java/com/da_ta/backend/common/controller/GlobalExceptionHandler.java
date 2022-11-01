@@ -14,13 +14,15 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({CustomException.class})
     private ResponseEntity<ErrorResponse> handleCustomException(CustomException customException) {
+        customException.getErrorCode();
         return ResponseEntity.status(customException.getErrorCode().getHttpStatus())
-                .body(new ErrorResponse(customException.getErrorCode().getHttpStatus(), customException.getErrorCode().getMessage()));
+                .body(new ErrorResponse(customException.getErrorCode().getHttpStatus(),
+                        customException.getErrorCode().getMessage()));
     }
 
     @ExceptionHandler({Exception.class})
     protected ResponseEntity handleServerException() {
-        return new ResponseEntity(new ErrorResponse(INTERNAL_SERVER_ERROR.getHttpStatus(), INTERNAL_SERVER_ERROR.getMessage()),
-                HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity(new ErrorResponse(INTERNAL_SERVER_ERROR.getHttpStatus(),
+                INTERNAL_SERVER_ERROR.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
