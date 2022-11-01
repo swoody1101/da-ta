@@ -22,7 +22,7 @@ const FooterContainer = styled.div`
 display: flex;
 justify-content: center;
 padding: 32px;
-background-color: grey;
+background-color: #001F29;
 color: white;
 text-align: center;
 `;
