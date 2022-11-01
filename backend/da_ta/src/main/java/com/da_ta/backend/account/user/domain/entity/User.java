@@ -30,7 +30,8 @@ public class User extends CommonEntity {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private Role role;
+    @Builder.Default
+    private Role role = Role.MEMBER;
 
     @NotNull
     @Builder.Default
@@ -42,6 +43,7 @@ public class User extends CommonEntity {
     @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<CollectedLetter> collectedLetters = new ArrayList<>();
 
-    @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ban_status_id")
     private BanStatus banStatus;
 }
