@@ -33,6 +33,6 @@ public class Letter extends CommonEntity {
     private Background background;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "user_id")
     private User user;
 }
