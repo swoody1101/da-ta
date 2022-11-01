@@ -14,7 +14,6 @@ import javax.validation.constraints.NotNull;
 @Getter
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AttributeOverride(name = "id", column = @Column(name = "image_letter_id"))
 @Entity
 @DiscriminatorValue("Image")
 public class ImageLetter extends Letter {
