@@ -11,6 +11,7 @@ import MainNav from "./components/templates/MainNav";
 import LetterWritePage from "./pages/letter_write/LetterWritePage";
 import NotFound from "./pages/error/NotFound";
 import PrivateRoute from "./pages/error/PrivateRoute";
+import SocialLogin from "./pages/SocialLogin";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="/test" element={<TestPage />} />
             <Route path="/testyoon" element={<TestPageYoon />} />
             <Route path="/bytest" element={<TestBoyeon />} />
+            <Route path="/auth/oauth" element={<SocialLogin />} />
             {/* <Route
               path="/write"
               element={<PrivateRoute component={<LetterWritePage />} />}

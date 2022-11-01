@@ -15,6 +15,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { useRecoilState } from "recoil";
 import { loginState } from "./../../recoil/Atoms";
+import { clickToKakao } from "./../../api/AuthAPI";
 
 const MainNav = () => {
   const navigate = useNavigate();
@@ -39,11 +40,12 @@ const MainNav = () => {
   };
 
   const handleLogin = () => {
-    setIsLogin(true);
+    clickToKakao();
+    // setIsLogin(true);
   };
 
   const handleLogout = () => {
-    setIsLogin(false);
+    // setIsLogin(false);
   };
 
   useEffect(() => {
@@ -70,7 +72,7 @@ const MainNav = () => {
         <>
           <MobileLogo
             src={`${process.env.PUBLIC_URL}/assets/logo/data_logo.png`}
-            height="64px"
+            height="4rem"
             onClick={() => navigate("/")}
           />
         </>
@@ -91,7 +93,7 @@ const MainNav = () => {
             <FontAwesomeIcon
               icon={faBars}
               size="2x"
-              style={{ filter: "drop-shadow(4px 4px 4px black)" }}
+              style={{ filter: "drop-shadow(0.25rem 0.25rem 0.25rem black)" }}
             />
           </Button>
           {slideMenuToggle && (
@@ -108,13 +110,13 @@ const MainNav = () => {
       ) : (
         <>
           <HeaderContents>
-            <HeaderContent onClick={() => navigate("/")}>
+            <HeaderContent onClick={() => navigate("/write")}>
               편지 쓰기
             </HeaderContent>
-            <HeaderContent onClick={() => navigate("/")}>
+            <HeaderContent onClick={() => navigate("/read")}>
               편지 읽기
             </HeaderContent>
-            <HeaderContent onClick={() => navigate("/")}>
+            <HeaderContent onClick={() => navigate("/mypage")}>
               마이페이지
             </HeaderContent>
           </HeaderContents>
