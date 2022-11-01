@@ -13,13 +13,40 @@ import { LetterTextArea } from "../../components/atoms/TextArea";
 import { ColorTypes } from "./../../constants/Colors";
 import { media } from "../../utils/styleUtil";
 import { SizeTypes } from "./../../constants/Sizes";
+import { useEffect } from "react";
+import LetterProgressBar from "../../components/molecules/letter_write/LetterProgressBar";
 
 const LetterWritePage = () => {
   const [act, setAct] = useState(true); // [편지지,도화지] 토글
-  const [letterDesign, setLetterDesign] = useState("default"); // 편지지 디자인 이름
+  const [letterDesign, setLetterDesign] = useState("pink"); // 편지지 디자인 이름
+  const [charCount, setCharCount] = useState(0); // 편지 글자 수
+  let timer;
 
-  console.log(screen.width);
-  console.log(screen.height);
+  useEffect(() => {
+    console.log(charCount);
+  }, [charCount]);
+
+  /**
+   * @description 편지 입력시 과한 재렌더링을 막기 위한 디바운싱 함수
+   * @param {() => void} callback 콜백함수
+   * @param {number} delay 딜레이
+   */
+  const debounce = (callback, delay) => {
+    if (timer) {
+      clearTimeout(timer);
+    }
+    timer = setTimeout(callback, delay);
+  };
+
+  /**
+   * @description 편지지 텍스트 입력 시 이벤트
+   * @param {number} length
+   */
+  const handleLetterWrite = (length) => {
+    debounce(() => {
+      setCharCount(length);
+    }, 300);
+  };
 
   return (
     <>
@@ -57,7 +84,10 @@ const LetterWritePage = () => {
           <LetterImg
             src={`${process.env.PUBLIC_URL}/assets/images/letter/${letterDesign}.png`}
           />
-          <LetterTextArea />
+          <LetterTextArea
+            onChange={(e) => handleLetterWrite(e.target.value.length)}
+          />
+          <LetterProgressBar charCount={charCount} />
         </ContentBlock>
         <ContentBlock
           height="5rem"
