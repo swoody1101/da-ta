@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { BackgroundGradient } from "../components/atoms/BackgroundGradient";
 import { Wave } from "../components/atoms/Wave";
+import { MypageMenu } from "../components/atoms/MypageMenu";
 
 //Todo : 해수면 높이 올리기
 const TestBoyeon = () => (
@@ -9,44 +10,7 @@ const TestBoyeon = () => (
     <Wraper>
       <MypageWebContents>
         <MypageDiv width={200}>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              borderRight: "1px solid black",
-            }}
-          >
-            <div
-              style={{
-                width: "100%",
-                height: "144px",
-                backgroundColor: "bisque",
-                margin: "20px 0 20px 0",
-              }}
-            >
-              첫번째
-            </div>
-            <div
-              style={{
-                width: "100%",
-                height: "144px",
-                backgroundColor: "bisque",
-                margin: "20px 0 20px 0",
-              }}
-            >
-              두번째
-            </div>
-            <div
-              style={{
-                width: "100%",
-                height: "144px",
-                backgroundColor: "bisque",
-                margin: "20px 0 20px 0",
-              }}
-            >
-              세번째
-            </div>
-          </div>
+          <MypageMenu></MypageMenu>
         </MypageDiv>
         <MypageDiv width={700}>
           <div
