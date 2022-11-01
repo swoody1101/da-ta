@@ -7,14 +7,13 @@
 import React from "react";
 import styled from "styled-components";
 import { MypageLetter } from "../atoms/MypageLetter";
+import { MypageSetting } from "../atoms/MypageSetting";
 
 export const MypageContentsBox = () => {
   return (
     <ContentsBoxDiv>
       <MypageLetter></MypageLetter>
-      <MypageLetter></MypageLetter>
-      <MypageLetter></MypageLetter>
-      <MypageLetter></MypageLetter>
+      <MypageSetting></MypageSetting>
     </ContentsBoxDiv>
   );
 };

@@ -10,6 +10,7 @@ import styled from "styled-components";
 import { MypageMenu } from "../atoms/MypageMenu";
 
 export const MenuBar = () => {
+  // Todo: TestBoyeon 페이지의 selectedIndex와 같이 전역으로 관리하기
   let [selectedIndex, setSelectedIndex] = useState(0);
 
   return (

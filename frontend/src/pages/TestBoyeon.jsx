@@ -8,6 +8,7 @@ import { MypageContentsBox } from "../components/molecules/MypageContentsBox";
 
 //Todo : 해수면 높이 올리기
 const TestBoyeon = () => {
+  // Todo: MenuBar molecule 의 selectedIndex와 같이 전역으로 관리하기
   let [selectedIndex, setSelectedIndex] = useState(0);
 
   return (
@@ -42,11 +43,6 @@ const MypageWebContents = styled.div`
   background-color: #f5f5f5;
   z-index: 1;
   border-radius: 20px;
-`;
-
-const MypageDiv = styled.div`
-  width: ${(props) => props.width}px;
-  background-color: #f5f5f5;
 `;
 
 export default TestBoyeon;
