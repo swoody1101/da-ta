@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { BackgroundGradient } from "../components/atoms/BackgroundGradient";
 import { Wave } from "../components/atoms/Wave";
 import { MenuBar } from "../components/molecules/MenuBar";
+import { MypageLetter } from "../components/atoms/MypageLetter";
 
 //Todo : 해수면 높이 올리기
 const TestBoyeon = () => (
@@ -11,64 +12,11 @@ const TestBoyeon = () => (
       <MypageWebContents>
         <MenuBar></MenuBar>
         <MypageDiv width={700}>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <div
-              style={{
-                width: "90%",
-                height: "70px",
-                backgroundColor: "bisque",
-                margin: "12px 0 12px 0",
-              }}
-            >
-              글글
-            </div>
-            <div
-              style={{
-                width: "90%",
-                height: "70px",
-                backgroundColor: "bisque",
-                margin: "12px 0 12px 0",
-              }}
-            >
-              글글
-            </div>
-            <div
-              style={{
-                width: "90%",
-                height: "70px",
-                backgroundColor: "bisque",
-                margin: "12px 0 12px 0",
-              }}
-            >
-              글글
-            </div>
-            <div
-              style={{
-                width: "90%",
-                height: "70px",
-                backgroundColor: "bisque",
-                margin: "12px 0 12px 0",
-              }}
-            >
-              글글
-            </div>
-            <div
-              style={{
-                width: "90%",
-                height: "70px",
-                backgroundColor: "bisque",
-                margin: "12px 0 12px 0",
-              }}
-            >
-              글글
-            </div>
-          </div>
+          <MypageLetter></MypageLetter>
+          <MypageLetter></MypageLetter>
+          <MypageLetter></MypageLetter>
+          <MypageLetter></MypageLetter>
+          <MypageLetter></MypageLetter>
         </MypageDiv>
       </MypageWebContents>
     </Wraper>
