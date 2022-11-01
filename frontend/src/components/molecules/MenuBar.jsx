@@ -5,14 +5,24 @@
  *
  */
 import React from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { MypageMenu } from "../atoms/MypageMenu";
 
 export const MenuBar = () => {
+  let [selectedIndex, setSelectedIndex] = useState(0);
+
   return (
     <MenuBarDiv>
       {[0, 1, 2].map((a, i) => (
-        <MypageMenu menuIndex={a} key={i}></MypageMenu>
+        <MypageMenu
+          menuIndex={a}
+          selectedIndex={selectedIndex}
+          key={i}
+          onClick={() => {
+            setSelectedIndex(a);
+          }}
+        ></MypageMenu>
       ))}
     </MenuBarDiv>
   );

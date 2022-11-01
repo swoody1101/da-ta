@@ -2,9 +2,9 @@
  * @author boyeon
  */
 /**
- *
+ * @param LetterObject //ToDo: API명세서 보고 변수양식 맞추기
  */
-// API로 받아온 친구들을 props 해줘야함
+// 나중에 API로 받아온 친구들을 props 해줘야함
 import React from "react";
 import styled from "styled-components";
 
@@ -15,6 +15,7 @@ export const MypageLetter = () => {
         <LetterTitle>오늘 하루는 어땠나요?</LetterTitle>
         <LetterDate>2022년 10월 20일, 용감한 너구리</LetterDate>
       </LetterWordsDiv>
+      {/* 아이콘이 들어갈 영역 임시 코드 Aaa */}
       <Aaa></Aaa>
       <Aaa></Aaa>
     </LetterDiv>
@@ -46,6 +47,7 @@ const LetterTitle = styled.p`
   width: 100%;
   height: 20px;
   text-align: start;
+  cursor: pointer;
 `;
 
 const LetterDate = styled.p`

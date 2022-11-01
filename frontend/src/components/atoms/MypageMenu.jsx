@@ -12,27 +12,30 @@ import styled from "styled-components";
 //      현재 선택 메뉴 index를 props 받아서 분기처리
 
 export const MypageMenu = ({ ...props }) => {
+  let isSelected = false;
+  props.selectedIndex === props.menuIndex ? (isSelected = true) : null;
+
   return [
     <MenuDiv>
       <img
         src={process.env.PUBLIC_URL + "assets/images/mypage/bottleletter.png"}
         height="100px"
       ></img>
-      <MenuName isSelected={true}>수집한 편지</MenuName>
+      <MenuName isSelected={isSelected}>수집한 편지</MenuName>
     </MenuDiv>,
     <MenuDiv>
       <img
         src={process.env.PUBLIC_URL + "assets/images/mypage/postbox.png"}
         height="100px"
       ></img>
-      <MenuName>받은 답장</MenuName>
+      <MenuName isSelected={isSelected}>받은 답장</MenuName>
     </MenuDiv>,
     <MenuDiv>
       <img
         src={process.env.PUBLIC_URL + "assets/images/mypage/gear.png"}
         height="100px"
       ></img>
-      <MenuName>개인설정</MenuName>
+      <MenuName isSelected={isSelected}>개인설정</MenuName>
     </MenuDiv>,
   ][props.menuIndex];
 };
@@ -41,7 +44,7 @@ const MenuDiv = styled.div`
   width: 200px;
   height: 144px;
   background-color: #f5f5f5;
-  pointer: cursor;
+  cursor: pointer;
 `;
 
 const MenuName = styled.p`
