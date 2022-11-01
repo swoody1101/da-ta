@@ -11,7 +11,7 @@ import styled from "styled-components";
 //      클릭 시 메뉴 변경 함수
 //      현재 선택 메뉴 index를 props 받아서 분기처리
 
-export const MypageMenu = () => {
+export const MypageMenu = ({ ...props }) => {
   return [
     <MenuDiv>
       <img
@@ -34,13 +34,14 @@ export const MypageMenu = () => {
       ></img>
       <MenuName>개인설정</MenuName>
     </MenuDiv>,
-  ];
+  ][props.menuIndex];
 };
 
 const MenuDiv = styled.div`
   width: 200px;
   height: 144px;
   background-color: #f5f5f5;
+  pointer: cursor;
 `;
 
 const MenuName = styled.p`

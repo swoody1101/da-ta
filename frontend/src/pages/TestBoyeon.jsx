@@ -2,16 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import { BackgroundGradient } from "../components/atoms/BackgroundGradient";
 import { Wave } from "../components/atoms/Wave";
-import { MypageMenu } from "../components/atoms/MypageMenu";
+import { MenuBar } from "../components/molecules/MenuBar";
 
 //Todo : 해수면 높이 올리기
 const TestBoyeon = () => (
   <>
     <Wraper>
       <MypageWebContents>
-        <MypageDiv width={200}>
-          <MypageMenu></MypageMenu>
-        </MypageDiv>
+        <MenuBar></MenuBar>
         <MypageDiv width={700}>
           <div
             style={{

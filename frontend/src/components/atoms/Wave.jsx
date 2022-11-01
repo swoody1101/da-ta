@@ -14,7 +14,7 @@ export const Wave = ({ ...props }) => <StyledDiv {...props}></StyledDiv>;
 
 const moveRight = keyframes`
   0% {
-    background-position: 0; 
+    background-position: 0;
   }
   100% {
     background-position: 1280px;
