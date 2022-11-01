@@ -9,7 +9,7 @@
   * @param path 물병 사진 경로
   */
 
- const LetterOfBottle = ({ path }) => {
+ const BottleOfLetter = ({ path }) => {
    return (
      <BG>
        <img src = {path}></img>
@@ -17,7 +17,7 @@
    );
  };
  
- LetterOfBottle.defaultProps = {
+ BottleOfLetter.defaultProps = {
     path: `${process.env.PUBLIC_URL}/assets/images/common/bottle_of_letter.png`,
   };
 
