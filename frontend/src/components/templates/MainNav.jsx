@@ -15,6 +15,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { useRecoilState } from "recoil";
 import { loginState } from "./../../recoil/Atoms";
+import { clickToKakao } from "./../../api/AuthAPI";
 
 const MainNav = () => {
   const navigate = useNavigate();
@@ -39,11 +40,12 @@ const MainNav = () => {
   };
 
   const handleLogin = () => {
-    setIsLogin(true);
+    clickToKakao();
+    // setIsLogin(true);
   };
 
   const handleLogout = () => {
-    setIsLogin(false);
+    // setIsLogin(false);
   };
 
   useEffect(() => {
