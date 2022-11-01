@@ -22,7 +22,6 @@ public class BanStatus extends CommonEntity {
     private boolean isBan = false;
 
     @NotNull
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @OneToOne(mappedBy = "banStatus", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private User user;
 }
