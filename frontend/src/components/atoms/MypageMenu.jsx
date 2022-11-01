@@ -1,5 +1,15 @@
+/**
+ * @author boyeon
+ */
+/**
+ *
+ */
 import React from "react";
 import styled from "styled-components";
+//TODO: 새로 온 메일이 있을 경우 받은 답장에 빨간 점 표시
+//      선택된 메뉴에 파란 줄 표시
+//      클릭 시 메뉴 변경 함수
+//      현재 선택 메뉴 index를 props 받아서 분기처리
 
 export const MypageMenu = () => {
   return [
