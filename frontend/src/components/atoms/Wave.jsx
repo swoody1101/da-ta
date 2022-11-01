@@ -41,7 +41,7 @@ const StyledDiv = styled.div`
   height: ${(props) => props.height};
   bottom: 0;
   left: 0;
-  background: url("/assets/images/mainpage/wave.png");
+  background: url("/assets/images/mypage/wave.png");
   opacity: ${(props) => props.opacity};
   animation: ${(props) => (props.isRight ? moveRight : moveLeft)}
     ${(props) => props.frequency}s linear infinite;
