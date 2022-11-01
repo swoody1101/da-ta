@@ -1,6 +1,7 @@
 package com.da_ta.backend.letter.controller;
 
 import com.da_ta.backend.common.domain.Message;
+import com.da_ta.backend.letter.controller.dto.ImageLetterCreateRequest;
 import com.da_ta.backend.letter.controller.dto.TextLetterCreateRequest;
 import com.da_ta.backend.letter.service.LetterService;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +26,8 @@ public class LetterController {
     }
 
     @PostMapping("/2")
-    public ResponseEntity<Message> createImageLetter() {
+    public ResponseEntity<Message> createImageLetter(@RequestBody ImageLetterCreateRequest imageLetterCreateRequest) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new Message("success"));
+                .body(letterService.createImageLetter(imageLetterCreateRequest));
     }
 }
