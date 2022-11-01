@@ -37,7 +37,6 @@ public class LetterService {
         Background background = findBackground(textLetterInfo.getBackgroundId());
         Font font = fontRepository.findById(textLetterInfo.getFontId())
                 .orElseThrow(() -> new CustomException(FONT_NOT_FOUND));
-
         TextLetter textLetter = TextLetter.builder()
                 .user(user)
                 .ageOption(option.getAgeOption())
@@ -58,7 +57,6 @@ public class LetterService {
         ImageLetterInfo imageLetterInfo = imageLetterCreateRequest.getImageLetterInfo();
         User user = findUser(imageLetterCreateRequest.getUserId());
         Background background = findBackground(imageLetterInfo.getBackgroundId());
-
         ImageLetter imageLetter = ImageLetter.builder()
                 .user(user)
                 .ageOption(option.getAgeOption())
