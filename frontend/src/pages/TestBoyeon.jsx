@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { BackgroundGradient } from "../components/atoms/BackgroundGradient";
+import BackgroundGradient from "../components/atoms/BackgroundGradient";
 import { Wave } from "../components/atoms/Wave";
 import { MenuBar } from "../components/molecules/MenuBar";
 import { MypageLetterBox } from "../components/molecules/MypageLetterBox";
