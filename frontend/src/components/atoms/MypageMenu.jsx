@@ -51,6 +51,11 @@ const MenuDiv = styled.div`
   height: 144px;
   background-color: #f5f5f5;
   cursor: pointer;
+
+  @media screen and (max-width: 900px) {
+    height: 44px;
+    background-color: #ffffff;
+  }
 `;
 
 const IconDiv = styled.div`

@@ -49,6 +49,7 @@ const MypageWebContents = styled.div`
     height: 100vh;
     border-radius: 0px;
     flex-direction: column;
+    justify-content: flex-start;
   }
 `;
 

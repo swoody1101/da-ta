@@ -41,5 +41,9 @@ const MenuBarDiv = styled.div`
   @media screen and (max-width: 900px) {
     width: 100%;
     flex-direction: row;
+    margin-top: 6rem;
+    height: 44px;
+    background-color: #ffffff;
+    border-bottom: 2px solid #d9d9d9;
   }
 `;

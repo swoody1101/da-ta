@@ -27,5 +27,6 @@ const ContentsBoxDiv = styled.div`
 
   @media screen and (max-width: 900px) {
     width: 100%;
+    margin-top: 15px;
   }
 `;
