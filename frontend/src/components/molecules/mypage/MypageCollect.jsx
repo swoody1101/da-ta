@@ -2,11 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { MypageLetter } from "../../atoms/mypage/MypageLetter";
 import { atom, useRecoilState } from "recoil";
-
-const mypageRouterState = atom({
-  key: "mypageRouterState",
-  default: 0,
-})
+import { mypageRouterState } from "../../../recoil/Atoms";
 
 export const MypageCollect = () => {
   const [selectedIndex, setSelectedIndex] = useRecoilState(mypageRouterState);

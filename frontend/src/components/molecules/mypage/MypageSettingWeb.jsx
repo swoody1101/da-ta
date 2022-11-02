@@ -9,11 +9,7 @@ import Checkbox from "../../atoms/Checkbox";
 import { ClickableSpan } from "../../atoms/ClickableSpan";
 import { useEffect } from "react";
 import { atom, useRecoilState } from "recoil";
-
-const mypageRouterState = atom({
-  key: "mypageRouterState",
-  default: 0,
-})
+import { mypageRouterState } from "../../../recoil/Atoms";
 
 export const MypageSettingWeb = () => {
   const [selectedIndex, setSelectedIndex] = useRecoilState(mypageRouterState);

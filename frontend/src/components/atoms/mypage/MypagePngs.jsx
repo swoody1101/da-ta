@@ -5,7 +5,6 @@
  * @param width width값
  * @param height height값
  * @param name png이미지의 이름 (.png제외)
- * @param disable 반응형 고려
  */
 import styled from "styled-components";
 import { media } from "../../../utils/styleUtil";

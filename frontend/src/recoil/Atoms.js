@@ -25,3 +25,12 @@ export const userState = atom({
   default: {},
   effects_UNSTABLE: [persistAtom],
 });
+
+/**
+ * @description 마이페이지의 현재 nested router 위치
+ * @return {number} 0~2
+ */
+export const mypageRouterState = atom({
+  key: "mypageRouterState",
+  default: 0,
+})

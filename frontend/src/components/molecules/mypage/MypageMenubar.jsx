@@ -7,11 +7,7 @@ import { MypageMenu } from "../../atoms/mypage/MypageMenu";
 import { media } from "../../../utils/styleUtil";
 import { atom, useRecoilState } from "recoil";
 import { useEffect } from "react";
-
-const mypageRouterState = atom({
-  key: "mypageRouterState",
-  default: 0,
-})
+import { mypageRouterState } from "../../../recoil/Atoms";
 
 export const MypageMenuBar = () => {
   const [selectedIndex, setSelectedIndex] = useRecoilState(mypageRouterState);
