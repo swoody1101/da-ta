@@ -8,6 +8,11 @@
 import React from "react";
 import styled from "styled-components";
 import { media } from "../../../utils/styleUtil";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTriangleExclamation,
+  faTrashCan
+} from "@fortawesome/free-solid-svg-icons";
 
 export const MypageLetter = () => (
   <LetterDiv>
@@ -16,8 +21,8 @@ export const MypageLetter = () => (
       <LetterDate>2022년 10월 20일, 용감한 너구리</LetterDate>
     </LetterWordsDiv>
     {/* 아이콘이 들어갈 영역 임시 코드 Aaa */}
-    <Aaa></Aaa>
-    <Aaa></Aaa>
+    <FontAwesomeIcon icon={faTriangleExclamation} style={{margin:'0 15px 0 0', color:'#F44336', cursor:'pointer'}} size="lg" />
+    <FontAwesomeIcon icon={faTrashCan} style={{margin:'0', cursor:'pointer'}} size="lg" />
   </LetterDiv>
 );
 
