@@ -1,14 +1,9 @@
 import React from "react";
-import { MypageLetter } from "../../components/atoms/MypageLetter";
+import { MypageReceive } from "../../components/molecules/mypage/MypageReceive";
 
-const Receive = () => {
-  return (
-    <>
-      <MypageLetter />
-      <MypageLetter />
-      <MypageLetter />
-    </>
-  );
-};
+const Receive = () => (
+  <MypageReceive />
+);
+
 
 export default Receive;

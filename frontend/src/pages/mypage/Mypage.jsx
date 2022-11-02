@@ -3,20 +3,16 @@ import { useState } from "react";
 import styled from "styled-components";
 import BackgroundGradient from "../../components/atoms/BackgroundGradient";
 import { Wave } from "../../components/atoms/Wave";
-import { MenuBar } from "../../components/molecules/MenuBar";
-import { MypageContentsBox } from "../../components/organisms/MypageContentsBox";
+import { MypageMenuBar } from "../../components/molecules/mypage/MypageMenubar";
+import { MypageContentsBox } from "../../components/organisms/mypage/MypageContentsBox";
 import { media } from "../../utils/styleUtil";
 
 //Todo : 해수면 높이 올리기
-const Mypage = () => {
-  // Todo: MenuBar molecule 의 selectedIndex와 같이 전역으로 관리하기
-  let [selectedIndex, setSelectedIndex] = useState(0);
-
-  return (
+const Mypage = () => (
     <>
       <Wraper>
         <MypageWebContents>
-          <MenuBar />
+          <MypageMenuBar />
           <MypageContentsBox />
         </MypageWebContents>
       </Wraper>
@@ -25,8 +21,7 @@ const Mypage = () => {
       <Wave opacity={0.4} frequency={13} isRight={false}></Wave>
       <BackgroundGradient start={"E2AAFD"} end={"FFDFC2"} />
     </>
-  );
-};
+);
 
 const Wraper = styled.div`
   display: flex;
