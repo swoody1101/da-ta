@@ -18,7 +18,7 @@ export const MainText = styled.p`
 
 export const FooterText = styled.p`
   display: flex;
-  font-size: 0.5rem;
+  font-size: 1rem;
   color: white;
   width: 100%;
   text-align: center;
@@ -34,5 +34,5 @@ MainText.defaultProps = {
 };
 
 FooterText.defaultProps = {
-  fontWeight: "100",
+  fontWeight: "500",
 };
