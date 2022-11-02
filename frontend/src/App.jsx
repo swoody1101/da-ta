@@ -37,9 +37,9 @@ function App() {
             <Route path="/write" element={<LetterWritePage />} />
             <Route path="/read" element={<LetterReadPage />} />
             <Route path="/mypage" element={<Mypage />}>
-              <Route index path="/collect" element={<Collect />} />
-              <Route path="/receive" element={<Receive />} />
-              <Route path="/setting" element={<Setting />} />
+              <Route index path="collect" element={<Collect />} />
+              <Route path="receive" element={<Receive />} />
+              <Route path="setting" element={<Setting />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
