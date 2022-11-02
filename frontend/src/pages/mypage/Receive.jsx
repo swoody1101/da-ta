@@ -1,5 +1,5 @@
 import React from "react";
-import { MypageReceive } from "../../components/molecules/MypageReceive";
+import { MypageReceive } from "../../components/molecules/mypage/MypageReceive";
 
 const Receive = () => (
   <MypageReceive />

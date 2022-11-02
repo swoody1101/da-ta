@@ -6,7 +6,7 @@
  */
 import React from "react";
 import styled from "styled-components";
-import { ClickableSpan } from "../atoms/ClickableSpan";
+import { ClickableSpan } from "../../atoms/ClickableSpan";
 
 export const MypageSettingMobile = () => (
   <>

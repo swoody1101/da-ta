@@ -3,10 +3,10 @@
  */
 import React from "react";
 import styled from "styled-components";
-import MypagePngs from "../atoms/MypagePngs";
-import { media } from "../../utils/styleUtil";
-import Checkbox from "../atoms/Checkbox";
-import { ClickableSpan } from "../atoms/ClickableSpan";
+import MypagePngs from "../../atoms/mypage/MypagePngs";
+import { media } from "../../../utils/styleUtil";
+import Checkbox from "../../atoms/Checkbox";
+import { ClickableSpan } from "../../atoms/ClickableSpan";
 import { useEffect } from "react";
 
 export const MypageSettingWeb = () => {

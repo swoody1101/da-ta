@@ -7,7 +7,7 @@
 // 나중에 API로 받아온 친구들을 props 해줘야함
 import React from "react";
 import styled from "styled-components";
-import { media } from "../../utils/styleUtil";
+import { media } from "../../../utils/styleUtil";
 
 export const MypageLetter = () => {
   return (

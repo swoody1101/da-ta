@@ -1,13 +1,14 @@
 import React from "react";
 import { useEffect } from "react";
-import { MypageLetter } from "../atoms/MypageLetter";
+import { MypageLetter } from "../../atoms/mypage/MypageLetter";
 
-export const MypageCollect = () => {
+export const MypageReceive = () => {
   useEffect(() => {
-    console.log('Collect')
+    console.log('Receive')
   }, [])
   return (
     <>
+      <MypageLetter></MypageLetter>
       <MypageLetter></MypageLetter>
       <MypageLetter></MypageLetter>
     </>  

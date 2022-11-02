@@ -7,8 +7,8 @@
 import React from "react";
 import { useState } from "react";
 import styled from "styled-components";
-import { MypageMenu } from "../atoms/MypageMenu";
-import { media } from "../../utils/styleUtil";
+import { MypageMenu } from "../../atoms/mypage/MypageMenu";
+import { media } from "../../../utils/styleUtil";
 
 export const MypageMenuBar = () => {
   // Todo: TestBoyeon 페이지의 selectedIndex와 같이 전역으로 관리하기

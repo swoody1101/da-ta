@@ -6,7 +6,7 @@
  */
 import React from "react";
 import styled from "styled-components";
-import { media } from "../../utils/styleUtil";
+import { media } from "../../../utils/styleUtil";
 import { useNavigate } from "react-router-dom";
 //TODO: 새로 온 메일이 있을 경우 받은 답장에 빨간 점 표시
 //      선택된 메뉴에 파란 줄 표시

@@ -3,8 +3,8 @@ import { useState } from "react";
 import styled from "styled-components";
 import BackgroundGradient from "../../components/atoms/BackgroundGradient";
 import { Wave } from "../../components/atoms/Wave";
-import { MypageMenuBar } from "../../components/molecules/MypageMenubar";
-import { MypageContentsBox } from "../../components/organisms/MypageContentsBox";
+import { MypageMenuBar } from "../../components/molecules/mypage/MypageMenubar";
+import { MypageContentsBox } from "../../components/organisms/mypage/MypageContentsBox";
 import { media } from "../../utils/styleUtil";
 
 //Todo : 해수면 높이 올리기

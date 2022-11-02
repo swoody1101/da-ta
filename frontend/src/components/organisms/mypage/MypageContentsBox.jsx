@@ -6,11 +6,8 @@
  */
 import React from "react";
 import styled from "styled-components";
-import { MypageLetter } from "../atoms/MypageLetter";
-import { MypageSettingWeb } from "../molecules/MypageSettingWeb";
-import { MypageSettingMobile } from "../molecules/MypageSettingMobile";
 import { Outlet } from "react-router-dom";
-import { media } from "../../utils/styleUtil";
+import { media } from "../../../utils/styleUtil";
 
 export const MypageContentsBox = () => {
   return (
