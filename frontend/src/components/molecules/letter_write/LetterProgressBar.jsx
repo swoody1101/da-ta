@@ -13,7 +13,7 @@ const LetterProgressBar = ({ charCount, charCountWarning }) => {
 const Container = styled.div`
   display: flex;
   position: absolute;
-  bottom: 2rem;
+  bottom: 2.5rem;
   right: 1rem;
   align-items: center;
   justify-content: center;
