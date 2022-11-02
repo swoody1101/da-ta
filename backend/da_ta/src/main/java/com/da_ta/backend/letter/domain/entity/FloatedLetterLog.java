@@ -12,12 +12,12 @@ import javax.validation.constraints.NotNull;
 @Getter
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AttributeOverride(name = "id", column = @Column(name = "log_id"))
+@AttributeOverride(name = "id", column = @Column(name = "floated_letter_log_id"))
 @Entity
-public class Log extends CommonEntity {
+public class FloatedLetterLog extends CommonEntity {
 
     @NotNull
-    private String loggedUserId;
+    private Long loggedRecipientId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "floated_letter_id")
