@@ -92,7 +92,6 @@ public class LetterService {
                 .build());
         TextLetter textLetter = textLetterRepository.findById(floatedLetter.getLetter().getId()).get();
         ImageLetter imageLetter = imageLetterRepository.findById(floatedLetter.getLetter().getId()).get();
-
         if (textLetter != null) {
             return ReceiveFloatedLetterResponse.builder()
                     .writerId(textLetter.getWriter().getId())
