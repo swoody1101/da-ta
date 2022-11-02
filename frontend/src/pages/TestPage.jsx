@@ -13,6 +13,7 @@ import "../utils/progress_bar/loading-bar.js";
 import "../utils/progress_bar/loading-bar.css";
 import { useRecoilState } from "recoil";
 import { loginState } from "./../recoil/Atoms";
+import { getLetterBackgrounds } from "../api/letterAPI";
 
 const TestPage = () => {
   // for DropDown
@@ -23,6 +24,10 @@ const TestPage = () => {
   useEffect(() => {
     console.log(isLogin);
   });
+
+  const letterBackgroundTest = async () => {
+    const response = await getLetterBackgrounds();
+  };
 
   return (
     <>
@@ -65,7 +70,7 @@ const TestPage = () => {
           <DropDownInput itemList={list}></DropDownInput>
         </TestBlock>
         <TestBlock>
-          <button onClick={() => setPercent(percent + 1)}>클릭</button>
+          <button onClick={letterBackgroundTest}>클릭</button>
           <ProgressBar
             className="ldBar label-center"
             data-preset="bubble"

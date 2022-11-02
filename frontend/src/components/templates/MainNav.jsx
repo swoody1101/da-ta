@@ -15,7 +15,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { useRecoilState } from "recoil";
 import { loginState } from "./../../recoil/Atoms";
-import { clickToKakao } from "./../../api/AuthAPI";
+import { clickToKakao } from "../../api/authAPI";
 
 const MainNav = () => {
   const navigate = useNavigate();
@@ -23,8 +23,8 @@ const MainNav = () => {
   const [scrollY, setScrollY] = useState(0); // 높이 스크롤 값
   const [headerShow, setHeaderShow] = useState(true); // 헤더 show 여부
   const [headerMobileMode, setHeaderMobileMode] = useState(false); // pc모드인지 모바일모드인지 여부
-  const [slideMenuToggle, setSlideMenuToggle] = useState(false); // 슬라이딩메뉴 토클
-  const [isLogin, setIsLogin] = useRecoilState(loginState);
+  const [slideMenuToggle, setSlideMenuToggle] = useState(false); // 슬라이딩메뉴 토
+  const [isLogin, setIsLogin] = useRecoilState(loginState); // Recoil로 관리하는 로그인 정보
 
   const handleHeaderShow = () => {
     if (window.scrollY === 0 || window.scrollY - scrollY < 0) {
@@ -72,7 +72,7 @@ const MainNav = () => {
         <>
           <MobileLogo
             src={`${process.env.PUBLIC_URL}/assets/logo/data_logo.png`}
-            height="4rem"
+            width="75vw"
             onClick={() => navigate("/")}
           />
         </>
