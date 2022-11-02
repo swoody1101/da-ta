@@ -2,11 +2,14 @@ package com.da_ta.backend.letter.service;
 
 import com.da_ta.backend.account.user.domain.entity.User;
 import com.da_ta.backend.account.user.domain.repository.UserRepository;
+import com.da_ta.backend.common.domain.Age;
 import com.da_ta.backend.common.domain.Message;
 import com.da_ta.backend.common.domain.exception.NotFoundException;
 import com.da_ta.backend.letter.controller.dto.ImageLetterCreateRequest;
+import com.da_ta.backend.letter.controller.dto.ReceiveFloatedLetterResponse;
 import com.da_ta.backend.letter.controller.dto.TextLetterCreateRequest;
 import com.da_ta.backend.letter.controller.dto.common.ImageLetterInfo;
+import com.da_ta.backend.letter.controller.dto.common.LetterInfo;
 import com.da_ta.backend.letter.controller.dto.common.Option;
 import com.da_ta.backend.letter.controller.dto.common.TextLetterInfo;
 import com.da_ta.backend.letter.domain.entity.*;
@@ -26,8 +29,10 @@ public class LetterService {
 
     private final BackgroundRepository backgroundRepository;
     private final FloatedLetterRepository floatedLetterRepository;
+    private final FloatedLetterLogRepository floatedLetterLogRepository;
     private final FontRepository fontRepository;
     private final ImageLetterRepository imageLetterRepository;
+    private final LetterRepository letterRepository;
     private final TextLetterRepository textLetterRepository;
     private final UserRepository userRepository;
 
@@ -35,11 +40,11 @@ public class LetterService {
     public Message createTextLetter(TextLetterCreateRequest textLetterCreateRequest) {
         Option option = textLetterCreateRequest.getOption();
         TextLetterInfo textLetterInfo = textLetterCreateRequest.getTextLetterInfo();
-        User user = findUser(textLetterCreateRequest.getUserId());
+        User writer = findUser(textLetterCreateRequest.getUserId());
         Background background = findBackground(textLetterInfo.getBackgroundId());
         Font font = findFont(textLetterInfo.getFontId());
         TextLetter textLetter = TextLetter.builder()
-                .user(user)
+                .writer(writer)
                 .ageOption(option.getAgeOption())
                 .replyOption(option.getReplyOption())
                 .background(background)
@@ -56,10 +61,10 @@ public class LetterService {
     public Message createImageLetter(ImageLetterCreateRequest imageLetterCreateRequest) {
         Option option = imageLetterCreateRequest.getOption();
         ImageLetterInfo imageLetterInfo = imageLetterCreateRequest.getImageLetterInfo();
-        User user = findUser(imageLetterCreateRequest.getUserId());
+        User writer = findUser(imageLetterCreateRequest.getUserId());
         Background background = findBackground(imageLetterInfo.getBackgroundId());
         ImageLetter imageLetter = ImageLetter.builder()
-                .user(user)
+                .writer(writer)
                 .ageOption(option.getAgeOption())
                 .replyOption(option.getReplyOption())
                 .background(background)
@@ -71,24 +76,73 @@ public class LetterService {
         return new Message(IMAGE_LETTER_CREATED.getMessage());
     }
 
+    @Transactional
+    public ReceiveFloatedLetterResponse receiveFloatedLetter(Long recipientId) {
+        User recipient = findUser(recipientId);
+        FloatedLetter floatedLetter = findFloatedLetter(recipientId, recipient.getAge());
+        floatedLetter.updateRecipient(recipient);
+        int floatedCount = floatedLetterLogRepository.countByFloatedLetterId(floatedLetter.getId());
+        if (floatedCount >= 4) {
+            floatedLetter.deleteFloatedLetter();
+        }
+        floatedLetterRepository.save(floatedLetter);
+        floatedLetterLogRepository.save(FloatedLetterLog.builder()
+                .loggedRecipientId(recipientId)
+                .floatedLetter(floatedLetter)
+                .build());
+        TextLetter textLetter = textLetterRepository.findById(floatedLetter.getLetter().getId()).get();
+        ImageLetter imageLetter = imageLetterRepository.findById(floatedLetter.getLetter().getId()).get();
+
+        if (textLetter != null) {
+            return ReceiveFloatedLetterResponse.builder()
+                    .writerId(textLetter.getWriter().getId())
+                    .writerNickname(textLetter.getWriter().getNickname())
+                    .letterInfo(LetterInfo.builder()
+                            .title(textLetter.getTitle())
+                            .content(textLetter.getContent())
+                            .backgroundId(textLetter.getBackground().getBackgroundId())
+                            .fontId(textLetter.getFont().getFontId())
+                            .createTime(textLetter.getCreatedDate())
+                            .build())
+                    .build();
+        } else if (imageLetter != null) {
+            return ReceiveFloatedLetterResponse.builder()
+                    .writerId(imageLetter.getWriter().getId())
+                    .writerNickname(imageLetter.getWriter().getNickname())
+                    .letterInfo(LetterInfo.builder()
+                            .title(imageLetter.getTitle())
+                            .imageLetterUrl(imageLetter.getImageLetterUrl())
+                            .backgroundId(imageLetter.getBackground().getBackgroundId())
+                            .createTime(imageLetter.getCreatedDate())
+                            .build())
+                    .build();
+        }
+        return null;
+    }
+
     public void floatLetter(Letter letter) {
         floatedLetterRepository.save(FloatedLetter.builder()
                 .letter(letter)
                 .build());
     }
 
-    public User findUser(Long userId) {
+    private User findUser(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
     }
 
-    public Background findBackground(Long backgroundId) {
+    private Background findBackground(Long backgroundId) {
         return backgroundRepository.findById(backgroundId)
                 .orElseThrow(() -> new NotFoundException(BACKGROUND_NOT_FOUND));
     }
 
-    public Font findFont(Long fontId) {
+    private Font findFont(Long fontId) {
         return fontRepository.findById(fontId)
                 .orElseThrow(() -> new NotFoundException(FONT_NOT_FOUND));
+    }
+
+    private FloatedLetter findFloatedLetter(Long recipientId, Age age) {
+        return floatedLetterRepository.findFloatedLetterByAgeOption(recipientId, age)
+                .orElseThrow(() -> new NotFoundException(LETTER_NOT_FOUND));
     }
 }
