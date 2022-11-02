@@ -32,7 +32,6 @@ public class LetterService {
     private final FloatedLetterLogRepository floatedLetterLogRepository;
     private final FontRepository fontRepository;
     private final ImageLetterRepository imageLetterRepository;
-    private final LetterRepository letterRepository;
     private final TextLetterRepository textLetterRepository;
     private final UserRepository userRepository;
 
