@@ -51,7 +51,7 @@ const SettingDiv = styled.div`
   border-radius: 5px;
   margin-bottom: 24px;
 
-  @media screen and (min-width: 900px) {
+  @media screen and (min-width: 1024px) {
     display: none;
   }
 `;

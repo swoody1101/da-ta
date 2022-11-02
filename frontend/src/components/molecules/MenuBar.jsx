@@ -8,6 +8,7 @@ import React from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import { MypageMenu } from "../atoms/MypageMenu";
+import { media } from "../../utils/styleUtil";
 
 export const MenuBar = () => {
   // Todo: TestBoyeon 페이지의 selectedIndex와 같이 전역으로 관리하기
@@ -38,7 +39,7 @@ const MenuBarDiv = styled.div`
   background-color: #f5f5f5;
   border-right: 2px solid gray;
 
-  @media screen and (max-width: 900px) {
+  ${media.tablet1`
     width: 100%;
     flex-direction: row;
     margin-top: 6rem;
@@ -46,5 +47,5 @@ const MenuBarDiv = styled.div`
     background-color: #ffffff;
     border-bottom: 2px solid #d9d9d9;
     border-right: none;
-  }
+  `}
 `;

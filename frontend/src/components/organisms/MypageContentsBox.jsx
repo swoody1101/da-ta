@@ -10,6 +10,7 @@ import { MypageLetter } from "../atoms/MypageLetter";
 import { MypageSettingWeb } from "../molecules/MypageSettingWeb";
 import { MypageSettingMobile } from "../molecules/MypageSettingMobile";
 import { Outlet } from "react-router-dom";
+import { media } from "../../utils/styleUtil";
 
 export const MypageContentsBox = () => {
   return (
@@ -26,8 +27,8 @@ const ContentsBoxDiv = styled.div`
   height: 536px;
   background-color: #f5f5f5;
 
-  @media screen and (max-width: 900px) {
+  ${media.tablet1`
     width: 100%;
     margin-top: 15px;
-  }
+  `}
 `;

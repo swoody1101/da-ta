@@ -6,6 +6,7 @@
  */
 import React from "react";
 import styled from "styled-components";
+import { media } from "../../utils/styleUtil";
 //TODO: 새로 온 메일이 있을 경우 받은 답장에 빨간 점 표시
 //      선택된 메뉴에 파란 줄 표시
 //      클릭 시 메뉴 변경 함수
@@ -55,19 +56,19 @@ const MenuDiv = styled.div`
   background-color: #f5f5f5;
   cursor: pointer;
 
-  @media screen and (max-width: 900px) {
+  ${media.tablet1`
     height: 44px;
     background-color: #ffffff;
-  }
+  `}
 `;
 
 const IconDiv = styled.div`
   width: 100px;
   height: 100px;
 
-  @media screen and (max-width: 900px) {
+  ${media.tablet1`
     display: none;
-  }
+  `}
 `;
 
 const MenuName = styled.p`

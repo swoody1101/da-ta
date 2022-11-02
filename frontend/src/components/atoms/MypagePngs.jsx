@@ -8,9 +8,10 @@
  * @param disable 반응형 고려
  */
 import styled from "styled-components";
+import { media } from "../../utils/styleUtil";
 
 const MypagePngs = ({ ...props }) => (
-  <ImageDiv width={props.width} height={props.height} disable={props.disable}>
+  <ImageDiv width={props.width} height={props.height}>
     <img
       src={process.env.PUBLIC_URL + `/assets/images/mypage/${props.name}.png`}
       height={props.height ? props.height : null}
@@ -23,9 +24,9 @@ const ImageDiv = styled.div`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
 
-  @media screen and (max-width: ${(props) => props.disable}) {
+  ${media.tablet1`
     display: none;
-  }
+  `}
 `;
 
 export default MypagePngs;

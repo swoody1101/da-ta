@@ -7,17 +7,13 @@
 import React from "react";
 import styled from "styled-components";
 import MypagePngs from "../atoms/MypagePngs";
+import { media } from "../../utils/styleUtil";
 
 export const MypageSettingWeb = () => {
   return (
     <>
       <SettingDiv>
-        <MypagePngs
-          width={"80px"}
-          height={"80px"}
-          name={"calendar"}
-          disable={"900px"}
-        />
+        <MypagePngs width={"80px"} height={"80px"} name={"calendar"} />
         <SettingWordsDiv>
           <SettingExpln>
             <p>회원님의 연령 정보를 등록하거나 변경하실 수 있습니다.</p>
@@ -27,12 +23,7 @@ export const MypageSettingWeb = () => {
         </SettingWordsDiv>
       </SettingDiv>
       <SettingDiv>
-        <MypagePngs
-          width={"80px"}
-          height={"80px"}
-          name={"kakao"}
-          disable={"900px"}
-        />
+        <MypagePngs width={"80px"} height={"80px"} name={"kakao"} />
         <SettingWordsDiv>
           <SettingExpln>
             <p>연동된 계정으로 실시간 알람을 보내드립니다.</p>
@@ -44,12 +35,7 @@ export const MypageSettingWeb = () => {
         </SettingWordsDiv>
       </SettingDiv>
       <SettingDiv>
-        <MypagePngs
-          width={"80px"}
-          height={"80px"}
-          name={"exit"}
-          disable={"900px"}
-        />
+        <MypagePngs width={"80px"} height={"80px"} name={"exit"} />
         <SettingWordsDiv>
           <SettingExpln>
             <p>저희 서비스를 당분간 사용하지 않으실 계획이신가요?</p>
@@ -72,9 +58,9 @@ const SettingDiv = styled.div`
   border-radius: 5px;
   margin-bottom: 24px;
 
-  @media screen and (max-width: 900px) {
+  ${media.tablet1`
     display: none;
-  }
+  `}
 `;
 
 const SettingWordsDiv = styled.div`

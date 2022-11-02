@@ -5,6 +5,7 @@ import BackgroundGradient from "../../components/atoms/BackgroundGradient";
 import { Wave } from "../../components/atoms/Wave";
 import { MenuBar } from "../../components/molecules/MenuBar";
 import { MypageContentsBox } from "../../components/organisms/MypageContentsBox";
+import { media } from "../../utils/styleUtil";
 
 //Todo : 해수면 높이 올리기
 const Mypage = () => {
@@ -45,14 +46,14 @@ const MypageWebContents = styled.div`
   z-index: 1;
   border-radius: 20px;
 
-  @media screen and (max-width: 900px) {
+  ${media.tablet1`
     margin-top: 0px;
     width: 100vw;
     height: 100vh;
     border-radius: 0px;
     flex-direction: column;
     justify-content: flex-start;
-  }
+  `}
 `;
 
 export default Mypage;
