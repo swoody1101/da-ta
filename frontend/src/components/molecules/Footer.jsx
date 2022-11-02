@@ -20,11 +20,15 @@ const currYear = new Date().getFullYear();
 
 const FooterContainer = styled.div`
 display: flex;
+position: absolute;
+width: 100vw;
+height: 15vh;
 justify-content: center;
 padding: 32px;
 background-color: #001F29;
 color: white;
 text-align: center;
+margin-top: 400vh;
 `;
 
 export default Footer;

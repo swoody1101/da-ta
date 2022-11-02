@@ -8,6 +8,8 @@ import Footer from "../components/molecules/Footer";
 import BackgroundGradient from "../components/atoms/BackgroundGradient";
 import MainSeaGradient from "../components/atoms/MainSeaGradient";
 import Bubble from "../components/atoms/Bubble";
+import ScrollToTop from "react-scroll-to-top";
+
 
 const TestPageYoon = () => (
     <>
@@ -25,6 +27,9 @@ const TestPageYoon = () => (
         
     </BubbleContainer>
     
+    <ScrollToTop smooth color="#6f00ff" border="20"/>
+
+
 
     {/* <Wave opacity={.4} frequency={13} isRight={false}></Wave> */}
     </>
