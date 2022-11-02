@@ -4,6 +4,7 @@ import com.da_ta.backend.account.user.domain.entity.User;
 import com.da_ta.backend.common.domain.Age;
 import com.da_ta.backend.common.domain.CommonEntity;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -25,7 +26,8 @@ public class Letter extends CommonEntity {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private Age ageOption;
+    @Builder.Default
+    private Age ageOption = Age.AGE_ALL;
 
     @NotNull
     private String title;
