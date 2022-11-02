@@ -8,7 +8,7 @@ import { media } from "../../../utils/styleUtil";
 import Checkbox from "../../atoms/Checkbox";
 import { ClickableSpan } from "../../atoms/ClickableSpan";
 import { useEffect } from "react";
-import { atom, useRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { mypageRouterState } from "../../../recoil/Atoms";
 
 export const MypageSettingWeb = () => {

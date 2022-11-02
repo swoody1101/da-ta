@@ -5,14 +5,28 @@ import React from "react";
 import styled from "styled-components";
 import { MypageMenu } from "../../atoms/mypage/MypageMenu";
 import { media } from "../../../utils/styleUtil";
-import { atom, useRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { useEffect } from "react";
 import { mypageRouterState } from "../../../recoil/Atoms";
+import { useNavigate } from "react-router-dom";
 
 export const MypageMenuBar = () => {
   const [selectedIndex, setSelectedIndex] = useRecoilState(mypageRouterState);
+  const navigate = useNavigate();
   useEffect(() => {
-    console.log(selectedIndex)
+    switch (selectedIndex) {
+      case 0:
+        navigate('/mypage/collect')
+        break;
+      case 1:
+        navigate('/mypage/receive')
+        break;
+      case 2:
+        navigate('/mypage/setting')
+        break;
+      default:
+        break;
+    }
   }, [])
 
   return (
