@@ -6,9 +6,10 @@ import { mypageRouterState } from "../../../recoil/Atoms";
 
 export const MypageReceive = () => {
   const [selectedIndex, setSelectedIndex] = useRecoilState(mypageRouterState);
-  useEffect(() => {
+  useEffect( async () => {
     setSelectedIndex(1)
   }, [])
+  
   return (
     <>
       <MypageLetter></MypageLetter>

@@ -14,15 +14,15 @@ import {
   faTrashCan
 } from "@fortawesome/free-solid-svg-icons";
 
-export const MypageLetter = () => (
+export const MypageLetter = ({letterId, letterTitle, userId, userNickName, time, is_read}) => (
   <LetterDiv>
     <LetterWordsDiv>
-      <LetterTitle>오늘 하루는 어땠나요?</LetterTitle>
-      <LetterDate>2022년 10월 20일, 용감한 너구리</LetterDate>
+      <LetterTitle>{letterTitle}</LetterTitle>
+      <LetterDate>{`${userNickName}, ${time}`}</LetterDate>
     </LetterWordsDiv>
     {/* 아이콘이 들어갈 영역 임시 코드 Aaa */}
-    <FontAwesomeIcon icon={faTriangleExclamation} style={{margin:'0 15px 0 0', color:'#F44336', cursor:'pointer'}} size="lg" />
-    <FontAwesomeIcon icon={faTrashCan} style={{margin:'0', cursor:'pointer'}} size="lg" />
+    <FontAwesomeIcon icon={faTriangleExclamation} style={{margin:'0 15px 0 0', color:'#F44336', cursor:'pointer'}} size="lg" onClick={() => {console.log(`${letterId}번 글을 쓴 글쓴이 아이디 ${userId}를 신고버튼`)}} />
+    <FontAwesomeIcon icon={faTrashCan} style={{margin:'0', cursor:'pointer'}} size="lg" onClick={() => {console.log(`${letterId}번 글 삭제버튼`)}} />
   </LetterDiv>
 );
 
