@@ -16,6 +16,7 @@ import { useEffect } from "react";
 import LetterProgressBar from "../../components/molecules/letter_write/LetterProgressBar";
 import Input from "./../../components/atoms/Input";
 import LetterOptionBox from "../../components/organisms/LetterOptionBox";
+import { MAX_CHAR_COUNT, MIN_CHAR_COUNT } from "./../../constants/Variables";
 
 const LetterWritePage = () => {
   const [act, setAct] = useState(true); // [편지지,도화지] 토글
@@ -56,7 +57,7 @@ const LetterWritePage = () => {
   };
 
   useEffect(() => {
-    charCount < 200 || charCount > 1000
+    charCount < MIN_CHAR_COUNT || charCount > MAX_CHAR_COUNT
       ? setCharCountWarning(true)
       : setCharCountWarning(false);
   }, [charCount]);

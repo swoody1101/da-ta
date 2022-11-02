@@ -1,3 +1,7 @@
+/**
+ * @author mingyu
+ * @description 각종 크기에 대한 상수 정의입니다.
+ */
 const deviceWidth = screen.width;
 const deviceHeight = screen.height;
 const WIDTH_LIMIT = 1000;
