@@ -2,16 +2,15 @@ import styled from "styled-components";
 
 const StyledLabel = styled.label`
   display: flex;
-  align-items: center;
   user-select: none;
   font-size: 0.9rem;
 `;
 
 const StyledInput = styled.input`
   appearance: none;
-  width: 1.2rem;
-  height: 1.2rem;
-  border: 1.5px solid gainsboro;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 3px solid gainsboro;
   border-radius: 100%;
 
   &:checked {

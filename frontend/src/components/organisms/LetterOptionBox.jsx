@@ -24,8 +24,9 @@ const LetterOptionBox = ({ props }) => {
             hoverBgOpacity="0.5"
             width="80%"
             height="2.2rem"
+            borderRadius="32px"
           >
-            버튼
+            멋진 편지지
           </Button>
         </ContentElement>
       </ContentBlock>
@@ -80,12 +81,13 @@ const Container = styled.div`
   border-radius: 8px;
   justify-content: center;
   align-items: center;
+  z-index: 10;
 `;
 
 const PinImg = styled.img`
   display: flex;
   position: absolute;
-  top: -1rem;
+  top: -2rem;
   width: 40px;
   height: 54px;
 `;

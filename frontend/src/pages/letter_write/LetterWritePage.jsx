@@ -22,8 +22,8 @@ const LetterWritePage = () => {
   const [letterDesign, setLetterDesign] = useState("default"); // 편지지 디자인 이름
   const [charCount, setCharCount] = useState(0); // 편지 글자 수
   const [charCountWarning, setCharCountWarning] = useState(true); // 글자수 미만 또는 초과로 인한 경고 표시
-  const titleInput = useRef();
-  const contentInput = useRef();
+  const titleInput = useRef(); // 제목 ref (값 가져오기, focus)
+  const contentInput = useRef(); // 내용 ref (값 가져오기, ref)
   let timer; // debounce에 사용되는 timer
 
   /**
