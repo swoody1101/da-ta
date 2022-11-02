@@ -8,6 +8,7 @@ import React from "react";
 import styled from "styled-components";
 import MypagePngs from "../atoms/MypagePngs";
 import { media } from "../../utils/styleUtil";
+import Checkbox from "../atoms/Checkbox";
 
 export const MypageSettingWeb = () => {
   return (
@@ -31,7 +32,9 @@ export const MypageSettingWeb = () => {
               회원님의 편지에 대한 답장이 도착하면 바로 확인하실 수 있습니다.
             </p>
           </SettingExpln>
-          <SettingChange>알림설정 체크박스 해놔야댐</SettingChange>
+          <SettingChange>
+            <Checkbox text={"실시간 알림을 받습니다"} tagname={"알림설정"} />
+          </SettingChange>
         </SettingWordsDiv>
       </SettingDiv>
       <SettingDiv>
@@ -85,5 +88,7 @@ const SettingChange = styled.div`
   display: flex;
   width: 100%;
   height: 30px;
-  text-align: start;
+  align-items: center;
+  justify-content: start;
+  text-align: left;
 `;
