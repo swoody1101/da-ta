@@ -3,7 +3,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import BackgroundGradient from "../../components/atoms/BackgroundGradient";
 import { Wave } from "../../components/atoms/Wave";
-import { MenuBar } from "../../components/molecules/MenuBar";
+import { MypageMenuBar } from "../../components/molecules/MypageMenubar";
 import { MypageContentsBox } from "../../components/organisms/MypageContentsBox";
 import { media } from "../../utils/styleUtil";
 
@@ -16,7 +16,7 @@ const Mypage = () => {
     <>
       <Wraper>
         <MypageWebContents>
-          <MenuBar />
+          <MypageMenuBar />
           <MypageContentsBox />
         </MypageWebContents>
       </Wraper>
