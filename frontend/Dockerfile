@@ -1,4 +1,4 @@
-FROM node:16.15.0 as build-stage
+FROM node:16.17.0 as build-stage
 WORKDIR /var/jenkins_home/workspace/Da_Ta_Project_Front/frontend
 COPY package*.json ./
 RUN npm install
@@ -9,6 +9,6 @@ RUN mkdir /app
 WORKDIR /app
 RUN mkdir ./dist
 COPY --from=build-stage /var/jenkins_home/workspace/Da_Ta_Project_Front/frontend/dist ./dist
-# COPY ./nginx.conf /etc/nginx/conf.d
+COPY ./nginx.conf /etc/nginx/conf.d
 EXPOSE 80
 CMD ["nginx", "-g","daemon off;"]
