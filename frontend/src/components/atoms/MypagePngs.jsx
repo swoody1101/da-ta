@@ -12,7 +12,7 @@ import styled from "styled-components";
 const MypagePngs = ({ ...props }) => (
   <ImageDiv width={props.width} height={props.height} disable={props.disable}>
     <img
-      src={process.env.PUBLIC_URL + `assets/images/mypage/${props.name}.png`}
+      src={process.env.PUBLIC_URL + `/assets/images/mypage/${props.name}.png`}
       height={props.height ? props.height : null}
       width={props.width ? props.width : null}
     ></img>

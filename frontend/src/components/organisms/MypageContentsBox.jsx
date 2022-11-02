@@ -9,13 +9,12 @@ import styled from "styled-components";
 import { MypageLetter } from "../atoms/MypageLetter";
 import { MypageSettingWeb } from "../molecules/MypageSettingWeb";
 import { MypageSettingMobile } from "../molecules/MypageSettingMobile";
+import { Outlet } from "react-router-dom";
 
 export const MypageContentsBox = () => {
   return (
     <ContentsBoxDiv>
-      <MypageLetter></MypageLetter>
-      <MypageSettingWeb></MypageSettingWeb>
-      <MypageSettingMobile></MypageSettingMobile>
+      <Outlet></Outlet>
     </ContentsBoxDiv>
   );
 };

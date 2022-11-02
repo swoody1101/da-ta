@@ -20,7 +20,9 @@ export const MypageMenu = ({ ...props }) => {
     <MenuDiv>
       <IconDiv>
         <img
-          src={process.env.PUBLIC_URL + "assets/images/mypage/bottleletter.png"}
+          src={
+            process.env.PUBLIC_URL + "/assets/images/mypage/bottleletter.png"
+          }
           height="100px"
         ></img>
       </IconDiv>
@@ -29,7 +31,7 @@ export const MypageMenu = ({ ...props }) => {
     <MenuDiv>
       <IconDiv>
         <img
-          src={process.env.PUBLIC_URL + "assets/images/mypage/postbox.png"}
+          src={process.env.PUBLIC_URL + "/assets/images/mypage/postbox.png"}
           height="100px"
         ></img>
       </IconDiv>
@@ -38,7 +40,7 @@ export const MypageMenu = ({ ...props }) => {
     <MenuDiv>
       <IconDiv>
         <img
-          src={process.env.PUBLIC_URL + "assets/images/mypage/gear.png"}
+          src={process.env.PUBLIC_URL + "/assets/images/mypage/gear.png"}
           height="100px"
         ></img>
       </IconDiv>
