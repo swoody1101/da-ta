@@ -1,7 +1,14 @@
 import React from "react";
+import { MypageLetter } from "../../components/atoms/MypageLetter";
 
 const Receive = () => {
-  return <div></div>;
+  return (
+    <>
+      <MypageLetter />
+      <MypageLetter />
+      <MypageLetter />
+    </>
+  );
 };
 
 export default Receive;

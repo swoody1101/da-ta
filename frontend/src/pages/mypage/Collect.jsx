@@ -1,7 +1,13 @@
 import React from "react";
+import { MypageLetter } from "../../components/atoms/MypageLetter";
 
 const Collect = () => {
-  return <div></div>;
+  return (
+    <>
+      <MypageLetter />
+      <MypageLetter />
+    </>
+  );
 };
 
 export default Collect;
