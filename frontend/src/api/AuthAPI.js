@@ -2,7 +2,7 @@
  * @author mingyu
  * @description 카카오 소셜 로그인 관련 변수와 함수를 정의한 파일입니다.
  */
-import { client } from "./../utils/client";
+import { client } from "../utils/client";
 
 const REST_API_KEY = process.env.REACT_APP_KAKAO_API_KEY;
 const REDIRECT_URI = "http://localhost:3000/auth/oauth";
@@ -12,7 +12,7 @@ const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=co
  * @description 클릭 시 카카오 소셜 로그인 페이지로 리다이렉트하는 함수
  */
 export const clickToKakao = () => {
-  window.location.replace(`${KAKAO_AUTH_URL}`);
+  window.location.href = `${KAKAO_AUTH_URL}`;
 };
 
 /**
