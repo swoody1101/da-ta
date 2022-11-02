@@ -12,6 +12,11 @@ import LetterWritePage from "./pages/letter_write/LetterWritePage";
 import NotFound from "./pages/error/NotFound";
 import PrivateRoute from "./pages/error/PrivateRoute";
 import SocialLogin from "./pages/SocialLogin";
+import LetterReadPage from "./pages/letter_read/LetterReadPage";
+import Mypage from "./pages/mypage/Mypage";
+import Collect from "./pages/mypage/Collect";
+import Receive from "./pages/mypage/Receive";
+import Setting from "./pages/mypage/Setting";
 
 function App() {
   return (
@@ -30,6 +35,12 @@ function App() {
               element={<PrivateRoute component={<LetterWritePage />} />}
             /> */}
             <Route path="/write" element={<LetterWritePage />} />
+            <Route path="/read" element={<LetterReadPage />} />
+            <Route path="/mypage" element={<Mypage />}>
+              <Route index path="/collect" element={<Collect />} />
+              <Route path="/receive" element={<Receive />} />
+              <Route path="/setting" element={<Setting />} />
+            </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
