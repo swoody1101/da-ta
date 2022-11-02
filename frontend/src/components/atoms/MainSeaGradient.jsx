@@ -14,7 +14,7 @@
    width: 100vw;
    height: 300vh;
    overflow: hidden;
-   background: linear-gradient(#BECCF9,#90CAF9,#64B5F6,#64B5F6,#42A5F5,
+   background: linear-gradient(#B6C6F8,#90CAF9,#64B5F6,#64B5F6,#42A5F5,
     #2196F3,#1E88E5,#1976D2,#2559A9,#003158,
     #001F29);
    z-index: -1;
