@@ -8,10 +8,17 @@ import { media } from "../../../utils/styleUtil";
 import Checkbox from "../../atoms/Checkbox";
 import { ClickableSpan } from "../../atoms/ClickableSpan";
 import { useEffect } from "react";
+import { atom, useRecoilState } from "recoil";
+
+const mypageRouterState = atom({
+  key: "mypageRouterState",
+  default: 0,
+})
 
 export const MypageSettingWeb = () => {
+  const [selectedIndex, setSelectedIndex] = useRecoilState(mypageRouterState);
   useEffect(() => {
-    console.log('settings')
+    setSelectedIndex(2)
   }, [])
 
   return (

@@ -9,13 +9,11 @@ import styled from "styled-components";
 import { Outlet } from "react-router-dom";
 import { media } from "../../../utils/styleUtil";
 
-export const MypageContentsBox = () => {
-  return (
-    <ContentsBoxDiv>
-      <Outlet></Outlet>
-    </ContentsBoxDiv>
-  );
-};
+export const MypageContentsBox = () => (
+  <ContentsBoxDiv>
+    <Outlet></Outlet>
+  </ContentsBoxDiv>
+);
 
 const ContentsBoxDiv = styled.div`
   display: flex;

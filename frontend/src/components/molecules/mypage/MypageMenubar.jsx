@@ -1,18 +1,23 @@
 /**
  * @author boyeon
  */
-/**
- *
- */
 import React from "react";
-import { useState } from "react";
 import styled from "styled-components";
 import { MypageMenu } from "../../atoms/mypage/MypageMenu";
 import { media } from "../../../utils/styleUtil";
+import { atom, useRecoilState } from "recoil";
+import { useEffect } from "react";
+
+const mypageRouterState = atom({
+  key: "mypageRouterState",
+  default: 0,
+})
 
 export const MypageMenuBar = () => {
-  // Todo: TestBoyeon 페이지의 selectedIndex와 같이 전역으로 관리하기
-  let [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useRecoilState(mypageRouterState);
+  useEffect(() => {
+    console.log(selectedIndex)
+  }, [])
 
   return (
     <MenuBarDiv>

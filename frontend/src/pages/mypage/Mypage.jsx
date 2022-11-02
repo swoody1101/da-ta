@@ -8,11 +8,7 @@ import { MypageContentsBox } from "../../components/organisms/mypage/MypageConte
 import { media } from "../../utils/styleUtil";
 
 //Todo : 해수면 높이 올리기
-const Mypage = () => {
-  // Todo: MenuBar molecule 의 selectedIndex와 같이 전역으로 관리하기
-  let [selectedIndex, setSelectedIndex] = useState(0);
-
-  return (
+const Mypage = () => (
     <>
       <Wraper>
         <MypageWebContents>
@@ -25,8 +21,7 @@ const Mypage = () => {
       <Wave opacity={0.4} frequency={13} isRight={false}></Wave>
       <BackgroundGradient start={"E2AAFD"} end={"FFDFC2"} />
     </>
-  );
-};
+);
 
 const Wraper = styled.div`
   display: flex;

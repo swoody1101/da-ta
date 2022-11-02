@@ -9,19 +9,17 @@ import React from "react";
 import styled from "styled-components";
 import { media } from "../../../utils/styleUtil";
 
-export const MypageLetter = () => {
-  return (
-    <LetterDiv>
-      <LetterWordsDiv>
-        <LetterTitle>오늘 하루는 어땠나요?</LetterTitle>
-        <LetterDate>2022년 10월 20일, 용감한 너구리</LetterDate>
-      </LetterWordsDiv>
-      {/* 아이콘이 들어갈 영역 임시 코드 Aaa */}
-      <Aaa></Aaa>
-      <Aaa></Aaa>
-    </LetterDiv>
-  );
-};
+export const MypageLetter = () => (
+  <LetterDiv>
+    <LetterWordsDiv>
+      <LetterTitle>오늘 하루는 어땠나요?</LetterTitle>
+      <LetterDate>2022년 10월 20일, 용감한 너구리</LetterDate>
+    </LetterWordsDiv>
+    {/* 아이콘이 들어갈 영역 임시 코드 Aaa */}
+    <Aaa></Aaa>
+    <Aaa></Aaa>
+  </LetterDiv>
+);
 
 const LetterDiv = styled.div`
   display: flex;
