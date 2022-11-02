@@ -6,12 +6,13 @@
  */
 import React from "react";
 import styled from "styled-components";
+import MypagePngs from "../atoms/MypagePngs";
 
 export const MypageSetting = () => {
   return (
     <>
       <SettingDiv>
-        <Aaa />
+        <MypagePngs width={"80px"} height={"80px"} name={"calendar"} />
         <SettingWordsDiv>
           <SettingExpln size={18}>
             회원님의 연령대 정보를 등록하거나 변경하실 수 있습니다.
@@ -25,7 +26,7 @@ export const MypageSetting = () => {
         </SettingWordsDiv>
       </SettingDiv>
       <SettingDiv>
-        <Aaa />
+        <MypagePngs width={"80px"} height={"80px"} name={"kakao"} />
         <SettingWordsDiv>
           <SettingExpln size={18}>
             연동된 계정으로 실시간 알람을 보내 드립니다.
@@ -39,7 +40,7 @@ export const MypageSetting = () => {
         </SettingWordsDiv>
       </SettingDiv>
       <SettingDiv>
-        <Aaa />
+        <MypagePngs width={"80px"} height={"80px"} name={"exit"} />
         <SettingWordsDiv>
           <SettingExpln size={18}>
             저희 서비스를 당분간 사용하지 않으실 계획이신가요?
