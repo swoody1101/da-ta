@@ -1,0 +1,117 @@
+/**
+ * @author boyeon
+ */
+/**
+ *
+ */
+import React from "react";
+import styled from "styled-components";
+import MypagePngs from "../atoms/MypagePngs";
+
+export const MypageSettingWeb = () => {
+  return (
+    <>
+      <SettingDiv>
+        <MypagePngs
+          width={"80px"}
+          height={"80px"}
+          name={"calendar"}
+          disable={"900px"}
+        />
+        <SettingWordsDiv>
+          <SettingExpln>
+            <span style={{ display: "block" }}>
+              회원님의 연령 정보를 등록하거나 변경하실 수 있습니다.
+            </span>
+            <span style={{ display: "block" }}>
+              공감대가 맞는 사람들과 소통해보세요
+            </span>
+          </SettingExpln>
+          <div>죽고싶다</div>
+        </SettingWordsDiv>
+      </SettingDiv>
+      <SettingDiv>
+        <MypagePngs
+          width={"80px"}
+          height={"80px"}
+          name={"kakao"}
+          disable={"900px"}
+        />
+        <SettingWordsDiv>
+          <SettingExpln>
+            <span style={{ display: "block" }}>
+              연동된 계정으로 실시간 알람을 보내드립니다.
+            </span>
+            <span style={{ display: "block" }}>
+              회원님의 편지에 대한 답장이 도착하면 바로 확인하실 수 있습니다.
+            </span>
+          </SettingExpln>
+          <div>죽고싶다</div>
+        </SettingWordsDiv>
+      </SettingDiv>
+      <SettingDiv>
+        <MypagePngs
+          width={"80px"}
+          height={"80px"}
+          name={"exit"}
+          disable={"900px"}
+        />
+        <SettingWordsDiv>
+          <SettingExpln>
+            <span style={{ display: "block" }}>
+              저희 서비스를 당분간 사용하지 않으실 계획이신가요?
+            </span>
+            <span style={{ display: "block" }}>
+              계정을 비활성화 하실 수 있습니다. 나중에 다시 뵙길 바래요!
+            </span>
+          </SettingExpln>
+          <div>죽고싶다</div>
+        </SettingWordsDiv>
+      </SettingDiv>
+    </>
+  );
+};
+
+const SettingDiv = styled.div`
+  display: flex;
+  height: 120px;
+  width: 620px;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 5px;
+  margin-bottom: 24px;
+
+  @media screen and (max-width: 900px) {
+    display: none;
+  }
+`;
+
+const SettingWordsDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 490px;
+  height: 83px;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+`;
+
+const SettingExpln = styled.p`
+  font-size: 18px;
+  width: 100%;
+  height: 40px;
+  text-align: start;
+  color: #444444;
+`;
+
+const SettingChange = styled.div`
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+  width: 100%;
+  height: 30px;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+`;

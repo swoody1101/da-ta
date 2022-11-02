@@ -10,6 +10,7 @@ import styled from "styled-components";
 //      선택된 메뉴에 파란 줄 표시
 //      클릭 시 메뉴 변경 함수
 //      현재 선택 메뉴 index를 props 받아서 분기처리
+//      Router 설정 이용해서 분기처리 해야할듯..
 
 export const MypageMenu = ({ ...props }) => {
   let isSelected = false;

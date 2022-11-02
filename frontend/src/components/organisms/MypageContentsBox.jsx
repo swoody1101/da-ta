@@ -7,13 +7,15 @@
 import React from "react";
 import styled from "styled-components";
 import { MypageLetter } from "../atoms/MypageLetter";
-import { MypageSetting } from "../molecules/MypageSetting";
+import { MypageSettingWeb } from "../molecules/MypageSettingWeb";
+import { MypageSettingMobile } from "../molecules/MypageSettingMobile";
 
 export const MypageContentsBox = () => {
   return (
     <ContentsBoxDiv>
       <MypageLetter></MypageLetter>
-      <MypageSetting></MypageSetting>
+      <MypageSettingWeb></MypageSettingWeb>
+      <MypageSettingMobile></MypageSettingMobile>
     </ContentsBoxDiv>
   );
 };

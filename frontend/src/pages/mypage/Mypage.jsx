@@ -38,6 +38,7 @@ const MypageWebContents = styled.div`
   display: flex;
   height: 656px;
   width: 900px;
+  margin-top: 6rem;
   justify-content: center;
   align-items: center;
   background-color: #f5f5f5;
@@ -45,6 +46,7 @@ const MypageWebContents = styled.div`
   border-radius: 20px;
 
   @media screen and (max-width: 900px) {
+    margin-top: 0px;
     width: 100vw;
     height: 100vh;
     border-radius: 0px;

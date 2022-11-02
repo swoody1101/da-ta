@@ -26,7 +26,7 @@ export const MypageSetting = () => {
             공감대가 맞는 사람들과 소통해보세요
           </SettingExpln>
           <SettingChange>
-            <SettingExpln size={20}>회춘하기 버튼</SettingExpln>
+            <SettingExpln size={20}>현재 회원님의 연령대 : </SettingExpln>
           </SettingChange>
         </SettingWordsDiv>
       </SettingDiv>
@@ -106,10 +106,10 @@ const SettingExpln = styled.p`
   height: 20px;
   text-align: start;
   color: #444444;
-  margin-left: 25px;
 
   @media screen and (max-width: 900px) {
-    width: 90%;
+    width: 100%;
+    margin: 0;
   }
 `;
 
@@ -124,7 +124,7 @@ const SettingChange = styled.div`
   margin: 0;
 
   @media screen and (max-width: 900px) {
-    width: 90%;
+    width: 100%;
   }
 `;
 // 아이콘이 들어갈 영역 test코드
