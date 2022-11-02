@@ -15,6 +15,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { useRecoilState } from "recoil";
 import { loginState } from "./../../recoil/Atoms";
+import { clickToKakao } from "../../api/authAPI";
 
 const MainNav = () => {
   const navigate = useNavigate();
@@ -22,8 +23,8 @@ const MainNav = () => {
   const [scrollY, setScrollY] = useState(0); // 높이 스크롤 값
   const [headerShow, setHeaderShow] = useState(true); // 헤더 show 여부
   const [headerMobileMode, setHeaderMobileMode] = useState(false); // pc모드인지 모바일모드인지 여부
-  const [slideMenuToggle, setSlideMenuToggle] = useState(false); // 슬라이딩메뉴 토클
-  const [isLogin, setIsLogin] = useRecoilState(loginState);
+  const [slideMenuToggle, setSlideMenuToggle] = useState(false); // 슬라이딩메뉴 토
+  const [isLogin, setIsLogin] = useRecoilState(loginState); // Recoil로 관리하는 로그인 정보
 
   const handleHeaderShow = () => {
     if (window.scrollY === 0 || window.scrollY - scrollY < 0) {
@@ -39,11 +40,12 @@ const MainNav = () => {
   };
 
   const handleLogin = () => {
-    setIsLogin(true);
+    clickToKakao();
+    // setIsLogin(true);
   };
 
   const handleLogout = () => {
-    setIsLogin(false);
+    // setIsLogin(false);
   };
 
   useEffect(() => {
@@ -70,7 +72,7 @@ const MainNav = () => {
         <>
           <MobileLogo
             src={`${process.env.PUBLIC_URL}/assets/logo/data_logo.png`}
-            height="64px"
+            width="75vw"
             onClick={() => navigate("/")}
           />
         </>
@@ -108,13 +110,13 @@ const MainNav = () => {
       ) : (
         <>
           <HeaderContents>
-            <HeaderContent onClick={() => navigate("/")}>
+            <HeaderContent onClick={() => navigate("/write")}>
               편지 쓰기
             </HeaderContent>
-            <HeaderContent onClick={() => navigate("/")}>
+            <HeaderContent onClick={() => navigate("/read")}>
               편지 읽기
             </HeaderContent>
-            <HeaderContent onClick={() => navigate("/")}>
+            <HeaderContent onClick={() => navigate("/mypage")}>
               마이페이지
             </HeaderContent>
           </HeaderContents>
