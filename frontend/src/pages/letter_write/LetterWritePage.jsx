@@ -20,6 +20,7 @@ import { MAX_CHAR_COUNT, MIN_CHAR_COUNT } from "./../../constants/Variables";
 
 const LetterWritePage = () => {
   const [act, setAct] = useState(true); // [편지지,도화지] 토글
+  const [optionToggle, setOptionToggle] = useState(false); // 옵션창 토글
   const [letterDesign, setLetterDesign] = useState("default"); // 편지지 디자인 이름
   const [charCount, setCharCount] = useState(0); // 편지 글자 수
   const [charCountWarning, setCharCountWarning] = useState(true); // 글자수 미만 또는 초과로 인한 경고 표시
@@ -61,6 +62,12 @@ const LetterWritePage = () => {
       ? setCharCountWarning(true)
       : setCharCountWarning(false);
   }, [charCount]);
+
+  // 여기부터 작업 시작!! screen.width 말고 실시간 너비로 해야함
+  // 이거에 따른 state 수정, 옵션창 표시
+  useEffect(() => {
+    console.log(screen.width);
+  }, [screen.width]);
 
   return (
     <>
@@ -156,7 +163,7 @@ const LetterWritePage = () => {
             보내기
           </Button>
         </ContentBlock>
-        <LetterOptionBox />
+        {optionToggle && <LetterOptionBox />}
       </RowCenterWrapper>
     </>
   );
