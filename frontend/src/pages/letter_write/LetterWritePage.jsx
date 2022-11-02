@@ -20,7 +20,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const LetterWritePage = () => {
 	const [options, setOptions] = useState({
 		paper: "default",
-		font: "굴림체",
+		font: "함초롬바탕체",
 		age: "전체",
 		allowReply: false,
 	});
@@ -111,7 +111,12 @@ const LetterWritePage = () => {
 								placeholder="제목"
 								myRef={titleInput}
 							/>
-							<LetterTextArea onChange={(e) => handleLetterWrite(e.target.value.length)} placeholder="내용" ref={contentInput} />
+							<LetterTextArea
+								fontFamily={options.font}
+								onChange={(e) => handleLetterWrite(e.target.value.length)}
+								placeholder="내용"
+								ref={contentInput}
+							/>
 							<LetterProgressBar charCount={charCount} charCountWarning={charCountWarning} />
 						</>
 					) : (

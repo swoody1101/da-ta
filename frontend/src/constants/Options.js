@@ -2,8 +2,8 @@
  * @author mingyu
  * @description 편지지 옵션에 대한 상수 정의입니다.
  */
-
 export const LetterOptions = {
-	FONTS: ["굴림체", "바탕체", "휴먼매직체"],
+	PAPERS: ["default"],
+	FONTS: ["함초롬바탕체", "조선굴림체", "프리텐다드", "SUIT", "교보손글씨"],
 	AGES: ["전체", "0대", "10대", "20대", "30대", "40대", "50대", "60대"],
 };
