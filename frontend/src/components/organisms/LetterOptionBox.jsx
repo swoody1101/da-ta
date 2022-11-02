@@ -1,12 +1,39 @@
-import React from "react";
+/**
+ * @author mingyu
+ */
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import DropDownInput from "./../atoms/DropDownInput";
 import Checkbox from "../atoms/Checkbox";
 import Button from "../atoms/Button";
+import { sizes } from "./../../utils/styleUtil";
+import { SIZE_PHONE, SIZE_TABLET1, SIZE_WIDE } from "./../../constants/Sizes";
+import { debounce } from "./../../utils/optimizationUtil";
 
-const LetterOptionBox = ({ props }) => {
+/**
+ * @argument optionToggle 옵션창 표시 여부를 제어하는 변수
+ */
+const LetterOptionBox = ({ optionToggle }) => {
+  const [sizeX, setSizeX] = useState(window.innerWidth);
+  /**
+   * @description 화면크기 재조정시 이벤트, 편지지 옵션창 display 조정
+   */
+  const handleResize = () => {
+    debounce(() => {
+      console.log(window.innerWidth);
+      setSizeX(window.innerWidth);
+    }, 100);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
-    <Container>
+    <Container optionToggle={optionToggle} sizeX={sizeX}>
       <PinImg
         src={`${process.env.PUBLIC_URL}/assets/images/common/pin.png`}
         width="40px"
@@ -69,11 +96,12 @@ const LetterOptionBox = ({ props }) => {
 };
 
 const Container = styled.div`
-  display: flex;
+  display: ${(props) =>
+    props.optionToggle || props.sizeX > SIZE_WIDE ? "flex" : "none"};
   flex-direction: column;
   position: absolute;
-  top: 20%;
-  right: 10%;
+  top: ${(props) => (props.optionToggle ? "20%" : "20%")};
+  right: ${(props) => (props.optionToggle ? "" : "5%")};
   background-color: white;
   width: 20rem;
   height: 20rem;
@@ -82,6 +110,8 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 10;
+  opacity: ${(props) => (props.optionToggle ? "1" : "0")};
+  transition: 0.25s ease;
 `;
 
 const PinImg = styled.img`

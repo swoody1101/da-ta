@@ -17,28 +17,20 @@ import LetterProgressBar from "../../components/molecules/letter_write/LetterPro
 import Input from "./../../components/atoms/Input";
 import LetterOptionBox from "../../components/organisms/LetterOptionBox";
 import { MAX_CHAR_COUNT, MIN_CHAR_COUNT } from "./../../constants/Variables";
+import { sizes } from "./../../utils/styleUtil";
+import { debounce } from "../../utils/optimizationUtil";
+import { faGear } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const LetterWritePage = () => {
   const [act, setAct] = useState(true); // [편지지,도화지] 토글
-  const [optionToggle, setOptionToggle] = useState(false); // 옵션창 토글
+  const [optionToggle, setOptionToggle] = useState(true); // 옵션창 토글
+  const [sizeX, setSizeX] = useState();
   const [letterDesign, setLetterDesign] = useState("default"); // 편지지 디자인 이름
   const [charCount, setCharCount] = useState(0); // 편지 글자 수
   const [charCountWarning, setCharCountWarning] = useState(true); // 글자수 미만 또는 초과로 인한 경고 표시
   const titleInput = useRef(); // 제목 ref (값 가져오기, focus)
   const contentInput = useRef(); // 내용 ref (값 가져오기, ref)
-  let timer; // debounce에 사용되는 timer
-
-  /**
-   * @description 편지 입력시 과한 재렌더링을 막기 위한 디바운싱 함수
-   * @param {() => void} callback 콜백함수
-   * @param {number} delay 딜레이
-   */
-  const debounce = (callback, delay) => {
-    if (timer) {
-      clearTimeout(timer);
-    }
-    timer = setTimeout(callback, delay);
-  };
 
   /**
    * @description 편지지 텍스트 입력 시 이벤트
@@ -63,12 +55,6 @@ const LetterWritePage = () => {
       : setCharCountWarning(false);
   }, [charCount]);
 
-  // 여기부터 작업 시작!! screen.width 말고 실시간 너비로 해야함
-  // 이거에 따른 state 수정, 옵션창 표시
-  useEffect(() => {
-    console.log(screen.width);
-  }, [screen.width]);
-
   return (
     <>
       <BackgroundGradient start={"E2AAFD"} end={"FFDFC2"} />
@@ -76,11 +62,12 @@ const LetterWritePage = () => {
         <ContentBlock
           margin={SizeTypes.PC_LETTER_MARGIN}
           mWidth={SizeTypes.MOBILE_LETTER_WIDTH}
+          optionToggle={optionToggle}
         >
           <LetterToggleButton
             category="write"
             act={act}
-            setAct={setAct}
+            setAct={!optionToggle && setAct}
             width="50%"
           >
             편지지
@@ -88,13 +75,16 @@ const LetterWritePage = () => {
           <LetterToggleButton
             category="draw"
             act={act}
-            setAct={setAct}
+            setAct={!optionToggle && setAct}
             width="50%"
           >
             도화지
           </LetterToggleButton>
         </ContentBlock>
-        <ContentBlock mWidth={SizeTypes.MOBILE_LETTER_WIDTH}>
+        <ContentBlock
+          mWidth={SizeTypes.MOBILE_LETTER_WIDTH}
+          optionToggle={optionToggle}
+        >
           <Spacer act={act} />
         </ContentBlock>
         <ContentBlock
@@ -102,6 +92,7 @@ const LetterWritePage = () => {
           mWidth={SizeTypes.MOBILE_LETTER_WIDTH}
           mHeight={SizeTypes.MOBILE_LETTER_HEIGHT}
           flexDirection="column"
+          optionToggle={optionToggle}
         >
           <LetterImg
             src={`${process.env.PUBLIC_URL}/assets/images/letter/${letterDesign}.png`}
@@ -139,6 +130,7 @@ const LetterWritePage = () => {
           alignItems="center"
           justifyContent="space-between"
           mWidth={SizeTypes.MOBILE_LETTER_WIDTH}
+          optionToggle={optionToggle}
         >
           <Button
             hoverBgOpacity="0.2"
@@ -163,7 +155,19 @@ const LetterWritePage = () => {
             보내기
           </Button>
         </ContentBlock>
-        {optionToggle && <LetterOptionBox />}
+        <LetterOptionBox optionToggle={optionToggle} />
+        <OptionToggleButton
+          bgOpacity="0.3"
+          hoverBgOpacity="0.5"
+          height="4.5rem"
+          width="4.5rem"
+          padding="1rem"
+          shadow={true}
+          borderRadius="100%"
+          onClick={() => setOptionToggle(!optionToggle)}
+        >
+          <FontAwesomeIcon icon={faGear} size="2x" />
+        </OptionToggleButton>
       </RowCenterWrapper>
     </>
   );
@@ -171,6 +175,8 @@ const LetterWritePage = () => {
 
 const ContentBlock = styled.div`
   display: flex;
+  opacity: ${(props) => (props.optionToggle ? "0" : "1")};
+  visibility: ${(props) => (props.optionToggle ? "hidden" : "visible")};
   position: relative;
   flex-direction: ${(props) => props.flexDirection || "row"};
   width: ${SizeTypes.PC_LETTER_WIDTH};
@@ -178,6 +184,7 @@ const ContentBlock = styled.div`
   align-items: ${(props) => props.alignItems};
   justify-content: ${(props) => props.justifyContent};
   margin: ${(props) => props.margin};
+  transition: 0.25s ease;
 
   ${media.phone`
     width: ${(props) => props.mWidth};
@@ -201,6 +208,13 @@ const Spacer = styled.div`
   border-bottom: 1px solid #d9d9d9;
   background-color: ${(props) =>
     props.act ? ColorTypes.LETTER_WRITE_COLOR : ColorTypes.LETTER_DRAW_COLOR};
+`;
+
+const OptionToggleButton = styled(Button)`
+  position: absolute;
+  bottom: 50%;
+  right: 1%;
+  z-index: 30;
 `;
 
 export default LetterWritePage;

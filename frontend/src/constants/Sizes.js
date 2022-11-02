@@ -6,6 +6,11 @@ const deviceWidth = screen.width;
 const deviceHeight = screen.height;
 const WIDTH_LIMIT = 1000;
 
+export const SIZE_WIDE = 1280;
+export const SIZE_TABLET1 = 1024;
+export const SIZE_TABLET2 = 768;
+export const SIZE_PHONE = 480;
+
 export const SizeTypes = {
   PC_LETTER_MARGIN: deviceHeight < WIDTH_LIMIT ? "1rem 0 0 0" : "2rem 0 0 0",
   PC_LETTER_WIDTH: deviceHeight < WIDTH_LIMIT ? "20rem" : "26rem",
