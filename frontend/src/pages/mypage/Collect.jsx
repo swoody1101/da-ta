@@ -1,13 +1,9 @@
 import React from "react";
-import { MypageLetter } from "../../components/atoms/MypageLetter";
+import { MypageCollect } from "../../components/molecules/mypage/MypageCollect";
 
-const Collect = () => {
-  return (
-    <>
-      <MypageLetter />
-      <MypageLetter />
-    </>
-  );
-};
+const Collect = () => (
+  <MypageCollect />
+);
+
 
 export default Collect;
