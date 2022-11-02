@@ -7,7 +7,6 @@ import {
 import LetterToggleButton from "./../../components/atoms/letter_write/LetterToggleButton";
 import styled from "styled-components";
 import Button from "./../../components/atoms/Button";
-import BackgroundVideo from "./../../components/atoms/BackgroundVideo";
 import BackgroundGradient from "./../../components/atoms/BackgroundGradient";
 import { LetterTextArea } from "../../components/atoms/TextArea";
 import { ColorTypes } from "./../../constants/Colors";
@@ -20,11 +19,8 @@ const LetterWritePage = () => {
   const [act, setAct] = useState(true); // [편지지,도화지] 토글
   const [letterDesign, setLetterDesign] = useState("pink"); // 편지지 디자인 이름
   const [charCount, setCharCount] = useState(0); // 편지 글자 수
+  const [charCountWarning, setCharCountWarning] = useState(true);
   let timer;
-
-  useEffect(() => {
-    console.log(charCount);
-  }, [charCount]);
 
   /**
    * @description 편지 입력시 과한 재렌더링을 막기 위한 디바운싱 함수
@@ -45,8 +41,14 @@ const LetterWritePage = () => {
   const handleLetterWrite = (length) => {
     debounce(() => {
       setCharCount(length);
-    }, 300);
+    }, 200);
   };
+
+  useEffect(() => {
+    charCount < 200 || charCount > 1000
+      ? setCharCountWarning(true)
+      : setCharCountWarning(false);
+  }, [charCount]);
 
   return (
     <>
@@ -87,7 +89,10 @@ const LetterWritePage = () => {
           <LetterTextArea
             onChange={(e) => handleLetterWrite(e.target.value.length)}
           />
-          <LetterProgressBar charCount={charCount} />
+          <LetterProgressBar
+            charCount={charCount}
+            charCountWarning={charCountWarning}
+          />
         </ContentBlock>
         <ContentBlock
           height="5rem"
