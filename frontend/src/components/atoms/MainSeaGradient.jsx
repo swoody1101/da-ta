@@ -13,7 +13,9 @@
    height: 100vh;
    overflow: hidden;
    position: absolute;
-   background: linear-gradient(#F17C58,#E94584,#24AADB,#27DBB1,#FFDC18,#FF3706);
+   background: linear-gradient(#BECCF9,#90CAF9,#64B5F6,#64B5F6,#42A5F5,
+    #2196F3,#1E88E5,#1976D2,#2559A9,#003158,
+    #001F29);
    z-index: -1;
  `;
 

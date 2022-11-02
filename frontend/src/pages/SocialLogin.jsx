@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
-import { kakaoLoginByAuthCode } from "../api/AuthAPI";
+import { kakaoLoginByAuthCode } from "../api/authAPI";
 import { Wrapper } from "./../styles/Wrapper";
 
 const SocialLogin = () => {
