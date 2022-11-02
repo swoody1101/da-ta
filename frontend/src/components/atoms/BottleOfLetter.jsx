@@ -19,22 +19,18 @@
  
  BottleOfLetter.defaultProps = {
     path: `${process.env.PUBLIC_URL}/assets/images/common/bottle_of_letter.png`,
+    width: "20vw",
+    height: "20vh"
   };
 
  const BG = styled.div`
-   width: 100%;
-   height: 100%;
+   width: ${(props) => props.width};
+   height: ${(props) => props.height};
    overflow: hidden;
    margin: 0 auto;
    position: absolute;
    z-index: 5000;
-   object-fit: cover;
  `;
  
-//  const BottleImage = styled.img`
-//    width: 20vw;
-//    height: 20vh;
-//  `;
- 
- export default LetterOfBottle;
+ export default BottleOfLetter;
  
