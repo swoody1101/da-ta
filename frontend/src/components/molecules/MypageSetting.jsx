@@ -12,7 +12,12 @@ export const MypageSetting = () => {
   return (
     <>
       <SettingDiv>
-        <MypagePngs width={"80px"} height={"80px"} name={"calendar"} />
+        <MypagePngs
+          width={"80px"}
+          height={"80px"}
+          name={"calendar"}
+          disable={"900px"}
+        />
         <SettingWordsDiv>
           <SettingExpln size={18}>
             회원님의 연령대 정보를 등록하거나 변경하실 수 있습니다.
@@ -26,7 +31,12 @@ export const MypageSetting = () => {
         </SettingWordsDiv>
       </SettingDiv>
       <SettingDiv>
-        <MypagePngs width={"80px"} height={"80px"} name={"kakao"} />
+        <MypagePngs
+          width={"80px"}
+          height={"80px"}
+          name={"kakao"}
+          disable={"900px"}
+        />
         <SettingWordsDiv>
           <SettingExpln size={18}>
             연동된 계정으로 실시간 알람을 보내 드립니다.
@@ -40,7 +50,12 @@ export const MypageSetting = () => {
         </SettingWordsDiv>
       </SettingDiv>
       <SettingDiv>
-        <MypagePngs width={"80px"} height={"80px"} name={"exit"} />
+        <MypagePngs
+          width={"80px"}
+          height={"80px"}
+          name={"exit"}
+          disable={"900px"}
+        />
         <SettingWordsDiv>
           <SettingExpln size={18}>
             저희 서비스를 당분간 사용하지 않으실 계획이신가요?
