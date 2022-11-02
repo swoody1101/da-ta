@@ -7,6 +7,7 @@
 // 나중에 API로 받아온 친구들을 props 해줘야함
 import React from "react";
 import styled from "styled-components";
+import { media } from "../../utils/styleUtil";
 
 export const MypageLetter = () => {
   return (
@@ -31,6 +32,11 @@ const LetterDiv = styled.div`
   background-color: #ffffff;
   border-radius: 5px;
   margin-bottom: 24px;
+
+  ${media.tablet1`
+    width: 90%;
+    align-items: space-between;
+  `}
 `;
 
 const LetterWordsDiv = styled.div`
@@ -40,6 +46,11 @@ const LetterWordsDiv = styled.div`
   justify-content: center;
   align-items: center;
   margin: 0;
+
+  ${media.tablet1`
+    width: 80%;
+    margin-left: 15px;
+  `}
 `;
 
 const LetterTitle = styled.p`
