@@ -7,7 +7,7 @@
 import React from "react";
 import styled from "styled-components";
 import { MypageLetter } from "../atoms/MypageLetter";
-import { MypageSetting } from "../atoms/MypageSetting";
+import { MypageSetting } from "../molecules/MypageSetting";
 
 export const MypageContentsBox = () => {
   return (

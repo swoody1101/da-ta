@@ -13,9 +13,11 @@ export const MypageSetting = () => {
       <SettingDiv>
         <Aaa />
         <SettingWordsDiv>
-          <SettingExpln size={18}>회원님의 연령대는 늙었습니당</SettingExpln>
           <SettingExpln size={18}>
-            젊은 나이로 바꿀 기회를 드립니당
+            회원님의 연령대 정보를 등록하거나 변경하실 수 있습니다.
+          </SettingExpln>
+          <SettingExpln size={18}>
+            공감대가 맞는 사람들과 소통해보세요
           </SettingExpln>
           <SettingChange>
             <SettingExpln size={20}>회춘하기 버튼</SettingExpln>
@@ -26,10 +28,10 @@ export const MypageSetting = () => {
         <Aaa />
         <SettingWordsDiv>
           <SettingExpln size={18}>
-            연동된 계정으로 카카오톡을 날립니당
+            연동된 계정으로 실시간 알람을 보내 드립니다.
           </SettingExpln>
           <SettingExpln size={18}>
-            진동울리는거 싫으면 체크를 빼십숑
+            회원님의 편지에 대한 답장이 도착하면 바로 확인하실 수 있습니다.
           </SettingExpln>
           <SettingChange>
             <SettingExpln size={16}>실시간 알람 받기 체크빡스</SettingExpln>
@@ -43,7 +45,7 @@ export const MypageSetting = () => {
             저희 서비스를 당분간 사용하지 않으실 계획이신가요?
           </SettingExpln>
           <SettingExpln size={18}>
-            계정을 비활성화 하실 수 있습니다. ㅃㅃ
+            계정을 비활성화 하실 수 있습니다. 나중에 다시 뵙길 바래요!
           </SettingExpln>
           <SettingChange>
             <SettingExpln size={15}>탈퇴버튼</SettingExpln>

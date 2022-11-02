@@ -45,5 +45,6 @@ const MenuBarDiv = styled.div`
     height: 44px;
     background-color: #ffffff;
     border-bottom: 2px solid #d9d9d9;
+    border-right: none;
   }
 `;
