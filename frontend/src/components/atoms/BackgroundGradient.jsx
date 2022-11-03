@@ -8,9 +8,7 @@
  */
 import styled from "styled-components";
 
-export const BackgroundGradient = ({ start, end }) => (
-  <BG start={start} end={end} />
-);
+const BackgroundGradient = ({ start, end }) => <BG start={start} end={end} />;
 
 const BG = styled.div`
   width: 100vw;
@@ -23,3 +21,5 @@ const BG = styled.div`
   );
   z-index: -1;
 `;
+
+export default BackgroundGradient;

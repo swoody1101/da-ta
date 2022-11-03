@@ -14,7 +14,7 @@ import LogoImage from "./../molecules/LogoImage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { useRecoilState } from "recoil";
-import { loginState } from "./../../recoil/Atoms";
+import { loginState, mypageRouterState } from "./../../recoil/Atoms";
 import { clickToKakao } from "../../api/authAPI";
 
 const MainNav = () => {
@@ -25,6 +25,7 @@ const MainNav = () => {
   const [headerMobileMode, setHeaderMobileMode] = useState(false); // pc모드인지 모바일모드인지 여부
   const [slideMenuToggle, setSlideMenuToggle] = useState(false); // 슬라이딩메뉴 토
   const [isLogin, setIsLogin] = useRecoilState(loginState); // Recoil로 관리하는 로그인 정보
+  const [mypageIndex, setMypageIndex] = useRecoilState(mypageRouterState); // Recoil로 관리하는 현재 마이페이지의 index
 
   const handleHeaderShow = () => {
     if (window.scrollY === 0 || window.scrollY - scrollY < 0) {
@@ -116,7 +117,21 @@ const MainNav = () => {
             <HeaderContent onClick={() => navigate("/read")}>
               편지 읽기
             </HeaderContent>
-            <HeaderContent onClick={() => navigate("/mypage")}>
+            <HeaderContent
+              onClick={() => {
+                switch (mypageIndex) {
+                  case 0:
+                    navigate("/mypage/collect");
+                    break;
+                  case 1:
+                    navigate("/mypage/receive");
+                    break;
+                  case 2:
+                    navigate("/mypage/setting");
+                    break;
+                }
+              }}
+            >
               마이페이지
             </HeaderContent>
           </HeaderContents>

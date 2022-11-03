@@ -1,7 +1,9 @@
 import React from "react";
+import { MypageReceive } from "../../components/molecules/mypage/MypageReceive";
 
-const Receive = () => {
-  return <div></div>;
-};
+const Receive = () => (
+  <MypageReceive />
+);
+
 
 export default Receive;
