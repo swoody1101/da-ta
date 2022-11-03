@@ -64,12 +64,11 @@ public class LetterService {
     public Message createImageLetter(ImageLetterCreateRequest imageLetterCreateRequest) {
         Option option = imageLetterCreateRequest.getOption();
         ImageLetterInfo imageLetterInfo = imageLetterCreateRequest.getImageLetterInfo();
-        Background background = findBackground(imageLetterInfo.getBackgroundId());
         ImageLetter imageLetter = ImageLetter.builder()
                 .writer(findUser(imageLetterCreateRequest.getUserId()))
                 .ageOption(option.getAgeOption())
                 .replyOption(option.getReplyOption())
-                .background(background)
+                .background(findBackground(imageLetterInfo.getBackgroundId()))
                 .title(imageLetterInfo.getTitle())
                 .imageLetterUrl(imageLetterInfo.getImageLetterUrl())
                 .build();
