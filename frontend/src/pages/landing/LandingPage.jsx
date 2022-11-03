@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 import MainBackgroundSky from "../../components/atoms/MainBackgroundSky";
 import Footer from "../../components/molecules/Footer";
@@ -21,6 +23,10 @@ import MouseScrollDownMouse from "../../components/atoms/MainScrollDownMouse";
 const LandingPage = () => {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    AOS.init();
+  });
+
   return (
     <>
       {/* <BackgroundGradient start={"aaa"} end={"aaa"} /> */}
@@ -33,21 +39,31 @@ const LandingPage = () => {
         <MainText margin="8vh 0 0 0">
           안녕하세요! <br /> 여기는 '닿다'예요
         </MainText>
-        <MainText margin="90vh 0 0 0">
-          여기선 익명으로 <br />
-          마음을 털어놓을 수 있어요
-        </MainText>
-        <MainText margin="65vh 0 0 0">
-          아무에게도 말하지 못했던 것들을
-          <br />
-          적어서 보내보세요
-        </MainText>
-        <MainText margin="65vh 0 0 0">
-          혹시 몰라요! <br /> 누군가에게 답을 받을 수도 있겠죠?
-        </MainText>
-        <MainText margin="65vh 0 0 0">
-          행운에 닿기를 바라며 물병을 던져볼까요?
-        </MainText>
+
+        <div data-aos="fade-right" data-aos-duration="2000">
+          <MainText margin="90vh 0 0 0">
+            여기선 익명으로 <br />
+            마음을 털어놓을 수 있어요
+          </MainText>
+        </div>
+        <div data-aos="fade-left" data-aos-duration="2000">
+          <MainText margin="65vh 0 0 0">
+            아무에게도 말하지 못했던 것들을
+            <br />
+            적어서 보내보세요
+          </MainText>
+        </div>
+        <div data-aos="fade-right" data-aos-duration="2000">
+          <MainText margin="65vh 0 0 0">
+            혹시 몰라요! <br /> 누군가에게 답을 받을 수도 있겠죠?
+          </MainText>
+        </div>
+        <div data-aos="fade-left" data-aos-duration="2000">
+          <MainText margin="65vh 0 0 0">
+            행운에 닿기를 바라며 물병을 던져볼까요?
+          </MainText>
+        </div>
+
         <br />
         <Button
           hoverBgOpacity="0.5"
@@ -86,7 +102,7 @@ const LandingPage = () => {
 
       <Footer />
 
-      <ScrollToTop smooth color="#6f00ff" border="20" />
+      <ScrollToTop smooth width="" color="#6f00ff" border="20" />
     </>
   );
 };
@@ -124,7 +140,7 @@ const MouseScrollDownArrowWrapper = styled.div`
   position: absolute;
   justify-content: center;
   align-items: center;
-  z-index: 20001;
+  z-index: 5;
 `;
 
 const MouseScrollDownMouseWrapper = styled.div`
@@ -133,6 +149,6 @@ const MouseScrollDownMouseWrapper = styled.div`
   position: absolute;
   justify-content: center;
   align-items: center;
-  z-index: 20001;
+  z-index: 5;
 `;
 export default LandingPage;
