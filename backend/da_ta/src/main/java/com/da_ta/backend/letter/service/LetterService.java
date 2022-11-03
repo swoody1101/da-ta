@@ -43,15 +43,12 @@ public class LetterService {
     public Message createTextLetter(TextLetterCreateRequest textLetterCreateRequest) {
         Option option = textLetterCreateRequest.getOption();
         TextLetterInfo textLetterInfo = textLetterCreateRequest.getTextLetterInfo();
-        User writer = findUser(textLetterCreateRequest.getUserId());
-        Background background = findBackground(textLetterInfo.getBackgroundId());
-        Font font = findFont(textLetterInfo.getFontId());
         TextLetter textLetter = TextLetter.builder()
-                .writer(writer)
+                .writer(findUser(textLetterCreateRequest.getUserId()))
                 .ageOption(option.getAgeOption())
                 .replyOption(option.getReplyOption())
-                .background(background)
-                .font(font)
+                .background(findBackground(textLetterInfo.getBackgroundId()))
+                .font(findFont(textLetterInfo.getFontId()))
                 .title(textLetterInfo.getTitle())
                 .content(textLetterInfo.getContent())
                 .build();
