@@ -34,4 +34,10 @@ public class LetterController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(letterService.receiveFloatedLetter(recipientId));
     }
+
+    @PutMapping("/{floated_letter_id}")
+    public ResponseEntity<Message> reFloatLetter(@PathVariable("floated_letter_id") Long floatedLetterId) {
+        return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                .body(letterService.updateFloatedLetter(floatedLetterId));
+    }
 }
