@@ -1,3 +1,6 @@
+/**
+ * @author mingyu
+ */
 import styled from "styled-components";
 import { media } from "../../../utils/styleUtil";
 import { SizeTypes } from "./../../../constants/Sizes";
