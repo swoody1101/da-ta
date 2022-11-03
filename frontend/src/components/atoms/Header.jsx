@@ -32,7 +32,7 @@ const StyledHeader = styled.header`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  z-index: 9999;
+  z-index: 500;
   padding: 0 2rem 0 2rem;
   color: white;
   font-size: 1.2rem;
