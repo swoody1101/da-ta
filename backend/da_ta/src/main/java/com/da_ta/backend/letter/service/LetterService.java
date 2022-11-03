@@ -113,8 +113,9 @@ public class LetterService {
                             .createTime(imageLetter.getCreatedDate())
                             .build())
                     .build();
+        } else {
+            throw new NotFoundException(LETTER_TYPE_NOT_FOUND);
         }
-        return null;
     }
 
     public void floatLetter(Letter letter) {
@@ -140,6 +141,6 @@ public class LetterService {
 
     private FloatedLetter findFloatedLetter(Long recipientId, Age age) {
         return floatedLetterRepository.findFloatedLetterByAgeOption(recipientId, age.toString())
-                .orElseThrow(() -> new NotFoundException(LETTER_NOT_FOUND));
+                .orElseThrow(() -> new NotFoundException(FLOATED_LETTER_NOT_FOUND));
     }
 }
