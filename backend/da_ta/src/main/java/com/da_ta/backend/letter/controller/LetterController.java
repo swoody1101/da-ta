@@ -47,4 +47,10 @@ public class LetterController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(letterService.createReply(LetterId, replyCreateRequest));
     }
+
+    @PutMapping("/replies/{reply_id}")
+    public ResponseEntity<Message> checkReplyReception(@PathVariable("reply_id") Long replyId) {
+        return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                .body(letterService.checkReplyReception(replyId));
+    }
 }
