@@ -3,8 +3,8 @@ import { useState } from "react";
 import styled from "styled-components";
 import BackgroundGradient from "../components/atoms/BackgroundGradient";
 import { Wave } from "../components/atoms/Wave";
-import { MenuBar } from "../components/molecules/MenuBar";
-import { MypageContentsBox } from "../components/organisms/MypageContentsBox";
+import { MypageMenuBar } from "../components/molecules/mypage/MypageMenubar";
+import { MypageContentsBox } from "../components/organisms/mypage/MypageContentsBox";
 
 //Todo : 해수면 높이 올리기
 const TestBoyeon = () => {
@@ -15,7 +15,7 @@ const TestBoyeon = () => {
     <>
       <Wraper>
         <MypageWebContents>
-          <MenuBar />
+          <MypageMenuBar />
           <MypageContentsBox />
         </MypageWebContents>
       </Wraper>

@@ -1,24 +1,20 @@
 /**
  * @author boyeon
  */
-/**
- *
- */
 import React from "react";
 import styled from "styled-components";
-import { media } from "../../utils/styleUtil";
+import { media } from "../../../utils/styleUtil";
+import { useNavigate } from "react-router-dom";
 //TODO: 새로 온 메일이 있을 경우 받은 답장에 빨간 점 표시
 //      선택된 메뉴에 파란 줄 표시
-//      클릭 시 메뉴 변경 함수
-//      현재 선택 메뉴 index를 props 받아서 분기처리
-//      Router 설정 이용해서 분기처리 해야할듯..
 
 export const MypageMenu = ({ ...props }) => {
   let isSelected = false;
   props.selectedIndex === props.menuIndex ? (isSelected = true) : null;
+  const navigate = useNavigate();
 
   return [
-    <MenuDiv>
+    <MenuDiv onClick={() => navigate("/mypage/collect")}>
       <IconDiv>
         <img
           src={
@@ -29,7 +25,7 @@ export const MypageMenu = ({ ...props }) => {
       </IconDiv>
       <MenuName isSelected={isSelected}>수집한 편지</MenuName>
     </MenuDiv>,
-    <MenuDiv>
+    <MenuDiv onClick={() => navigate("/mypage/receive")}>
       <IconDiv>
         <img
           src={process.env.PUBLIC_URL + "/assets/images/mypage/postbox.png"}
@@ -38,7 +34,7 @@ export const MypageMenu = ({ ...props }) => {
       </IconDiv>
       <MenuName isSelected={isSelected}>받은 답장</MenuName>
     </MenuDiv>,
-    <MenuDiv>
+    <MenuDiv onClick={() => navigate("/mypage/setting")}>
       <IconDiv>
         <img
           src={process.env.PUBLIC_URL + "/assets/images/mypage/gear.png"}
