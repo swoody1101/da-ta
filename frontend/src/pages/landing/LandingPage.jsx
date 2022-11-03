@@ -15,8 +15,8 @@ import ScrollToTop from "react-scroll-to-top";
 import Button from "./../../components/atoms/Button";
 
 import BackgroundGradient from "../../components/atoms/BackgroundGradient";
-// import MouseScrollDownArrow from "../../components/atoms/MouseScrollDownArrow";
 import MouseScrollDownArrowGroup from "../../components/molecules/MouseScrollDownArrowGroup";
+import MouseScrollDownMouse from "../../components/atoms/MainScrollDownMouse";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -66,8 +66,12 @@ const LandingPage = () => {
         <BottleOfLetter />
       </BottleWrapper>
 
+      <MouseScrollDownMouseWrapper>
+        <MainText margin="85vh 0 0 0">Scroll</MainText>
+        <MouseScrollDownMouse margin_top="90vh" />
+      </MouseScrollDownMouseWrapper>
       <MouseScrollDownArrowWrapper>
-        <MouseScrollDownArrowGroup />
+        <MouseScrollDownArrowGroup margin_top="93.5vh" />
       </MouseScrollDownArrowWrapper>
 
       <MainWave opacity={0.5} frequency={16} isRight={true}></MainWave>
@@ -123,4 +127,12 @@ const MouseScrollDownArrowWrapper = styled.div`
   z-index: 20001;
 `;
 
+const MouseScrollDownMouseWrapper = styled.div`
+  width: 100vw;
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  z-index: 20001;
+`;
 export default LandingPage;

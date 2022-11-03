@@ -44,14 +44,15 @@ const MouseScrollDownArrowGroup = ({ ...props }) => {
 
 MouseScrollDownArrowGroup.defaultProps = {
   isRight: "1",
+  margin_top: "90vh",
 };
 
 const S1_arrow = styled.div`
   display: flex;
   position: absolute;
   width: 10vw;
-  height: 10vh;
-  margin-top: 80vh;
+  height: 20vh;
+  margin-top: ${(props) => props.margin_top};
   flex-direction: column;
   justify-content: center;
   align-items: center;
