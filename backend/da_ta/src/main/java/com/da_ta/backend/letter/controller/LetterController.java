@@ -6,12 +6,10 @@ import com.da_ta.backend.letter.controller.dto.ReceiveFloatedLetterResponse;
 import com.da_ta.backend.letter.controller.dto.TextLetterCreateRequest;
 import com.da_ta.backend.letter.service.LetterService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/letters")
