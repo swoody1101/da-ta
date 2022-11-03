@@ -39,4 +39,7 @@ public class Letter extends CommonEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "writer_id")
     private User writer;
+
+    @Column(name = "letter_type")
+    private String letterType;
 }
