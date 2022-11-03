@@ -16,18 +16,18 @@ export const MypageMenuBar = () => {
   useEffect(() => {
     switch (selectedIndex) {
       case 0:
-        navigate('/mypage/collect')
+        navigate("/mypage/collect");
         break;
       case 1:
-        navigate('/mypage/receive')
+        navigate("/mypage/receive");
         break;
       case 2:
-        navigate('/mypage/setting')
+        navigate("/mypage/setting");
         break;
       default:
         break;
     }
-  }, [])
+  }, []);
 
   return (
     <MenuBarDiv>
