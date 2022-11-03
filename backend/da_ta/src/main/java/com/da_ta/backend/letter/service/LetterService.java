@@ -28,7 +28,6 @@ import static com.da_ta.backend.common.domain.SuccessCode.TEXT_LETTER_CREATED;
 public class LetterService {
 
     private final static String TYPE_TEXT = "Text";
-
     private final static String TYPE_IMAGE = "Image";
     private final BackgroundRepository backgroundRepository;
     private final FloatedLetterRepository floatedLetterRepository;
