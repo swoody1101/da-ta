@@ -7,6 +7,7 @@ import com.da_ta.backend.common.domain.Message;
 import com.da_ta.backend.common.domain.exception.NotFoundException;
 import com.da_ta.backend.letter.controller.dto.ImageLetterCreateRequest;
 import com.da_ta.backend.letter.controller.dto.ReceiveFloatedLetterResponse;
+import com.da_ta.backend.letter.controller.dto.ReplyCreateRequest;
 import com.da_ta.backend.letter.controller.dto.TextLetterCreateRequest;
 import com.da_ta.backend.letter.controller.dto.common.ImageLetterInfo;
 import com.da_ta.backend.letter.controller.dto.common.LetterInfo;
@@ -36,6 +37,7 @@ public class LetterService {
     private final FontRepository fontRepository;
     private final ImageLetterRepository imageLetterRepository;
     private final LetterRepository letterRepository;
+    private final ReplyRepository replyRepository;
     private final TextLetterRepository textLetterRepository;
     private final UserRepository userRepository;
 
@@ -117,6 +119,23 @@ public class LetterService {
         } else {
             throw new NotFoundException(LETTER_TYPE_NOT_FOUND);
         }
+    }
+
+    public Message createReply(Long letterId, ReplyCreateRequest replyCreateRequest) {
+        TextLetterInfo textLetterInfo = replyCreateRequest.getTextLetterInfo();
+        TextLetter textLetter = TextLetter.builder()
+                .title(textLetterInfo.getTitle())
+                .content(textLetterInfo.getContent())
+                .background(findBackground(textLetterInfo.getBackgroundId()))
+                .font(findFont(textLetterInfo.getFontId()))
+                .build();
+        textLetterRepository.save(textLetter);
+        replyRepository.save(Reply.builder()
+                .recipient(findUser(replyCreateRequest.getRecipientId()))
+                .originLetterId(letterId)
+                .reply(textLetter)
+                .build());
+        return new Message(REPLY_CREATED.getMessage());
     }
 
     public Message updateFloatedLetter(Long floatedLetterId) {

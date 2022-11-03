@@ -3,6 +3,7 @@ package com.da_ta.backend.letter.controller;
 import com.da_ta.backend.common.domain.Message;
 import com.da_ta.backend.letter.controller.dto.ImageLetterCreateRequest;
 import com.da_ta.backend.letter.controller.dto.ReceiveFloatedLetterResponse;
+import com.da_ta.backend.letter.controller.dto.ReplyCreateRequest;
 import com.da_ta.backend.letter.controller.dto.TextLetterCreateRequest;
 import com.da_ta.backend.letter.service.LetterService;
 import lombok.RequiredArgsConstructor;
@@ -39,5 +40,11 @@ public class LetterController {
     public ResponseEntity<Message> refloatLetter(@PathVariable("floated_letter_id") Long floatedLetterId) {
         return ResponseEntity.status(HttpStatus.NO_CONTENT)
                 .body(letterService.updateFloatedLetter(floatedLetterId));
+    }
+
+    @PostMapping("/replies/{letter_id}")
+    public ResponseEntity<Message> reply(@PathVariable("letter_id") Long LetterId, @RequestBody ReplyCreateRequest replyCreateRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(letterService.createReply(LetterId, replyCreateRequest));
     }
 }
