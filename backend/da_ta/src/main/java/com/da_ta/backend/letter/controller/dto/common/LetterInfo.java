@@ -9,10 +9,11 @@ import java.time.LocalDateTime;
 @Builder
 public class LetterInfo {
 
+    Long letterId;
     String title;
     String content;
     String imageLetterUrl;
     Long backgroundId;
     Long fontId;
-    LocalDateTime createTime;
+    LocalDateTime createdDate;
 }
