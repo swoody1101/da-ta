@@ -141,8 +141,6 @@ public class LetterService {
     }
 
     private FloatedLetter findFloatedLetter(Long recipientId, Age age) {
-        System.out.println(recipientId);
-        System.out.println("age " + age.toString());
         return floatedLetterRepository.findFloatedLetterByAgeOption(recipientId, age.toString())
                 .orElseThrow(() -> new NotFoundException(LETTER_NOT_FOUND));
     }
