@@ -5,16 +5,10 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Builder
 public class ReceiveFloatedLetterResponse {
 
     private Long writerId;
     private String writerNickname;
     private LetterInfo letterInfo;
-
-    @Builder
-    public ReceiveFloatedLetterResponse(Long writerId, String writerNickname, LetterInfo letterInfo) {
-        this.writerId = writerId;
-        this.writerNickname = writerNickname;
-        this.letterInfo = letterInfo;
-    }
 }

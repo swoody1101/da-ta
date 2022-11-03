@@ -6,6 +6,7 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 
 @Getter
+@Builder
 public class LetterInfo {
 
     String title;
@@ -14,15 +15,4 @@ public class LetterInfo {
     Long backgroundId;
     Long fontId;
     LocalDateTime createTime;
-
-    @Builder
-    public LetterInfo(String title, String content, String imageLetterUrl, Long backgroundId,
-                      Long fontId, LocalDateTime createTime) {
-        this.title = title;
-        this.content = content;
-        this.imageLetterUrl = imageLetterUrl;
-        this.backgroundId = backgroundId;
-        this.fontId = fontId;
-        this.createTime = createTime;
-    }
 }
