@@ -76,8 +76,8 @@ const LetterWritePage = () => {
   };
 
   useEffect(() => {
-    console.log(options);
-  }, [options]);
+    setCharCount(0);
+  }, [act]);
 
   useEffect(() => {
     window.addEventListener("resize", handleResize);
