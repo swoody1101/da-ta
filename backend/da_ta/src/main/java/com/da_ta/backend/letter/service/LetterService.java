@@ -27,6 +27,9 @@ import static com.da_ta.backend.common.domain.SuccessCode.TEXT_LETTER_CREATED;
 @Service
 public class LetterService {
 
+    private final static String TYPE_TEXT = "Text";
+
+    private final static String TYPE_IMAGE = "Image";
     private final BackgroundRepository backgroundRepository;
     private final FloatedLetterRepository floatedLetterRepository;
     private final FloatedLetterLogRepository floatedLetterLogRepository;
@@ -61,10 +64,9 @@ public class LetterService {
     public Message createImageLetter(ImageLetterCreateRequest imageLetterCreateRequest) {
         Option option = imageLetterCreateRequest.getOption();
         ImageLetterInfo imageLetterInfo = imageLetterCreateRequest.getImageLetterInfo();
-        User writer = findUser(imageLetterCreateRequest.getUserId());
         Background background = findBackground(imageLetterInfo.getBackgroundId());
         ImageLetter imageLetter = ImageLetter.builder()
-                .writer(writer)
+                .writer(findUser(imageLetterCreateRequest.getUserId()))
                 .ageOption(option.getAgeOption())
                 .replyOption(option.getReplyOption())
                 .background(background)
@@ -90,7 +92,7 @@ public class LetterService {
                 .floatedLetter(floatedLetter)
                 .build());
         Letter letter = letterRepository.findById(floatedLetter.getLetter().getId()).get();
-        if (letter.getLetterType().equals("Text")) {
+        if (letter.getLetterType().equals(TYPE_TEXT)) {
             TextLetter textLetter = textLetterRepository.findById(floatedLetter.getLetter().getId()).get();
             return ReceiveFloatedLetterResponse.builder()
                     .writerId(textLetter.getWriter().getId())
@@ -103,7 +105,7 @@ public class LetterService {
                             .createTime(textLetter.getCreatedDate())
                             .build())
                     .build();
-        } else if (letter.getLetterType().equals("Image")) {
+        } else if (letter.getLetterType().equals(TYPE_IMAGE)) {
             ImageLetter imageLetter = imageLetterRepository.findById(floatedLetter.getLetter().getId()).get();
             return ReceiveFloatedLetterResponse.builder()
                     .writerId(imageLetter.getWriter().getId())
