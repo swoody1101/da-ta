@@ -13,10 +13,10 @@ import { MainText, MainSmallText } from "../../components/atoms/Text";
 import BottleOfLetter from "../../components/atoms/BottleOfLetter";
 import ScrollToTop from "react-scroll-to-top";
 import Button from "./../../components/atoms/Button";
-import MouseScrollDown from "../../components/atoms/MouseScrollDown";
 
 import BackgroundGradient from "../../components/atoms/BackgroundGradient";
-import MouseScrollDownArrow from "../../components/atoms/MouseScrollDownArrow";
+// import MouseScrollDownArrow from "../../components/atoms/MouseScrollDownArrow";
+import MouseScrollDownArrowGroup from "../../components/molecules/MouseScrollDownArrowGroup";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -27,28 +27,28 @@ const LandingPage = () => {
       <BackgroundGradient start={"E2AAFD"} end={"FFDFC2"} />
 
       <TextWrapper>
-        <MainSmallText margin="10rem 0 0 0">
+        <MainSmallText margin="20vh 0 0 0">
           [100]개의 편지가 바다에 떠 있습니다
         </MainSmallText>
-        <MainText margin="5rem 0 0 0">
+        <MainText margin="8vh 0 0 0">
           안녕하세요! <br /> 여기는 '닿다'예요
         </MainText>
-        <MainText margin="60rem 0 0 0">
+        <MainText margin="90vh 0 0 0">
           여기선 익명으로 <br />
           마음을 털어놓을 수 있어요
         </MainText>
-        <MainText margin="40rem 0 0 0">
+        <MainText margin="65vh 0 0 0">
           아무에게도 말하지 못했던 것들을
           <br />
           적어서 보내보세요
         </MainText>
-        <MainText margin="40rem 0 0 0">
+        <MainText margin="65vh 0 0 0">
           혹시 몰라요! <br /> 누군가에게 답을 받을 수도 있겠죠?
         </MainText>
-        <MainText margin="40rem 0 0 0">
+        <MainText margin="65vh 0 0 0">
           행운에 닿기를 바라며 물병을 던져볼까요?
         </MainText>
-
+        <br />
         <Button
           hoverBgOpacity="0.5"
           fontSize="1.5rem"
@@ -66,30 +66,9 @@ const LandingPage = () => {
         <BottleOfLetter />
       </BottleWrapper>
 
-      <MouseScrollDownArrow
-        width="100px"
-        height="100px"
-        animation-delay="0.2s"
-      ></MouseScrollDownArrow>
-
-      {/* <Scroll_arrow
-        width="100px"
-        height="100px"
-        animation-delay="0.2s"
-        margin-top="6px"
-      ></Scroll_arrow>
-      <Scroll_arrow
-        width="100px"
-        height="100px"
-        animation-delay="0.2s"
-        margin-top="6px"
-      ></Scroll_arrow>
-      <Scroll_arrow
-        width="100px"
-        height="100px"
-        animation-delay="0.2s"
-        margin-top="6px"
-      ></Scroll_arrow> */}
+      <MouseScrollDownArrowWrapper>
+        <MouseScrollDownArrowGroup />
+      </MouseScrollDownArrowWrapper>
 
       <MainWave opacity={0.5} frequency={16} isRight={true}></MainWave>
       <MainWave opacity={0.6} frequency={8} isRight={true}></MainWave>
@@ -133,6 +112,15 @@ const TextWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+
+const MouseScrollDownArrowWrapper = styled.div`
+  width: 100vw;
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  z-index: 20001;
 `;
 
 export default LandingPage;
