@@ -33,4 +33,8 @@ public class Reply extends CommonEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "recipient_id")
     private User recipient;
+
+    public void updateIsRead() {
+        this.isRead = true;
+    }
 }
