@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="047e3495-fbca-4e64-9b38-92a688157be6" name="변경" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/7.5.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.5.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/da_ta/backend/config/PropertyConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/da_ta/backend/config/PropertyConfig.java" afterDir="false" />
-    </list>
+    <list default="true" id="047e3495-fbca-4e64-9b38-92a688157be6" name="변경" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -145,7 +140,7 @@
       <workItem from="1667204531444" duration="2386000" />
       <workItem from="1667265862676" duration="8999000" />
       <workItem from="1667347563394" duration="2699000" />
-      <workItem from="1667434289660" duration="2041000" />
+      <workItem from="1667434289660" duration="2366000" />
     </task>
     <servers />
   </component>
