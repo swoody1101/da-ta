@@ -102,7 +102,7 @@ const LandingPage = () => {
 
       <Footer />
 
-      <ScrollToTop smooth color="#6f00ff" border="20" />
+      <ScrollToTop smooth width="" color="#6f00ff" border="20" />
     </>
   );
 };
@@ -140,7 +140,7 @@ const MouseScrollDownArrowWrapper = styled.div`
   position: absolute;
   justify-content: center;
   align-items: center;
-  z-index: 20001;
+  z-index: 5;
 `;
 
 const MouseScrollDownMouseWrapper = styled.div`
@@ -149,6 +149,6 @@ const MouseScrollDownMouseWrapper = styled.div`
   position: absolute;
   justify-content: center;
   align-items: center;
-  z-index: 20001;
+  z-index: 5;
 `;
 export default LandingPage;
