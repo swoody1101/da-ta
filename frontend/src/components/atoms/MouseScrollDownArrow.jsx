@@ -22,7 +22,7 @@ const MouseScrollDownArrow = ({ ...props }) => (
 );
 
 MouseScrollDownArrow.defaultProps = {
-  width: "10vh",
+  width: "10vw",
   height: "10vh",
   animation_delay: "0s",
   margin_top: "10px",
