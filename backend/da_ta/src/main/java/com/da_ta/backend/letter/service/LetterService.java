@@ -32,6 +32,7 @@ public class LetterService {
     private final FloatedLetterLogRepository floatedLetterLogRepository;
     private final FontRepository fontRepository;
     private final ImageLetterRepository imageLetterRepository;
+    private final LetterRepository letterRepository;
     private final TextLetterRepository textLetterRepository;
     private final UserRepository userRepository;
 
@@ -80,8 +81,7 @@ public class LetterService {
         User recipient = findUser(recipientId);
         FloatedLetter floatedLetter = findFloatedLetter(recipientId, recipient.getAge());
         floatedLetter.updateRecipient(recipient);
-        int floatedCount = floatedLetterLogRepository.countByFloatedLetterId(floatedLetter.getId());
-        if (floatedCount >= 4) {
+        if (floatedLetterLogRepository.countByFloatedLetterId(floatedLetter.getId()) >= 4) {
             floatedLetter.deleteFloatedLetter();
         }
         floatedLetterRepository.save(floatedLetter);
@@ -89,9 +89,9 @@ public class LetterService {
                 .loggedRecipientId(recipientId)
                 .floatedLetter(floatedLetter)
                 .build());
-        TextLetter textLetter = textLetterRepository.findById(floatedLetter.getLetter().getId()).get();
-        ImageLetter imageLetter = imageLetterRepository.findById(floatedLetter.getLetter().getId()).get();
-        if (textLetter != null) {
+        Letter letter = letterRepository.findById(floatedLetter.getLetter().getId()).get();
+        if (letter.getLetterType().equals("Text")) {
+            TextLetter textLetter = textLetterRepository.findById(floatedLetter.getLetter().getId()).get();
             return ReceiveFloatedLetterResponse.builder()
                     .writerId(textLetter.getWriter().getId())
                     .writerNickname(textLetter.getWriter().getNickname())
@@ -103,7 +103,8 @@ public class LetterService {
                             .createTime(textLetter.getCreatedDate())
                             .build())
                     .build();
-        } else if (imageLetter != null) {
+        } else if (letter.getLetterType().equals("Image")) {
+            ImageLetter imageLetter = imageLetterRepository.findById(floatedLetter.getLetter().getId()).get();
             return ReceiveFloatedLetterResponse.builder()
                     .writerId(imageLetter.getWriter().getId())
                     .writerNickname(imageLetter.getWriter().getNickname())
@@ -140,7 +141,9 @@ public class LetterService {
     }
 
     private FloatedLetter findFloatedLetter(Long recipientId, Age age) {
-        return floatedLetterRepository.findFloatedLetterByAgeOption(recipientId, age)
+        System.out.println(recipientId);
+        System.out.println("age " + age.toString());
+        return floatedLetterRepository.findFloatedLetterByAgeOption(recipientId, age.toString())
                 .orElseThrow(() -> new NotFoundException(LETTER_NOT_FOUND));
     }
 }
