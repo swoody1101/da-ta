@@ -7,10 +7,12 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ErrorCode {
 
-    BACKGROUND_NOT_FOUND("존재하지 않는 편지지입니다."),
-    FONT_NOT_FOUND("존재하지 않는 폰트입니다."),
-    USER_NOT_FOUND("존재하지 않는 사용자입니다."),
-    INTERNAL_SERVER_ERROR("INTERNAL SERVER ERROR");
+    BACKGROUND_NOT_FOUND("편지지를 찾을 수 없습니다."),
+    FLOATED_LETTER_NOT_FOUND("바다에 띄워진 편지를 찾을 수 없습니다."),
+    FONT_NOT_FOUND("폰트를 찾을 수 없습니다."),
+    LETTER_NOT_FOUND("편지를 찾을 수 없습니다."),
+    LETTER_TYPE_NOT_FOUND("존재하지 않는 편지 타입입니다."),
+    USER_NOT_FOUND("사용자를 찾을 수 없습니다.");
 
     private final String message;
 }
