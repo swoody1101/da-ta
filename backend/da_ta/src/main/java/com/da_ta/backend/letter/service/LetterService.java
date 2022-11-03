@@ -29,6 +29,7 @@ public class LetterService {
     private final static int MAX_FLOAT_COUNT = 5;
     private final static String TYPE_TEXT = "Text";
     private final static String TYPE_IMAGE = "Image";
+
     private final BackgroundRepository backgroundRepository;
     private final FloatedLetterRepository floatedLetterRepository;
     private final FloatedLetterLogRepository floatedLetterLogRepository;
@@ -149,7 +150,7 @@ public class LetterService {
                 .orElseThrow(() -> new NotFoundException(FONT_NOT_FOUND));
     }
 
-    private FloatedLetter findFloatedLetterById(Long floatedLetterId){
+    private FloatedLetter findFloatedLetterById(Long floatedLetterId) {
         return floatedLetterRepository.findById(floatedLetterId)
                 .orElseThrow(() -> new NotFoundException(FLOATED_LETTER_NOT_FOUND));
     }
