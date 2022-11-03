@@ -48,9 +48,9 @@ export const MypageMenuBar = () => {
 const MenuBarDiv = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-evenly;
   width: 200px;
-  height: 536px;
+  height: 90%;
   background-color: #f5f5f5;
   border-right: 2px solid gray;
 
