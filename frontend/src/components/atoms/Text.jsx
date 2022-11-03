@@ -4,7 +4,20 @@
  */
 import styled from "styled-components";
 
+
 export const MainText = styled.p`
+  display: flex;
+  font-size: 1.8rem;
+  color: white;
+  width: 100%;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin: ${(props) => props.margin};
+  font-weight: ${(props) => props.fontWeight};
+`;
+
+export const MainSmallText = styled.p`
   display: flex;
   font-size: 1.5rem;
   color: white;
@@ -16,9 +29,10 @@ export const MainText = styled.p`
   font-weight: ${(props) => props.fontWeight};
 `;
 
+
 export const FooterText = styled.p`
   display: flex;
-  font-size: 0.5rem;
+  font-size: 0.8rem;
   color: white;
   width: 100%;
   text-align: center;
@@ -34,5 +48,5 @@ MainText.defaultProps = {
 };
 
 FooterText.defaultProps = {
-  fontWeight: "100",
+  fontWeight: "400",
 };
