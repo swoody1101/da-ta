@@ -159,15 +159,15 @@ public class UserService {
     }
 
     private User signUp(KakaoProfile kakaoProfile) {
+        BanStatus banStatus = BanStatus.builder()
+                .build();
         User user = User.builder()
                 .kakaoId(kakaoProfile.getKakaoAccount().getEmail())
                 .nickname(generateRamdomNickname())
                 .age(kakaoProfile.getKakaoAccount().getAgeRange())
+                .banStatus(banStatus)
                 .build();
-        BanStatus banStatus = BanStatus.builder()
-                .build();
-        banStatus.initBanStatus(user);
-        banStatusRepository.save(banStatus);
+        userRepository.save(user);
         return user;
     }
 
