@@ -4,7 +4,7 @@ import {
   RowCenterWrapper,
   Wrapper,
 } from "./../../styles/Wrapper";
-import LetterToggleButton from "./../../components/atoms/letter_write/LetterToggleButton";
+import LetterToggleButton from "./../../components/atoms/letter/LetterToggleButton";
 import styled from "styled-components";
 import Button from "./../../components/atoms/Button";
 import BackgroundGradient from "./../../components/atoms/BackgroundGradient";
@@ -13,7 +13,7 @@ import { ColorTypes } from "./../../constants/Colors";
 import { media } from "../../utils/styleUtil";
 import { SizeTypes, SIZE_WIDE } from "./../../constants/Sizes";
 import { useEffect } from "react";
-import LetterProgressBar from "../../components/molecules/letter_write/LetterProgressBar";
+import LetterProgressBar from "../../components/molecules/letter/LetterProgressBar";
 import Input from "./../../components/atoms/Input";
 import LetterOptionBox from "../../components/organisms/LetterOptionBox";
 import { MAX_CHAR_COUNT, MIN_CHAR_COUNT } from "./../../constants/Variables";
@@ -22,7 +22,9 @@ import { faGear } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { LetterOptions } from "../../constants/Options";
 import Modal from "./../../components/organisms/Modal";
-import LetterDesignChoice from "../../components/molecules/letter_write/LetterDesignChoice";
+import LetterDesignChoice from "../../components/molecules/letter/LetterDesignChoice";
+import ContentBlock from "./../../components/atoms/letter/ContentBlock";
+import LetterImg from "./../../components/atoms/letter/LetterImg";
 
 const LetterWritePage = () => {
   const [options, setOptions] = useState({
@@ -238,33 +240,6 @@ const LetterWritePage = () => {
     </>
   );
 };
-
-const ContentBlock = styled.div`
-  display: flex;
-  opacity: ${(props) => (props.optionToggle ? "0" : "1")};
-  visibility: ${(props) => (props.optionToggle ? "hidden" : "visible")};
-  position: relative;
-  flex-direction: ${(props) => props.flexDirection || "row"};
-  width: ${SizeTypes.PC_LETTER_WIDTH};
-  height: ${(props) => props.height};
-  align-items: ${(props) => props.alignItems};
-  justify-content: ${(props) => props.justifyContent};
-  margin: ${(props) => props.margin};
-  transition: 0.25s ease;
-
-  ${media.phone`
-    width: ${(props) => props.mWidth};
-    height: calc(${(props) => props.mHeight});
-  `}
-`;
-
-const LetterImg = styled.img`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-`;
 
 const Spacer = styled.div`
   display: flex;
