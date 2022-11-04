@@ -5,7 +5,6 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Getter
 @SuperBuilder
@@ -21,8 +20,6 @@ public class BanStatus extends CommonEntity {
     @Builder.Default
     private boolean isBan = false;
 
-    @NotNull
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @OneToOne(mappedBy = "banStatus", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private User user;
 }
