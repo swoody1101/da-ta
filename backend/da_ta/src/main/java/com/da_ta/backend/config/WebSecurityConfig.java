@@ -1,9 +1,9 @@
 package com.da_ta.backend.config;
 
 import com.da_ta.backend.account.user.service.UserService;
-import com.da_ta.backend.common.jwt.CustomAuthenticationEntryPoint;
-import com.da_ta.backend.common.jwt.JwtAuthenticationFilter;
-import com.da_ta.backend.common.jwt.JwtTokenProvider;
+import com.da_ta.backend.account.jwt.CustomAuthenticationEntryPoint;
+import com.da_ta.backend.account.jwt.JwtAuthenticationFilter;
+import com.da_ta.backend.account.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
