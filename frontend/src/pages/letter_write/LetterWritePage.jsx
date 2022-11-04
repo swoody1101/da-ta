@@ -130,7 +130,7 @@ const LetterWritePage = () => {
 
   return (
     <>
-      <BackgroundGradient start={"E2AAFD"} end={"FFDFC2"} />
+      <BackgroundGradient start={"E2AAFD"} end={"FFDFC2"} height={"100%"} />
       <RowCenterWrapper>
         <ContentBlock
           margin={SizeTypes.PC_LETTER_MARGIN}
