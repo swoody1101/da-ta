@@ -2,6 +2,7 @@ package com.da_ta.backend.account.user.service;
 
 import com.da_ta.backend.account.jwt.JwtTokenProvider;
 import com.da_ta.backend.account.user.controller.dto.*;
+import com.da_ta.backend.account.user.domain.entity.BanStatus;
 import com.da_ta.backend.account.user.domain.entity.User;
 import com.da_ta.backend.account.user.domain.repository.BanStatusRepository;
 import com.da_ta.backend.account.user.domain.repository.RedisRepository;
@@ -138,5 +139,30 @@ public class UserService {
         banStatus.initBanStatus(user);
         banStatusRepository.save(banStatus);
         return user;
+    }
+
+    private String generateRamdomNickname() {
+        String randomNickname;
+        while (true) {
+            randomNickname = getNickname();
+            if (!userRepository.existsByNickname(randomNickname)) {
+                break;
+            }
+        }
+        return randomNickname;
+    }
+
+    private String getNickname() {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(CONTENT_TYPE, CONTENT_TYPE_VALUE);
+        HttpEntity<MultiValueMap<String, String>> nicknameRequest = new HttpEntity<>(httpHeaders);
+        ResponseEntity<NicknameResponse> response = restTemplate.exchange(
+                GENERATE_NICKNAME_URL,
+                HttpMethod.GET,
+                nicknameRequest,
+                NicknameResponse.class
+        );
+        return response.getBody().getNickname()[0];
     }
 }
