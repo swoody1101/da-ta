@@ -32,6 +32,7 @@ public class LetterService {
     private final static String TYPE_IMAGE = "Image";
 
     private final BackgroundRepository backgroundRepository;
+    private final CollectedLetterRepository collectedLetterRepository;
     private final FloatedLetterRepository floatedLetterRepository;
     private final FloatedLetterLogRepository floatedLetterLogRepository;
     private final FontRepository fontRepository;
@@ -154,6 +155,14 @@ public class LetterService {
         floatedLetter.updateRecipient(null);
         floatedLetterRepository.save(floatedLetter);
         return new Message(FLOATED_LETTER_NO_CONTENT.getMessage());
+    }
+
+    public Message saveLetter(Long userId, Long letterId) {
+        collectedLetterRepository.save(CollectedLetter.builder()
+                .letter(findLetterById(letterId))
+                .user(findUserById(userId))
+                .build());
+        return new Message(COLLECTED_LETTER_CREATED.getMessage());
     }
 
     public void floatLetter(Letter letter) {
