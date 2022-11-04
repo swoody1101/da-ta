@@ -9,9 +9,14 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class KakaoProfile {
+public class KakaoAccount {
 
-    private Long id;
-    private String connectedAt;
-    private KakaoAccount kakaoAccount;
+    private Boolean hasEmail;
+    private Boolean emailNeedsAgreement;
+    private Boolean isEmailValid;
+    private Boolean isEmailVerified;
+    private String email;
+    private Boolean hasAgeRange;
+    private Boolean ageRangeNeedsAgreement;
+    private String ageRange;
 }
