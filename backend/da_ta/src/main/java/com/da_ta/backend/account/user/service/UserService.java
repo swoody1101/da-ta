@@ -1,13 +1,21 @@
 package com.da_ta.backend.account.user.service;
 
 import com.da_ta.backend.account.jwt.JwtTokenProvider;
+import com.da_ta.backend.account.user.controller.dto.*;
+import com.da_ta.backend.account.user.domain.entity.User;
 import com.da_ta.backend.account.user.domain.repository.BanStatusRepository;
 import com.da_ta.backend.account.user.domain.repository.RedisRepository;
 import com.da_ta.backend.account.user.domain.repository.UserRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
 @Slf4j
 @Service
@@ -61,5 +69,32 @@ public class UserService {
                         .build())
                 .role(user.getRole())
                 .build();
+    }
+
+    public KakaoToken getKakaoAccessToken(String authorizationCode) {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        MultiValueMap<String, String> multiValueMap = new LinkedMultiValueMap<>();
+        multiValueMap.add("grant_type", GRANT_TYPE_VALUE);
+        multiValueMap.add("client_id", clientId);
+        multiValueMap.add("redirect_uri", redirectUri);
+        multiValueMap.add("code", authorizationCode);
+        multiValueMap.add("client_secret", clientSecret);
+        HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = new HttpEntity<>(multiValueMap, httpHeaders);
+        ResponseEntity<String> accessTokenResponse = restTemplate.exchange(
+                tokenUri,
+                HttpMethod.POST,
+                kakaoTokenRequest,
+                String.class
+        );
+        ObjectMapper objectMapper = new ObjectMapper();
+        KakaoToken kakaoToken = null;
+        try {
+            kakaoToken = objectMapper.readValue(accessTokenResponse.getBody(), KakaoToken.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return kakaoToken;
     }
 }
