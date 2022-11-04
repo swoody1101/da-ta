@@ -12,27 +12,14 @@ import styled, { keyframes } from "styled-components";
 const moveBottle = keyframes`
   0% {
     margin-top: 0px;
-    
   }
   100% {
     margin-top: 30px;
-    
   }
 
 
 
   `;
-
-// top: 80%;
-// @keyframes motion {
-// 	0% {margin-top: 0px;}
-// 	100% {margin-top: 10px;}
-// }
-
-// -webkit-@keyframes motion {
-// 	0% {margin-top: 0px;}
-// 	100% {margin-top: 10px;}
-// }
 
 const BottleOfLetter = ({ path }) => {
   return (
@@ -44,19 +31,22 @@ const BottleOfLetter = ({ path }) => {
 
 BottleOfLetter.defaultProps = {
   path: `${process.env.PUBLIC_URL}/assets/images/common/bottle_of_letter.png`,
-  maxwidth: "10vh",
-  maxheight: "10vh", //원래는 20vh
+  width: "10%",
+  height: "10%", //원래는 20vh
   isRight: "1",
 };
 
 const BG = styled.div`
-  maxwidth: ${(props) => props.width};
-  maxheight: ${(props) => props.height};
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
   overflow: hidden;
   position: absolute;
   z-index: 1.5;
   animation: ${(props) => (props.isRight ? moveBottle : moveBottle)} 1.5s linear
     0s infinite alternate;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 export default BottleOfLetter;
