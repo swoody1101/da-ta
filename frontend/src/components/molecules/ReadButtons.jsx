@@ -8,21 +8,21 @@ const ReadButtons = ({ index }) => {
     <ButtonDiv>
       {
         [
-          <BubbleBtn1 width={"13vh"} height={"13vh"} color={"white"}>
+          <BubbleBtn1 width={"120px"} height={"120px"} color={"white"}>
             답장하기
           </BubbleBtn1>,
-          <BubbleBtn1 width={"13vh"} height={"13vh"} color={"white"}>
+          <BubbleBtn1 width={"120px"} height={"120px"} color={"white"}>
             보관하기
           </BubbleBtn1>,
-          <BubbleBtn1 width={"13vh"} height={"13vh"} color={"white"}>
+          <BubbleBtn1 width={"120px"} height={"120px"} color={"white"}>
             삭제하기
           </BubbleBtn1>,
         ][index]
       }
-      <BubbleBtn1 width={"13vh"} height={"13vh"} color={"white"}>
+      <BubbleBtn1 width={"120px"} height={"120px"} color={"white"}>
         다시 띄우기
       </BubbleBtn1>
-      <BubbleBtn2 width={"13vh"} height={"13vh"} color={"white"}>
+      <BubbleBtn2 width={"120px"} height={"120px"} color={"white"}>
         신고하기
       </BubbleBtn2>
     </ButtonDiv>
