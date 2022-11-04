@@ -97,4 +97,26 @@ public class UserService {
         }
         return kakaoToken;
     }
+
+    private KakaoProfile getKakaoProfile(String accessToken) {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(jwtHeader, jwtTokenPrefix + DELIMITER + accessToken);
+        httpHeaders.add(CONTENT_TYPE, CONTENT_TYPE_VALUE);
+        HttpEntity<MultiValueMap<String, String>> kakaoProfileRequest = new HttpEntity<>(httpHeaders);
+        ResponseEntity<String> kakaoProfileResponse = restTemplate.exchange(
+                userInfoUri,
+                HttpMethod.POST,
+                kakaoProfileRequest,
+                String.class
+        );
+        ObjectMapper objectMapper = new ObjectMapper();
+        KakaoProfile kakaoProfile = null;
+        try {
+            kakaoProfile = objectMapper.readValue(kakaoProfileResponse.getBody(), KakaoProfile.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return kakaoProfile;
+    }
 }
