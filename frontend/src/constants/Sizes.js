@@ -2,14 +2,19 @@
  * @author mingyu
  * @description 각종 크기에 대한 상수 정의입니다.
  */
+
+// 기기 사이즈 구하기
 const deviceWidth = screen.width;
 const deviceHeight = screen.height;
 const WIDTH_LIMIT = 1000;
 
+// 기기 가로 사이즈
 export const SIZE_WIDE = 1280;
 export const SIZE_TABLET1 = 1024;
 export const SIZE_TABLET2 = 768;
 export const SIZE_PHONE = 480;
+
+export const HEADER_HEIGHT = deviceWidth > SIZE_TABLET1 ? "6rem" : "4rem";
 
 export const SizeTypes = {
   PC_LETTER_MARGIN: deviceHeight < WIDTH_LIMIT ? "1rem 0 0 0" : "2rem 0 0 0",

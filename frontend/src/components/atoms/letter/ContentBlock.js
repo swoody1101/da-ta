@@ -18,6 +18,11 @@ const ContentBlock = styled.div`
   margin: ${(props) => props.margin};
   transition: 0.25s ease;
 
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
   ${media.phone`
     width: ${(props) => props.mWidth};
     height: calc(${(props) => props.mHeight});

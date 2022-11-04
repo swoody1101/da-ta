@@ -1,87 +1,206 @@
+/**
+ * @author mingyu
+ * @description 도화지 캔버스
+ */
 import styled from "styled-components";
-
 import React, { useEffect, useRef, useState } from "react";
+import { isFocusable } from "@testing-library/user-event/dist/utils";
 
-const LetterCanvasArea = ({ color, stroke }) => {
-	const canvasRef = useRef(null);
-	const contextRef = useRef(null);
+const LetterCanvasArea = ({
+  wrap,
+  canvasOptions,
+  canvasSaveTrigger,
+  setCanvasSaveTrigger,
+}) => {
+  const canvasRef = useRef(null);
+  const contextRef = useRef(null);
 
-	const [ctx, setCtx] = useState();
-	const [isDrawing, setIsDrawing] = useState(false);
+  const [ctx, setCtx] = useState();
+  const [isDrawing, setIsDrawing] = useState(false);
 
-	useEffect(() => {
-		const canvas = canvasRef.current;
-		canvas.width = 400; // ## 캔버스 크기 props로 받아 설정해야 함!
-		canvas.height = 600; // ## 캔버스 크기 props로 받아 설정해야 함!
+  // 캔버스 초기화용 useEffect
+  useEffect(() => {
+    initCanvas();
+  }, [canvasOptions.initTrigger]);
 
-		const context = canvas.getContext("2d");
-		context.strokeStyle = "black";
-		context.lineWidth = 2.5;
-		contextRef.current = context;
+  // 캔버스 옵션 설정용 useEffect
+  useEffect(() => {
+    handleStroke(canvasOptions.stroke);
+    handleColor(canvasOptions.color);
+  }, [canvasOptions]);
 
-		setCtx(contextRef.current);
-	}, []);
+  // 그림 저장용 useEffect
+  useEffect(() => {
+    if (!canvasSaveTrigger) return;
 
-	/** 드로잉을 시작할 때 이벤트 */
-	const startDrawing = () => {
-		setIsDrawing(true);
-	};
+    saveCanvas();
+    setCanvasSaveTrigger(false);
+  }, [canvasSaveTrigger]);
 
-	/** 드로잉을 끝낼 때 이벤트 */
-	const finishDrawing = () => {
-		setIsDrawing(false);
-	};
+  // 화면 크기 변경 시 캔버스 크기 변경 useEffect
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    canvas.width = wrap.offsetWidth;
+    canvas.height = wrap.offsetHeight;
+  }, [wrap.offsetWidth]);
 
-	/** 캔버스로 그린 그림 저장 */
-	const saveCanvas = () => {
-		const image = canvasRef.current.toDataURL("image/png");
-		const link = document.createElement("a");
-		link.href = image;
-		link.download = "draw_image.png";
-		link.click();
-	};
+  /** Canvas 초기화 */
+  const initCanvas = () => {
+    const canvas = canvasRef.current;
+    canvas.width = wrap.offsetWidth;
+    canvas.height = wrap.offsetHeight;
 
-	/** 드로잉 중 이벤트 */
-	const drawing = ({ nativeEvent }) => {
-		const { offsetX, offsetY } = nativeEvent;
+    const context = canvas.getContext("2d");
+    context.strokeStyle = canvasOptions.color;
+    context.lineWidth = canvasOptions.stroke;
+    contextRef.current = context;
 
-		// canvas.getContext('2d')의 값이 있을 때
-		if (ctx) {
-			if (!isDrawing) {
-				ctx.beginPath();
-				ctx.moveTo(offsetX, offsetY);
-			} else {
-				ctx.lineTo(offsetX, offsetY);
-				ctx.stroke();
-			}
-		}
-	};
+    setCtx(contextRef.current);
+  };
 
-	return (
-		<Container
-			ref={canvasRef}
-			onMouseDown={startDrawing}
-			onMouseUp={finishDrawing}
-			onMouseMove={drawing}
-			onMouseLeave={finishDrawing}
-			onTouchStart={startDrawing}
-			onTouchEnd={finishDrawing}
-			onTouchMove={drawing}
-		></Container>
-	);
+  /** 모바일을 위한 터치한 좌표 구하기 */
+  const getTouchPos = (e) => {
+    let left = 0;
+    let top = 0;
+    let elem = canvasRef.current;
+
+    // 제일 부모요소까지 반복문으로 접근하여 거리를 구한다.
+    while (elem) {
+      left = left + parseInt(elem.offsetLeft);
+      top = top + parseInt(elem.offsetTop);
+      elem = elem.offsetParent;
+    }
+
+    return {
+      offsetX: e.touches[0].clientX - left,
+      offsetY: e.touches[0].clientY - top,
+    };
+  };
+
+  /** 펜 두께 변경 */
+  const handleStroke = (stroke) => {
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d");
+    context.lineWidth = stroke;
+    setCtx(contextRef.current);
+  };
+
+  /** 펜 색깔 변경 */
+  const handleColor = (color) => {
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d");
+    context.strokeStyle = color;
+    setCtx(contextRef.current);
+  };
+
+  /** 드로잉을 시작할 때 이벤트 */
+  const startDrawing = () => {
+    setIsDrawing(true);
+  };
+
+  /** 드로잉을 끝낼 때 이벤트 */
+  const finishDrawing = () => {
+    setIsDrawing(false);
+  };
+
+  /** 캔버스로 그린 그림 저장 */
+  const saveCanvas = () => {
+    const image = canvasRef.current.toDataURL("image/png");
+    const link = document.createElement("a");
+    link.href = image;
+    link.download = "draw_image.png";
+    link.click();
+  };
+
+  /** 드로잉 중 이벤트 */
+  const drawing = ({ nativeEvent }) => {
+    const { offsetX, offsetY } = nativeEvent;
+
+    // 지우개 모드
+    if (ctx && !canvasOptions.drawMode) {
+      if (isDrawing) {
+        ctx.clearRect(
+          offsetX - canvasOptions.stroke / 2,
+          offsetY - canvasOptions.stroke / 2,
+          canvasOptions.stroke,
+          canvasOptions.stroke
+        );
+      }
+      return;
+    }
+
+    // 그리기 모드
+    if (ctx) {
+      if (!isDrawing) {
+        ctx.beginPath();
+        ctx.moveTo(offsetX, offsetY);
+      } else {
+        ctx.lineTo(offsetX, offsetY);
+        ctx.stroke();
+      }
+    }
+  };
+
+  /** 터치 시 그리기 시작 */
+  const touchStart = (e) => {
+    const { offsetX, offsetY } = getTouchPos(e);
+    if (ctx) {
+      ctx.beginPath();
+      ctx.moveTo(offsetX, offsetY);
+    }
+    setIsDrawing(true);
+  };
+
+  /** 터치 시 그리기 */
+  const touchDrawing = (e) => {
+    const { offsetX, offsetY } = getTouchPos(e);
+
+    // 지우개 모드
+    if (ctx && !canvasOptions.drawMode) {
+      ctx.clearRect(
+        offsetX - canvasOptions.stroke,
+        offsetY - canvasOptions.stroke,
+        canvasOptions.stroke * 2,
+        canvasOptions.stroke * 2
+      );
+      return;
+    }
+
+    // 그리기 모드
+    if (ctx && isDrawing) {
+      ctx.lineTo(offsetX, offsetY);
+      ctx.stroke();
+    }
+  };
+
+  /** 터치 시 그리기 끝 */
+  const touchEnd = () => {
+    setIsDrawing(false);
+  };
+
+  return (
+    <Container
+      ref={canvasRef}
+      onMouseDown={startDrawing}
+      onMouseUp={finishDrawing}
+      onMouseMove={drawing}
+      onMouseLeave={finishDrawing}
+      onTouchStart={touchStart}
+      onTouchMove={touchDrawing}
+      onTouchEnd={touchEnd}
+    ></Container>
+  );
 };
 
 const Container = styled.canvas`
-	display: flex;
-	resize: none;
-	border: none;
-	z-index: 10;
-	width: 100%;
-	height: 100%;
-	box-sizing: border-box;
-	background: transparent;
-	color: black;
-	// background-color: skyblue;
+  display: flex;
+  resize: none;
+  border: none;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  background: transparent;
 `;
 
 export default LetterCanvasArea;

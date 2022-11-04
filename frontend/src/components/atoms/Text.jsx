@@ -4,7 +4,6 @@
  */
 import styled from "styled-components";
 
-
 export const MainText = styled.p`
   display: flex;
   font-size: 1.8rem;
@@ -29,7 +28,6 @@ export const MainSmallText = styled.p`
   font-weight: ${(props) => props.fontWeight};
 `;
 
-
 export const FooterText = styled.p`
   display: flex;
   font-size: 0.8rem;
@@ -42,6 +40,11 @@ export const FooterText = styled.p`
   font-weight: ${(props) => props.fontWeight};
 `;
 
+export const OptionText = styled.div`
+  display: flex;
+  font-size: 1rem;
+  font-weight: bold;
+`;
 
 MainText.defaultProps = {
   fontWeight: "500",
