@@ -16,6 +16,7 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { useRecoilState } from "recoil";
 import { loginState, mypageRouterState } from "./../../recoil/Atoms";
 import { clickToKakao } from "../../api/authAPI";
+import { SIZE_WIDE } from "./../../constants/Sizes";
 
 const MainNav = () => {
   const navigate = useNavigate();
@@ -37,7 +38,7 @@ const MainNav = () => {
   };
 
   const handleHeaderMode = () => {
-    setHeaderMobileMode(window.innerWidth <= 1280 ? true : false);
+    setHeaderMobileMode(window.innerWidth <= SIZE_WIDE ? true : false);
   };
 
   const handleLogin = () => {
