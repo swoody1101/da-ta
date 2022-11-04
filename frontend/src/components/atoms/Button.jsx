@@ -49,6 +49,9 @@ const StyledButton = styled.button`
 
   ${media.phone`
 		width: ${(props) => (props.mWidth ? props.mWidth : props.width)};
+    height: ${(props) => (props.mHeight ? props.mHeight : props.height)};
+    border-radius: ${(props) =>
+      props.mBorderRadius ? props.mBorderRadius : props.borderRadius};
 	`}
 `;
 
