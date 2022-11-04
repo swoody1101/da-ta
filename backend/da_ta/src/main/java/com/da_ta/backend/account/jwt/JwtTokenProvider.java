@@ -63,7 +63,7 @@ public class JwtTokenProvider {
         return createToken(user, refreshTokenValidTime);
     }
 
-    public TokenInfo createToken(User user, long tokenValidTime) {
+    private TokenInfo createToken(User user, long tokenValidTime) {
         Claims claims = Jwts.claims()
                 .setSubject(user.getId().toString());
         claims.put("roles", user.getRole());
@@ -122,7 +122,7 @@ public class JwtTokenProvider {
         headers.add(jwtHeader, accessToken);
     }
 
-    public Claims getAllClaims(String token) {
+    private Claims getAllClaims(String token) {
         try {
             return Jwts.parser()
                     .setSigningKey(secretKey)
@@ -133,12 +133,12 @@ public class JwtTokenProvider {
         }
     }
 
-    public String getActualToken(String token) {
+    private String getActualToken(String token) {
         validateAuthorization(token);
         return token.split(DELIMITER)[1];
     }
 
-    public void validateAuthorization(String token) {
+    private void validateAuthorization(String token) {
         if (!token.startsWith(jwtTokenPrefix)) {
             throw new WrongAccessException(WRONG_TOKEN);
         }
