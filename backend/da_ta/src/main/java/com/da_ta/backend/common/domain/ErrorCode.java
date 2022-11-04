@@ -7,6 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ErrorCode {
 
+    COLLECT_BAD_REQUEST("편지를 수집할 수 없습니다."),
+
     BACKGROUND_NOT_FOUND("편지지를 찾을 수 없습니다."),
     FLOATED_LETTER_NOT_FOUND("바다에 띄워진 편지를 찾을 수 없습니다."),
     FONT_NOT_FOUND("폰트를 찾을 수 없습니다."),
