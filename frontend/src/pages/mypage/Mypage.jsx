@@ -1,5 +1,4 @@
 import React from "react";
-import { useState } from "react";
 import styled from "styled-components";
 import BackgroundGradient from "../../components/atoms/BackgroundGradient";
 import { Wave } from "../../components/atoms/Wave";
@@ -9,18 +8,18 @@ import { media } from "../../utils/styleUtil";
 
 //Todo : 해수면 높이 올리기
 const Mypage = () => (
-    <>
-      <Wraper>
-        <MypageWebContents>
-          <MypageMenuBar />
-          <MypageContentsBox />
-        </MypageWebContents>
-      </Wraper>
-      <Wave opacity={0.5} frequency={16} isRight={true}></Wave>
-      <Wave opacity={0.3} frequency={8} isRight={true}></Wave>
-      <Wave opacity={0.4} frequency={13} isRight={false}></Wave>
-      <BackgroundGradient start={"E2AAFD"} end={"FFDFC2"} />
-    </>
+  <>
+    <Wraper>
+      <MypageWebContents>
+        <MypageMenuBar />
+        <MypageContentsBox />
+      </MypageWebContents>
+    </Wraper>
+    <Wave opacity={0.5} frequency={16} isRight={true}></Wave>
+    <Wave opacity={0.3} frequency={8} isRight={true}></Wave>
+    <Wave opacity={0.4} frequency={13} isRight={false}></Wave>
+    <BackgroundGradient start={"E2AAFD"} end={"FFDFC2"} />
+  </>
 );
 
 const Wraper = styled.div`
@@ -32,7 +31,7 @@ const Wraper = styled.div`
 
 const MypageWebContents = styled.div`
   display: flex;
-  height: 656px;
+  height: 70%;
   width: 900px;
   margin-top: 6rem;
   justify-content: center;
