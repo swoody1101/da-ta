@@ -7,8 +7,13 @@ import com.da_ta.backend.account.user.domain.entity.User;
 import com.da_ta.backend.account.user.domain.repository.BanStatusRepository;
 import com.da_ta.backend.account.user.domain.repository.RedisRepository;
 import com.da_ta.backend.account.user.domain.repository.UserRepository;
+import com.da_ta.backend.common.domain.Message;
+import com.da_ta.backend.common.domain.exception.NotFoundException;
+import com.da_ta.backend.common.domain.exception.WrongAccessException;
+import com.da_ta.backend.util.JwtUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,6 +22,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.HashMap;
+
+import static com.da_ta.backend.common.domain.ErrorCode.*;
+import static com.da_ta.backend.common.domain.SuccessCode.REISSUED_TOKEN;
 
 @Slf4j
 @Service
@@ -70,6 +80,26 @@ public class UserService {
                         .build())
                 .role(user.getRole())
                 .build();
+    }
+
+    public Message reissue(HttpHeaders headers, String token) {
+        try {
+            HashMap<String, String> payloadMap = JwtUtil.getPayloadByToken(token);
+            String userId = (payloadMap.get(TOKEN_SUBJECT));
+            TokenInfo refreshToken = redisRepository.findById(userId)
+                    .orElseThrow(() -> new WrongAccessException(UNAUTHORIZED));
+            if (jwtTokenProvider.validateToken(refreshToken.getValue())) {
+                User user = userRepository.findById(Long.parseLong(userId))
+                        .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
+                TokenInfo newAccessToken = jwtTokenProvider.createAccessToken(user);
+                TokenInfo newRefreshToken = jwtTokenProvider.createRefreshToken(user);
+                jwtTokenProvider.setHeaderAccessToken(headers, newAccessToken.getValue());
+                redisRepository.save(newRefreshToken);
+            }
+        } catch (ExpiredJwtException e) {
+            throw new WrongAccessException(REFRESH_TOKEN_EXPIRED);
+        }
+        return new Message(REISSUED_TOKEN.getMessage());
     }
 
     public KakaoToken getKakaoAccessToken(String authorizationCode) {
