@@ -25,7 +25,7 @@ const LandingPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    AOS.init();
+    AOS.init({ duration: 500, easing: "ease-in-out-back" });
   });
 
   return (
@@ -34,7 +34,11 @@ const LandingPage = () => {
       <BackgroundGradient start={"E2AAFD"} end={"FFDFC2"} />
 
       <TextWrapper>
-        <MainSmallText margin="20vh 0 0 0">
+        <MainSmallText
+          margin="20vh 0 0 0"
+          data-aos-duration="500"
+          data-aos="flip-up"
+        >
           [100]개의 편지가 바다에 떠 있습니다
         </MainSmallText>
         <MainText
@@ -44,7 +48,7 @@ const LandingPage = () => {
           안녕하세요! <br /> 여기는 '닿다'예요
         </MainText>
 
-        <div data-aos="fade-right" data-aos-duration="2000">
+        <div data-aos="zoom-in-up" data-aos-anchor-placement="bottom-bottom">
           <MainText
             margin="90vh 0 0 0"
             mFont_size={SizeTypes.MOBILE_MAIN_TEXT_SIZE}
@@ -53,11 +57,7 @@ const LandingPage = () => {
             마음을 털어놓을 수 있어요
           </MainText>
         </div>
-        <div
-          data-aos="fade-left"
-          data-aos-duration="2000"
-          mFont_size={SizeTypes.MOBILE_MAIN_TEXT_SIZE}
-        >
+        <div data-aos="zoom-in-up" data-aos-anchor-placement="bottom-bottom">
           <MainText
             margin="65vh 0 0 0"
             mFont_size={SizeTypes.MOBILE_MAIN_TEXT_SIZE}
@@ -67,7 +67,7 @@ const LandingPage = () => {
             적어서 보내보세요
           </MainText>
         </div>
-        <div data-aos="fade-right" data-aos-duration="2000">
+        <div data-aos="zoom-in-up" data-aos-anchor-placement="bottom-bottom">
           <MainText
             margin="65vh 0 0 0"
             mFont_size={SizeTypes.MOBILE_MAIN_TEXT_SIZE}
@@ -75,7 +75,7 @@ const LandingPage = () => {
             혹시 몰라요! <br /> 누군가에게 답을 받을 수도 있겠죠?
           </MainText>
         </div>
-        <div data-aos="fade-left" data-aos-duration="2000">
+        <div data-aos="zoom-in-up" data-aos-anchor-placement="bottom-bottom">
           <MainText
             margin="65vh 0 0 0"
             mFont_size={SizeTypes.MOBILE_MAIN_TEXT_SIZE}
@@ -85,7 +85,11 @@ const LandingPage = () => {
         </div>
 
         <br />
-        <div data-aos="fade-left" data-aos-duration="2000">
+        <div
+          data-aos="zoom-in-up"
+          data-aos-duration="1000"
+          data-aos-anchor-placement="bottom-bottom"
+        >
           <Button
             hoverBgOpacity="0.5"
             fontSize="1.5rem"
