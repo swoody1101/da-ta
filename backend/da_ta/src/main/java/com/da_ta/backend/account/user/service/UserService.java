@@ -102,7 +102,7 @@ public class UserService {
         return new Message(REISSUED_TOKEN.getMessage());
     }
 
-    public KakaoToken getKakaoAccessToken(String authorizationCode) {
+    private KakaoToken getKakaoAccessToken(String authorizationCode) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
