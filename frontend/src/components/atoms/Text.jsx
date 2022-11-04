@@ -40,12 +40,6 @@ export const FooterText = styled.p`
   font-weight: ${(props) => props.fontWeight};
 `;
 
-export const OptionText = styled.div`
-  display: flex;
-  font-size: 1rem;
-  font-weight: bold;
-`;
-
 MainText.defaultProps = {
   fontWeight: "500",
 };

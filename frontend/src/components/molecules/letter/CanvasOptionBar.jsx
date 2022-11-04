@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { MainText, OptionText } from "./../../atoms/Text";
+import { MainText } from "./../../atoms/Text";
 import CanvasOption from "./../../atoms/letter/CanvasOption";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEraser, faPencil } from "@fortawesome/free-solid-svg-icons";
@@ -107,6 +107,12 @@ const OptionWrapper = styled.div`
   width: 30%;
   align-items: center;
   justify-content: center;
+`;
+
+const OptionText = styled.div`
+  display: flex;
+  font-size: 1rem;
+  font-weight: bold;
 `;
 
 const FaWrapper = styled.div`
