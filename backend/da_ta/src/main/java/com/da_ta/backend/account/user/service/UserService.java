@@ -126,4 +126,17 @@ public class UserService {
                 .orElse(signUp(kakaoProfile));
         return user;
     }
+
+    private User signUp(KakaoProfile kakaoProfile) {
+        User user = User.builder()
+                .kakaoId(kakaoProfile.getKakaoAccount().getEmail())
+                .nickname(generateRamdomNickname())
+                .age(kakaoProfile.getKakaoAccount().getAgeRange())
+                .build();
+        BanStatus banStatus = BanStatus.builder()
+                .build();
+        banStatus.initBanStatus(user);
+        banStatusRepository.save(banStatus);
+        return user;
+    }
 }
