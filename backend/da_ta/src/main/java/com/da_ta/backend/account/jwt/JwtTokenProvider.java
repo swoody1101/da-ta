@@ -32,6 +32,7 @@ import static com.da_ta.backend.common.domain.ErrorCode.*;
 public class JwtTokenProvider {
 
     private final int BEARER_TOKEN_BEGIN_INDEX = 7;
+    private final String TOKEN_SUBJECT = "sub";
     private final String DELIMITER = " ";
 
     @Value("${spring.jwt.secret}")
@@ -82,7 +83,7 @@ public class JwtTokenProvider {
 
     public Authentication getAuthentication(String token) {
         HashMap<String, String> payloadMap = JwtUtil.getPayloadByToken(token);
-        UserDetails userDetails = userDetailsService.loadUserByUsername(payloadMap.get("sub"));
+        UserDetails userDetails = userDetailsService.loadUserByUsername(payloadMap.get(TOKEN_SUBJECT));
         return new UsernamePasswordAuthenticationToken(userDetails, token, userDetails.getAuthorities());
     }
 
