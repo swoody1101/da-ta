@@ -16,9 +16,6 @@ const moveBottle = keyframes`
   100% {
     margin-top: 30px;
   }
-
-
-
   `;
 
 const BottleOfLetter = ({ path }) => {

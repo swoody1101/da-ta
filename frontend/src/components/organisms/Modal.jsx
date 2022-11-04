@@ -20,9 +20,9 @@ const Modal = ({
 }) => {
   useEffect(() => {
     document.body.style.cssText = `
-      position: fixed; 
+      position: absolute; 
       top: -${window.scrollY}px;
-      overflow-y: scroll;
+			overflow: overlay;
       width: 100%;`;
     return () => {
       const scrollY = document.body.style.top;

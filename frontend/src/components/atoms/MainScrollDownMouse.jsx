@@ -27,10 +27,9 @@ const MouseScrollDownMouse = ({ ...props }) => (
 );
 
 MouseScrollDownMouse.defaultProps = {
-  width: "10vw",
-  height: "10vh",
+  width: "50px",
+  height: "70px",
   isRight: "1",
-  margin_top: "85vh",
 };
 
 const Scroll_mouse = styled.div`

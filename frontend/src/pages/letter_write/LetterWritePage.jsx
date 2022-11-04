@@ -25,13 +25,23 @@ import Modal from "./../../components/organisms/Modal";
 import LetterDesignChoice from "../../components/molecules/letter/LetterDesignChoice";
 import ContentBlock from "./../../components/atoms/letter/ContentBlock";
 import LetterImg from "./../../components/atoms/letter/LetterImg";
+import LetterCanvasArea from "./../../components/atoms/letter/LetterCanvasArea";
+import CanvasOptionBar from "../../components/molecules/letter/CanvasOptionBar";
 
 const LetterWritePage = () => {
   const [options, setOptions] = useState({
+    // 편지지 옵션
     paper: LetterOptions.PAPERS[0],
     font: LetterOptions.FONTS[0],
     age: LetterOptions.AGES[0],
     allowReply: false,
+  });
+  // 캔버스 옵션
+  const [canvasOptions, setCanvasOptions] = useState({
+    color: "#000000",
+    stroke: 1,
+    drawMode: true,
+    initTrigger: false,
   });
 
   const [act, setAct] = useState(true); // [편지지,도화지] 토글
@@ -40,8 +50,12 @@ const LetterWritePage = () => {
   const [charCount, setCharCount] = useState(0); // 편지 글자 수
   const [charCountWarning, setCharCountWarning] = useState(true); // 글자수 미만 또는 초과로 인한 경고 표시
   const [sizeX, setSizeX] = useState(window.innerWidth); // 브라우저 너비 측정
+  const [canvasSaveTrigger, setCanvasSaveTrigger] = useState(false); // 도화지 그린 그림 저장 트리거
+
   const titleInput = useRef(); // 제목 ref (값 가져오기, focus)
   const contentInput = useRef(); // 내용 ref (값 가져오기, ref)
+
+  const wrapRef = useRef();
 
   /**
    * @description 편지지 텍스트 입력 시 이벤트
@@ -55,7 +69,14 @@ const LetterWritePage = () => {
    * @description "지우기" 버튼 클릭 시 내용 지우는 이벤트
    */
   const handleDeleteContent = () => {
-    contentInput.current.value = "";
+    if (act) {
+      contentInput.current.value = "";
+    } else {
+      setCanvasOptions({
+        ...canvasOptions,
+        initTrigger: !canvasOptions.initTrigger,
+      });
+    }
   };
 
   /**
@@ -77,6 +98,19 @@ const LetterWritePage = () => {
     setModalToggle(false);
   };
 
+  /**
+   * @description "보내기" 버튼 눌렀을 시 이벤트
+   */
+  const handleLetterSend = () => {
+    // 편지지
+    if (act) {
+    }
+    // 도화지
+    else {
+      setCanvasSaveTrigger(true);
+    }
+  };
+
   useEffect(() => {
     setCharCount(0);
   }, [act]);
@@ -96,7 +130,7 @@ const LetterWritePage = () => {
 
   return (
     <>
-      <BackgroundGradient start={"E2AAFD"} end={"FFDFC2"} />
+      <BackgroundGradient start={"E2AAFD"} end={"FFDFC2"} height={"100%"} />
       <RowCenterWrapper>
         <ContentBlock
           margin={SizeTypes.PC_LETTER_MARGIN}
@@ -132,6 +166,7 @@ const LetterWritePage = () => {
           mHeight={SizeTypes.MOBILE_LETTER_HEIGHT}
           flexDirection="column"
           optionToggle={optionToggle}
+          ref={wrapRef}
         >
           <LetterImg
             src={`${process.env.PUBLIC_URL}/assets/images/letter/${options.paper}.png`}
@@ -161,7 +196,20 @@ const LetterWritePage = () => {
             </>
           ) : (
             <>
-              <h1 style={{ backgroundColor: "black" }}>도화지 들어갈 부분</h1>
+              <CanvasOptionBar
+                canvasOptions={canvasOptions}
+                setCanvasOptions={setCanvasOptions}
+              />
+              <LetterCanvasArea
+                color="black"
+                stroke="5"
+                wrap={wrapRef.current}
+                canvasOptions={canvasOptions}
+                canvasSaveTrigger={canvasSaveTrigger}
+                setCanvasSaveTrigger={setCanvasSaveTrigger}
+              >
+                이 브라우저는 캔버스를 지원하지 않습니다.
+              </LetterCanvasArea>
             </>
           )}
         </ContentBlock>
@@ -190,7 +238,7 @@ const LetterWritePage = () => {
             width="8rem"
             margin="0 8% 0 0"
             shadow={true}
-            onClick={() => contentInput.current.focus()}
+            onClick={() => handleLetterSend()}
           >
             보내기
           </Button>

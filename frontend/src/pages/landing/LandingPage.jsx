@@ -25,7 +25,7 @@ const LandingPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    AOS.init();
+    AOS.init({ duration: 500, easing: "ease-in-out-back" });
   });
 
   return (
@@ -34,17 +34,21 @@ const LandingPage = () => {
       <BackgroundGradient start={"E2AAFD"} end={"FFDFC2"} />
 
       <TextWrapper>
-        <MainSmallText margin="20vh 0 0 0">
+        <MainSmallText
+          margin="20vh 0 0 0"
+          data-aos-duration="500"
+          data-aos="flip-up"
+        >
           [100]개의 편지가 바다에 떠 있습니다
         </MainSmallText>
         <MainText
           margin="8vh 0 0 0"
           mFont_size={SizeTypes.MOBILE_MAIN_TEXT_SIZE}
         >
-          안녕하세요! <br /> 여기는 '닿다'예요
+          안녕하세요! 😏 <br /> 여기는 '닿다'예요
         </MainText>
 
-        <div data-aos="fade-right" data-aos-duration="2000">
+        <div data-aos="zoom-in-up" data-aos-anchor-placement="bottom-bottom">
           <MainText
             margin="90vh 0 0 0"
             mFont_size={SizeTypes.MOBILE_MAIN_TEXT_SIZE}
@@ -53,11 +57,7 @@ const LandingPage = () => {
             마음을 털어놓을 수 있어요
           </MainText>
         </div>
-        <div
-          data-aos="fade-left"
-          data-aos-duration="2000"
-          mFont_size={SizeTypes.MOBILE_MAIN_TEXT_SIZE}
-        >
+        <div data-aos="zoom-in-up" data-aos-anchor-placement="bottom-bottom">
           <MainText
             margin="65vh 0 0 0"
             mFont_size={SizeTypes.MOBILE_MAIN_TEXT_SIZE}
@@ -67,7 +67,7 @@ const LandingPage = () => {
             적어서 보내보세요
           </MainText>
         </div>
-        <div data-aos="fade-right" data-aos-duration="2000">
+        <div data-aos="zoom-in-up" data-aos-anchor-placement="bottom-bottom">
           <MainText
             margin="65vh 0 0 0"
             mFont_size={SizeTypes.MOBILE_MAIN_TEXT_SIZE}
@@ -75,7 +75,7 @@ const LandingPage = () => {
             혹시 몰라요! <br /> 누군가에게 답을 받을 수도 있겠죠?
           </MainText>
         </div>
-        <div data-aos="fade-left" data-aos-duration="2000">
+        <div data-aos="zoom-in-up" data-aos-anchor-placement="bottom-bottom">
           <MainText
             margin="65vh 0 0 0"
             mFont_size={SizeTypes.MOBILE_MAIN_TEXT_SIZE}
@@ -85,17 +85,21 @@ const LandingPage = () => {
         </div>
 
         <br />
-        <div data-aos="fade-left" data-aos-duration="2000">
+        <div
+          data-aos="zoom-in-up"
+          data-aos-duration="1000"
+          data-aos-anchor-placement="bottom-bottom"
+        >
           <Button
             hoverBgOpacity="0.5"
-            fontSize="1.5rem"
+            fontSize="1.4rem"
             height="3rem"
-            width="20rem"
+            width="18rem"
             margin="1% 0 0 0"
             shadow={true}
             onClick={() => navigate("/write")}
           >
-            물병 던지기
+            💌 &nbsp; 물병 던지기 &nbsp; 💌
           </Button>
         </div>
       </TextWrapper>
@@ -104,10 +108,11 @@ const LandingPage = () => {
         <BottleOfLetter />
       </BottleWrapper>
 
-      <MouseScrollDownMouseWrapper>
+      {/* <MouseScrollDownMouseWrapper>
         <MainText>Scroll</MainText>
         <MouseScrollDownMouse />
-      </MouseScrollDownMouseWrapper>
+      </MouseScrollDownMouseWrapper> */}
+
       <MouseScrollDownArrowWrapper>
         <MouseScrollDownArrowGroup />
       </MouseScrollDownArrowWrapper>
@@ -129,19 +134,27 @@ const LandingPage = () => {
 
       <Footer />
 
-      <ScrollToTop smooth width="" color="#6f00ff" border="20" />
+      <ScrollToTop
+        smooth
+        color="#ffffff"
+        width="30px"
+        height="30px"
+        // svgPath={{ strokeWidth: "20" }}
+        strokeWidth="px"
+        style={{
+          backgroundColor: "rgba( 255, 255, 255, 0.4 )",
+          borderRadius: "100px",
+          border: "5px solid #ffffff",
+          width: "55px",
+          height: "55px",
+          marginRight: "-35px",
+          marginBottom: "-33px",
+          // strokeWidth: "7",
+        }}
+      />
     </>
   );
 };
-
-const Wrapper = styled.div`
-  display: flex;
-  position: absolute;
-  width: 100vw;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
 
 const BottleWrapper = styled.div`
   display: flex;
