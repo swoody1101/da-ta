@@ -25,7 +25,8 @@ MouseScrollDownArrow.defaultProps = {
   width: "10vw",
   height: "10vh",
   animation_delay: "0s",
-  margin_top: "10px",
+  margin: "0 0 50px 0",
+  padding: "6rem 0 0 0",
   isRight: "1",
 };
 
@@ -42,7 +43,8 @@ const Scroll_arrow = styled.div`
   animation: ${(props) => (props.isRight ? arrow_wave : 0)} 1s infinite;
   animation-direction: alternate;
   animation-delay: ${(props) => props.animation_delay};
-  margin-top: ${(props) => props.margin_top};
+  margin: ${(props) => props.margin};
+  padding: ${(props) => props.padding};
 `;
 
 export default MouseScrollDownArrow;
