@@ -45,7 +45,7 @@ const LandingPage = () => {
           margin="8vh 0 0 0"
           mFont_size={SizeTypes.MOBILE_MAIN_TEXT_SIZE}
         >
-          안녕하세요! <br /> 여기는 '닿다'예요
+          안녕하세요! 😏 <br /> 여기는 '닿다'예요
         </MainText>
 
         <div data-aos="zoom-in-up" data-aos-anchor-placement="bottom-bottom">
@@ -92,14 +92,14 @@ const LandingPage = () => {
         >
           <Button
             hoverBgOpacity="0.5"
-            fontSize="1.5rem"
+            fontSize="1.4rem"
             height="3rem"
-            width="20rem"
+            width="18rem"
             margin="1% 0 0 0"
             shadow={true}
             onClick={() => navigate("/write")}
           >
-            물병 던지기
+            💌 &nbsp; 물병 던지기 &nbsp; 💌
           </Button>
         </div>
       </TextWrapper>
@@ -108,10 +108,11 @@ const LandingPage = () => {
         <BottleOfLetter />
       </BottleWrapper>
 
-      <MouseScrollDownMouseWrapper>
+      {/* <MouseScrollDownMouseWrapper>
         <MainText>Scroll</MainText>
         <MouseScrollDownMouse />
-      </MouseScrollDownMouseWrapper>
+      </MouseScrollDownMouseWrapper> */}
+
       <MouseScrollDownArrowWrapper>
         <MouseScrollDownArrowGroup />
       </MouseScrollDownArrowWrapper>
@@ -154,15 +155,6 @@ const LandingPage = () => {
     </>
   );
 };
-
-const Wrapper = styled.div`
-  display: flex;
-  position: absolute;
-  width: 100vw;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
 
 const BottleWrapper = styled.div`
   display: flex;
