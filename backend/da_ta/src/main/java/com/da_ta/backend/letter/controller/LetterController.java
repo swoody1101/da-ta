@@ -1,10 +1,7 @@
 package com.da_ta.backend.letter.controller;
 
 import com.da_ta.backend.common.domain.Message;
-import com.da_ta.backend.letter.controller.dto.ImageLetterCreateRequest;
-import com.da_ta.backend.letter.controller.dto.ReceiveFloatedLetterResponse;
-import com.da_ta.backend.letter.controller.dto.ReplyCreateRequest;
-import com.da_ta.backend.letter.controller.dto.TextLetterCreateRequest;
+import com.da_ta.backend.letter.controller.dto.*;
 import com.da_ta.backend.letter.service.LetterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -43,7 +40,7 @@ public class LetterController {
     }
 
     @PostMapping("/replies/{letter_id}")
-    public ResponseEntity<Message> reply(@PathVariable("letter_id") Long LetterId, @RequestBody ReplyCreateRequest replyCreateRequest) {
+    public ResponseEntity<Message> createReply(@PathVariable("letter_id") Long LetterId, @RequestBody ReplyCreateRequest replyCreateRequest) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(letterService.createReply(LetterId, replyCreateRequest));
     }
@@ -58,5 +55,12 @@ public class LetterController {
     public ResponseEntity<Message> collectLetter(@PathVariable("user_id") Long userId, @PathVariable("letter_id") Long letterId) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(letterService.saveLetter(userId, letterId));
+    }
+
+    @PostMapping("/accusation/{reporter_id}/{letter_id}")
+    public ResponseEntity<Message> accuseLetter(@PathVariable("reporter_id") Long reporterId, @PathVariable("letter_id") Long letterId,
+                                                @RequestBody AccuseLetterRequest accuseLetterRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(letterService.createLetterAccusation(reporterId, letterId, accuseLetterRequest));
     }
 }

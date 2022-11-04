@@ -5,10 +5,7 @@ import com.da_ta.backend.account.user.domain.repository.UserRepository;
 import com.da_ta.backend.common.domain.Age;
 import com.da_ta.backend.common.domain.Message;
 import com.da_ta.backend.common.domain.exception.NotFoundException;
-import com.da_ta.backend.letter.controller.dto.ImageLetterCreateRequest;
-import com.da_ta.backend.letter.controller.dto.ReceiveFloatedLetterResponse;
-import com.da_ta.backend.letter.controller.dto.ReplyCreateRequest;
-import com.da_ta.backend.letter.controller.dto.TextLetterCreateRequest;
+import com.da_ta.backend.letter.controller.dto.*;
 import com.da_ta.backend.letter.controller.dto.common.ImageLetterInfo;
 import com.da_ta.backend.letter.controller.dto.common.LetterInfo;
 import com.da_ta.backend.letter.controller.dto.common.Option;
@@ -37,6 +34,7 @@ public class LetterService {
     private final FloatedLetterLogRepository floatedLetterLogRepository;
     private final FontRepository fontRepository;
     private final ImageLetterRepository imageLetterRepository;
+    private final LetterAccusationRepository letterAccusationRepository;
     private final LetterRepository letterRepository;
     private final ReplyRepository replyRepository;
     private final TextLetterRepository textLetterRepository;
@@ -163,6 +161,15 @@ public class LetterService {
                 .user(findUserById(userId))
                 .build());
         return new Message(COLLECTED_LETTER_CREATED.getMessage());
+    }
+
+    public Message createLetterAccusation(Long userId, Long letterId, AccuseLetterRequest accuseLetterRequest) {
+        letterAccusationRepository.save(LetterAccusation.builder()
+                .letter(findLetterById(letterId))
+                .reporterId(userId)
+                .reason(accuseLetterRequest.getReason())
+                .build());
+        return new Message(LETTER_ACCUSATION_CREATED.getMessage());
     }
 
     public void floatLetter(Letter letter) {
