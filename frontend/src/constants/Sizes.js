@@ -21,4 +21,11 @@ export const SizeTypes = {
   MOBILE_TITLE_HEIGHT: "2rem",
   PC_CONTENT_HEIGHT: deviceHeight < WIDTH_LIMIT ? "26rem" : "34.4rem",
   MOBILE_CONTENT_HEIGHT: "calc(126vw - 2rem)",
+
+  PC_MAIN_TEXT_SIZE: "1.5rem",
+  MOBILE_MAIN_TEXT_SIZE: "1.3rem",
+  PC_MAIN_BOTTLE_WIDTH: "30vw",
+  PC_MAIN_BOTTLE_HEIGHT: "30vh",
+  MOBILE_MAIN_BOTTLE_WIDTH: "3vw",
+  MOBILE_MAIN_BOTTLE_HEIGHT: "3vh",
 };
