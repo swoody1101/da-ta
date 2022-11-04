@@ -6,6 +6,6 @@ import lombok.Getter;
 @Getter
 public class ReplyCreateRequest {
 
-    Long recipientId;
-    TextLetterInfo textLetterInfo;
+    private Long recipientId;
+    private TextLetterInfo textLetterInfo;
 }
