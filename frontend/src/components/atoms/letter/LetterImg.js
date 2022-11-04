@@ -1,3 +1,7 @@
+/**
+ * @author mingyu
+ * @description 편지지 배경 이미지
+ */
 import styled from "styled-components";
 
 const LetterImg = styled.img`
