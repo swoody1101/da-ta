@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Entity
 public class LetterAccusation extends CommonEntity {
 
-    private Long reporter_id;
+    private Long reporterId;
     private String reason;
 
     @OneToOne(fetch = FetchType.LAZY)
