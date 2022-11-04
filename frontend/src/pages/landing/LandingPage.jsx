@@ -144,12 +144,13 @@ const Wrapper = styled.div`
 `;
 
 const BottleWrapper = styled.div`
+  display: flex;
   position: absolute;
-  width: 10%;
-
+  width: 100vw;
+  height: 100vh;
   flex-direction: column;
   justify-content: center;
-  z-index: ;
+  z-index: 1.5;
 `;
 
 const TextWrapper = styled.div`
