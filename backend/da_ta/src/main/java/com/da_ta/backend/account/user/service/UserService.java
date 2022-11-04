@@ -45,4 +45,21 @@ public class UserService {
 
     @Value("${spring.jwt.token.prefix}")
     private String jwtTokenPrefix;
+
+    public LoginResponse login(LoginRequest loginRequest, HttpHeaders headers) {
+        KakaoToken kakaoToken = getKakaoAccessToken(loginRequest.getAuthorizationCode());
+        User user = getUser(kakaoToken.getAccessToken());
+        TokenInfo accessToken = jwtTokenProvider.createAccessToken(user);
+        TokenInfo refreshToken = jwtTokenProvider.createRefreshToken(user);
+        jwtTokenProvider.setHeaderAccessToken(headers, accessToken.getValue());
+        redisRepository.save(refreshToken);
+        return LoginResponse.builder()
+                .userId(user.getId())
+                .nickname(user.getNickname())
+                .banStatus(BanStatusInfo.builder()
+                        .isBan(user.getBanStatus().isBan())
+                        .build())
+                .role(user.getRole())
+                .build();
+    }
 }
