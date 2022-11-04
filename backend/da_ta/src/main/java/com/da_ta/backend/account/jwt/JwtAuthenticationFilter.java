@@ -26,9 +26,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
-            if (request.getServletPath().startsWith("/api/v1/user/reissue") ||
-                    request.getServletPath().startsWith("/api/v1/user/login")
-            ) {
+            if (request.getServletPath().startsWith("/api/v1/user/reissue") || request.getServletPath().startsWith("/api/v1/user/login")) {
                 filterChain.doFilter(request, response);
             } else {
                 String accessToken = jwtTokenProvider.resolveAccessToken(request);
