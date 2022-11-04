@@ -56,6 +56,9 @@ const MenuDiv = styled.div`
     height: 44px;
     background-color: #ffffff;
   `}
+  @media screen and (max-height: 700px) {
+    height: 44px;
+  }
 `;
 
 const IconDiv = styled.div`
@@ -65,6 +68,9 @@ const IconDiv = styled.div`
   ${media.tablet1`
     display: none;
   `}
+  @media screen and (max-height: 700px) {
+    display: none;
+  }
 `;
 
 const MenuName = styled.p`
