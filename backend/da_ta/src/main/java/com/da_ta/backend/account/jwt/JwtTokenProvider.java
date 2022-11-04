@@ -34,7 +34,6 @@ public class JwtTokenProvider {
     private final int BEARER_TOKEN_BEGIN_INDEX = 7;
     private final String DELIMITER = " ";
 
-
     @Value("${spring.jwt.secret}")
     private String secretKey;
 
