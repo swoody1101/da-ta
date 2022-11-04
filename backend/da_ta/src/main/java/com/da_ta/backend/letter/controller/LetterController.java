@@ -53,6 +53,7 @@ public class LetterController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT)
                 .body(letterService.checkReplyReception(replyId));
     }
+
     @PostMapping("/collect/{user_id}/{letter_id}")
     public ResponseEntity<Message> collectLetter(@PathVariable("user_id") Long userId, @PathVariable("letter_id") Long letterId) {
         return ResponseEntity.status(HttpStatus.CREATED)
