@@ -27,7 +27,7 @@ const BG = styled.div`
   width: 100%;
   overflow: hidden;
   margin: 0 auto;
-  position: absolute;
+  position: fixed;
   z-index: -1;
 `;
 
