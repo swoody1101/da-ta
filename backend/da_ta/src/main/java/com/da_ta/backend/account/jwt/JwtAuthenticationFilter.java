@@ -1,7 +1,5 @@
 package com.da_ta.backend.account.jwt;
 
-import com.da_ta.backend.common.domain.exception.WrongAccessException;
-import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -15,8 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.da_ta.backend.common.domain.ErrorCode.ACCESS_TOKEN_EXPIRED;
-
 @Slf4j
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -25,19 +21,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        try {
-            if (request.getServletPath().startsWith("/api/v1/user/reissue") || request.getServletPath().startsWith("/api/v1/user/login")) {
-                filterChain.doFilter(request, response);
-            } else {
-                String accessToken = jwtTokenProvider.resolveAccessToken(request);
-                if (StringUtils.hasText(accessToken) && jwtTokenProvider.validateToken(accessToken)) {
-                    this.setAuthentication(accessToken);
-                }
-                filterChain.doFilter(request, response);
+        if (!request.getServletPath().startsWith("/api/v1/user/reissue") && !request.getServletPath().startsWith("/api/v1/user/login")) {
+            String accessToken = jwtTokenProvider.resolveAccessToken(request);
+            if (StringUtils.hasText(accessToken) && jwtTokenProvider.validateToken(accessToken)) {
+                this.setAuthentication(accessToken);
             }
-        } catch (ExpiredJwtException e) {
-            throw new WrongAccessException(ACCESS_TOKEN_EXPIRED);
         }
+        filterChain.doFilter(request, response);
     }
 
     private void setAuthentication(String token) {
