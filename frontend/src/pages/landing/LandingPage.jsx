@@ -15,6 +15,7 @@ import { MainText, MainSmallText } from "../../components/atoms/Text";
 import BottleOfLetter from "../../components/atoms/BottleOfLetter";
 import ScrollToTop from "react-scroll-to-top";
 import Button from "./../../components/atoms/Button";
+import { SizeTypes, SIZE_WIDE } from "./../../constants/Sizes";
 
 import BackgroundGradient from "../../components/atoms/BackgroundGradient";
 import MouseScrollDownArrowGroup from "../../components/molecules/MouseScrollDownArrowGroup";
@@ -36,46 +37,67 @@ const LandingPage = () => {
         <MainSmallText margin="20vh 0 0 0">
           [100]개의 편지가 바다에 떠 있습니다
         </MainSmallText>
-        <MainText margin="8vh 0 0 0">
+        <MainText
+          margin="8vh 0 0 0"
+          mFont_size={SizeTypes.MOBILE_MAIN_TEXT_SIZE}
+        >
           안녕하세요! <br /> 여기는 '닿다'예요
         </MainText>
 
         <div data-aos="fade-right" data-aos-duration="2000">
-          <MainText margin="90vh 0 0 0">
+          <MainText
+            margin="90vh 0 0 0"
+            mFont_size={SizeTypes.MOBILE_MAIN_TEXT_SIZE}
+          >
             여기선 익명으로 <br />
             마음을 털어놓을 수 있어요
           </MainText>
         </div>
-        <div data-aos="fade-left" data-aos-duration="2000">
-          <MainText margin="65vh 0 0 0">
+        <div
+          data-aos="fade-left"
+          data-aos-duration="2000"
+          mFont_size={SizeTypes.MOBILE_MAIN_TEXT_SIZE}
+        >
+          <MainText
+            margin="65vh 0 0 0"
+            mFont_size={SizeTypes.MOBILE_MAIN_TEXT_SIZE}
+          >
             아무에게도 말하지 못했던 것들을
             <br />
             적어서 보내보세요
           </MainText>
         </div>
         <div data-aos="fade-right" data-aos-duration="2000">
-          <MainText margin="65vh 0 0 0">
+          <MainText
+            margin="65vh 0 0 0"
+            mFont_size={SizeTypes.MOBILE_MAIN_TEXT_SIZE}
+          >
             혹시 몰라요! <br /> 누군가에게 답을 받을 수도 있겠죠?
           </MainText>
         </div>
         <div data-aos="fade-left" data-aos-duration="2000">
-          <MainText margin="65vh 0 0 0">
-            행운에 닿기를 바라며 물병을 던져볼까요?
+          <MainText
+            margin="65vh 0 0 0"
+            mFont_size={SizeTypes.MOBILE_MAIN_TEXT_SIZE}
+          >
+            당신의 물병을 '닿다'에 던져보세요!
           </MainText>
         </div>
 
         <br />
-        <Button
-          hoverBgOpacity="0.5"
-          fontSize="1.5rem"
-          height="3rem"
-          width="20rem"
-          margin="1% 0 0 0"
-          shadow={true}
-          onClick={() => navigate("/write")}
-        >
-          물병 던지기
-        </Button>
+        <div data-aos="fade-left" data-aos-duration="2000">
+          <Button
+            hoverBgOpacity="0.5"
+            fontSize="1.5rem"
+            height="3rem"
+            width="20rem"
+            margin="1% 0 0 0"
+            shadow={true}
+            onClick={() => navigate("/write")}
+          >
+            물병 던지기
+          </Button>
+        </div>
       </TextWrapper>
 
       <BottleWrapper>
@@ -83,12 +105,17 @@ const LandingPage = () => {
       </BottleWrapper>
 
       <MouseScrollDownMouseWrapper>
-        <MainText margin="85vh 0 0 0">Scroll</MainText>
-        <MouseScrollDownMouse margin_top="90vh" />
+        <MainText>Scroll</MainText>
+        <MouseScrollDownMouse />
       </MouseScrollDownMouseWrapper>
       <MouseScrollDownArrowWrapper>
-        <MouseScrollDownArrowGroup margin_top="93.5vh" />
+        <MouseScrollDownArrowGroup />
       </MouseScrollDownArrowWrapper>
+
+      {/* <MainText>
+        {" "}
+        원래는 margin_top을 줬는데, 이렇게하지말고 absolute position
+      </MainText> */}
 
       <MainWave opacity={0.5} frequency={16} isRight={true}></MainWave>
       <MainWave opacity={0.6} frequency={8} isRight={true}></MainWave>
@@ -117,12 +144,12 @@ const Wrapper = styled.div`
 `;
 
 const BottleWrapper = styled.div`
-  display: flex;
   position: absolute;
-  margin-top: 40vh;
-  margin-left: 50vw;
-  flex-direction: row;
+  width: 10%;
+
+  flex-direction: column;
   justify-content: center;
+  z-index: ;
 `;
 
 const TextWrapper = styled.div`
