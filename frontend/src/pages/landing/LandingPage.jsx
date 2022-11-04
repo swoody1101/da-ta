@@ -133,7 +133,24 @@ const LandingPage = () => {
 
       <Footer />
 
-      <ScrollToTop smooth width="" color="#6f00ff" border="20" />
+      <ScrollToTop
+        smooth
+        color="#ffffff"
+        width="30px"
+        height="30px"
+        // svgPath={{ strokeWidth: "20" }}
+        strokeWidth="px"
+        style={{
+          backgroundColor: "rgba( 255, 255, 255, 0.4 )",
+          borderRadius: "100px",
+          border: "5px solid #ffffff",
+          width: "55px",
+          height: "55px",
+          marginRight: "-35px",
+          marginBottom: "-33px",
+          // strokeWidth: "7",
+        }}
+      />
     </>
   );
 };
