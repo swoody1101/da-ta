@@ -8,18 +8,24 @@ import ReadLetter from "../../components/molecules/ReadLetter";
 
 const TestBoyeon = () => {
   const [blur, setBlur] = useState(false);
+  const [loading, setLoading] = useState(false);
   useEffect(async () => {
     setTimeout(() => {
       setBlur(true);
-    }, 5000);
+      setLoading(true);
+    }, 1500);
+    setTimeout(() => {
+      setLoading(false);
+    }, 500);
   }, []);
+
   return (
     <>
       <BackgroundVideo
         isBlur={blur}
         path={`${process.env.PUBLIC_URL}/assets/video/bg2.mp4`}
       />
-      <ReadWrapper style={{}}>
+      <ReadWrapper>
         <ReadLetter></ReadLetter>
         <ReadButtons index={1}></ReadButtons>
       </ReadWrapper>
