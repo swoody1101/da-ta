@@ -33,7 +33,8 @@ public class User extends CommonEntity implements UserDetails {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private Role role;
+    @Builder.Default
+    private Role role = Role.MEMBER;
 
     @NotNull
     @Builder.Default
