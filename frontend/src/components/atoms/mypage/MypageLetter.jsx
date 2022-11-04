@@ -11,18 +11,35 @@ import { media } from "../../../utils/styleUtil";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTriangleExclamation,
-  faTrashCan
+  faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
 
-export const MypageLetter = ({letter}) => (
+export const MypageLetter = ({ letter }) => (
   <LetterDiv>
     <LetterWordsDiv>
       <LetterTitle>{letter.letterTitle}</LetterTitle>
       <LetterDate>{`${letter.userNickName}, ${letter.time}`}</LetterDate>
+      <LetterDateWeb>{`${letter.userNickName}`}</LetterDateWeb>
+      <LetterDateWeb>{`${letter.time}`}</LetterDateWeb>
     </LetterWordsDiv>
-    {/* 아이콘이 들어갈 영역 임시 코드 Aaa */}
-    <FontAwesomeIcon icon={faTriangleExclamation} style={{margin:'0 15px 0 0', color:'#F44336', cursor:'pointer'}} size="lg" onClick={() => {console.log(`${letter.letterId}번 글을 쓴 글쓴이 아이디 ${letter.userId}를 신고버튼`)}} />
-    <FontAwesomeIcon icon={faTrashCan} style={{margin:'0', cursor:'pointer'}} size="lg" onClick={() => {console.log(`${letter.letterId}번 글 삭제버튼`)}} />
+    <FontAwesomeIcon
+      icon={faTriangleExclamation}
+      style={{ margin: "0 15px 0 0", color: "#F44336", cursor: "pointer" }}
+      size="lg"
+      onClick={() => {
+        console.log(
+          `${letter.letterId}번 글을 쓴 글쓴이 아이디 ${letter.userId}를 신고버튼`
+        );
+      }}
+    />
+    <FontAwesomeIcon
+      icon={faTrashCan}
+      style={{ margin: "0 15px 0 0", cursor: "pointer" }}
+      size="lg"
+      onClick={() => {
+        console.log(`${letter.letterId}번 글 삭제버튼`);
+      }}
+    />
   </LetterDiv>
 );
 
@@ -38,6 +55,7 @@ const LetterDiv = styled.div`
 
   ${media.tablet1`
     width: 90%;
+    height: 87px;
     align-items: space-between;
   `}
 `;
@@ -62,6 +80,9 @@ const LetterTitle = styled.p`
   height: 20px;
   text-align: start;
   cursor: pointer;
+  ${media.tablet1`
+    margin-bottom: 8px;
+  `}
 `;
 
 const LetterDate = styled.p`
@@ -71,12 +92,16 @@ const LetterDate = styled.p`
   color: #8f8f8f;
   margin-top: 5px;
   text-align: start;
+
+  ${media.tablet1`
+    display: none;
+  `}
 `;
 
-// 아이콘이 들어갈 영역 test코드
-const Aaa = styled.div`
-  width: 20px;
-  height: 20px;
-  background-color: bisque;
-  margin: 0 10px 0 0;
+const LetterDateWeb = styled(LetterDate)`
+  display: none;
+  margin: 0;
+  ${media.tablet1`
+    display: inline;
+  `}
 `;

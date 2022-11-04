@@ -26,7 +26,7 @@ const MouseScrollDownArrowGroup = ({ ...props }) => {
         height="2vh"
         animation_delay="0.1s"
       ></MouseScrollDownArrow>
-      <MouseScrollDownArrow
+      {/* <MouseScrollDownArrow
         width="2vh"
         height="2vh"
         margin_top="1vh"
@@ -37,7 +37,7 @@ const MouseScrollDownArrowGroup = ({ ...props }) => {
         height="2vh"
         margin_top="1vh"
         animation_delay="0.5s"
-      ></MouseScrollDownArrow>
+      ></MouseScrollDownArrow> */}
     </S1_arrow>
   );
 };
