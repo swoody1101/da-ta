@@ -4,6 +4,7 @@ import com.da_ta.backend.account.user.domain.entity.User;
 import com.da_ta.backend.account.user.domain.repository.UserRepository;
 import com.da_ta.backend.common.domain.Age;
 import com.da_ta.backend.common.domain.Message;
+import com.da_ta.backend.common.domain.exception.BadRequestException;
 import com.da_ta.backend.common.domain.exception.NotFoundException;
 import com.da_ta.backend.letter.controller.dto.*;
 import com.da_ta.backend.letter.controller.dto.common.ImageLetterInfo;
@@ -16,6 +17,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+
+import java.util.stream.Collectors;
 
 import static com.da_ta.backend.common.domain.ErrorCode.*;
 import static com.da_ta.backend.common.domain.SuccessCode.*;
@@ -156,8 +159,12 @@ public class LetterService {
     }
 
     public Message saveLetter(Long userId, Long letterId) {
+        Letter letter = findLetterById(letterId);
+        if (letter.isReplyOption()) {
+            throw new BadRequestException(COLLECT_BAD_REQUEST);
+        }
         collectedLetterRepository.save(CollectedLetter.builder()
-                .letter(findLetterById(letterId))
+                .letter(letter)
                 .user(findUserById(userId))
                 .build());
         return new Message(COLLECTED_LETTER_CREATED.getMessage());
@@ -176,6 +183,13 @@ public class LetterService {
         floatedLetterRepository.save(FloatedLetter.builder()
                 .letter(letter)
                 .build());
+    }
+
+    // 내림차순
+    public FindLetterCollectionResponse findLetterCollection(Long userId) {
+        return FindLetterCollectionResponse.builder()
+                .letters(null)
+                .build();
     }
 
     private User findUserById(Long userId) {

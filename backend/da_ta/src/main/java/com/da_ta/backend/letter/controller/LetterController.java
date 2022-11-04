@@ -63,4 +63,10 @@ public class LetterController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(letterService.createLetterAccusation(reporterId, letterId, accuseLetterRequest));
     }
+
+    @GetMapping("/collection/{user_id}")
+    public ResponseEntity<FindLetterCollectionResponse> findLetterCollection(@PathVariable("user_id") Long userId) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(letterService.findLetterCollection(userId));
+    }
 }
