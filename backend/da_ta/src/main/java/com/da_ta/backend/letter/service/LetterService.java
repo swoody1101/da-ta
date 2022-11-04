@@ -7,17 +7,13 @@ import com.da_ta.backend.common.domain.Message;
 import com.da_ta.backend.common.domain.exception.BadRequestException;
 import com.da_ta.backend.common.domain.exception.NotFoundException;
 import com.da_ta.backend.letter.controller.dto.*;
-import com.da_ta.backend.letter.controller.dto.common.ImageLetterInfo;
-import com.da_ta.backend.letter.controller.dto.common.LetterInfo;
-import com.da_ta.backend.letter.controller.dto.common.Option;
-import com.da_ta.backend.letter.controller.dto.common.TextLetterInfo;
+import com.da_ta.backend.letter.controller.dto.common.*;
 import com.da_ta.backend.letter.domain.entity.*;
 import com.da_ta.backend.letter.domain.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-
 import java.util.stream.Collectors;
 
 import static com.da_ta.backend.common.domain.ErrorCode.*;
@@ -185,10 +181,21 @@ public class LetterService {
                 .build());
     }
 
-    // 내림차순
     public FindLetterCollectionResponse findLetterCollection(Long userId) {
         return FindLetterCollectionResponse.builder()
-                .letters(null)
+                .letters(collectedLetterRepository.findAllByUserIdAndIsActiveTrueOrderByCreatedDate(userId)
+                        .stream()
+                        .map(collectedLetter -> {
+                                    Letter letter = collectedLetter.getLetter();
+                                    return LetterItem.builder()
+                                            .letterId(letter.getId())
+                                            .letterTitle(letter.getTitle())
+                                            .writerId(letter.getWriter().getId())
+                                            .writerNickname(letter.getWriter().getNickname())
+                                            .writtenTime(letter.getCreatedDate())
+                                            .build();
+                                }
+                        ).collect(Collectors.toList()))
                 .build();
     }
 

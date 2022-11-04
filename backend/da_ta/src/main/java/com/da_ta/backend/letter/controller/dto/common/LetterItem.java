@@ -12,6 +12,6 @@ public class LetterItem {
     private Long letterId;
     private String letterTitle;
     private Long writerId;
-    private Long writerNickname;
-    private LocalDateTime createdTime;
+    private String writerNickname;
+    private LocalDateTime writtenTime;
 }
