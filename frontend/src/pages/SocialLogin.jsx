@@ -64,7 +64,7 @@ const SocialLogin = () => {
 	}, []);
 	return (
 		<>
-			<Wrapper>소셜 로그인</Wrapper>
+			<Wrapper>로그인 중입니다...</Wrapper>
 		</>
 	);
 };
