@@ -18,11 +18,16 @@ import javax.validation.constraints.NotNull;
 public class CollectedLetter extends CommonEntity {
 
     @NotNull
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "letter_id", unique = true)
     private Letter letter;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    public void deleteCollectedLetter() {
+        super.delete();
+        this.letter.deleteLetter();
+    }
 }
