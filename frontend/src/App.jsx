@@ -18,11 +18,17 @@ import Collect from "./pages/mypage/Collect";
 import Receive from "./pages/mypage/Receive";
 import Setting from "./pages/mypage/Setting";
 import { GlobalFonts } from "./styles/fonts/fonts";
+import Loading from "./components/molecules/Loading";
+import { useRecoilState } from "recoil";
+import { loadingState } from "./recoil/Atoms";
 
 function App() {
+	const [loading, setLoading] = useRecoilState(loadingState);
+
 	return (
 		<div className="App">
 			<GlobalFonts />
+			{loading && <Loading />}
 			<Background>
 				<BrowserRouter>
 					<MainNav />
