@@ -47,8 +47,8 @@ public class LetterService {
                 .writer(findUserById(textLetterCreateRequest.getUserId()))
                 .ageOption(option.getAgeOption())
                 .replyOption(option.getReplyOption())
-                .background(findBackground(textLetterInfo.getBackgroundId()))
-                .font(findFont(textLetterInfo.getFontId()))
+                .background(findBackgroundByUrl(textLetterInfo.getBackgroundUrl()))
+                .font(findFontByName(textLetterInfo.getFontName()))
                 .title(textLetterInfo.getTitle())
                 .content(textLetterInfo.getContent())
                 .build();
@@ -65,7 +65,7 @@ public class LetterService {
                 .writer(findUserById(imageLetterCreateRequest.getUserId()))
                 .ageOption(option.getAgeOption())
                 .replyOption(option.getReplyOption())
-                .background(findBackground(imageLetterInfo.getBackgroundId()))
+                .background(findBackgroundByUrl(imageLetterInfo.getImageLetterUrl()))
                 .title(imageLetterInfo.getTitle())
                 .imageLetterUrl(imageLetterInfo.getImageLetterUrl())
                 .build();
@@ -96,9 +96,9 @@ public class LetterService {
                             .letterId(textLetter.getId())
                             .title(textLetter.getTitle())
                             .content(textLetter.getContent())
-                            .backgroundId(textLetter.getBackground().getBackgroundId())
-                            .fontId(textLetter.getFont().getFontId())
-                            .createdDate(textLetter.getCreatedDate())
+                            .backgroundUrl(textLetter.getBackground().getBackgroundUrl())
+                            .fontName(textLetter.getFont().getFontName())
+                            .writtenDate(textLetter.getCreatedDate())
                             .build())
                     .build();
         } else if (letter.getLetterType().equals(TYPE_IMAGE)) {
@@ -111,8 +111,8 @@ public class LetterService {
                             .letterId(imageLetter.getId())
                             .title(imageLetter.getTitle())
                             .imageLetterUrl(imageLetter.getImageLetterUrl())
-                            .backgroundId(imageLetter.getBackground().getBackgroundId())
-                            .createdDate(imageLetter.getCreatedDate())
+                            .backgroundUrl(imageLetter.getBackground().getBackgroundUrl())
+                            .writtenDate(imageLetter.getCreatedDate())
                             .build())
                     .build();
         } else {
@@ -125,8 +125,8 @@ public class LetterService {
         TextLetter textLetter = TextLetter.builder()
                 .title(textLetterInfo.getTitle())
                 .content(textLetterInfo.getContent())
-                .background(findBackground(textLetterInfo.getBackgroundId()))
-                .font(findFont(textLetterInfo.getFontId()))
+                .background(findBackgroundByUrl(textLetterInfo.getBackgroundUrl()))
+                .font(findFontByName(textLetterInfo.getFontName()))
                 .build();
         textLetterRepository.save(textLetter);
         replyRepository.save(Reply.builder()
@@ -154,7 +154,7 @@ public class LetterService {
         return new Message(FLOATED_LETTER_NO_CONTENT.getMessage());
     }
 
-    public Message saveLetter(Long userId, Long letterId) {
+    public Message createCollection(Long userId, Long letterId) {
         Letter letter = findLetterById(letterId);
         if (letter.isReplyOption()) {
             throw new BadRequestException(COLLECT_BAD_REQUEST);
@@ -183,20 +183,53 @@ public class LetterService {
 
     public FindLetterCollectionResponse findLetterCollection(Long userId) {
         return FindLetterCollectionResponse.builder()
-                .letters(collectedLetterRepository.findAllByUserIdAndIsActiveTrueOrderByCreatedDate(userId)
+                .collection(collectedLetterRepository.findAllByUserIdAndIsActiveTrueOrderByCreatedDate(userId)
                         .stream()
                         .map(collectedLetter -> {
                                     Letter letter = collectedLetter.getLetter();
-                                    return LetterItem.builder()
+                                    return CollectionItem.builder()
                                             .letterId(letter.getId())
                                             .letterTitle(letter.getTitle())
                                             .writerId(letter.getWriter().getId())
                                             .writerNickname(letter.getWriter().getNickname())
-                                            .writtenTime(letter.getCreatedDate())
+                                            .writtenDate(letter.getCreatedDate())
                                             .build();
                                 }
                         ).collect(Collectors.toList()))
                 .build();
+    }
+
+    public FindCollectedLetterDetailResponse findCollectedLetterDetail(Long letterId) {
+        Letter letter = findLetterById(letterId);
+        if (letter.getLetterType().equals(TYPE_TEXT)) {
+            TextLetter textLetter = findTextLetterById(letterId);
+            return FindCollectedLetterDetailResponse.builder()
+                    .letterType(TYPE_TEXT)
+                    .writerId(textLetter.getWriter().getId())
+                    .writerNickname(textLetter.getWriter().getNickname())
+                    .letterInfo(LetterInfo.builder()
+                            .title(textLetter.getTitle())
+                            .content(textLetter.getContent())
+                            .backgroundUrl(textLetter.getBackground().getBackgroundUrl())
+                            .fontName(textLetter.getFont().getFontName())
+                            .writtenDate(textLetter.getCreatedDate())
+                            .build())
+                    .build();
+        } else if (letter.getLetterType().equals(TYPE_IMAGE)) {
+            ImageLetter imageLetter = findImageLetterById(letterId);
+            return FindCollectedLetterDetailResponse.builder()
+                    .letterType(TYPE_IMAGE)
+                    .writerId(imageLetter.getWriter().getId())
+                    .writerNickname(imageLetter.getWriter().getNickname())
+                    .letterInfo(LetterInfo.builder()
+                            .title(imageLetter.getTitle())
+                            .backgroundUrl(imageLetter.getBackground().getBackgroundUrl())
+                            .writtenDate(imageLetter.getCreatedDate())
+                            .build())
+                    .build();
+        } else {
+            throw new NotFoundException(LETTER_NOT_FOUND);
+        }
     }
 
     private User findUserById(Long userId) {
@@ -219,13 +252,13 @@ public class LetterService {
                 .orElseThrow(() -> new NotFoundException(IMAGE_LETTER_NOT_FOUND));
     }
 
-    private Background findBackground(Long backgroundId) {
-        return backgroundRepository.findById(backgroundId)
+    private Background findBackgroundByUrl(String backgroundUrl) {
+        return backgroundRepository.findByBackgroundUrl(backgroundUrl)
                 .orElseThrow(() -> new NotFoundException(BACKGROUND_NOT_FOUND));
     }
 
-    private Font findFont(Long fontId) {
-        return fontRepository.findById(fontId)
+    private Font findFontByName(String fontName) {
+        return fontRepository.findByFontName(fontName)
                 .orElseThrow(() -> new NotFoundException(FONT_NOT_FOUND));
     }
 
