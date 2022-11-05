@@ -35,7 +35,7 @@ public class LetterController {
 
     @PutMapping("/{floated_letter_id}")
     public ResponseEntity<Message> refloatLetter(@PathVariable("floated_letter_id") Long floatedLetterId) {
-        return ResponseEntity.status(HttpStatus.NO_CONTENT)
+        return ResponseEntity.status(HttpStatus.CREATED)
                 .body(letterService.updateFloatedLetter(floatedLetterId));
     }
 
@@ -47,7 +47,7 @@ public class LetterController {
 
     @PutMapping("/replies/{reply_id}")
     public ResponseEntity<Message> checkReplyReception(@PathVariable("reply_id") Long replyId) {
-        return ResponseEntity.status(HttpStatus.NO_CONTENT)
+        return ResponseEntity.status(HttpStatus.CREATED)
                 .body(letterService.checkReplyReception(replyId));
     }
 
@@ -71,8 +71,14 @@ public class LetterController {
     }
 
     @GetMapping("/collection/detail/{letter_id}")
-    public ResponseEntity<FindCollectedLetterDetailResponse> findCollectionLetterDetail(@PathVariable("letter_id") Long letterId) {
+    public ResponseEntity<FindCollectedLetterDetailResponse> findCollectedLetterDetail(@PathVariable("letter_id") Long letterId) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(letterService.findCollectedLetterDetail(letterId));
+    }
+
+    @DeleteMapping("/collection/{letter_id}")
+    public ResponseEntity<Message> deleteCollectedLetter(@PathVariable("letter_id") Long letterId) {
+        return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                .body(letterService.deleteCollectedLetter(letterId));
     }
 }

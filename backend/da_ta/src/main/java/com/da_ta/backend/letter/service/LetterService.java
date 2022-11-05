@@ -141,7 +141,7 @@ public class LetterService {
         Reply reply = findReplyById(replyId);
         reply.updateIsRead();
         replyRepository.save(reply);
-        return new Message(REPLY_RECEPTION_CHECK_NO_CONTENT.getMessage());
+        return new Message(REPLY_RECEPTION_CHECK_CREATED.getMessage());
     }
 
     public Message updateFloatedLetter(Long floatedLetterId) {
@@ -151,7 +151,7 @@ public class LetterService {
         }
         floatedLetter.updateRecipient(null);
         floatedLetterRepository.save(floatedLetter);
-        return new Message(FLOATED_LETTER_NO_CONTENT.getMessage());
+        return new Message(FLOATED_LETTER_CREATED.getMessage());
     }
 
     public Message createCollection(Long userId, Long letterId) {
@@ -232,6 +232,13 @@ public class LetterService {
         }
     }
 
+    public Message deleteCollectedLetter(Long letterId) {
+        CollectedLetter collectedLetter = findCollectedLetterByLetterId(letterId);
+        collectedLetter.deleteCollectedLetter();
+        collectedLetterRepository.save(collectedLetter);
+        return new Message(COLLECTED_LETTER_DELETED.getMessage());
+    }
+
     private User findUserById(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
@@ -275,5 +282,10 @@ public class LetterService {
     private Reply findReplyById(Long replyId) {
         return replyRepository.findById(replyId)
                 .orElseThrow(() -> new NotFoundException(REPLY_NOT_FOUND));
+    }
+
+    private CollectedLetter findCollectedLetterByLetterId(Long letterId) {
+        return collectedLetterRepository.findByLetterId(letterId)
+                .orElseThrow(() -> new NotFoundException(COLLECTED_LETTER_NOT_FOUND));
     }
 }
