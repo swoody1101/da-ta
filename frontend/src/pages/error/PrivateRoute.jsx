@@ -1,19 +1,13 @@
 import React from "react";
 import { popWarningAlert } from "./../../utils/sweetAlert";
 import { Navigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { loginState } from "./../../recoil/Atoms";
 
 const PrivateRoute = ({ component: Component }) => {
-  //const authenticated = useSelector((state) => state.user.value.isLogin);
-  const authenticated = false;
+	const isLogin = useRecoilValue(loginState);
 
-  return authenticated ? (
-    Component
-  ) : (
-    <Navigate
-      to="/"
-      {...popWarningAlert("로그인", "로그인 후 이용해주세요.")}
-    />
-  );
+	return isLogin ? Component : <Navigate to="/" {...popWarningAlert("", "로그인 후 이용해주세요.")} />;
 };
 
 export default PrivateRoute;
