@@ -7,11 +7,11 @@ import java.time.LocalDateTime;
 
 @Getter
 @Builder
-public class LetterItem {
+public class CollectionItem {
 
     private Long letterId;
     private String letterTitle;
     private Long writerId;
     private String writerNickname;
-    private LocalDateTime writtenTime;
+    private LocalDateTime writtenDate;
 }
