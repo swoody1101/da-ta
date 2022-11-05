@@ -6,8 +6,6 @@ import Button from "../components/atoms/Button";
 import { MainText } from "../components/atoms/Text";
 import Input from "../components/atoms/Input";
 import DropDownInput from "../components/atoms/DropDownInput";
-import Loading from "./../components/molecules/Loading";
-import Header from "../components/atoms/Header";
 import MainNav from "./../components/templates/MainNav";
 import "../utils/progress_bar/loading-bar.js";
 import "../utils/progress_bar/loading-bar.css";
