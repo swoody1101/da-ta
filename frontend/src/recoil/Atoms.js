@@ -33,4 +33,4 @@ export const userState = atom({
 export const mypageRouterState = atom({
   key: "mypageRouterState",
   default: 0,
-})
+});
