@@ -8,5 +8,7 @@ import java.util.Optional;
 
 public interface CollectedLetterRepository extends JpaRepository<CollectedLetter, Long> {
 
+    Optional<CollectedLetter> findByLetterId(Long letterId);
+
     List<CollectedLetter> findAllByUserIdAndIsActiveTrueOrderByCreatedDate(Long userId);
 }
