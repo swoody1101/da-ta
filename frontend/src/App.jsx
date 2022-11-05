@@ -38,13 +38,9 @@ function App() {
 						<Route path="/testyoon" element={<TestPageYoon />} />
 						<Route path="/bytest" element={<TestBoyeon />} />
 						<Route path="/auth/oauth" element={<SocialLogin />} />
-						{/* <Route
-              path="/write"
-              element={<PrivateRoute component={<LetterWritePage />} />}
-            /> */}
-						<Route path="/write" element={<LetterWritePage />} />
-						<Route path="/read" element={<LetterReadPage />} />
-						<Route path="/mypage" element={<Mypage />}>
+						<Route path="/write" element={<PrivateRoute component={<LetterWritePage />} />} />
+						<Route path="/read" element={<PrivateRoute component={<LetterReadPage />} />} />
+						<Route path="/mypage" element={<PrivateRoute component={<Mypage />} />}>
 							<Route index path="collect" element={<Collect />} />
 							<Route path="receive" element={<Receive />} />
 							<Route path="setting" element={<Setting />} />
