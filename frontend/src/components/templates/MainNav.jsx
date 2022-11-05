@@ -13,8 +13,8 @@ import Button from "./../atoms/Button";
 import LogoImage from "./../molecules/LogoImage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { useRecoilState } from "recoil";
-import { loginState, mypageRouterState } from "./../../recoil/Atoms";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { loginState, mypageRouterState, userState } from "./../../recoil/Atoms";
 import { clickToKakao } from "../../api/authAPI";
 import { SIZE_WIDE } from "./../../constants/Sizes";
 
@@ -26,6 +26,7 @@ const MainNav = () => {
   const [headerMobileMode, setHeaderMobileMode] = useState(false); // pc모드인지 모바일모드인지 여부
   const [slideMenuToggle, setSlideMenuToggle] = useState(false); // 슬라이딩메뉴 토
   const [isLogin, setIsLogin] = useRecoilState(loginState); // Recoil로 관리하는 로그인 정보
+  const setUserState = useSetRecoilState(userState);
   const [mypageIndex, setMypageIndex] = useRecoilState(mypageRouterState); // Recoil로 관리하는 현재 마이페이지의 index
 
   const handleHeaderShow = () => {
@@ -43,21 +44,19 @@ const MainNav = () => {
 
   const handleLogin = () => {
     clickToKakao();
-    // setIsLogin(true);
   };
 
   const handleLogout = () => {
-    // setIsLogin(false);
+    setIsLogin(false);
+    setUserState({});
+    sessionStorage.removeItem("ACCESS_TOKEN");
+    window.location.href = "/";
   };
 
   useEffect(() => {
     handleHeaderMode();
     handleHeaderShow();
   }, []);
-
-  useEffect(() => {
-    console.log(isLogin);
-  }, [isLogin]);
 
   useEffect(() => {
     window.addEventListener("scroll", handleHeaderShow);

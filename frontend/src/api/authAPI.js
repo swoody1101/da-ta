@@ -25,8 +25,8 @@ export const kakaoLoginByAuthCode = async (code) => {
     .post("/user/login", {
       authorizationCode: code,
     })
-    .then((res) => res.data)
-    .catch((error) => error);
+    .then((res) => res)
+    .catch((error) => error.response);
 
   return response;
 };
