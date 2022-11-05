@@ -1,6 +1,6 @@
 package com.da_ta.backend.letter.controller.dto;
 
-import com.da_ta.backend.letter.controller.dto.common.LetterItem;
+import com.da_ta.backend.letter.controller.dto.common.CollectionItem;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -10,5 +10,5 @@ import java.util.List;
 @Builder
 public class FindLetterCollectionResponse {
 
-    private List<LetterItem> letters;
+    private List<CollectionItem> collection;
 }
