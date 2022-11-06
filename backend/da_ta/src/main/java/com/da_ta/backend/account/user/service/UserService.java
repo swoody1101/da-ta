@@ -149,10 +149,8 @@ public class UserService {
 
     private User getUser(String accessToken) {
         KakaoProfile kakaoProfile = getKakaoProfile(accessToken);
-        User user = userRepository.findByKakaoId(kakaoProfile.getKakaoAccount().getEmail());
-        if (user == null) {
-            user = signUp(kakaoProfile);
-        }
+        User user = userRepository.findByKakaoId(kakaoProfile.getKakaoAccount().getEmail())
+                .orElseGet(() -> signUp(kakaoProfile));
         return user;
     }
 
