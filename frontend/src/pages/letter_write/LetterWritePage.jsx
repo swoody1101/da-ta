@@ -23,6 +23,7 @@ import ContentBlock from "./../../components/atoms/letter/ContentBlock";
 import LetterImg from "./../../components/atoms/letter/LetterImg";
 import LetterCanvasArea from "./../../components/atoms/letter/LetterCanvasArea";
 import CanvasOptionBar from "../../components/molecules/letter/CanvasOptionBar";
+import { firebaseStorage, firestore } from "./../../firebase-config";
 
 const LetterWritePage = () => {
 	const [options, setOptions] = useState({
@@ -88,8 +89,6 @@ const LetterWritePage = () => {
 	 * @description 편지지 선택 시 이벤트
 	 */
 	const handleSelectPaper = (e) => {
-		console.log(e.target);
-		console.log(e.target.name);
 		setOptions({ ...options, paper: e.target.name });
 		setModalToggle(false);
 	};
@@ -100,6 +99,7 @@ const LetterWritePage = () => {
 	const handleLetterSend = () => {
 		// 편지지
 		if (act) {
+			// 1. 유효성 검사
 		}
 		// 도화지
 		else {
@@ -177,6 +177,7 @@ const LetterWritePage = () => {
 								canvasOptions={canvasOptions}
 								canvasSaveTrigger={canvasSaveTrigger}
 								setCanvasSaveTrigger={setCanvasSaveTrigger}
+								options={options}
 							>
 								이 브라우저는 캔버스를 지원하지 않습니다.
 							</LetterCanvasArea>
