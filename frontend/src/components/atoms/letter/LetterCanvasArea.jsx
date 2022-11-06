@@ -160,6 +160,7 @@ const LetterCanvasArea = ({ wrap, canvasOptions, canvasSaveTrigger, setCanvasSav
 
 	/** 터치 시 그리기 시작 */
 	const touchStart = (e) => {
+		document.body.style.overflow = "hidden";
 		const { offsetX, offsetY } = getTouchPos(e);
 		if (ctx) {
 			ctx.beginPath();
@@ -187,6 +188,8 @@ const LetterCanvasArea = ({ wrap, canvasOptions, canvasSaveTrigger, setCanvasSav
 
 	/** 터치 시 그리기 끝 */
 	const touchEnd = () => {
+		console.log("good");
+		document.body.style.overflow = "overlay";
 		setIsDrawing(false);
 	};
 

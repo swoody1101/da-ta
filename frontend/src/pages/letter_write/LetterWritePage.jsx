@@ -51,7 +51,6 @@ const LetterWritePage = () => {
 
 	const titleInput = useRef(); // 제목 ref (값 가져오기, focus)
 	const contentInput = useRef(); // 내용 ref (값 가져오기, ref)
-
 	const wrapRef = useRef();
 
 	/**
