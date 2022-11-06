@@ -68,10 +68,8 @@ public class UserService {
     public LoginResponse login(LoginRequest loginRequest, HttpHeaders headers) {
         KakaoToken kakaoToken = getKakaoAccessToken(loginRequest.getAuthorizationCode());
         User user = getUser(kakaoToken.getAccessToken());
-        TokenInfo accessToken = jwtTokenProvider.createAccessToken(user);
-        TokenInfo refreshToken = jwtTokenProvider.createRefreshToken(user);
-        jwtTokenProvider.setHeaderAccessToken(headers, accessToken.getValue());
-        redisRepository.save(refreshToken);
+        jwtTokenProvider.setHeaderAccessToken(headers, jwtTokenProvider.createAccessToken(user).getValue());
+        redisRepository.save(jwtTokenProvider.createRefreshToken(user));
         return LoginResponse.builder()
                 .userId(user.getId())
                 .nickname(user.getNickname())
@@ -91,10 +89,8 @@ public class UserService {
             if (jwtTokenProvider.validateToken(refreshToken.getValue())) {
                 User user = userRepository.findById(Long.parseLong(userId))
                         .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
-                TokenInfo newAccessToken = jwtTokenProvider.createAccessToken(user);
-                TokenInfo newRefreshToken = jwtTokenProvider.createRefreshToken(user);
-                jwtTokenProvider.setHeaderAccessToken(headers, newAccessToken.getValue());
-                redisRepository.save(newRefreshToken);
+                jwtTokenProvider.setHeaderAccessToken(headers, jwtTokenProvider.createAccessToken(user).getValue());
+                redisRepository.save(jwtTokenProvider.createRefreshToken(user));
             }
         } catch (ExpiredJwtException e) {
             throw new WrongAccessException(REFRESH_TOKEN_EXPIRED);
