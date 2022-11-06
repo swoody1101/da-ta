@@ -41,6 +41,7 @@ public class UserService {
     private final String GRANT_TYPE_VALUE = "authorization_code";
     private final String TOKEN_SUBJECT = "sub";
     private final String DELIMITER = " ";
+    private final String TILDE = "~";
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final RedisRepository redisRepository;
@@ -197,7 +198,7 @@ public class UserService {
         if (ageRange == null) {
             return AGE_ALL;
         } else {
-            StringTokenizer stringTokenizer = new StringTokenizer(ageRange, "~");
+            StringTokenizer stringTokenizer = new StringTokenizer(ageRange, TILDE);
             int startAge = Integer.parseInt(stringTokenizer.nextToken());
             int endAge = Integer.parseInt(stringTokenizer.nextToken());
             if (startAge == 1 && endAge == 9) {
