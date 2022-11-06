@@ -9,8 +9,8 @@ import org.springframework.data.redis.core.index.Indexed;
 @Getter
 @Builder
 @RedisHash("auth")
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class TokenInfo {
 
     @Id
