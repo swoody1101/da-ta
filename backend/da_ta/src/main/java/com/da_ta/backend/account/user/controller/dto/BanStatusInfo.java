@@ -6,7 +6,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class LoginRequest {
+public class BanStatusInfo {
 
-    private String authorizationCode;
+    private Boolean isBan;
 }
