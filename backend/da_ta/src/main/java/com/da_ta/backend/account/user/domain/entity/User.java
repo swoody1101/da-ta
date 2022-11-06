@@ -1,6 +1,7 @@
 package com.da_ta.backend.account.user.domain.entity;
 
 import com.da_ta.backend.account.user.domain.Role;
+import com.da_ta.backend.common.domain.Age;
 import com.da_ta.backend.common.domain.CommonEntity;
 import com.da_ta.backend.letter.domain.entity.CollectedLetter;
 import com.da_ta.backend.letter.domain.entity.Reply;
@@ -30,7 +31,9 @@ public class User extends CommonEntity implements UserDetails {
     @Column(nullable = false, unique = true)
     private String nickname;
 
-    private String age;
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private Age age = Age.AGE_ALL;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -41,7 +44,7 @@ public class User extends CommonEntity implements UserDetails {
     @Builder.Default
     private boolean isAlertActive = true;
 
-    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "reply", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Reply> replies = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE})

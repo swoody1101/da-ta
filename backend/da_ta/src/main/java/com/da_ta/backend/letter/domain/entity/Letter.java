@@ -1,7 +1,10 @@
 package com.da_ta.backend.letter.domain.entity;
 
+import com.da_ta.backend.account.user.domain.entity.User;
+import com.da_ta.backend.common.domain.Age;
 import com.da_ta.backend.common.domain.CommonEntity;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -22,7 +25,9 @@ public class Letter extends CommonEntity {
     private boolean replyOption;
 
     @NotNull
-    private String ageOption;
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private Age ageOption = Age.AGE_ALL;
 
     @NotNull
     private String title;
@@ -30,4 +35,11 @@ public class Letter extends CommonEntity {
     @ManyToOne
     @JoinColumn(name = "background_id")
     private Background background;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "writer_id")
+    private User writer;
+
+    @Column(name = "letter_type")
+    private String letterType;
 }

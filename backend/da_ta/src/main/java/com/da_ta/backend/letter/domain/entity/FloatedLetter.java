@@ -20,15 +20,22 @@ import java.util.List;
 public class FloatedLetter extends CommonEntity {
 
     @NotNull
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "letter_id", unique = true)
     private Letter letter;
 
-    @NotNull
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", unique = true)
-    private User user;
+    @JoinColumn(name = "recipient_id", unique = true)
+    private User recipient;
 
     @OneToMany(mappedBy = "floatedLetter", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<Log> logs = new ArrayList<>();
+    private List<FloatedLetterLog> logs = new ArrayList<>();
+
+    public void updateRecipient(User recipient) {
+        this.recipient = recipient;
+    }
+
+    public void deleteFloatedLetter() {
+        super.delete();
+    }
 }

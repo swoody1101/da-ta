@@ -18,9 +18,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler({WrongAccessException.class})
-    private ResponseEntity<Message> handleNotFoundException(WrongAccessException wrongAccessException) {
+    private ResponseEntity<Message> handleWrongAccessException(WrongAccessException wrongAccessException) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(new Message(wrongAccessException.getErrorCode().getMessage()));
     }
 }
-

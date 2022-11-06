@@ -3,6 +3,7 @@ package com.da_ta.backend.letter.domain.entity;
 import com.da_ta.backend.account.user.domain.entity.User;
 import com.da_ta.backend.common.domain.CommonEntity;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -23,12 +24,17 @@ public class Reply extends CommonEntity {
     @NotNull
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reply_letter_id", unique = true)
-    private Letter letter;
+    private Letter reply;
 
-    private boolean isRead;
+    @Builder.Default
+    private boolean isRead = false;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "recipient_id")
+    private User recipient;
+
+    public void updateIsRead() {
+        this.isRead = true;
+    }
 }
