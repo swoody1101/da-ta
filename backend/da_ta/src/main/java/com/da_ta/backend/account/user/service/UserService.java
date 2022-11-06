@@ -4,7 +4,6 @@ import com.da_ta.backend.account.jwt.JwtTokenProvider;
 import com.da_ta.backend.account.user.controller.dto.*;
 import com.da_ta.backend.account.user.domain.entity.BanStatus;
 import com.da_ta.backend.account.user.domain.entity.User;
-import com.da_ta.backend.account.user.domain.repository.BanStatusRepository;
 import com.da_ta.backend.account.user.domain.repository.RedisRepository;
 import com.da_ta.backend.account.user.domain.repository.UserRepository;
 import com.da_ta.backend.common.domain.Age;
@@ -43,7 +42,6 @@ public class UserService {
     private final String TOKEN_SUBJECT = "sub";
     private final String DELIMITER = " ";
     private final UserRepository userRepository;
-    private final BanStatusRepository banStatusRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final RedisRepository redisRepository;
 
