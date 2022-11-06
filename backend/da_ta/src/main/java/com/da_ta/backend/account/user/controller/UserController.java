@@ -24,7 +24,6 @@ public class UserController {
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
         HttpHeaders headers = new HttpHeaders();
         LoginResponse loginResponse = userService.login(loginRequest, headers);
-        log.info("access-token : " + headers);
         return ResponseEntity.status(HttpStatus.OK)
                 .headers(headers)
                 .body(loginResponse);
@@ -34,7 +33,6 @@ public class UserController {
     public ResponseEntity<Message> reissue(@RequestHeader(AUTHORIZATION) String token) {
         HttpHeaders headers = new HttpHeaders();
         Message message = userService.reissue(headers, token);
-        log.info("reissued access-token :" + headers);
         return ResponseEntity.status(HttpStatus.OK)
                 .headers(headers)
                 .body(message);
