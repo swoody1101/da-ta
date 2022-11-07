@@ -15,6 +15,7 @@ const StyledInput = styled.input`
   height: 1.5rem;
   border: 3px solid gainsboro;
   border-radius: 100%;
+  margin: 0;
 
   &:checked {
     border-color: transparent;

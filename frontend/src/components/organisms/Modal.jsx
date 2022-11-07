@@ -17,6 +17,7 @@ const Modal = ({
   setModalToggle,
   onModalClick,
   titleText,
+  height
 }) => {
   useEffect(() => {
     document.body.style.cssText = `
@@ -37,7 +38,7 @@ const Modal = ({
         <>
           l
           <TranslucentBackground onClick={() => setModalToggle(false)} />
-          <ModalContainer>
+          <ModalContainer height={height}>
             {/* 닫기 버튼 */}
             <FaWrapper onClick={() => setModalToggle(false)}>
               <FontAwesomeIcon icon={faX} size="lg" />
@@ -61,7 +62,7 @@ const ModalContainer = styled.div`
   flex-direction: column;
   z-index: 1001;
   width: 55rem;
-  height: 80vh;
+  height: ${(props) => props.height || "80vh"};
   border-radius: 1rem;
   background-color: white;
   align-items: center;
