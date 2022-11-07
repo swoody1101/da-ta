@@ -4,14 +4,32 @@
  */
 import styled from "styled-components";
 import React, { useEffect, useRef, useState } from "react";
-import { isFocusable } from "@testing-library/user-event/dist/utils";
+import { firebaseStorage } from "../../../firebase-config";
+import { downloadFirebaseStorage, uploadFirebaseStorage } from "../../../utils/firebaseStorage";
+import { saveCanvasLetter } from "../../../api/letterWriteAPI";
+import { popErrorAlert } from "../../../utils/sweetAlert";
+import { popSuccessAlert } from "./../../../utils/sweetAlert";
+import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { userState } from "../../../recoil/Atoms";
 
-const LetterCanvasArea = ({ wrap, canvasOptions, canvasSaveTrigger, setCanvasSaveTrigger }) => {
+/**
+ *
+ * @param {*} wrap 화면크기
+ * @param {object} canvasOptions 캔버스 옵션
+ * @param {boolean} canvasSaveTrigger 보내기 버튼 누를 시 트리거
+ * @param {*} setCanvasSaveTrigger
+ * @param {object} options 편지지 옵션
+ * @returns
+ */
+const LetterCanvasArea = ({ wrap, canvasOptions, canvasSaveTrigger, setCanvasSaveTrigger, options }) => {
+	const navigate = useNavigate();
 	const canvasRef = useRef(null);
 	const contextRef = useRef(null);
 
 	const [ctx, setCtx] = useState();
 	const [isDrawing, setIsDrawing] = useState(false);
+	const user = useRecoilValue(userState);
 
 	// 캔버스 초기화용 useEffect
 	useEffect(() => {
@@ -99,12 +117,21 @@ const LetterCanvasArea = ({ wrap, canvasOptions, canvasSaveTrigger, setCanvasSav
 	};
 
 	/** 캔버스로 그린 그림 저장 */
-	const saveCanvas = () => {
-		const image = canvasRef.current.toDataURL("image/png");
-		const link = document.createElement("a");
-		link.href = image;
-		link.download = "draw_image.png";
-		link.click();
+	const saveCanvas = async () => {
+		const image = canvasRef.current.toDataURL("image/png"); // 그린 그림 png로 추출
+		const imagePath = uploadFirebaseStorage(image, "drawings/");
+
+		// api 요청 보내자...
+		const response = await saveCanvasLetter(options, imagePath, user.userId);
+
+		if (response.status !== 200) {
+			popErrorAlert("편지 보내기 실패", "편지 전송 중 문제가 발생했어요");
+			console.log(response);
+			return;
+		}
+
+		popSuccessAlert("편지 보내기 성공", "소중한 이야기가 바다 위에 띄워졌습니다");
+		navigate("/");
 	};
 
 	/** 드로잉 중 이벤트 */
@@ -133,6 +160,7 @@ const LetterCanvasArea = ({ wrap, canvasOptions, canvasSaveTrigger, setCanvasSav
 
 	/** 터치 시 그리기 시작 */
 	const touchStart = (e) => {
+		document.body.style.overflow = "hidden";
 		const { offsetX, offsetY } = getTouchPos(e);
 		if (ctx) {
 			ctx.beginPath();
@@ -160,6 +188,8 @@ const LetterCanvasArea = ({ wrap, canvasOptions, canvasSaveTrigger, setCanvasSav
 
 	/** 터치 시 그리기 끝 */
 	const touchEnd = () => {
+		console.log("good");
+		document.body.style.overflow = "overlay";
 		setIsDrawing(false);
 	};
 
