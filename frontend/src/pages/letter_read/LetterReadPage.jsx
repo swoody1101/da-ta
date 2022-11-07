@@ -7,6 +7,7 @@ import ReadButtons from "../../components/molecules/ReadButtons";
 import ReadLetterText from "../../components/molecules/ReadLetterText";
 import { useSetRecoilState } from "recoil";
 import { loadingState } from "../../recoil/Atoms";
+import ReportModal from "../../components/organisms/ReportModal";
 
 const LetterReadPage = () => {
   const [blur, setBlur] = useState(false);
@@ -49,19 +50,21 @@ const LetterReadPage = () => {
   }, []);
   return (
     <>
-      {loading &&
-        (isPicture ? (
-          <ReadWrapper>
-            <ReadLetterText info={letter.letterInfo}></ReadLetterText>
-            <ReadButtons index={letter.reply_option ? 0 : 1}></ReadButtons>
-          </ReadWrapper>
-        ) : (
-          <ReadWrapper>
-            <ReadLetterText info={letter.letterInfo}></ReadLetterText>
-            <ReadButtons index={letter.reply_option ? 0 : 1}></ReadButtons>
-          </ReadWrapper>
-        ))}
-
+      <ReadWrapper>
+        {loading &&
+          (isPicture ? (
+            <>
+              <ReadLetterText info={letter.letterInfo}></ReadLetterText>
+              <ReadButtons index={letter.reply_option ? 0 : 1}></ReadButtons>
+            </>
+          ) : (
+            <>
+              <ReadLetterText info={letter.letterInfo}></ReadLetterText>
+              <ReadButtons index={letter.reply_option ? 0 : 1}></ReadButtons>
+            </>
+          ))}
+        <ReportModal />
+      </ReadWrapper>
       <BackgroundVideo
         isBlur={blur}
         path={`${process.env.PUBLIC_URL}/assets/video/bg2.mp4`}

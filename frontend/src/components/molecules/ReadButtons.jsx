@@ -2,8 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import { media } from "../../utils/styleUtil";
 import Button from "../atoms/Button";
+import { useSetRecoilState } from "recoil";
+import { reportState } from "../../recoil/Atoms";
 
 const ReadButtons = ({ index }) => {
+  const setRecoilState = useSetRecoilState(reportState);
+
   return (
     <ButtonDiv>
       {
@@ -61,7 +65,7 @@ const ReadButtons = ({ index }) => {
         mWidth={"40%"}
         mHeight={"40px"}
         mBorderRadius={"8px"}
-        onClick={() => console.log("신고하기")}
+        onClick={() => setRecoilState(true)}
       >
         신고하기
       </ReportButton>
