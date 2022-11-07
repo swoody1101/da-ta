@@ -183,7 +183,7 @@ public class LetterService {
 
     public FindLetterCollectionResponse findLetterCollection(Long userId) {
         return FindLetterCollectionResponse.builder()
-                .collection(collectedLetterRepository.findAllByUserIdAndIsActiveTrueOrderByCreatedDate(userId)
+                .collection(collectedLetterRepository.findAllByUserIdAndIsActiveTrueOrderByCreatedDateDesc(userId)
                         .stream()
                         .map(collectedLetter ->
                                 CollectionItem.builder()
@@ -245,7 +245,7 @@ public class LetterService {
 
     public FindRepliesResponse findReplies(Long userId) {
         return FindRepliesResponse.builder()
-                .replies(replyRepository.findAllByUserIdAndIsActiveTrueOrderByCreatedDate(userId)
+                .replies(replyRepository.findAllByUserIdAndIsActiveTrueOrderByCreatedDateDesc(userId)
                         .stream()
                         .map(reply ->
                                 ReplyItem.builder()
