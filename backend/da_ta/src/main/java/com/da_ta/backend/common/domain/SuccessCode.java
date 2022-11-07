@@ -8,6 +8,7 @@ import lombok.Getter;
 public enum SuccessCode {
 
     REISSUED_TOKEN("토큰이 재발급되었습니다."),
+    AGE_RANGE_UPDATED("연령대 수정이 완료되었습니다"),
 
     COLLECTED_LETTER_CREATED("편지를 주웠습니다."),
     COLLECTED_LETTER_DELETED("편지가 보관함에서 삭제되었습니다."),
