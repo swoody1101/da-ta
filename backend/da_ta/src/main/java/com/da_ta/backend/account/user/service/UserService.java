@@ -42,8 +42,8 @@ public class UserService {
     private final String TOKEN_SUBJECT = "sub";
     private final String DELIMITER = " ";
     private final String TILDE = "~";
-    private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
+    private final UserRepository userRepository;
     private final RedisRepository redisRepository;
 
     @Value("${kakao.client-id}")
@@ -218,29 +218,21 @@ public class UserService {
         return AGE_60S;
     }
 
-    public Message updateAgeRange(String token, UpdateAgeRangeRequest updateAgeRangeRequest) {
-        User user = findUserByToken(token);
+    public Message updateAgeRange(User user, UpdateAgeRangeRequest updateAgeRangeRequest) {
         user.updateAgeRange(updateAgeRangeRequest.getAgeRange());
         userRepository.save(user);
         return new Message(AGE_RANGE_UPDATED.getMessage());
     }
 
-    public Message updateAlertOption(String token, UpdateAlertOptionRequest updateAlertOptionRequest) {
-        User user = findUserByToken(token);
+    public Message updateAlertOption(User user, UpdateAlertOptionRequest updateAlertOptionRequest) {
         user.updateAlertOption(updateAlertOptionRequest.isAlertOption());
         userRepository.save(user);
         return new Message(ALERT_OPTION_UPDATED.getMessage());
     }
 
-    public Message deleteUser(String token) {
-        User user = findUserByToken(token);
+    public Message deleteUser(User user) {
         user.deleteUser();
         userRepository.save(user);
         return new Message(USER_DELETED.getMessage());
-    }
-
-    private User findUserByToken(String token) {
-        return userRepository.findById(Long.parseLong(jwtTokenProvider.getUserId(token)))
-                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
     }
 }

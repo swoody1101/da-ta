@@ -2,6 +2,8 @@ package com.da_ta.backend.account.jwt;
 
 import com.da_ta.backend.account.user.controller.dto.TokenInfo;
 import com.da_ta.backend.account.user.domain.entity.User;
+import com.da_ta.backend.account.user.domain.repository.UserRepository;
+import com.da_ta.backend.common.domain.exception.NotFoundException;
 import com.da_ta.backend.common.domain.exception.WrongAccessException;
 import com.da_ta.backend.util.JwtUtil;
 import io.jsonwebtoken.*;
@@ -50,6 +52,9 @@ public class JwtTokenProvider {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @PostConstruct
     protected void init() {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
@@ -84,6 +89,11 @@ public class JwtTokenProvider {
         HashMap<String, String> payloadMap = JwtUtil.getPayloadByToken(token);
         UserDetails userDetails = userDetailsService.loadUserByUsername(payloadMap.get(TOKEN_SUBJECT));
         return new UsernamePasswordAuthenticationToken(userDetails, token, userDetails.getAuthorities());
+    }
+
+    public User findUserByToken(String token) {
+        return userRepository.findById(Long.parseLong(getUserId(token)))
+                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
     }
 
     public String getUserId(String token) {
