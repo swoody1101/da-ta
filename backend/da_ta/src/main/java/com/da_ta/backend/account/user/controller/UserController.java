@@ -25,6 +25,7 @@ public class UserController {
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
         HttpHeaders headers = new HttpHeaders();
         LoginResponse loginResponse = userService.login(loginRequest, headers);
+        log.info("access-token : " + headers);
         return ResponseEntity.status(HttpStatus.OK)
                 .headers(headers)
                 .body(loginResponse);
@@ -41,7 +42,7 @@ public class UserController {
 
     @PutMapping("/update/1")
     public ResponseEntity<Message> updateAgeRange(@RequestHeader(AUTHORIZATION) String token, @RequestBody UpdateAgeRangeRequest updateAgeRangeRequest) {
-        return ResponseEntity.status(HttpStatus.OK)
+        return ResponseEntity.status(HttpStatus.CREATED)
                 .body(userService.updateAgeRange(token, updateAgeRangeRequest));
     }
 }
