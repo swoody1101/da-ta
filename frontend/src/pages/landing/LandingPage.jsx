@@ -176,12 +176,14 @@ const TextWrapper = styled.div`
 `;
 
 const MouseScrollDownArrowWrapper = styled.div`
-  width: 100vw;
   display: flex;
   position: absolute;
   justify-content: center;
   align-items: center;
   z-index: 5;
+  top: 56%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 const MouseScrollDownMouseWrapper = styled.div`
@@ -192,4 +194,5 @@ const MouseScrollDownMouseWrapper = styled.div`
   align-items: center;
   z-index: 5;
 `;
+
 export default LandingPage;
