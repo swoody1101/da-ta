@@ -185,16 +185,14 @@ public class LetterService {
         return FindLetterCollectionResponse.builder()
                 .collection(collectedLetterRepository.findAllByUserIdAndIsActiveTrueOrderByCreatedDate(userId)
                         .stream()
-                        .map(collectedLetter -> {
-                                    Letter letter = collectedLetter.getLetter();
-                                    return CollectionItem.builder()
-                                            .letterId(letter.getId())
-                                            .letterTitle(letter.getTitle())
-                                            .writerId(letter.getWriter().getId())
-                                            .writerNickname(letter.getWriter().getNickname())
-                                            .writtenDate(letter.getCreatedDate())
-                                            .build();
-                                }
+                        .map(collectedLetter ->
+                                CollectionItem.builder()
+                                        .letterId(collectedLetter.getLetter().getId())
+                                        .letterTitle(collectedLetter.getLetter().getTitle())
+                                        .writerId(collectedLetter.getLetter().getWriter().getId())
+                                        .writerNickname(collectedLetter.getLetter().getWriter().getNickname())
+                                        .writtenDate(collectedLetter.getLetter().getCreatedDate())
+                                        .build()
                         ).collect(Collectors.toList()))
                 .build();
     }
@@ -237,6 +235,35 @@ public class LetterService {
         collectedLetter.deleteCollectedLetter();
         collectedLetterRepository.save(collectedLetter);
         return new Message(COLLECTED_LETTER_DELETED.getMessage());
+    }
+
+    public FindUnreadReplyResponse checkUnreadReply(Long userId) {
+        return FindUnreadReplyResponse.builder()
+                .isUnreadReply(replyRepository.existsByIsReadTrueAndIsActiveTrueAndRecipientId(userId))
+                .build();
+    }
+
+    public FindRepliesResponse findReplies(Long userId) {
+        return FindRepliesResponse.builder()
+                .replies(replyRepository.findAllByUserIdAndIsActiveTrueOrderByCreatedDate(userId)
+                        .stream()
+                        .map(reply ->
+                                ReplyItem.builder()
+                                        .replyId(reply.getReply().getId())
+                                        .replyTitle(reply.getReply().getTitle())
+                                        .writerId(reply.getReply().getWriter().getId())
+                                        .writerNickname(reply.getReply().getWriter().getNickname())
+                                        .writtenDate(reply.getReply().getCreatedDate())
+                                        .isRead(reply.isRead())
+                                        .build())
+                        .collect(Collectors.toList()))
+                .build();
+    }
+
+    public FindReplyDetailResponse findReplyDetail(Long replyId) {
+        return FindReplyDetailResponse.builder()
+                .myLetterInfo(LetterInfo.builder().build())
+                .replyInfo( ReplyInfo.builder().build()).build();
     }
 
     private User findUserById(Long userId) {

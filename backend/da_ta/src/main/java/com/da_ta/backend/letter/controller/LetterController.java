@@ -81,4 +81,22 @@ public class LetterController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT)
                 .body(letterService.deleteCollectedLetter(letterId));
     }
+
+    @GetMapping("/replies/check/{user_id}")
+    public ResponseEntity<FindUnreadReplyResponse> checkUnreadReplyResponse(@PathVariable("user_id") Long userId) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(letterService.checkUnreadReply(userId));
+    }
+
+    @GetMapping("/replies/{user_id}")
+    public ResponseEntity<FindRepliesResponse> findReplies(@PathVariable("user_id") Long userId) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(letterService.findReplies(userId));
+    }
+
+    @GetMapping("/replies/detail/{reply_id}")
+    public ResponseEntity<FindReplyDetailResponse> findReplyDetail(@PathVariable("reply_id") Long replyId) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(letterService.findReplyDetail(replyId));
+    }
 }
