@@ -5,5 +5,5 @@ import lombok.Getter;
 @Getter
 public class AccuseLetterRequest {
 
-    String reason;
+    private String reason;
 }

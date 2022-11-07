@@ -42,4 +42,8 @@ public class Letter extends CommonEntity {
 
     @Column(name = "letter_type")
     private String letterType;
+
+    protected void deleteLetter() {
+        super.delete();
+    }
 }
