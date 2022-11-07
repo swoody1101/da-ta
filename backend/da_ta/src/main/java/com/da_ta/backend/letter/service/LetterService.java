@@ -261,8 +261,7 @@ public class LetterService {
     }
 
     public FindReplyDetailResponse findReplyDetail(Long replyId) {
-        Reply reply = findReplyById(replyId);
-        Long originLetterId = reply.getOriginLetterId();
+        Long originLetterId = findReplyById(replyId).getOriginLetterId();
         Letter originLetter = findLetterById(originLetterId);
         TextLetter replyLetter = findTextLetterById(replyId);
         ReplyInfo replyInfo = ReplyInfo.builder()
@@ -304,7 +303,7 @@ public class LetterService {
         }
     }
 
-    public Message deleteReply(Long replyLetterId){
+    public Message deleteReply(Long replyLetterId) {
         Reply reply = findReplyByReplyLetterId(replyLetterId);
         reply.deleteReplyLetter();
         replyRepository.save(reply);
