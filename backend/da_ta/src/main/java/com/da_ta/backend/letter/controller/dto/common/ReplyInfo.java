@@ -13,7 +13,7 @@ public class ReplyInfo {
     private String writerNickname;
     private String title;
     private String content;
-    private String backgroundUrl;
-    private String fontName;
+    private Long backgroundId;
+    private Long fontId;
     private LocalDateTime writtenDate;
 }

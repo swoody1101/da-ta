@@ -32,9 +32,8 @@ public class Letter extends CommonEntity {
     @NotNull
     private String title;
 
-    @ManyToOne
-    @JoinColumn(name = "background_id")
-    private Background background;
+    @NotNull
+    private Long backgroundId;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "writer_id")

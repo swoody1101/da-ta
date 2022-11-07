@@ -27,11 +27,9 @@ public class LetterService {
     private final static String TYPE_TEXT = "Text";
     private final static String TYPE_IMAGE = "Image";
 
-    private final BackgroundRepository backgroundRepository;
     private final CollectedLetterRepository collectedLetterRepository;
     private final FloatedLetterRepository floatedLetterRepository;
     private final FloatedLetterLogRepository floatedLetterLogRepository;
-    private final FontRepository fontRepository;
     private final ImageLetterRepository imageLetterRepository;
     private final LetterAccusationRepository letterAccusationRepository;
     private final LetterRepository letterRepository;
@@ -47,8 +45,8 @@ public class LetterService {
                 .writer(findUserById(textLetterCreateRequest.getUserId()))
                 .ageOption(option.getAgeOption())
                 .replyOption(option.getReplyOption())
-                .background(findBackgroundByUrl(textLetterInfo.getBackgroundUrl()))
-                .font(findFontByName(textLetterInfo.getFontName()))
+                .backgroundId(textLetterInfo.getBackgroundId())
+                .fontId(textLetterInfo.getFontId())
                 .title(textLetterInfo.getTitle())
                 .content(textLetterInfo.getContent())
                 .build();
@@ -65,7 +63,7 @@ public class LetterService {
                 .writer(findUserById(imageLetterCreateRequest.getUserId()))
                 .ageOption(option.getAgeOption())
                 .replyOption(option.getReplyOption())
-                .background(findBackgroundByUrl(imageLetterInfo.getImageLetterUrl()))
+                .backgroundId(imageLetterInfo.getBackgroundId())
                 .title(imageLetterInfo.getTitle())
                 .imageLetterUrl(imageLetterInfo.getImageLetterUrl())
                 .build();
@@ -96,8 +94,8 @@ public class LetterService {
                             .letterId(textLetter.getId())
                             .title(textLetter.getTitle())
                             .content(textLetter.getContent())
-                            .backgroundUrl(textLetter.getBackground().getBackgroundUrl())
-                            .fontName(textLetter.getFont().getFontName())
+                            .backgroundId(textLetter.getBackgroundId())
+                            .fontId(textLetter.getFontId())
                             .writtenDate(textLetter.getCreatedDate())
                             .build())
                     .build();
@@ -111,7 +109,7 @@ public class LetterService {
                             .letterId(imageLetter.getId())
                             .title(imageLetter.getTitle())
                             .imageLetterUrl(imageLetter.getImageLetterUrl())
-                            .backgroundUrl(imageLetter.getBackground().getBackgroundUrl())
+                            .backgroundId(imageLetter.getBackgroundId())
                             .writtenDate(imageLetter.getCreatedDate())
                             .build())
                     .build();
@@ -125,8 +123,8 @@ public class LetterService {
         TextLetter textLetter = TextLetter.builder()
                 .title(textLetterInfo.getTitle())
                 .content(textLetterInfo.getContent())
-                .background(findBackgroundByUrl(textLetterInfo.getBackgroundUrl()))
-                .font(findFontByName(textLetterInfo.getFontName()))
+                .backgroundId(textLetterInfo.getBackgroundId())
+                .fontId(textLetterInfo.getFontId())
                 .build();
         textLetterRepository.save(textLetter);
         replyRepository.save(Reply.builder()
@@ -208,8 +206,8 @@ public class LetterService {
                     .letterInfo(LetterInfo.builder()
                             .title(textLetter.getTitle())
                             .content(textLetter.getContent())
-                            .backgroundUrl(textLetter.getBackground().getBackgroundUrl())
-                            .fontName(textLetter.getFont().getFontName())
+                            .backgroundId(textLetter.getBackgroundId())
+                            .fontId(textLetter.getFontId())
                             .writtenDate(textLetter.getCreatedDate())
                             .build())
                     .build();
@@ -221,7 +219,7 @@ public class LetterService {
                     .writerNickname(imageLetter.getWriter().getNickname())
                     .letterInfo(LetterInfo.builder()
                             .title(imageLetter.getTitle())
-                            .backgroundUrl(imageLetter.getBackground().getBackgroundUrl())
+                            .backgroundId(imageLetter.getBackgroundId())
                             .writtenDate(imageLetter.getCreatedDate())
                             .build())
                     .build();
@@ -269,8 +267,8 @@ public class LetterService {
                 .writerNickname(replyLetter.getWriter().getNickname())
                 .title(replyLetter.getTitle())
                 .content(replyLetter.getContent())
-                .backgroundUrl(replyLetter.getBackground().getBackgroundUrl())
-                .fontName(replyLetter.getFont().getFontName())
+                .backgroundId(replyLetter.getBackgroundId())
+                .fontId(replyLetter.getFontId())
                 .writtenDate(replyLetter.getCreatedDate())
                 .build();
         if (originLetter.getLetterType().equals(TYPE_TEXT)) {
@@ -279,10 +277,10 @@ public class LetterService {
                     .originLetterInfo(LetterInfo.builder()
                             .letterId(originLetterId)
                             .title(textLetter.getTitle())
-                            .backgroundUrl(textLetter.getBackground().getBackgroundUrl())
+                            .backgroundId(textLetter.getBackgroundId())
                             .writtenDate(textLetter.getCreatedDate())
                             .content(textLetter.getContent())
-                            .fontName(textLetter.getFont().getFontName())
+                            .fontId(textLetter.getFontId())
                             .build())
                     .replyInfo(replyInfo)
                     .build();
@@ -292,7 +290,7 @@ public class LetterService {
                     .originLetterInfo(LetterInfo.builder()
                             .letterId(originLetterId)
                             .title(imageLetter.getTitle())
-                            .backgroundUrl(imageLetter.getBackground().getBackgroundUrl())
+                            .backgroundId(imageLetter.getBackgroundId())
                             .writtenDate(imageLetter.getCreatedDate())
                             .imageLetterUrl(imageLetter.getImageLetterUrl())
                             .build())
@@ -328,16 +326,6 @@ public class LetterService {
     private ImageLetter findImageLetterById(Long LetterId) {
         return imageLetterRepository.findById(LetterId)
                 .orElseThrow(() -> new NotFoundException(IMAGE_LETTER_NOT_FOUND));
-    }
-
-    private Background findBackgroundByUrl(String backgroundUrl) {
-        return backgroundRepository.findByBackgroundUrl(backgroundUrl)
-                .orElseThrow(() -> new NotFoundException(BACKGROUND_NOT_FOUND));
-    }
-
-    private Font findFontByName(String fontName) {
-        return fontRepository.findByFontName(fontName)
-                .orElseThrow(() -> new NotFoundException(FONT_NOT_FOUND));
     }
 
     private FloatedLetter findFloatedLetterById(Long floatedLetterId) {
