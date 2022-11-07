@@ -120,8 +120,8 @@ public class LetterService {
         }
     }
 
-    public Message createReply(Long letterId, ReplyCreateRequest replyCreateRequest) {
-        TextLetterInfo textLetterInfo = replyCreateRequest.getTextLetterInfo();
+    public Message createReply(Long letterId, CreateReplyRequset createReplyRequset) {
+        TextLetterInfo textLetterInfo = createReplyRequset.getTextLetterInfo();
         TextLetter textLetter = TextLetter.builder()
                 .title(textLetterInfo.getTitle())
                 .content(textLetterInfo.getContent())
@@ -130,7 +130,7 @@ public class LetterService {
                 .build();
         textLetterRepository.save(textLetter);
         replyRepository.save(Reply.builder()
-                .recipient(findUserById(replyCreateRequest.getRecipientId()))
+                .recipient(findUserById(createReplyRequset.getRecipientId()))
                 .originLetterId(letterId)
                 .reply(textLetter)
                 .build());
@@ -154,7 +154,7 @@ public class LetterService {
         return new Message(FLOATED_LETTER_CREATED.getMessage());
     }
 
-    public Message createCollection(Long userId, Long letterId) {
+    public Message collectLetter(Long userId, Long letterId) {
         Letter letter = findLetterById(letterId);
         if (letter.isReplyOption()) {
             throw new BadRequestException(COLLECT_BAD_REQUEST);
@@ -228,7 +228,7 @@ public class LetterService {
                             .build())
                     .build();
         } else {
-            throw new NotFoundException(LETTER_NOT_FOUND);
+            throw new NotFoundException(LETTER_TYPE_NOT_FOUND);
         }
     }
 

@@ -40,9 +40,9 @@ public class LetterController {
     }
 
     @PostMapping("/replies/{letter_id}")
-    public ResponseEntity<Message> createReply(@PathVariable("letter_id") Long LetterId, @RequestBody ReplyCreateRequest replyCreateRequest) {
+    public ResponseEntity<Message> createReply(@PathVariable("letter_id") Long LetterId, @RequestBody CreateReplyRequset createReplyRequset) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(letterService.createReply(LetterId, replyCreateRequest));
+                .body(letterService.createReply(LetterId, createReplyRequset));
     }
 
     @PutMapping("/replies/{reply_id}")
@@ -54,7 +54,7 @@ public class LetterController {
     @PostMapping("/collect/{user_id}/{letter_id}")
     public ResponseEntity<Message> collectLetter(@PathVariable("user_id") Long userId, @PathVariable("letter_id") Long letterId) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(letterService.createCollection(userId, letterId));
+                .body(letterService.collectLetter(userId, letterId));
     }
 
     @PostMapping("/accusation/{reporter_id}/{letter_id}")
