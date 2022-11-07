@@ -1,7 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:8080/api/v1";
-// const BASE_URL = "https://k7b106.p.ssafy.io/api/v1";
+const BASE_URL = process.env.REACT_APP_REST_API_DOMAIN;
 
 export const client = axios.create({
   baseURL: BASE_URL,
@@ -13,10 +12,10 @@ export const client = axios.create({
 client.interceptors.request.use(
   (config) => {
     const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
-    const refreshToken = sessionStorage.getItem("REFRESH_TOKEN");
 
-    if (!accessToken || !refreshToken) config.headers["Authorization"] = null;
+    if (!accessToken) config.headers["Authorization"] = null;
     else config.headers["Authorization"] = `Bearer ${accessToken}`;
+
     return config;
   },
   (error) => {
