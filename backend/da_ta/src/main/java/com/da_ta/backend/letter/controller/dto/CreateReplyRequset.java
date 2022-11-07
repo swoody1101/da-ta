@@ -4,7 +4,7 @@ import com.da_ta.backend.letter.controller.dto.common.TextLetterInfo;
 import lombok.Getter;
 
 @Getter
-public class ReplyCreateRequest {
+public class CreateReplyRequset {
 
     private Long recipientId;
     private TextLetterInfo textLetterInfo;
