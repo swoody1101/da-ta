@@ -24,7 +24,7 @@ const TestBoyeon = () => {
       setLetter({
         writerId: 7,
         writerName: "길가다 5만원을 주운 후라이드치킨",
-        "reply-option": "ㅇ머",
+        reply_option: true,
         floatLetterId: 0,
         letterInfo: {
           letterId: 10,
@@ -36,6 +36,7 @@ const TestBoyeon = () => {
           createTime: new Date(),
         },
       });
+
       //편지를 출력하기 전에 그림인지 글인지 분기
       letter.letterInfo.imageLetterUrl
         ? setIsPicture(true)
@@ -48,17 +49,18 @@ const TestBoyeon = () => {
   }, []);
   return (
     <>
-      {loading && isPicture ? (
-        <ReadWrapper>
-          <ReadLetter info={letter.letterInfo}></ReadLetter>
-          <ReadButtons index={1}></ReadButtons>
-        </ReadWrapper>
-      ) : (
-        <ReadWrapper>
-          <ReadLetter info={letter.letterInfo}></ReadLetter>
-          <ReadButtons index={1}></ReadButtons>
-        </ReadWrapper>
-      )}
+      {loading &&
+        (isPicture ? (
+          <ReadWrapper>
+            <ReadLetter info={letter.letterInfo}></ReadLetter>
+            <ReadButtons index={letter.reply_option ? 0 : 1}></ReadButtons>
+          </ReadWrapper>
+        ) : (
+          <ReadWrapper>
+            <ReadLetter info={letter.letterInfo}></ReadLetter>
+            <ReadButtons index={letter.reply_option ? 0 : 1}></ReadButtons>
+          </ReadWrapper>
+        ))}
 
       <BackgroundVideo
         isBlur={blur}
