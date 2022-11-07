@@ -121,7 +121,7 @@ const LetterWritePage = () => {
         return;
       }
     }
-    // 도화지
+    // 도화지l
     else {
       setCanvasSaveTrigger(true);
     }
