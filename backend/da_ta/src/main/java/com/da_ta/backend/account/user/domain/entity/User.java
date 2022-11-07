@@ -42,7 +42,7 @@ public class User extends CommonEntity implements UserDetails {
 
     @NotNull
     @Builder.Default
-    private boolean isAlertActive = true;
+    private boolean alertOption = true;
 
     @OneToMany(mappedBy = "reply", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Reply> replies = new ArrayList<>();
