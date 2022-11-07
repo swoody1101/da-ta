@@ -2,19 +2,34 @@
  * @author mingyu
  * @description 편지지 옵션에 대한 상수 정의입니다.
  */
+
 export const LetterOptions = {
   PAPERS: [
     "기본",
+    "내추럴",
+    "단풍",
     "민트",
+    "베이지",
+    "보라",
+    "살짝접힌 노란",
+    "살짝접힌",
+    "양피지",
+    "천사와별",
+    "파란눈꽃",
     "핑크",
-    "random1",
-    "random2",
-    "random3",
-    "random4",
-    "random5",
-    "random6",
-    "random7",
+    "핑크테두리",
+    "하늘",
   ],
   FONTS: ["함초롬바탕체", "조선굴림체", "프리텐다드", "SUIT", "교보손글씨"],
   AGES: ["전체", "0대", "10대", "20대", "30대", "40대", "50대", "60대"],
+  AGES_VALUE: {
+    전체: "AGES_ALL",
+    "0대": "AGES_0S",
+    "10대": "AGES_10S",
+    "20대": "AGES_20S",
+    "30대": "AGES_30S",
+    "40대": "AGES_40S",
+    "50대": "AGES_50S",
+    "60대": "AGES_60S",
+  },
 };

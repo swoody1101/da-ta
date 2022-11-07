@@ -21,6 +21,7 @@ import { GlobalFonts } from "./styles/fonts/fonts";
 import Loading from "./components/molecules/Loading";
 import { useRecoilState } from "recoil";
 import { loadingState } from "./recoil/Atoms";
+import { firestore } from "./firebase-config";
 
 function App() {
 	const [loading, setLoading] = useRecoilState(loadingState);
