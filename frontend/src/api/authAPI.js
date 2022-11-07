@@ -19,7 +19,7 @@ export const clickToKakao = () => {
 /**
  * @description 카카오 소셜 로그인 시 받은 인가코드로 백엔드 서버에 로그인 요청을 보냄
  * @param {string} code
- * @returns
+ * @returns response
  */
 export const kakaoLoginByAuthCode = async (code) => {
   const response = await client
