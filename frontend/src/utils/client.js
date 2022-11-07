@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_REST_API_DOMAIN;
+// const BASE_URL = "http://localhost:8080/api/v1";
 
 export const client = axios.create({
   baseURL: BASE_URL,
@@ -19,7 +20,7 @@ client.interceptors.request.use(
     return config;
   },
   (error) => {
-    console.log(error);
+    console.log(error); // error
     return Promise.reject(error);
   }
 );
@@ -32,6 +33,7 @@ client.interceptors.response.use(
     return config;
   },
   (error) => {
+    console.log(error);
     return Promise.reject(error);
   }
 );
