@@ -132,7 +132,7 @@ public class LetterService {
         replyRepository.save(Reply.builder()
                 .recipient(findUserById(createReplyRequset.getRecipientId()))
                 .originLetterId(letterId)
-                .reply(textLetter)
+                .replyLetter(textLetter)
                 .build());
         return new Message(REPLY_CREATED.getMessage());
     }
@@ -183,18 +183,16 @@ public class LetterService {
 
     public FindLetterCollectionResponse findLetterCollection(Long userId) {
         return FindLetterCollectionResponse.builder()
-                .collection(collectedLetterRepository.findAllByUserIdAndIsActiveTrueOrderByCreatedDate(userId)
+                .collection(collectedLetterRepository.findAllByUserIdAndIsActiveTrueOrderByCreatedDateDesc(userId)
                         .stream()
-                        .map(collectedLetter -> {
-                                    Letter letter = collectedLetter.getLetter();
-                                    return CollectionItem.builder()
-                                            .letterId(letter.getId())
-                                            .letterTitle(letter.getTitle())
-                                            .writerId(letter.getWriter().getId())
-                                            .writerNickname(letter.getWriter().getNickname())
-                                            .writtenDate(letter.getCreatedDate())
-                                            .build();
-                                }
+                        .map(collectedLetter ->
+                                CollectionItem.builder()
+                                        .letterId(collectedLetter.getLetter().getId())
+                                        .letterTitle(collectedLetter.getLetter().getTitle())
+                                        .writerId(collectedLetter.getLetter().getWriter().getId())
+                                        .writerNickname(collectedLetter.getLetter().getWriter().getNickname())
+                                        .writtenDate(collectedLetter.getLetter().getCreatedDate())
+                                        .build()
                         ).collect(Collectors.toList()))
                 .build();
     }
@@ -239,6 +237,79 @@ public class LetterService {
         return new Message(COLLECTED_LETTER_DELETED.getMessage());
     }
 
+    public FindUnreadReplyResponse checkUnreadReply(Long userId) {
+        return FindUnreadReplyResponse.builder()
+                .isUnreadReply(replyRepository.existsByIsReadTrueAndIsActiveTrueAndRecipientId(userId))
+                .build();
+    }
+
+    public FindRepliesResponse findReplies(Long userId) {
+        return FindRepliesResponse.builder()
+                .replies(replyRepository.findAllByUserIdAndIsActiveTrueOrderByCreatedDateDesc(userId)
+                        .stream()
+                        .map(reply ->
+                                ReplyItem.builder()
+                                        .replyId(reply.getReplyLetter().getId())
+                                        .replyTitle(reply.getReplyLetter().getTitle())
+                                        .writerId(reply.getReplyLetter().getWriter().getId())
+                                        .writerNickname(reply.getReplyLetter().getWriter().getNickname())
+                                        .writtenDate(reply.getReplyLetter().getCreatedDate())
+                                        .isRead(reply.isRead())
+                                        .build())
+                        .collect(Collectors.toList()))
+                .build();
+    }
+
+    public FindReplyDetailResponse findReplyDetail(Long replyId) {
+        Long originLetterId = findReplyById(replyId).getOriginLetterId();
+        Letter originLetter = findLetterById(originLetterId);
+        TextLetter replyLetter = findTextLetterById(replyId);
+        ReplyInfo replyInfo = ReplyInfo.builder()
+                .writerId(replyLetter.getWriter().getId())
+                .writerNickname(replyLetter.getWriter().getNickname())
+                .title(replyLetter.getTitle())
+                .content(replyLetter.getContent())
+                .backgroundUrl(replyLetter.getBackground().getBackgroundUrl())
+                .fontName(replyLetter.getFont().getFontName())
+                .writtenDate(replyLetter.getCreatedDate())
+                .build();
+        if (originLetter.getLetterType().equals(TYPE_TEXT)) {
+            TextLetter textLetter = findTextLetterById(originLetterId);
+            return FindReplyDetailResponse.builder()
+                    .originLetterInfo(LetterInfo.builder()
+                            .letterId(originLetterId)
+                            .title(textLetter.getTitle())
+                            .backgroundUrl(textLetter.getBackground().getBackgroundUrl())
+                            .writtenDate(textLetter.getCreatedDate())
+                            .content(textLetter.getContent())
+                            .fontName(textLetter.getFont().getFontName())
+                            .build())
+                    .replyInfo(replyInfo)
+                    .build();
+        } else if (originLetter.getLetterType().equals(TYPE_IMAGE)) {
+            ImageLetter imageLetter = findImageLetterById(originLetterId);
+            return FindReplyDetailResponse.builder()
+                    .originLetterInfo(LetterInfo.builder()
+                            .letterId(originLetterId)
+                            .title(imageLetter.getTitle())
+                            .backgroundUrl(imageLetter.getBackground().getBackgroundUrl())
+                            .writtenDate(imageLetter.getCreatedDate())
+                            .imageLetterUrl(imageLetter.getImageLetterUrl())
+                            .build())
+                    .replyInfo(replyInfo)
+                    .build();
+        } else {
+            throw new NotFoundException(LETTER_TYPE_NOT_FOUND);
+        }
+    }
+
+    public Message deleteReply(Long replyLetterId) {
+        Reply reply = findReplyByReplyLetterId(replyLetterId);
+        reply.deleteReplyLetter();
+        replyRepository.save(reply);
+        return new Message(REPLY_DELETED.getMessage());
+    }
+
     private User findUserById(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
@@ -281,6 +352,11 @@ public class LetterService {
 
     private Reply findReplyById(Long replyId) {
         return replyRepository.findById(replyId)
+                .orElseThrow(() -> new NotFoundException(REPLY_NOT_FOUND));
+    }
+
+    private Reply findReplyByReplyLetterId(Long replyLetterId) {
+        return replyRepository.findByReplyLetterId(replyLetterId)
                 .orElseThrow(() -> new NotFoundException(REPLY_NOT_FOUND));
     }
 

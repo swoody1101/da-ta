@@ -10,5 +10,5 @@ public interface CollectedLetterRepository extends JpaRepository<CollectedLetter
 
     Optional<CollectedLetter> findByLetterId(Long letterId);
 
-    List<CollectedLetter> findAllByUserIdAndIsActiveTrueOrderByCreatedDate(Long userId);
+    List<CollectedLetter> findAllByUserIdAndIsActiveTrueOrderByCreatedDateDesc(Long userId);
 }
