@@ -4,7 +4,7 @@ import { media } from "../../utils/styleUtil";
 import ContentBlock from "../atoms/letter/ContentBlock";
 import LetterImg from "../atoms/letter/LetterImg";
 
-const ReadLetter = () => {
+const ReadLetter = ({ info }) => {
   return (
     <ContentBlock
       height={SizeTypes.PC_LETTER_HEIGHT}
@@ -12,7 +12,6 @@ const ReadLetter = () => {
       mHeight={SizeTypes.MOBILE_LETTER_HEIGHT}
       flexDirection="column"
       optionToggle={false}
-      style={{ opacity: 0.6 }}
     >
       <LetterImg
         src={`${process.env.PUBLIC_URL}/assets/images/letter/${"핑크"}.png`}
@@ -23,26 +22,10 @@ const ReadLetter = () => {
         padding="0.5rem 0 0.5rem 0"
       >
         <LetterTitle width="96%" fontSize="1.2rem" fontWeight="bold">
-          타이틀
+          {info.title}
         </LetterTitle>
       </Container>
-      <LetterContent>
-        You can now view frontend in the browser. Local: http://localhost:3000
-        On Your Network: http://192.168.31.78:3000 Note that the development
-        build is not optimized. To create a production build, use npm run build.
-        You can now view frontend in the browser. Local: http://localhost:3000
-        On Your Network: http://192.168.31.78:3000 Note that the development
-        build is not optimized. To create a production build, use npm run build.
-        You can now view frontend in the browser. Local: http://localhost:3000
-        On Your Network: http://192.168.31.78:3000 Note that the development
-        build is not optimized. To create a production build, use npm run build.
-        You can now view frontend in the browser. Local: http://localhost:3000
-        On Your Network: http://192.168.31.78:3000 Note that the development
-        build is not optimized. To create a production build, use npm run build.
-        You can now view frontend in the browser. Local: http://localhost:3000
-        On Your Network: http://192.168.31.78:3000 Note that the development
-        build is not optimized. To create a production build, use npm run build.
-      </LetterContent>
+      <LetterContent>{info.content}</LetterContent>
     </ContentBlock>
   );
 };
