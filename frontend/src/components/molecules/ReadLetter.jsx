@@ -3,6 +3,7 @@ import { SizeTypes } from "../../constants/Sizes";
 import { media } from "../../utils/styleUtil";
 import ContentBlock from "../atoms/letter/ContentBlock";
 import LetterImg from "../atoms/letter/LetterImg";
+import { LetterOptions } from "../../constants/Options";
 
 const ReadLetter = ({ info }) => {
   return (
@@ -14,7 +15,9 @@ const ReadLetter = ({ info }) => {
       optionToggle={false}
     >
       <LetterImg
-        src={`${process.env.PUBLIC_URL}/assets/images/letter/${"핑크"}.png`}
+        src={`${process.env.PUBLIC_URL}/assets/images/letter/${
+          LetterOptions.PAPERS[info.backgroundId]
+        }.png`}
       />
       <Container
         width="96%"
@@ -25,7 +28,9 @@ const ReadLetter = ({ info }) => {
           {info.title}
         </LetterTitle>
       </Container>
-      <LetterContent>{info.content}</LetterContent>
+      <LetterContent fontFamily={LetterOptions.FONTS[info.fontId]}>
+        {info.content}
+      </LetterContent>
     </ContentBlock>
   );
 };

@@ -30,7 +30,7 @@ const TestBoyeon = () => {
           title: "메밀꽃 필 무렵",
           content: memilggot,
           imageLetterUrl: null,
-          BackgroundId: 0,
+          backgroundId: 2,
           fontId: 1,
           createTime: new Date(),
         },
