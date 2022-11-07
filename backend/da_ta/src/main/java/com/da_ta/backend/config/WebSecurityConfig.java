@@ -1,9 +1,9 @@
 package com.da_ta.backend.config;
 
-import com.da_ta.backend.account.user.service.UserService;
 import com.da_ta.backend.account.jwt.CustomAuthenticationEntryPoint;
 import com.da_ta.backend.account.jwt.JwtAuthenticationFilter;
 import com.da_ta.backend.account.jwt.JwtTokenProvider;
+import com.da_ta.backend.account.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +15,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import static com.da_ta.backend.account.user.domain.Role.ADMIN;
 
 @Configuration
 @EnableWebSecurity
@@ -40,6 +42,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors()
                 .and()
                 .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/admin").hasRole(String.valueOf(ADMIN))
+                .and()
                 .formLogin().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()

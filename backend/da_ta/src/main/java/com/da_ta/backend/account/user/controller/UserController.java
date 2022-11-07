@@ -1,5 +1,6 @@
 package com.da_ta.backend.account.user.controller;
 
+import com.da_ta.backend.account.jwt.JwtTokenProvider;
 import com.da_ta.backend.account.user.controller.dto.LoginRequest;
 import com.da_ta.backend.account.user.controller.dto.LoginResponse;
 import com.da_ta.backend.account.user.controller.dto.UpdateAgeRangeRequest;
@@ -19,6 +20,7 @@ public class UserController {
 
     private final String AUTHORIZATION = "Authorization";
     private final UserService userService;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
@@ -41,18 +43,18 @@ public class UserController {
     @PutMapping("/update/1")
     public ResponseEntity<Message> updateAgeRange(@RequestHeader(AUTHORIZATION) String token, @RequestBody UpdateAgeRangeRequest updateAgeRangeRequest) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(userService.updateAgeRange(token, updateAgeRangeRequest));
+                .body(userService.updateAgeRange(jwtTokenProvider.findUserByToken(token), updateAgeRangeRequest));
     }
 
     @PutMapping("/update/2")
     public ResponseEntity<Message> updateAlertOption(@RequestHeader(AUTHORIZATION) String token, @RequestBody UpdateAlertOptionRequest updateAlertOptionRequest) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(userService.updateAlertOption(token, updateAlertOptionRequest));
+                .body(userService.updateAlertOption(jwtTokenProvider.findUserByToken(token), updateAlertOptionRequest));
     }
 
     @DeleteMapping
     public ResponseEntity<Message> deleteUser(@RequestHeader(AUTHORIZATION) String token) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(userService.deleteUser(token));
+                .body(userService.deleteUser(jwtTokenProvider.findUserByToken(token)));
     }
 }
