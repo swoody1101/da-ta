@@ -50,7 +50,7 @@ const ReadButtons = ({ index }) => {
       >
         다시 띄우기
       </Button>
-      <DeleteButton
+      <ReportButton
         width={"120px"}
         height={"120px"}
         borderRadius={"50%"}
@@ -58,8 +58,8 @@ const ReadButtons = ({ index }) => {
         mHeight={"40px"}
         mBorderRadius={"8px"}
       >
-        삭제하기
-      </DeleteButton>
+        신고하기
+      </ReportButton>
     </ButtonDiv>
   );
 };
@@ -79,7 +79,7 @@ const ButtonDiv = styled.div`
   `}
 `;
 
-const DeleteButton = styled(Button)`
+const ReportButton = styled(Button)`
   ${media.phone`
     display: none;
   `}
