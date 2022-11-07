@@ -13,7 +13,7 @@ public class LetterInfo {
     String title;
     String content;
     String imageLetterUrl;
-    String backgroundUrl;
-    String fontName;
+    Long backgroundId;
+    Long fontId;
     LocalDateTime writtenDate;
 }
