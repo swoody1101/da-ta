@@ -3,6 +3,7 @@ package com.da_ta.backend.account.user.controller;
 import com.da_ta.backend.account.user.controller.dto.LoginRequest;
 import com.da_ta.backend.account.user.controller.dto.LoginResponse;
 import com.da_ta.backend.account.user.controller.dto.UpdateAgeRangeRequest;
+import com.da_ta.backend.account.user.controller.dto.UpdateAlertOptionRequest;
 import com.da_ta.backend.account.user.service.UserService;
 import com.da_ta.backend.common.domain.Message;
 import lombok.RequiredArgsConstructor;
@@ -41,5 +42,11 @@ public class UserController {
     public ResponseEntity<Message> updateAgeRange(@RequestHeader(AUTHORIZATION) String token, @RequestBody UpdateAgeRangeRequest updateAgeRangeRequest) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(userService.updateAgeRange(token, updateAgeRangeRequest));
+    }
+
+    @PutMapping("/update/2")
+    public ResponseEntity<Message> updateAlertOption(@RequestHeader(AUTHORIZATION) String token, @RequestBody UpdateAlertOptionRequest updateAlertOptionRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(userService.updateAlertOption(token, updateAlertOptionRequest));
     }
 }
