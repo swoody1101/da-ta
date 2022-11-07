@@ -2,9 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import BackgroundVideo from "../components/atoms/BackgroundVideo";
 import { Wrapper } from "../styles/Wrapper";
-import { media } from "../utils/styleUtil";
 import styled from "styled-components";
-import { SizeTypes } from "../constants/Sizes";
 import ReadButtons from "../components/molecules/ReadButtons";
 import ReadLetter from "../components/molecules/ReadLetter";
 
@@ -32,5 +30,6 @@ const TestBoyeon = () => {
 const ReadWrapper = styled(Wrapper)`
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 `;
 export default TestBoyeon;
