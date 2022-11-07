@@ -19,7 +19,5 @@ public class TextLetter extends Letter {
     private String content;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "font_id")
-    private Font font;
+    private Long fontId;
 }

@@ -7,6 +7,6 @@ public class TextLetterInfo {
 
     private String title;
     private String content;
-    private String backgroundUrl;
-    private String fontName;
+    private Long backgroundId;
+    private Long fontId;
 }
