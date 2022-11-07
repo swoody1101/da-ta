@@ -94,4 +94,8 @@ public class User extends CommonEntity implements UserDetails {
     public void updateAgeRange(String ageRange) {
         this.age = Age.valueOf(ageRange);
     }
+
+    public void updateAlertOption(boolean alertOption) {
+        this.alertOption = alertOption;
+    }
 }
