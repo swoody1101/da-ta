@@ -149,7 +149,7 @@ public class LetterService {
         }
         floatedLetter.updateRecipient(null);
         floatedLetterRepository.save(floatedLetter);
-        return new Message(LETTER_FLOATED_AGAIN.getMessage());
+        return new Message(LETTER_REFLOATED.getMessage());
     }
 
     public Message collectLetter(Long userId, Long letterId) {
