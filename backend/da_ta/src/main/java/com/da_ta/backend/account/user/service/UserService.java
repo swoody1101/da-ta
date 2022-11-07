@@ -232,6 +232,13 @@ public class UserService {
         return new Message(ALERT_OPTION_UPDATED.getMessage());
     }
 
+    public Message deleteUser(String token) {
+        User user = findUserByToken(token);
+        user.deleteUser();
+        userRepository.save(user);
+        return new Message(USER_DELETED.getMessage());
+    }
+
     private User findUserByToken(String token) {
         return userRepository.findById(Long.parseLong(jwtTokenProvider.getUserId(token)))
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
