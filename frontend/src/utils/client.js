@@ -20,7 +20,7 @@ client.interceptors.request.use(
     return config;
   },
   (error) => {
-    console.log(error);
+    console.log(error); // error
     return Promise.reject(error);
   }
 );
@@ -33,6 +33,7 @@ client.interceptors.response.use(
     return config;
   },
   (error) => {
+    console.log(error);
     return Promise.reject(error);
   }
 );
