@@ -1,6 +1,7 @@
 package com.da_ta.backend.common.controller;
 
 import com.da_ta.backend.common.domain.Message;
+import com.da_ta.backend.common.domain.exception.BadRequestException;
 import com.da_ta.backend.common.domain.exception.NotFoundException;
 import com.da_ta.backend.common.domain.exception.WrongAccessException;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler({BadRequestException.class})
+    private ResponseEntity<Message> handleBadRequestException(BadRequestException badRequestException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new Message(badRequestException.getErrorCode().getMessage()));
+    }
 
     @ExceptionHandler({NotFoundException.class})
     private ResponseEntity<Message> handleNotFoundException(NotFoundException notFoundException) {
