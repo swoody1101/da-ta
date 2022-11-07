@@ -78,7 +78,7 @@ public class LetterController {
 
     @DeleteMapping("/collection/{letter_id}")
     public ResponseEntity<Message> deleteCollectedLetter(@PathVariable("letter_id") Long letterId) {
-        return ResponseEntity.status(HttpStatus.NO_CONTENT)
+        return ResponseEntity.status(HttpStatus.OK)
                 .body(letterService.deleteCollectedLetter(letterId));
     }
 
@@ -102,7 +102,7 @@ public class LetterController {
 
     @DeleteMapping("/replies/{reply_id}")
     public ResponseEntity<Message> deleteReply(@PathVariable("reply_id") Long letterId) {
-        return ResponseEntity.status(HttpStatus.NO_CONTENT)
+        return ResponseEntity.status(HttpStatus.OK)
                 .body(letterService.deleteReply(letterId));
     }
 }
