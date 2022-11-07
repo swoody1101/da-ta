@@ -3,7 +3,7 @@ package com.da_ta.backend.account.user.domain.entity;
 import com.da_ta.backend.account.user.domain.Role;
 import com.da_ta.backend.common.domain.Age;
 import com.da_ta.backend.common.domain.CommonEntity;
-import com.da_ta.backend.letter.domain.entity.CollectedLetter;
+import com.da_ta.backend.letter.domain.entity.Collection;
 import com.da_ta.backend.letter.domain.entity.Reply;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -14,7 +14,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Getter
@@ -48,14 +47,14 @@ public class User extends CommonEntity implements UserDetails {
     private List<Reply> replies = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<CollectedLetter> collectedLetters = new ArrayList<>();
+    private List<Collection> collectedLetters = new ArrayList<>();
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "ban_status_id")
     private BanStatus banStatus;
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public java.util.Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(this.role.getCode()));
         return authorities;
