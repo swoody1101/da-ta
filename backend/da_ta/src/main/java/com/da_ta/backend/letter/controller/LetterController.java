@@ -99,4 +99,10 @@ public class LetterController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(letterService.findReplyDetail(replyId));
     }
+
+    @DeleteMapping("/replies/{reply_id}")
+    public ResponseEntity<Message> deleteReply(@PathVariable("reply_id") Long letterId) {
+        return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                .body(letterService.deleteReply(letterId));
+    }
 }
