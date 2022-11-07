@@ -90,4 +90,8 @@ public class User extends CommonEntity implements UserDetails {
     public boolean isEnabled() {
         return false;
     }
+
+    public void updateAgeRange(String ageRange) {
+        this.age = Age.valueOf(ageRange);
+    }
 }
