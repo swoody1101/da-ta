@@ -5,7 +5,7 @@ import ContentBlock from "../atoms/letter/ContentBlock";
 import LetterImg from "../atoms/letter/LetterImg";
 import { LetterOptions } from "../../constants/Options";
 
-const ReadLetter = ({ info }) => {
+const ReadLetterText = ({ info }) => {
   return (
     <ContentBlock
       height={SizeTypes.PC_LETTER_HEIGHT}
@@ -84,4 +84,4 @@ const LetterContent = styled.div`
   `}
 `;
 
-export default ReadLetter;
+export default ReadLetterText;

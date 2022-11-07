@@ -15,6 +15,7 @@ const ReadButtons = ({ index }) => {
             mWidth={"40%"}
             mHeight={"40px"}
             mBorderRadius={"8px"}
+            onClick={() => console.log("답장하기")}
           >
             답장하기
           </Button>,
@@ -25,6 +26,7 @@ const ReadButtons = ({ index }) => {
             mWidth={"40%"}
             mHeight={"40px"}
             mBorderRadius={"8px"}
+            onClick={() => console.log("보관하기")}
           >
             보관하기
           </Button>,
@@ -35,6 +37,7 @@ const ReadButtons = ({ index }) => {
             mWidth={"40%"}
             mHeight={"40px"}
             mBorderRadius={"8px"}
+            onClick={() => console.log("삭제하기")}
           >
             삭제하기
           </Button>,
@@ -47,6 +50,7 @@ const ReadButtons = ({ index }) => {
         mWidth={"40%"}
         mHeight={"40px"}
         mBorderRadius={"8px"}
+        onClick={() => console.log("다시 띄우기")}
       >
         다시 띄우기
       </Button>
@@ -57,6 +61,7 @@ const ReadButtons = ({ index }) => {
         mWidth={"40%"}
         mHeight={"40px"}
         mBorderRadius={"8px"}
+        onClick={() => console.log("신고하기")}
       >
         신고하기
       </ReportButton>
