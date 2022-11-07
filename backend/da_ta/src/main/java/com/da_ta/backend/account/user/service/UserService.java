@@ -28,6 +28,7 @@ import java.util.StringTokenizer;
 
 import static com.da_ta.backend.common.domain.Age.*;
 import static com.da_ta.backend.common.domain.ErrorCode.*;
+import static com.da_ta.backend.common.domain.SuccessCode.AGE_RANGE_UPDATED;
 import static com.da_ta.backend.common.domain.SuccessCode.REISSUED_TOKEN;
 
 @Slf4j
@@ -216,5 +217,17 @@ public class UserService {
             }
         }
         return AGE_60S;
+    }
+
+    public Message updateAgeRange(String token, UpdateAgeRangeRequest updateAgeRangeRequest) {
+        User user = findUserByToken(token);
+        user.updateAgeRange(updateAgeRangeRequest.getAgeRange());
+        userRepository.save(user);
+        return new Message(AGE_RANGE_UPDATED.getMessage());
+    }
+
+    private User findUserByToken(String token) {
+        return userRepository.findById(Long.parseLong(jwtTokenProvider.getUserId(token)))
+                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
     }
 }
