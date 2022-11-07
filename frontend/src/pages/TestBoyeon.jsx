@@ -11,8 +11,9 @@ import { loadingState } from "../recoil/Atoms";
 const TestBoyeon = () => {
   const [blur, setBlur] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [letter, setLetter] = useState({ letterInfo: {} });
   const loadingSpinner = useSetRecoilState(loadingState);
+  const [letter, setLetter] = useState({ letterInfo: {} });
+  const [isPicture, setIsPicture] = useState(false);
 
   useEffect(async () => {
     loadingSpinner(true);
@@ -35,13 +36,24 @@ const TestBoyeon = () => {
           createTime: new Date(),
         },
       });
+      //편지를 출력하기 전에 그림인지 글인지 분기
+      letter.letterInfo.imageLetterUrl
+        ? setIsPicture(true)
+        : setIsPicture(false);
+
+      //편지를 표시
       setLoading(true);
       loadingSpinner(false);
     }, 1000);
   }, []);
   return (
     <>
-      {loading && (
+      {loading && isPicture ? (
+        <ReadWrapper>
+          <ReadLetter info={letter.letterInfo}></ReadLetter>
+          <ReadButtons index={1}></ReadButtons>
+        </ReadWrapper>
+      ) : (
         <ReadWrapper>
           <ReadLetter info={letter.letterInfo}></ReadLetter>
           <ReadButtons index={1}></ReadButtons>
