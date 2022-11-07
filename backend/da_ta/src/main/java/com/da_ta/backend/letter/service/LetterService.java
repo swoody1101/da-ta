@@ -245,7 +245,7 @@ public class LetterService {
 
     public FindRepliesResponse findReplies(Long userId) {
         return FindRepliesResponse.builder()
-                .replies(replyRepository.findAllByUserIdAndIsActiveTrueOrderByCreatedDateDesc(userId)
+                .replies(replyRepository.findAllByRecipientIdAndIsActiveTrueOrderByCreatedDateDesc(userId)
                         .stream()
                         .map(reply ->
                                 ReplyItem.builder()

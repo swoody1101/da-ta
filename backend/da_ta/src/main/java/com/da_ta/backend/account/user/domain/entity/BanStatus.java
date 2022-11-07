@@ -20,6 +20,6 @@ public class BanStatus extends CommonEntity {
     @Builder.Default
     private boolean isBan = false;
 
-    @OneToOne(mappedBy = "banStatus", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToOne(mappedBy = "banStatus", cascade = CascadeType.ALL)
     private User user;
 }
