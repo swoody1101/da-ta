@@ -44,13 +44,13 @@ public class User extends CommonEntity implements UserDetails {
     @Builder.Default
     private boolean alertOption = true;
 
-    @OneToMany(mappedBy = "reply", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "recipient", cascade = CascadeType.ALL)
     private List<Reply> replies = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<CollectedLetter> collectedLetters = new ArrayList<>();
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "ban_status_id")
     private BanStatus banStatus;
 

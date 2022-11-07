@@ -22,7 +22,7 @@ public class Reply extends CommonEntity {
     private Long originLetterId;
 
     @NotNull
-    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "reply_letter_id", unique = true)
     private Letter replyLetter;
 
