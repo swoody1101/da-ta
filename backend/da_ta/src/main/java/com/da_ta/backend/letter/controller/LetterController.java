@@ -1,5 +1,6 @@
 package com.da_ta.backend.letter.controller;
 
+import com.da_ta.backend.account.jwt.JwtTokenProvider;
 import com.da_ta.backend.common.domain.Message;
 import com.da_ta.backend.letter.controller.dto.*;
 import com.da_ta.backend.letter.service.LetterService;
@@ -8,101 +9,117 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/letters")
 public class LetterController {
 
     private final LetterService letterService;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("/1")
-    public ResponseEntity<Message> createTextLetter(@RequestBody TextLetterCreateRequest textLetterCreateRequest) {
+    public ResponseEntity<Message> createTextLetter(@RequestHeader(AUTHORIZATION) String token,
+                                                    @RequestBody TextLetterCreateRequest textLetterCreateRequest) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(letterService.createTextLetter(textLetterCreateRequest));
+                .body(letterService.createTextLetter(jwtTokenProvider.findUserByToken(token), textLetterCreateRequest));
     }
 
     @PostMapping("/2")
-    public ResponseEntity<Message> createImageLetter(@RequestBody ImageLetterCreateRequest imageLetterCreateRequest) {
+    public ResponseEntity<Message> createImageLetter(@RequestHeader(AUTHORIZATION) String token,
+                                                     @RequestBody ImageLetterCreateRequest imageLetterCreateRequest) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(letterService.createImageLetter(imageLetterCreateRequest));
+                .body(letterService.createImageLetter(jwtTokenProvider.findUserByToken(token), imageLetterCreateRequest));
     }
 
-    @GetMapping("/{recipient_id}")
-    public ResponseEntity<ReceiveFloatedLetterResponse> receiveFloatedLetter(@PathVariable("recipient_id") Long recipientId) {
+    @GetMapping()
+    public ResponseEntity<ReceiveFloatedLetterResponse> receiveFloatedLetter(@RequestHeader(AUTHORIZATION) String token) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(letterService.receiveFloatedLetter(recipientId));
+                .body(letterService.receiveFloatedLetter(jwtTokenProvider.findUserByToken(token)));
     }
 
     @PutMapping("/{floated_letter_id}")
-    public ResponseEntity<Message> refloatLetter(@PathVariable("floated_letter_id") Long floatedLetterId) {
+    public ResponseEntity<Message> refloatLetter(@RequestHeader(AUTHORIZATION) String token,
+                                                 @PathVariable("floated_letter_id") Long floatedLetterId) {
+        jwtTokenProvider.findUserByToken(token);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(letterService.updateFloatedLetter(floatedLetterId));
     }
 
-    @PostMapping("/replies/{letter_id}")
-    public ResponseEntity<Message> createReply(@PathVariable("letter_id") Long LetterId, @RequestBody CreateReplyRequset createReplyRequset) {
+    @PostMapping("/replies/{origin_letter_id}")
+    public ResponseEntity<Message> createReply(@RequestHeader(AUTHORIZATION) String token,
+                                               @PathVariable("origin_letter_id") Long originLetterId,
+                                               @RequestBody CreateReplyRequset createReplyRequset) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(letterService.createReply(LetterId, createReplyRequset));
+                .body(letterService.createReply(jwtTokenProvider.findUserByToken(token), originLetterId, createReplyRequset));
     }
 
-    @PutMapping("/replies/{reply_id}")
-    public ResponseEntity<Message> checkReplyReception(@PathVariable("reply_id") Long replyId) {
+    @PutMapping("/replies/{replied_letter_id}")
+    public ResponseEntity<Message> checkReplyReception(@RequestHeader(AUTHORIZATION) String token,
+                                                       @PathVariable("replied_letter_id") Long repliedLetterId) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(letterService.checkReplyReception(replyId));
+                .body(letterService.checkReplyReception(jwtTokenProvider.findUserByToken(token), repliedLetterId));
     }
 
-    @PostMapping("/collect/{user_id}/{letter_id}")
-    public ResponseEntity<Message> collectLetter(@PathVariable("user_id") Long userId, @PathVariable("letter_id") Long letterId) {
+    @PostMapping("/collect/{letter_id}")
+    public ResponseEntity<Message> collectLetter(@RequestHeader(AUTHORIZATION) String token,
+                                                 @PathVariable("letter_id") Long letterId) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(letterService.collectLetter(userId, letterId));
+                .body(letterService.collectLetter(jwtTokenProvider.findUserByToken(token), letterId));
     }
 
-    @PostMapping("/accusation/{reporter_id}/{letter_id}")
-    public ResponseEntity<Message> accuseLetter(@PathVariable("reporter_id") Long reporterId, @PathVariable("letter_id") Long letterId,
+    @PostMapping("/accusation/{letter_id}")
+    public ResponseEntity<Message> accuseLetter(@RequestHeader(AUTHORIZATION) String token,
+                                                @PathVariable("letter_id") Long letterId,
                                                 @RequestBody AccuseLetterRequest accuseLetterRequest) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(letterService.createLetterAccusation(reporterId, letterId, accuseLetterRequest));
+                .body(letterService.createLetterAccusation(jwtTokenProvider.findUserByToken(token), letterId, accuseLetterRequest));
     }
 
-    @GetMapping("/collection/{user_id}")
-    public ResponseEntity<FindLetterCollectionResponse> findLetterCollection(@PathVariable("user_id") Long userId) {
+    @GetMapping("/collection")
+    public ResponseEntity<FindLetterCollectionResponse> findLetterCollection(@RequestHeader(AUTHORIZATION) String token) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(letterService.findLetterCollection(userId));
+                .body(letterService.findLetterCollection(jwtTokenProvider.findUserByToken(token)));
     }
 
-    @GetMapping("/collection/detail/{letter_id}")
-    public ResponseEntity<FindCollectedLetterDetailResponse> findCollectedLetterDetail(@PathVariable("letter_id") Long letterId) {
+    @GetMapping("/collection/detail/{collected_letter_id}")
+    public ResponseEntity<FindCollectedLetterDetailResponse> findCollectedLetterDetail(@RequestHeader(AUTHORIZATION) String token,
+                                                                                       @PathVariable("collected_letter_id") Long collectedLetterId) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(letterService.findCollectedLetterDetail(letterId));
+                .body(letterService.findCollectedLetterDetail(jwtTokenProvider.findUserByToken(token), collectedLetterId));
     }
 
-    @DeleteMapping("/collection/{letter_id}")
-    public ResponseEntity<Message> deleteCollectedLetter(@PathVariable("letter_id") Long letterId) {
+    @DeleteMapping("/collection/{collected_letter_id}")
+    public ResponseEntity<Message> deleteCollectedLetter(@RequestHeader(AUTHORIZATION) String token,
+                                                         @PathVariable("collected_letter_id") Long collectedLetterId) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(letterService.deleteCollectedLetter(letterId));
+                .body(letterService.deleteCollectedLetter(jwtTokenProvider.findUserByToken(token), collectedLetterId));
     }
 
-    @GetMapping("/replies/check/{user_id}")
-    public ResponseEntity<FindUnreadReplyResponse> checkUnreadReplyResponse(@PathVariable("user_id") Long userId) {
+    @GetMapping("/replies/check")
+    public ResponseEntity<FindUnreadReplyResponse> checkUnreadReplyResponse(@RequestHeader(AUTHORIZATION) String token) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(letterService.checkUnreadReply(userId));
+                .body(letterService.checkUnreadReply(jwtTokenProvider.findUserByToken(token)));
     }
 
-    @GetMapping("/replies/{user_id}")
-    public ResponseEntity<FindRepliesResponse> findReplies(@PathVariable("user_id") Long userId) {
+    @GetMapping("/replies")
+    public ResponseEntity<FindRepliesResponse> findReplies(@RequestHeader(AUTHORIZATION) String token) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(letterService.findReplies(userId));
+                .body(letterService.findReplies(jwtTokenProvider.findUserByToken(token)));
     }
 
-    @GetMapping("/replies/detail/{reply_id}")
-    public ResponseEntity<FindReplyDetailResponse> findReplyDetail(@PathVariable("reply_id") Long replyId) {
+    @GetMapping("/replies/detail/{replied_letter_id}")
+    public ResponseEntity<FindReplyDetailResponse> findReplyDetail(@RequestHeader(AUTHORIZATION) String token,
+                                                                   @PathVariable("replied_letter_id") Long repliedLetterId) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(letterService.findReplyDetail(replyId));
+                .body(letterService.findReplyDetail(jwtTokenProvider.findUserByToken(token), repliedLetterId));
     }
 
-    @DeleteMapping("/replies/{reply_id}")
-    public ResponseEntity<Message> deleteReply(@PathVariable("reply_id") Long letterId) {
+    @DeleteMapping("/replies/{replied_letter_id}")
+    public ResponseEntity<Message> deleteReply(@RequestHeader(AUTHORIZATION) String token,
+                                               @PathVariable("replied_letter_id") Long repliedLetterId) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(letterService.deleteReply(letterId));
+                .body(letterService.deleteReply(jwtTokenProvider.findUserByToken(token), repliedLetterId));
     }
 }
