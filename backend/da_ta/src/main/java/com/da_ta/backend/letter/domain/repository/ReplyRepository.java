@@ -11,7 +11,7 @@ public interface ReplyRepository extends JpaRepository<Reply, Long> {
 
     boolean existsByIsReadTrueAndIsActiveTrueAndRecipientId(Long RecipientId);
 
-    List<Reply> findAllByUserIdAndIsActiveTrueOrderByCreatedDateDesc(Long userId);
+    List<Reply> findAllByRecipientIdAndIsActiveTrueOrderByCreatedDateDesc(Long recipient_id);
 
     Optional<Reply> findByReplyLetterId(Long replyLetterId);
 }
