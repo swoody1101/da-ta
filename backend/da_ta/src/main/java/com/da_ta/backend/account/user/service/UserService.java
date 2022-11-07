@@ -28,8 +28,7 @@ import java.util.StringTokenizer;
 
 import static com.da_ta.backend.common.domain.Age.*;
 import static com.da_ta.backend.common.domain.ErrorCode.*;
-import static com.da_ta.backend.common.domain.SuccessCode.AGE_RANGE_UPDATED;
-import static com.da_ta.backend.common.domain.SuccessCode.REISSUED_TOKEN;
+import static com.da_ta.backend.common.domain.SuccessCode.*;
 
 @Slf4j
 @Service
@@ -224,6 +223,13 @@ public class UserService {
         user.updateAgeRange(updateAgeRangeRequest.getAgeRange());
         userRepository.save(user);
         return new Message(AGE_RANGE_UPDATED.getMessage());
+    }
+
+    public Message updateAlertOption(String token, UpdateAlertOptionRequest updateAlertOptionRequest) {
+        User user = findUserByToken(token);
+        user.updateAlertOption(updateAlertOptionRequest.isAlertOption());
+        userRepository.save(user);
+        return new Message(ALERT_OPTION_UPDATED.getMessage());
     }
 
     private User findUserByToken(String token) {

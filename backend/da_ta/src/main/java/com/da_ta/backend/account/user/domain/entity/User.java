@@ -42,7 +42,7 @@ public class User extends CommonEntity implements UserDetails {
 
     @NotNull
     @Builder.Default
-    private boolean isAlertActive = true;
+    private boolean alertOption = true;
 
     @OneToMany(mappedBy = "reply", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Reply> replies = new ArrayList<>();
@@ -93,5 +93,9 @@ public class User extends CommonEntity implements UserDetails {
 
     public void updateAgeRange(String ageRange) {
         this.age = Age.valueOf(ageRange);
+    }
+
+    public void updateAlertOption(boolean alertOption) {
+        this.alertOption = alertOption;
     }
 }
