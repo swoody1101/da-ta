@@ -3,7 +3,7 @@
  */
 import React from "react";
 import styled, { keyframes } from "styled-components";
-
+import { media } from "../../utils/styleUtil";
 /**
  *
  * @param path 물병 사진 경로
@@ -31,6 +31,8 @@ BottleOfLetter.defaultProps = {
   width: "10%",
   height: "10%", //원래는 20vh
   isRight: "1",
+  // mWidth: "500px",
+  // mHeight: "500px",
 };
 
 const BG = styled.div`
@@ -44,6 +46,11 @@ const BG = styled.div`
   top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
+
+  ${media.phone`
+  width: ${(props) => props.mWidth};
+  height: ${(props) => props.mHeight};
+`}
 `;
 
 export default BottleOfLetter;
