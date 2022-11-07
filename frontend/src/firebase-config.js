@@ -1,3 +1,7 @@
+/**
+ * @author mingyu
+ * @description firebase 관련 설정
+ */
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import "firebase/compat/storage";
