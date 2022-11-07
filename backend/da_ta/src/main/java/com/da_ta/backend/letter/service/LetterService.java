@@ -155,7 +155,7 @@ public class LetterService {
     public Message collectLetter(Long userId, Long letterId) {
         Letter letter = findLetterById(letterId);
         if (letter.isReplyOption()) {
-            throw new BadRequestException(COLLECT_BAD_REQUEST);
+            throw new BadRequestException(COLLECT_LETTER_REJECTED);
         }
         collectedLetterRepository.save(CollectedLetter.builder()
                 .letter(letter)
