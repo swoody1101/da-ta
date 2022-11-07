@@ -1,6 +1,5 @@
 package com.da_ta.backend.letter.domain.repository;
 
-import com.da_ta.backend.common.domain.Age;
 import com.da_ta.backend.letter.domain.entity.FloatedLetter;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -25,6 +24,6 @@ public interface FloatedLetterRepository extends JpaRepository<FloatedLetter, Lo
                 "where logged_recipient_id = :recipientId) " +
             "order by l.created_date limit 1",
             nativeQuery = true)
-    Optional<FloatedLetter> findFloatedLetterByAgeOption(@Param("recipientId") Long recipientId,
+    Optional<FloatedLetter> findByRecipientIdAndAgeOption(@Param("recipientId") Long recipientId,
                                                          @Param("ageOption") String ageOption);
 }
