@@ -235,9 +235,4 @@ public class UserService {
         userRepository.save(user);
         return new Message(USER_DELETED.getMessage());
     }
-
-    private User findUserByToken(String token) {
-        return userRepository.findById(Long.parseLong(jwtTokenProvider.getUserId(token)))
-                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
-    }
 }
