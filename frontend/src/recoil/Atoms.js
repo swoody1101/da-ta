@@ -22,7 +22,11 @@ export const loginState = atom({
  */
 export const userState = atom({
 	key: "userState",
-	default: {},
+	default: {
+		userId: null,
+		nickname: null,
+		role: null,
+	},
 	effects_UNSTABLE: [persistAtom],
 });
 
