@@ -7,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum SuccessCode {
 
-    REISSUED_TOKEN("토큰이 재발급되었습니다.");
+    REISSUED_TOKEN("토큰이 재발급되었습니다."),
 
     COLLECTED_LETTER_CREATED("편지를 주웠습니다."),
     IMAGE_LETTER_CREATED("이미지 편지를 바다에 띄웠습니다."),

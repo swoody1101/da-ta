@@ -4,9 +4,9 @@ import com.da_ta.backend.account.jwt.JwtTokenProvider;
 import com.da_ta.backend.account.user.controller.dto.*;
 import com.da_ta.backend.account.user.domain.entity.BanStatus;
 import com.da_ta.backend.account.user.domain.entity.User;
-import com.da_ta.backend.account.user.domain.repository.BanStatusRepository;
 import com.da_ta.backend.account.user.domain.repository.RedisRepository;
 import com.da_ta.backend.account.user.domain.repository.UserRepository;
+import com.da_ta.backend.common.domain.Age;
 import com.da_ta.backend.common.domain.Message;
 import com.da_ta.backend.common.domain.exception.NotFoundException;
 import com.da_ta.backend.common.domain.exception.WrongAccessException;
@@ -24,7 +24,9 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
+import java.util.StringTokenizer;
 
+import static com.da_ta.backend.common.domain.Age.*;
 import static com.da_ta.backend.common.domain.ErrorCode.*;
 import static com.da_ta.backend.common.domain.SuccessCode.REISSUED_TOKEN;
 
@@ -39,8 +41,8 @@ public class UserService {
     private final String GRANT_TYPE_VALUE = "authorization_code";
     private final String TOKEN_SUBJECT = "sub";
     private final String DELIMITER = " ";
+    private final String TILDE = "~";
     private final UserRepository userRepository;
-    private final BanStatusRepository banStatusRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final RedisRepository redisRepository;
 
@@ -160,7 +162,7 @@ public class UserService {
         User user = User.builder()
                 .kakaoId(kakaoProfile.getKakaoAccount().getEmail())
                 .nickname(generateRamdomNickname())
-                .age(kakaoProfile.getKakaoAccount().getAgeRange())
+                .age(mapToAge(kakaoProfile.getKakaoAccount().getAgeRange()))
                 .banStatus(banStatus)
                 .build();
         userRepository.save(user);
@@ -190,5 +192,29 @@ public class UserService {
                 NicknameResponse.class
         );
         return response.getBody().getNickname()[0];
+    }
+
+    private Age mapToAge(String ageRange) {
+        if (ageRange == null) {
+            return AGE_ALL;
+        } else {
+            StringTokenizer stringTokenizer = new StringTokenizer(ageRange, TILDE);
+            int startAge = Integer.parseInt(stringTokenizer.nextToken());
+            int endAge = Integer.parseInt(stringTokenizer.nextToken());
+            if (startAge == 1 && endAge == 9) {
+                return AGE_0S;
+            } else if ((startAge == 10 && endAge == 14) || (startAge == 15 && endAge == 19)) {
+                return AGE_10S;
+            } else if (startAge == 20 && endAge == 29) {
+                return AGE_20S;
+            } else if (startAge == 30 && endAge == 39) {
+                return AGE_30S;
+            } else if (startAge == 40 && endAge == 49) {
+                return AGE_40S;
+            } else if (startAge == 50 && endAge == 59) {
+                return AGE_50S;
+            }
+        }
+        return AGE_60S;
     }
 }
