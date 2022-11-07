@@ -98,4 +98,8 @@ public class User extends CommonEntity implements UserDetails {
     public void updateAlertOption(boolean alertOption) {
         this.alertOption = alertOption;
     }
+
+    public void deleteUser() {
+        super.delete();
+    }
 }
