@@ -3,10 +3,10 @@ import styled from "styled-components";
 import { media } from "../../utils/styleUtil";
 import Button from "../atoms/Button";
 import { useSetRecoilState } from "recoil";
-import { reportState } from "../../recoil/Atoms";
+import { reportModalState } from "../../recoil/Atoms";
 
 const ReadButtons = ({ index }) => {
-  const setRecoilState = useSetRecoilState(reportState);
+  const setRecoilState = useSetRecoilState(reportModalState);
 
   return (
     <ButtonDiv>

@@ -8,11 +8,13 @@ import ReadLetterText from "../../components/molecules/ReadLetterText";
 import { useSetRecoilState } from "recoil";
 import { loadingState } from "../../recoil/Atoms";
 import ReportModal from "../../components/organisms/ReportModal";
+import { reportLetterIdState } from "../../recoil/Atoms";
 
 const LetterReadPage = () => {
   const [blur, setBlur] = useState(false);
   const [loading, setLoading] = useState(false);
   const loadingSpinner = useSetRecoilState(loadingState);
+  const setReportLetterId = useSetRecoilState(reportLetterIdState);
   const [letter, setLetter] = useState({ letterInfo: {} });
   const [isPicture, setIsPicture] = useState(false);
 
@@ -37,6 +39,7 @@ const LetterReadPage = () => {
           createTime: new Date(),
         },
       });
+      setReportLetterId(letter.letterInfo.letterId);
 
       //편지를 출력하기 전에 그림인지 글인지 분기
       letter.letterInfo.imageLetterUrl

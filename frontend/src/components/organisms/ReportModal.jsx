@@ -1,10 +1,10 @@
 import Modal from "./Modal";
 import ReportModalContent from "../atoms/ReportModalContent";
 import { useRecoilState } from "recoil";
-import { reportState } from "../../recoil/Atoms";
+import { reportModalState } from "../../recoil/Atoms";
 
 const ReportModal = () => {
-  const [modalToggle, setModalToggle] = useRecoilState(reportState);
+  const [modalToggle, setModalToggle] = useRecoilState(reportModalState);
   return (
     <Modal
       titleText={"편지 신고하기"}

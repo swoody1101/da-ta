@@ -14,10 +14,12 @@ import {
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
 import { useSetRecoilState } from "recoil";
-import { reportState } from "../../../recoil/Atoms";
+import { reportModalState } from "../../../recoil/Atoms";
+import { reportLetterIdState } from "../../../recoil/Atoms";
 
 export const MypageLetter = ({ letter }) => {
-  const setModalToggle = useSetRecoilState(reportState);
+  const setModalToggle = useSetRecoilState(reportModalState);
+  const setReportLetterId = useSetRecoilState(reportLetterIdState);
 
   return (
     <LetterDiv>
@@ -33,6 +35,7 @@ export const MypageLetter = ({ letter }) => {
         size="lg"
         onClick={() => {
           setModalToggle(true);
+          setReportLetterId(letter.id);
           console.log(
             `${letter.letterId}번 글을 쓴 글쓴이 아이디 ${letter.userId}를 신고버튼`
           );

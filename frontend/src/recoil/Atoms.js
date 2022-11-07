@@ -44,10 +44,19 @@ export const loadingState = atom({
 });
 
 /**
- * @description 신고 페이지 toggle
+ * @description 편지 신고하기 모달 toggle
  * @return {boolean}
  */
-export const reportState = atom({
-  key: "reportState",
+export const reportModalState = atom({
+  key: "reportModalState",
   default: false,
+});
+
+/**
+ * @description 신고된 편지 id
+ * @return {number}
+ */
+export const reportLetterIdState = atom({
+  key: "reportLetterIdState",
+  default: null,
 });
