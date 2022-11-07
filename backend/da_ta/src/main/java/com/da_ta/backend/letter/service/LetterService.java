@@ -357,7 +357,7 @@ public class LetterService {
     }
 
     private Reply findReplyByReplyLetterId(Long replyLetterId) {
-        return replyRepository.findById(replyLetterId)
+        return replyRepository.findByReplyLetterId(replyLetterId)
                 .orElseThrow(() -> new NotFoundException(REPLY_NOT_FOUND));
     }
 

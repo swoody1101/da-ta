@@ -22,9 +22,9 @@ public class Reply extends CommonEntity {
     private Long originLetterId;
 
     @NotNull
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "reply_letter_id", unique = true)
-    private Letter reply;
+    private Letter replyLetter;
 
     @Builder.Default
     private boolean isRead = false;
@@ -36,5 +36,10 @@ public class Reply extends CommonEntity {
 
     public void updateIsRead() {
         this.isRead = true;
+    }
+
+    public void deleteReplyLetter() {
+        super.delete();
+        this.replyLetter.deleteLetter();
     }
 }
