@@ -16,7 +16,7 @@ const ContentBlock = styled.div`
   align-items: ${(props) => props.alignItems};
   justify-content: ${(props) => props.justifyContent};
   margin: ${(props) => props.margin};
-  transition: 0.25s ease;
+  transition: 0.5s ease;
 
   -webkit-user-select: none;
   -moz-user-select: none;

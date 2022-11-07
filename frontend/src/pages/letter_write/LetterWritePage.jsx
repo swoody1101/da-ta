@@ -27,6 +27,7 @@ import { popErrorAlert, popWarningAlert } from "./../../utils/sweetAlert";
 import { saveTextLetter } from "../../api/letterWriteAPI";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../recoil/Atoms";
+import { useNavigate } from "react-router-dom";
 
 const LetterWritePage = () => {
   const [options, setOptions] = useState({
@@ -55,7 +56,10 @@ const LetterWritePage = () => {
 
   const titleInput = useRef(); // 제목 ref (값 가져오기, focus)
   const contentInput = useRef(); // 내용 ref (값 가져오기, ref)
-  const wrapRef = useRef();
+  const wrapRef = useRef(); // 편지지 영역 ref
+  const unshowRef = useRef([]); // 보내기 버튼 누를 시 사라질 영역들 ref
+
+  const navigate = useNavigate();
 
   /**
    * @description 편지지 텍스트 입력 시 이벤트
@@ -99,7 +103,7 @@ const LetterWritePage = () => {
   /**
    * @description "보내기" 버튼 눌렀을 시 이벤트
    */
-  const handleLetterSend = () => {
+  const handleLetterSend = async () => {
     // 편지지
     if (act) {
       // 1. 유효성 검사
@@ -113,18 +117,46 @@ const LetterWritePage = () => {
         return;
       } else if (content.length > MAX_CHAR_COUNT) {
         popWarningAlert(`편지 내용을 ${MAX_CHAR_COUNT}자 이하 입력해주세요.`);
-      }
-
-      const response = saveTextLetter(options, user.userId, title, content);
-      if (response.status !== 200) {
-        popErrorAlert("편지 전송 오류", "편지 전송 중 오류가 발생했습니다.");
         return;
       }
+
+      // const response = await saveTextLetter(
+      //   options,
+      //   user.userId,
+      //   title,
+      //   content
+      // );
+      // console.log(response);
+      // if (response.status !== 200) {
+      //   popErrorAlert("편지 전송 오류", "편지 전송 중 오류가 발생했습니다.");
+      //   return;
+      // }
     }
     // 도화지l
     else {
       setCanvasSaveTrigger(true);
     }
+
+    // 편지 보내는 애니메이션
+    for (let r of unshowRef.current) {
+      r.style.opacity = 0;
+    }
+
+    setTimeout(() => {
+      wrapRef.current.style.margin = "-2rem 0 0 0";
+    }, 500);
+    setTimeout(() => {
+      titleInput.current.style.opacity = 0;
+      contentInput.current.style.opacity = 0;
+      wrapRef.current.style.height = 0;
+    }, 1000);
+    setTimeout(() => {
+      wrapRef.current.style.margin = "2rem 0 0 0";
+    }, 1500);
+
+    setTimeout(() => {
+      navigate("/writesuccess");
+    }, 2500);
   };
 
   useEffect(() => {
@@ -153,6 +185,7 @@ const LetterWritePage = () => {
           margin={SizeTypes.PC_LETTER_MARGIN}
           mWidth={SizeTypes.MOBILE_LETTER_WIDTH}
           optionToggle={optionToggle}
+          ref={(el) => (unshowRef.current[0] = el)}
         >
           <LetterToggleButton
             category="write"
@@ -174,6 +207,7 @@ const LetterWritePage = () => {
         <ContentBlock
           mWidth={SizeTypes.MOBILE_LETTER_WIDTH}
           optionToggle={optionToggle}
+          ref={(el) => (unshowRef.current[1] = el)}
         >
           <Spacer act={act} />
         </ContentBlock>
@@ -209,6 +243,7 @@ const LetterWritePage = () => {
               <LetterProgressBar
                 charCount={charCount}
                 charCountWarning={charCountWarning}
+                myRef={(el) => (unshowRef.current[2] = el)}
               />
             </>
           ) : (
@@ -237,6 +272,7 @@ const LetterWritePage = () => {
           justifyContent="space-between"
           mWidth={SizeTypes.MOBILE_LETTER_WIDTH}
           optionToggle={optionToggle}
+          ref={(el) => (unshowRef.current[3] = el)}
         >
           <Button
             hoverBgOpacity="0.2"

@@ -7,7 +7,7 @@ import { faEraser, faPencil } from "@fortawesome/free-solid-svg-icons";
 import { ChromePicker } from "react-color";
 import { useState } from "react";
 
-const CanvasOptionBar = ({ canvasOptions, setCanvasOptions }) => {
+const CanvasOptionBar = ({ canvasOptions, setCanvasOptions, myRef }) => {
   const [colorPickerShow, setColorPickerShow] = useState(false);
 
   const handleColorChange = (picked) => {
@@ -15,7 +15,7 @@ const CanvasOptionBar = ({ canvasOptions, setCanvasOptions }) => {
   };
 
   return (
-    <OptionBarContainer>
+    <OptionBarContainer ref={myRef}>
       <OptionWrapper>
         <OptionText>색상</OptionText>
         <CanvasOption
