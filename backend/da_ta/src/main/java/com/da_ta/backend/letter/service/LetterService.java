@@ -52,7 +52,7 @@ public class LetterService {
                 .build();
         textLetterRepository.save(textLetter);
         floatLetter(textLetter);
-        return new Message(TEXT_LETTER_CREATED.getMessage());
+        return new Message(TEXT_LETTER_FLOATED.getMessage());
     }
 
     @Transactional
@@ -69,7 +69,7 @@ public class LetterService {
                 .build();
         imageLetterRepository.save(imageLetter);
         floatLetter(imageLetter);
-        return new Message(IMAGE_LETTER_CREATED.getMessage());
+        return new Message(IMAGE_LETTER_FLOATED.getMessage());
     }
 
     @Transactional
@@ -132,14 +132,14 @@ public class LetterService {
                 .originLetterId(letterId)
                 .replyLetter(textLetter)
                 .build());
-        return new Message(REPLY_CREATED.getMessage());
+        return new Message(REPLY_SENT.getMessage());
     }
 
     public Message checkReplyReception(Long replyId) {
         Reply reply = findReplyById(replyId);
         reply.updateIsRead();
         replyRepository.save(reply);
-        return new Message(REPLY_RECEPTION_CHECK_CREATED.getMessage());
+        return new Message(REPLY_RECEPTION_CHECKED.getMessage());
     }
 
     public Message updateFloatedLetter(Long floatedLetterId) {
@@ -149,19 +149,19 @@ public class LetterService {
         }
         floatedLetter.updateRecipient(null);
         floatedLetterRepository.save(floatedLetter);
-        return new Message(FLOATED_LETTER_CREATED.getMessage());
+        return new Message(LETTER_REFLOATED.getMessage());
     }
 
     public Message collectLetter(Long userId, Long letterId) {
         Letter letter = findLetterById(letterId);
         if (letter.isReplyOption()) {
-            throw new BadRequestException(COLLECT_BAD_REQUEST);
+            throw new BadRequestException(COLLECT_LETTER_REJECTED);
         }
         collectedLetterRepository.save(CollectedLetter.builder()
                 .letter(letter)
                 .user(findUserById(userId))
                 .build());
-        return new Message(COLLECTED_LETTER_CREATED.getMessage());
+        return new Message(LETTER_COLLECTED.getMessage());
     }
 
     public Message createLetterAccusation(Long userId, Long letterId, AccuseLetterRequest accuseLetterRequest) {
@@ -170,7 +170,7 @@ public class LetterService {
                 .reporterId(userId)
                 .reason(accuseLetterRequest.getReason())
                 .build());
-        return new Message(LETTER_ACCUSATION_CREATED.getMessage());
+        return new Message(LETTER_ACCUSED.getMessage());
     }
 
     public void floatLetter(Letter letter) {

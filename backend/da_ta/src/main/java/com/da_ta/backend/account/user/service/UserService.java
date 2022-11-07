@@ -97,7 +97,7 @@ public class UserService {
         } catch (ExpiredJwtException e) {
             throw new WrongAccessException(REFRESH_TOKEN_EXPIRED);
         }
-        return new Message(REISSUED_TOKEN.getMessage());
+        return new Message(TOKEN_REISSUED.getMessage());
     }
 
     private KakaoToken getKakaoAccessToken(String authorizationCode) {
