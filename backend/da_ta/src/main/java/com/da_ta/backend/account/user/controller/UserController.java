@@ -49,4 +49,10 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(userService.updateAlertOption(token, updateAlertOptionRequest));
     }
+
+    @DeleteMapping
+    public ResponseEntity<Message> deleteUser(@RequestHeader(AUTHORIZATION) String token) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(userService.deleteUser(token));
+    }
 }
