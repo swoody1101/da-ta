@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { media } from "../../utils/styleUtil";
 
 import MainBackgroundSky from "../../components/atoms/MainBackgroundSky";
 import Footer from "../../components/molecules/Footer";
@@ -23,6 +24,9 @@ import MouseScrollDownMouse from "../../components/atoms/MainScrollDownMouse";
 
 const LandingPage = () => {
   const navigate = useNavigate();
+
+  const [chatboxToggle, setChatBoxToggle] = useState(false); // 물병 클릭시 뜨는 말풍선 토글
+  const [modalToggle, setModalToggle] = useState(false); // 답장하기 모달창 토글
 
   useEffect(() => {
     AOS.init({ duration: 500, easing: "ease-in-out-back" });
@@ -104,8 +108,43 @@ const LandingPage = () => {
         </div>
       </TextWrapper>
 
+      <ChatBoxWrapper>
+        <Chatbox>
+          <Button
+            hoverBgOpacity="0.5"
+            fontSize="1.4rem"
+            height="3rem"
+            width="18rem"
+            margin="1% 0 0 0"
+            shadow={true}
+            color="blue"
+            borderColor="blue"
+            onClick={() => navigate("/write")}
+          >
+            답변하기
+          </Button>
+
+          <Button
+            hoverBgOpacity="0.5"
+            fontSize="1.4rem"
+            height="3rem"
+            width="18rem"
+            margin="1% 0 0 0"
+            shadow={true}
+            color="blue"
+            onClick={() => navigate("/write")}
+          >
+            다른 답변보기
+          </Button>
+        </Chatbox>
+      </ChatBoxWrapper>
+
       <BottleWrapper>
-        <BottleOfLetter />
+        <BottleOfLetter
+          mWidth={SizeTypes.MOBILE_MAIN_BOTTLE_WIDTH}
+          mHeight={SizeTypes.MOBILE_MAIN_BOTTLE_HEIGHT}
+          setChatBoxToggle={() => setChatBoxToggle(true)}
+        />
       </BottleWrapper>
 
       {/* <MouseScrollDownMouseWrapper>
@@ -159,10 +198,11 @@ const LandingPage = () => {
 const BottleWrapper = styled.div`
   display: flex;
   position: absolute;
-  width: 100vw;
-  height: 100vh;
   flex-direction: column;
   justify-content: center;
+  top: 56%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 1.5;
 `;
 
@@ -186,13 +226,31 @@ const MouseScrollDownArrowWrapper = styled.div`
   transform: translate(-50%, -50%);
 `;
 
-const MouseScrollDownMouseWrapper = styled.div`
-  width: 100vw;
+// const MouseScrollDownMouseWrapper = styled.div`
+//   width: 100vw;
+//   display: flex;
+//   position: absolute;
+//   justify-content: center;
+//   align-items: center;
+//   z-index: 5;
+// `;
+
+const ChatBoxWrapper = styled.div`
   display: flex;
   position: absolute;
   justify-content: center;
   align-items: center;
-  z-index: 5;
+  z-index: 6;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 export default LandingPage;
+
+{
+  /* <div id="title-div" onclick="sayHello()"></div>;
+function sayHello() {
+  console.log("Hello there !!");
+} */
+}
