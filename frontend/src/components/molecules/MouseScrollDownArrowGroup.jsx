@@ -23,9 +23,9 @@ const arrow_down = keyframes`
 const MouseScrollDownArrowGroup = ({ ...props }) => {
   return (
     <S1_arrow {...props}>
-      <MainText>Scroll</MainText>
-      <MouseScrollDownMouse margin_top="110px"></MouseScrollDownMouse>
-      <ArrowWrapper margin_toparrowWrapper="250px">
+      {/* <MainText>Scroll</MainText> */}
+      <MouseScrollDownMouse margin_top="115px"></MouseScrollDownMouse>
+      <ArrowWrapper margin_toparrowWrapper="280px">
         <MouseScrollDownArrow
           width="2rem"
           height="2rem"
@@ -62,13 +62,10 @@ const S1_arrow = styled.div`
   width: 10vw;
   height: 20vh;
   margin-top: ${(props) => props.margin_top};
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
-  animation: ${(props) => (props.isRight ? arrow_down : 0)} 1.5s infinite;
-  top: 55%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  animation: ${(props) => (props.isRight ? arrow_down : 0)} 1.5s infinite; ;
 `;
 
 const ArrowWrapper = styled.div`
