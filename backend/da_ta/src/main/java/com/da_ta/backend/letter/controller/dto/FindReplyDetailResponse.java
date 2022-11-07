@@ -9,8 +9,6 @@ import lombok.Getter;
 @Builder
 public class FindReplyDetailResponse {
 
-    private LetterInfo myLetterInfo;
-    private String replyWriterId;
-    private String replyWriterNickname;
+    private LetterInfo originLetterInfo;
     private ReplyInfo replyInfo;
 }
