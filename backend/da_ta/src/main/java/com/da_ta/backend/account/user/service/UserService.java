@@ -151,7 +151,7 @@ public class UserService {
 
     private User getUser(String accessToken) {
         KakaoProfile kakaoProfile = getKakaoProfile(accessToken);
-        User user = userRepository.findByKakaoId(kakaoProfile.getKakaoAccount().getEmail())
+        User user = userRepository.findByKakaoIdAndIsActiveTrue(kakaoProfile.getKakaoAccount().getEmail())
                 .orElseGet(() -> signUp(kakaoProfile));
         return user;
     }
@@ -230,6 +230,13 @@ public class UserService {
         user.updateAlertOption(updateAlertOptionRequest.isAlertOption());
         userRepository.save(user);
         return new Message(ALERT_OPTION_UPDATED.getMessage());
+    }
+
+    public Message deleteUser(String token) {
+        User user = findUserByToken(token);
+        user.deleteUser();
+        userRepository.save(user);
+        return new Message(USER_DELETED.getMessage());
     }
 
     private User findUserByToken(String token) {

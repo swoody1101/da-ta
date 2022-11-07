@@ -25,7 +25,7 @@ import java.util.List;
 @Entity
 public class User extends CommonEntity implements UserDetails {
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String kakaoId;
 
     @Column(nullable = false, unique = true)
@@ -97,5 +97,9 @@ public class User extends CommonEntity implements UserDetails {
 
     public void updateAlertOption(boolean alertOption) {
         this.alertOption = alertOption;
+    }
+
+    public void deleteUser() {
+        super.delete();
     }
 }
