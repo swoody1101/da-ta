@@ -26,7 +26,7 @@ const Modal = ({
       width: 100%;`;
     return () => {
       const scrollY = document.body.style.top;
-      document.body.style.cssText = "";
+      document.body.style.cssText = "overflow: overlay;";
       window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
     };
   }, []);
@@ -35,6 +35,7 @@ const Modal = ({
     <>
       {modalToggle && (
         <>
+          l
           <TranslucentBackground onClick={() => setModalToggle(false)} />
           <ModalContainer>
             {/* 닫기 버튼 */}

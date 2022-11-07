@@ -18,11 +18,17 @@ import Collect from "./pages/mypage/Collect";
 import Receive from "./pages/mypage/Receive";
 import Setting from "./pages/mypage/Setting";
 import { GlobalFonts } from "./styles/fonts/fonts";
+import Loading from "./components/molecules/Loading";
+import { useRecoilState } from "recoil";
+import { loadingState } from "./recoil/Atoms";
 
 function App() {
+	const [loading, setLoading] = useRecoilState(loadingState);
+
 	return (
 		<div className="App">
 			<GlobalFonts />
+			{loading && <Loading />}
 			<Background>
 				<BrowserRouter>
 					<MainNav />
@@ -32,13 +38,9 @@ function App() {
 						<Route path="/testyoon" element={<TestPageYoon />} />
 						<Route path="/bytest" element={<TestBoyeon />} />
 						<Route path="/auth/oauth" element={<SocialLogin />} />
-						{/* <Route
-              path="/write"
-              element={<PrivateRoute component={<LetterWritePage />} />}
-            /> */}
-						<Route path="/write" element={<LetterWritePage />} />
-						<Route path="/read" element={<LetterReadPage />} />
-						<Route path="/mypage" element={<Mypage />}>
+						<Route path="/write" element={<PrivateRoute component={<LetterWritePage />} />} />
+						<Route path="/read" element={<PrivateRoute component={<LetterReadPage />} />} />
+						<Route path="/mypage" element={<PrivateRoute component={<Mypage />} />}>
 							<Route index path="collect" element={<Collect />} />
 							<Route path="receive" element={<Receive />} />
 							<Route path="setting" element={<Setting />} />

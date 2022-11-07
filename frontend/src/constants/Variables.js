@@ -1,5 +1,5 @@
 /**
- * @author mingty
+ * @author mingyu
  * @description 글자수 등 통용되는 상수에 대해 정의합니다.
  */
 export const MIN_CHAR_COUNT = 100; // 편지지 최소 글자 수

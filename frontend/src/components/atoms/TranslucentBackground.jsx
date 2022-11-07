@@ -1,3 +1,7 @@
+/**
+ * @author mingyu
+ * @description 반투명 배경 컴포넌트
+ */
 import React from "react";
 import styled from "styled-components";
 
