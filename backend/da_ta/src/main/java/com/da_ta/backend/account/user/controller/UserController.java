@@ -1,10 +1,7 @@
 package com.da_ta.backend.account.user.controller;
 
 import com.da_ta.backend.account.jwt.JwtTokenProvider;
-import com.da_ta.backend.account.user.controller.dto.LoginRequest;
-import com.da_ta.backend.account.user.controller.dto.LoginResponse;
-import com.da_ta.backend.account.user.controller.dto.UpdateAgeRangeRequest;
-import com.da_ta.backend.account.user.controller.dto.UpdateAlertOptionRequest;
+import com.da_ta.backend.account.user.controller.dto.*;
 import com.da_ta.backend.account.user.service.UserService;
 import com.da_ta.backend.common.domain.Message;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +36,12 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK)
                 .headers(headers)
                 .body(message);
+    }
+
+    @GetMapping
+    public ResponseEntity<MyPageResponse> getMyPage(@RequestHeader(AUTHORIZATION) String token) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(userService.findSetting(jwtTokenProvider.findUserByToken(token)));
     }
 
     @PutMapping("/update/1")
