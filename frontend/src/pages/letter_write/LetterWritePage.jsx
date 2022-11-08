@@ -122,7 +122,7 @@ const LetterWritePage = () => {
 
       const response = await saveTextLetter(options, title, content);
       console.log(response);
-      if (response.status !== 200) {
+      if (response.status < 200 && response.status >= 300) {
         popErrorAlert("편지 전송 오류", "편지 전송 중 오류가 발생했습니다.");
         return;
       }
