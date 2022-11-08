@@ -99,6 +99,10 @@ public class User extends CommonEntity implements UserDetails {
         this.alertOption = alertOption;
     }
 
+    public void updateRole(String role) {
+        this.role = Role.valueOf(role);
+    }
+
     public void deleteUser() {
         super.delete();
     }
