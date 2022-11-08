@@ -6,9 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface CollectedLetterRepository extends JpaRepository<CollectedLetter, Long> {
+public interface CollectionRepository extends JpaRepository<CollectedLetter, Long> {
 
-    Optional<CollectedLetter> findByLetterId(Long letterId);
+    Optional<CollectedLetter> findByLetterIdAndUserId(Long letterId, Long userId);
 
     List<CollectedLetter> findAllByUserIdAndIsActiveTrueOrderByCreatedDateDesc(Long userId);
 }

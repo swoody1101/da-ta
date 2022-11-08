@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AttributeOverride(name = "id", column = @Column(name = "collected_letter_id"))
+@AttributeOverride(name = "id", column = @Column(name = "collectie_letter_id"))
 @Entity
 public class CollectedLetter extends CommonEntity {
 

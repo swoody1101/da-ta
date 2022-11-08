@@ -24,7 +24,7 @@ public class Reply extends CommonEntity {
     @NotNull
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "reply_letter_id", unique = true)
-    private Letter replyLetter;
+    private Letter repliedLetter;
 
     @Builder.Default
     private boolean isRead = false;
@@ -40,6 +40,6 @@ public class Reply extends CommonEntity {
 
     public void deleteReplyLetter() {
         super.delete();
-        this.replyLetter.deleteLetter();
+        this.repliedLetter.deleteLetter();
     }
 }
