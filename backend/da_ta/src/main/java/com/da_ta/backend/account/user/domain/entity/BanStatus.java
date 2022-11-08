@@ -22,4 +22,12 @@ public class BanStatus extends CommonEntity {
 
     @OneToOne(mappedBy = "banStatus", cascade = CascadeType.ALL)
     private User user;
+
+    public void updateWarningCount() {
+        this.warningCount++;
+    }
+
+    public void updateIsBan() {
+        this.isBan = true;
+    }
 }
