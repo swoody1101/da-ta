@@ -38,7 +38,6 @@ const Modal = ({
     <>
       {modalToggle && (
         <>
-          l
           <TranslucentBackground onClick={() => setModalToggle(false)} />
           <ModalContainer height={height} width={width} maxWidth={maxWidth}>
             {/* 닫기 버튼 */}

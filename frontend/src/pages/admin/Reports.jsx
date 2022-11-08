@@ -4,14 +4,30 @@ import { AdminWrapper } from "./../../styles/Wrapper";
 import Button from "./../../components/atoms/Button";
 import styled from "styled-components";
 import Modal from "./../../components/organisms/Modal";
+import { MainSmallText, MainText } from "./../../components/atoms/Text";
 
 const Reports = () => {
   const flexRate = [2, 4, 5, 5, 4, 2, 2];
 
   const [modalToggle, setModalToggle] = useState(false);
 
-  const handleModal = () => {
-    setModalToggle(!modalToggle);
+  const [reportContent, setModalContent] = useState({
+    reportedNickname: null,
+    content: null, // 편지텍스트 또는 이미지url
+  });
+
+  /** 편지 내용 보기 */
+  const handleModal = (idx) => {
+    setModalContent({
+      reportedNickname: tmpData[idx].reportedNickname,
+      content: tmpData[idx].content,
+    });
+    setModalToggle(true);
+  };
+
+  /** 신고 처리 */
+  const handleProcess = (idx) => {
+    console.log(idx);
   };
 
   return (
@@ -21,7 +37,22 @@ const Reports = () => {
           titleText={"편지 내용"}
           modalToggle={modalToggle}
           setModalToggle={setModalToggle}
-        ></Modal>
+        >
+          <ModalContentWrapper>
+            <MainSmallText color="black" fontWeight="bold">
+              신고 대상
+            </MainSmallText>
+            <ModalContentBox width="12rem" margin="1rem 0 0 0">
+              {reportContent.reportedNickname}
+            </ModalContentBox>
+            <MainSmallText color="black" fontWeight="bold" margin="2rem 0 0 0">
+              편지 내용
+            </MainSmallText>
+            <ModalContentBox margin="1rem 0 0 0" width="80%" height="10rem">
+              {reportContent.content}
+            </ModalContentBox>
+          </ModalContentWrapper>
+        </Modal>
       )}
       <AdminWrapper>
         <Title fontSize="2.5rem" color="black" hoverBgOpacity="1">
@@ -58,7 +89,7 @@ const Reports = () => {
                     bgColor="#49C288"
                     width="90%"
                     height="70%"
-                    onClick={handleModal}
+                    onClick={() => handleModal(item.letterAccusationId)}
                   >
                     보기
                   </Button>
@@ -105,9 +136,30 @@ const ContentElement = styled.div`
   text-align: center;
 `;
 
+const ModalContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ModalContentBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: ${(props) => props.width || "50%"};
+  height: ${(props) => props.height || "4rem"};
+  margin: ${(props) => props.margin};
+  background-color: #ffffff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  overflow: scroll;
+`;
+
 const tmpData = [
   {
-    letterAccusationId: 1,
+    letterAccusationId: 0,
     reportedTime: "2022-01-02",
     reporterNickname: "신고 신고자",
     reportedUserId: 33,
@@ -119,15 +171,16 @@ const tmpData = [
   {
     letterAccusationId: 1,
     reportedTime: "2022-01-02",
-    reporterNickname: "신고 신고자",
-    reportedUserId: 33,
-    reportedNickname: "신고당한 당한사람",
-    reason: "욕설/폭력",
-    content: "대충 심한 말이 담긴 편지 내용",
+    reporterNickname: "머리 위 오둥이",
+    reportedUserId: 12551,
+    reportedNickname: "사악한 고양이",
+    reason: "불쾌",
+    content:
+      "심한 말 심한 말 심한 말\n심한 말 심한 말 심한 말심한 말 심한 말 심한 말",
     isProcessed: false,
   },
   {
-    letterAccusationId: 1,
+    letterAccusationId: 2,
     reportedTime: "2022-01-02",
     reporterNickname: "신고 신고자",
     reportedUserId: 33,
@@ -137,7 +190,7 @@ const tmpData = [
     isProcessed: false,
   },
   {
-    letterAccusationId: 1,
+    letterAccusationId: 3,
     reportedTime: "2022-01-02",
     reporterNickname: "신고 신고자",
     reportedUserId: 33,
@@ -147,7 +200,7 @@ const tmpData = [
     isProcessed: false,
   },
   {
-    letterAccusationId: 1,
+    letterAccusationId: 4,
     reportedTime: "2022-01-02",
     reporterNickname: "신고 신고자",
     reportedUserId: 33,
@@ -157,7 +210,7 @@ const tmpData = [
     isProcessed: false,
   },
   {
-    letterAccusationId: 1,
+    letterAccusationId: 5,
     reportedTime: "2022-01-02",
     reporterNickname: "신고 신고자",
     reportedUserId: 33,
@@ -167,7 +220,7 @@ const tmpData = [
     isProcessed: false,
   },
   {
-    letterAccusationId: 1,
+    letterAccusationId: 6,
     reportedTime: "2022-01-02",
     reporterNickname: "신고 신고자",
     reportedUserId: 33,
@@ -177,7 +230,47 @@ const tmpData = [
     isProcessed: true,
   },
   {
-    letterAccusationId: 1,
+    letterAccusationId: 7,
+    reportedTime: "2022-01-02",
+    reporterNickname: "신고 신고자",
+    reportedUserId: 33,
+    reportedNickname: "신고당한 당한사람",
+    reason: "욕설/폭력",
+    content: "대충 심한 말이 담긴 편지 내용",
+    isProcessed: false,
+  },
+  {
+    letterAccusationId: 8,
+    reportedTime: "2022-01-02",
+    reporterNickname: "신고 신고자",
+    reportedUserId: 33,
+    reportedNickname: "신고당한 당한사람",
+    reason: "욕설/폭력",
+    content: "대충 심한 말이 담긴 편지 내용",
+    isProcessed: true,
+  },
+  {
+    letterAccusationId: 9,
+    reportedTime: "2022-01-02",
+    reporterNickname: "신고 신고자",
+    reportedUserId: 33,
+    reportedNickname: "신고당한 당한사람",
+    reason: "욕설/폭력",
+    content: "대충 심한 말이 담긴 편지 내용",
+    isProcessed: false,
+  },
+  {
+    letterAccusationId: 10,
+    reportedTime: "2022-01-02",
+    reporterNickname: "신고 신고자",
+    reportedUserId: 33,
+    reportedNickname: "신고당한 당한사람",
+    reason: "욕설/폭력",
+    content: "대충 심한 말이 담긴 편지 내용",
+    isProcessed: true,
+  },
+  {
+    letterAccusationId: 11,
     reportedTime: "2022-01-02",
     reporterNickname: "신고 신고자",
     reportedUserId: 33,
