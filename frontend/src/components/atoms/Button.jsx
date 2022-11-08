@@ -37,7 +37,8 @@ const StyledButton = styled.button`
   filter: ${(props) =>
     props.shadow ? "drop-shadow(4px 8px 12px rgba(38,38,38,0.5))" : ""};
   cursor: pointer;
-  border: ${(props) => (props.hasBorder ? "2px solid white" : "0")};
+  border: ${(props) =>
+    props.hasBorder ? "2px solid white" : props.borderStyle};
   border-radius: ${(props) => props.borderRadius};
   color: ${(props) => props.color || "white"};
   align-items: center;
