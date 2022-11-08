@@ -31,7 +31,7 @@ public class AdminService {
                         .stream()
                         .map(user -> UserItem.builder()
                                 .userId(user.getId())
-                                .kakaoId(user.getKakaoId())
+                                .kakaoUserId(user.getKakaoUserId())
                                 .nickname(user.getNickname())
                                 .ageRange(user.getAge().getAgeRange())
                                 .role(user.getRole())
