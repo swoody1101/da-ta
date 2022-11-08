@@ -42,9 +42,8 @@ public class LetterController {
     @PutMapping("/{floated_letter_id}")
     public ResponseEntity<Message> refloatLetter(@RequestHeader(AUTHORIZATION) String token,
                                                  @PathVariable("floated_letter_id") Long floatedLetterId) {
-        jwtTokenProvider.findUserByToken(token);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(letterService.updateFloatedLetter(floatedLetterId));
+                .body(letterService.updateFloatedLetter(jwtTokenProvider.findUserByToken(token), floatedLetterId));
     }
 
     @PostMapping("/replies/{origin_letter_id}")
@@ -83,18 +82,18 @@ public class LetterController {
                 .body(letterService.findLetterCollection(jwtTokenProvider.findUserByToken(token)));
     }
 
-    @GetMapping("/collection/detail/{collected_letter_id}")
+    @GetMapping("/collection/detail/{letter_id}")
     public ResponseEntity<FindCollectedLetterDetailResponse> findCollectedLetterDetail(@RequestHeader(AUTHORIZATION) String token,
-                                                                                       @PathVariable("collected_letter_id") Long collectedLetterId) {
+                                                                                       @PathVariable("letter_id") Long letterId) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(letterService.findCollectedLetterDetail(jwtTokenProvider.findUserByToken(token), collectedLetterId));
+                .body(letterService.findCollectedLetterDetail(jwtTokenProvider.findUserByToken(token), letterId));
     }
 
-    @DeleteMapping("/collection/{collected_letter_id}")
+    @DeleteMapping("/collection/{letter_id}")
     public ResponseEntity<Message> deleteCollectedLetter(@RequestHeader(AUTHORIZATION) String token,
-                                                         @PathVariable("collected_letter_id") Long collectedLetterId) {
+                                                         @PathVariable("letter_id") Long letterId) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(letterService.deleteCollectedLetter(jwtTokenProvider.findUserByToken(token), collectedLetterId));
+                .body(letterService.deleteCollectedLetter(jwtTokenProvider.findUserByToken(token), letterId));
     }
 
     @GetMapping("/replies/check")
