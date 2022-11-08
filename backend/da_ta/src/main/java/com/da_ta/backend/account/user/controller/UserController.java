@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
-@Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/user")
