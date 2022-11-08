@@ -128,8 +128,9 @@ public class LetterService {
         }
     }
 
-    public Message createReply(User writer, Long originLetterId, CreateReplyRequset createReplyRequset) {
-        TextLetterInfo textLetterInfo = createReplyRequset.getTextLetterInfo();
+    public Message createReply(User writer, Long originLetterId, CreateReplyRequest createReplyRequest) {
+        FloatedLetter floatedLetter = findFloatedLetterByLetterIdAndRecipientId(originLetterId, writer.getId());
+        TextLetterInfo textLetterInfo = createReplyRequest.getTextLetterInfo();
         TextLetter textLetter = TextLetter.builder()
                 .letterType(TYPE_TEXT)
                 .writer(writer)
@@ -140,7 +141,7 @@ public class LetterService {
                 .build();
         textLetterRepository.save(textLetter);
         replyRepository.save(Reply.builder()
-                .recipient(findUserById(createReplyRequset.getRecipientId()))
+                .recipient(floatedLetter.getLetter().getWriter())
                 .originLetterId(originLetterId)
                 .repliedLetter(textLetter)
                 .build());
