@@ -14,7 +14,7 @@ const moveBottle = keyframes`
     margin-top: 0px;
   }
   100% {
-    margin-top: 30px;
+    margin-top: 20px;
   }
   `;
 
@@ -31,8 +31,6 @@ BottleOfLetter.defaultProps = {
   width: "10%",
   height: "10%", //원래는 20vh
   isRight: "1",
-  // mWidth: "500px",
-  // mHeight: "500px",
 };
 
 const BG = styled.div`

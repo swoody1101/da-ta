@@ -131,13 +131,13 @@ const LetterCanvasArea = ({
     const imagePath = uploadFirebaseStorage(image, "drawings/");
 
     // api 요청 보내자...
-    // const response = await saveCanvasLetter(options, imagePath, user.userId);
+    const response = await saveCanvasLetter(options, imagePath);
 
-    // if (response.status !== 200) {
-    //   popErrorAlert("편지 보내기 실패", "편지 전송 중 문제가 발생했어요");
-    //   console.log(response);
-    //   return;
-    // }
+    if (response.status !== 200) {
+      popErrorAlert("편지 보내기 실패", "편지 전송 중 문제가 발생했어요");
+      console.log(response);
+      return;
+    }
 
     navigate("/writesuccess");
   };

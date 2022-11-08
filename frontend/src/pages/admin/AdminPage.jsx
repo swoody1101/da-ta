@@ -35,7 +35,39 @@ const AdminPage = () => {
       <BackgroundGradient start={"0f2027"} end={"2C5364"} />
       <Wrapper>
         <MenuBarArea>
-          <MenuText color="black">ㅎㅇ</MenuText>
+          <MenuText
+            color="black"
+            fontWeight="bold"
+            margin="2rem 0 0 0"
+            padding="0 0 2rem 0"
+            borderBottom="4px outset black"
+          >
+            관리자 메뉴
+          </MenuText>
+          <MenuText
+            color="black"
+            margin="0.5rem 0 0.5rem 0"
+            padding="2rem"
+            onClick={() => navigate("/admin/reports")}
+          >
+            신고 관리
+          </MenuText>
+          <MenuText
+            color="black"
+            margin="0.5rem 0 0.5rem 0"
+            padding="2rem"
+            onClick={() => navigate("/admin/userinfos")}
+          >
+            사용자 관리
+          </MenuText>
+          <MenuText
+            color="black"
+            margin="0.5rem 0 0.5rem 0"
+            padding="2rem"
+            onClick={() => navigate("/admin/todayquestions")}
+          >
+            오늘의 질문 관리
+          </MenuText>
         </MenuBarArea>
         <ContentArea>
           <Outlet></Outlet>
@@ -67,6 +99,18 @@ const MenuText = styled(MainSmallText)`
   padding: ${(props) => props.padding};
   margin: ${(props) => props.margin};
   font-weight: ${(props) => props.fontWeight};
+  border: ${(props) => props.border};
+  border-bottom: ${(props) => props.borderBottom};
+  pointer: cursor;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  &:hover {
+    transition: 0.25s ease;
+    background-color: rgba(128, 75, 64, 0.3);
+  }
 `;
 
 export default AdminPage;
