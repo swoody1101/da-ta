@@ -95,7 +95,7 @@ const LetterCanvasArea = ({
 
     return {
       offsetX: e.touches[0].clientX - left,
-      offsetY: e.touches[0].clientY - top,
+      offsetY: e.touches[0].clientY - top + 100,
     };
   };
 
@@ -131,7 +131,7 @@ const LetterCanvasArea = ({
     const imagePath = uploadFirebaseStorage(image, "drawings/");
 
     // api 요청 보내자...
-    const response = await saveCanvasLetter(options, imagePath, user.userId);
+    const response = await saveCanvasLetter(options, imagePath);
 
     if (response.status !== 200) {
       popErrorAlert("편지 보내기 실패", "편지 전송 중 문제가 발생했어요");
@@ -139,10 +139,6 @@ const LetterCanvasArea = ({
       return;
     }
 
-    popSuccessAlert(
-      "편지 보내기 성공",
-      "소중한 이야기가 바다 위에 띄워졌습니다"
-    );
     navigate("/writesuccess");
   };
 

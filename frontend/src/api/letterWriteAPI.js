@@ -9,9 +9,8 @@ import { LetterOptions } from "./../constants/Options";
 /**
  * @description 텍스트 편지 쓰기
  */
-export const saveTextLetter = async (options, userId, title, content) => {
+export const saveTextLetter = async (options, title, content) => {
   const body = {
-    userId: userId,
     option: {
       replyOption: options.allowReply,
       ageOption: LetterOptions.AGES_VALUE[options.age],
@@ -36,9 +35,8 @@ export const saveTextLetter = async (options, userId, title, content) => {
 /**
  * @description 그림 편지 쓰기
  */
-export const saveCanvasLetter = async (options, imageLetterUrl, userId) => {
+export const saveCanvasLetter = async (options, imageLetterUrl) => {
   const body = {
-    userId: userId,
     option: {
       replyOption: options.allowReply,
       ageOption: LetterOptions.AGES_VALUE[options.age],
