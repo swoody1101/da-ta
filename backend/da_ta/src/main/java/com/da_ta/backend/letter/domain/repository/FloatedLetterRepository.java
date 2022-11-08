@@ -28,4 +28,6 @@ public interface FloatedLetterRepository extends JpaRepository<FloatedLetter, Lo
             nativeQuery = true)
     Optional<FloatedLetter> findByRecipientIdAndAgeOption(@Param("recipientId") Long recipientId,
                                                          @Param("ageOption") String ageOption);
+
+    long countByIsActiveTrueAndRecipientIdIsNull();
 }

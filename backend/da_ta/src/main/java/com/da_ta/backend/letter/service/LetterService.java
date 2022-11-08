@@ -76,7 +76,7 @@ public class LetterService {
 
     public CountFloatedLetterResponse countFloatedLetter() {
         return CountFloatedLetterResponse.builder()
-                .letterCount(floatedLetterLogRepository.countByIsActiveTrue())
+                .letterCount(floatedLetterRepository.countByIsActiveTrueAndRecipientIdIsNull())
                 .build();
     }
 
