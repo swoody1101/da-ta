@@ -4,16 +4,20 @@ import { MypageLetter } from "../../atoms/mypage/MypageLetter";
 import { useSetRecoilState } from "recoil";
 import { mypageRouterState } from "../../../recoil/Atoms";
 import { useState } from "react";
-import Loading from "../Loading";
-import { collectLetter } from "../../../api/letterReadAPI";
+import { useRecoilState } from "recoil";
+import { loadingState } from "../../../recoil/Atoms";
+import { receiveLetter } from "../../../api/letterReadAPI";
 
 export const MypageReceive = () => {
   const setSelectedIndex = useSetRecoilState(mypageRouterState);
   const [letters, setLetters] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useRecoilState(loadingState);
+
   useEffect(async () => {
+    setIsLoading(true);
     setSelectedIndex(1);
-    //setLetters(collectLetter());
+    //setLetters(receiveLetter());
+    //setIsLoading(false);
 
     setTimeout(() => {
       setLetters([
@@ -45,13 +49,11 @@ export const MypageReceive = () => {
 
   return (
     <>
-      {isLoading ? (
-        <Loading />
-      ) : (
-        letters.map((letter, index) => (
-          <MypageLetter letter={letter} key={index}></MypageLetter>
-        ))
-      )}
+      {isLoading
+        ? null
+        : letters.map((letter, index) => (
+            <MypageLetter letter={letter} key={index}></MypageLetter>
+          ))}
     </>
   );
 };
