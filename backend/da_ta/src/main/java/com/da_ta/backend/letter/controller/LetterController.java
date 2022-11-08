@@ -55,9 +55,9 @@ public class LetterController {
     @PostMapping("/replies/{origin_letter_id}")
     public ResponseEntity<Message> createReply(@RequestHeader(AUTHORIZATION) String token,
                                                @PathVariable("origin_letter_id") Long originLetterId,
-                                               @RequestBody CreateReplyRequset createReplyRequset) {
+                                               @RequestBody CreateReplyRequest createReplyRequest) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(letterService.createReply(jwtTokenProvider.findUserByToken(token), originLetterId, createReplyRequset));
+                .body(letterService.createReply(jwtTokenProvider.findUserByToken(token), originLetterId, createReplyRequest));
     }
 
     @PutMapping("/replies/{replied_letter_id}")
