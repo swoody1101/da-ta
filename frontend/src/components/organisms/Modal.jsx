@@ -17,6 +17,9 @@ const Modal = ({
   setModalToggle,
   onModalClick,
   titleText,
+  height,
+  width,
+  maxWidth,
 }) => {
   useEffect(() => {
     document.body.style.cssText = `
@@ -37,7 +40,7 @@ const Modal = ({
         <>
           l
           <TranslucentBackground onClick={() => setModalToggle(false)} />
-          <ModalContainer>
+          <ModalContainer height={height} width={width} maxWidth={maxWidth}>
             {/* 닫기 버튼 */}
             <FaWrapper onClick={() => setModalToggle(false)}>
               <FontAwesomeIcon icon={faX} size="lg" />
@@ -60,8 +63,9 @@ const ModalContainer = styled.div`
   position: absolute;
   flex-direction: column;
   z-index: 1001;
-  width: 55rem;
-  height: 80vh;
+  width: ${(props) => props.width || "55rem"};
+  height: ${(props) => props.height || "80vh"};
+  max-width: ${(props) => props.maxWidth || ""};
   border-radius: 1rem;
   background-color: white;
   align-items: center;

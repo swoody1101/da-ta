@@ -13,35 +13,45 @@ import {
   faTriangleExclamation,
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
+import { useSetRecoilState } from "recoil";
+import { reportModalState } from "../../../recoil/Atoms";
+import { readingLetterIdState } from "../../../recoil/Atoms";
 
-export const MypageLetter = ({ letter }) => (
-  <LetterDiv>
-    <LetterWordsDiv>
-      <LetterTitle>{letter.letterTitle}</LetterTitle>
-      <LetterDate>{`${letter.userNickName}, ${letter.time}`}</LetterDate>
-      <LetterDateWeb>{`${letter.userNickName}`}</LetterDateWeb>
-      <LetterDateWeb>{`${letter.time}`}</LetterDateWeb>
-    </LetterWordsDiv>
-    <FontAwesomeIcon
-      icon={faTriangleExclamation}
-      style={{ margin: "0 15px 0 0", color: "#F44336", cursor: "pointer" }}
-      size="lg"
-      onClick={() => {
-        console.log(
-          `${letter.letterId}번 글을 쓴 글쓴이 아이디 ${letter.userId}를 신고버튼`
-        );
-      }}
-    />
-    <FontAwesomeIcon
-      icon={faTrashCan}
-      style={{ margin: "0 15px 0 0", cursor: "pointer" }}
-      size="lg"
-      onClick={() => {
-        console.log(`${letter.letterId}번 글 삭제버튼`);
-      }}
-    />
-  </LetterDiv>
-);
+export const MypageLetter = ({ letter }) => {
+  const setModalToggle = useSetRecoilState(reportModalState);
+  const setReadingLetterId = useSetRecoilState(readingLetterIdState);
+
+  return (
+    <LetterDiv>
+      <LetterWordsDiv>
+        <LetterTitle>{letter.letterTitle}</LetterTitle>
+        <LetterDate>{`${letter.userNickName}, ${letter.time}`}</LetterDate>
+        <LetterDateWeb>{`${letter.userNickName}`}</LetterDateWeb>
+        <LetterDateWeb>{`${letter.time}`}</LetterDateWeb>
+      </LetterWordsDiv>
+      <FontAwesomeIcon
+        icon={faTriangleExclamation}
+        style={{ margin: "0 15px 0 0", color: "#F44336", cursor: "pointer" }}
+        size="lg"
+        onClick={() => {
+          setModalToggle(true);
+          setReadingLetterId(letter.id);
+          console.log(
+            `${letter.letterId}번 글을 쓴 글쓴이 아이디 ${letter.userId}를 신고버튼`
+          );
+        }}
+      />
+      <FontAwesomeIcon
+        icon={faTrashCan}
+        style={{ margin: "0 15px 0 0", cursor: "pointer" }}
+        size="lg"
+        onClick={() => {
+          console.log(`${letter.letterId}번 글 삭제버튼`);
+        }}
+      />
+    </LetterDiv>
+  );
+};
 
 const LetterDiv = styled.div`
   display: flex;
