@@ -6,7 +6,12 @@ import { reportModalState } from "../../recoil/Atoms";
 const ReportModal = () => {
   const [modalToggle, setModalToggle] = useRecoilState(reportModalState);
   return (
-    <Modal modalToggle={modalToggle} setModalToggle={setModalToggle} height="auto">
+    <Modal
+      modalToggle={modalToggle}
+      setModalToggle={setModalToggle}
+      height="auto"
+      maxWidth="535px"
+    >
       <ReportModalContent />
     </Modal>
   );
