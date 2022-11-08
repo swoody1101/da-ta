@@ -10,7 +10,7 @@ import lombok.Getter;
 public class UserItem {
 
     private Long userId;
-    private String kakaoId;
+    private Long kakaoUserId;
     private String nickname;
     private String ageRange;
     private Role role;
