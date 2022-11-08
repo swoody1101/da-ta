@@ -18,7 +18,9 @@ import { reportModalState } from "../../../recoil/Atoms";
 import { readingLetterIdState } from "../../../recoil/Atoms";
 
 const DateToString = (writtenDate) =>
-  `${writtenDate.getFullYear()}년 ${writtenDate.getMonth()}월 ${writtenDate.getDate()}일`;
+  `${writtenDate.getFullYear()}년 ${
+    writtenDate.getMonth() + 1
+  }월 ${writtenDate.getDate()}일`;
 
 export const MypageLetter = ({ letter }) => {
   const setModalToggle = useSetRecoilState(reportModalState);
