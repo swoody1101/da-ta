@@ -48,6 +48,7 @@ const Container = styled.div`
 const LetterTitle = styled.p`
   width: 100%;
   height: 100%;
+  text-align: left;
   font-size: ${(props) => props.fontSize};
   font-weight: ${(props) => props.fontWeight};
   padding: 0.6rem 0.4rem;
@@ -67,6 +68,7 @@ const LetterContent = styled.div`
   display: flex;
   resize: none;
   border: none;
+  text-align: left;
   z-index: 10;
   width: 100%;
   height: ${SizeTypes.PC_CONTENT_HEIGHT};

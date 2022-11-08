@@ -53,10 +53,10 @@ export const reportModalState = atom({
 });
 
 /**
- * @description 신고된 편지 id
+ * @description 읽고있는 편지 id
  * @return {number}
  */
-export const reportLetterIdState = atom({
-  key: "reportLetterIdState",
+export const readingLetterIdState = atom({
+  key: "readingLetterIdState",
   default: null,
 });
