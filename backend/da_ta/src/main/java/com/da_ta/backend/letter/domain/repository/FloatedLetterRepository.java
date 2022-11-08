@@ -31,5 +31,5 @@ public interface FloatedLetterRepository extends JpaRepository<FloatedLetter, Lo
 
     long countByIsActiveTrueAndRecipientIdIsNull();
 
-    Optional<FloatedLetter> findByRecipientId(Long recipientId);
+    FloatedLetter findByRecipientId(Long recipientId);
 }

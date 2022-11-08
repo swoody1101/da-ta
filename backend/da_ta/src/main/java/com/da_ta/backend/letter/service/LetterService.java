@@ -82,7 +82,7 @@ public class LetterService {
 
     @Transactional
     public ReceiveFloatedLetterResponse receiveFloatedLetter(User recipient) {
-        FloatedLetter floatedLetter = floatedLetterRepository.findByRecipientId(recipient.getId()).get();
+        FloatedLetter floatedLetter = floatedLetterRepository.findByRecipientId(recipient.getId());
         if (floatedLetter == null) {
             floatedLetter = findFloatedLetterByRecipientIdAndAgeOption(recipient.getId(), recipient.getAge());
             floatedLetter.updateRecipient(recipient);
