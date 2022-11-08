@@ -133,9 +133,8 @@ const LetterCanvasArea = ({
     // api 요청 보내자...
     const response = await saveCanvasLetter(options, imagePath);
 
-    if (response.status !== 200) {
+    if (response.status < 200 && response.status >= 300) {
       popErrorAlert("편지 보내기 실패", "편지 전송 중 문제가 발생했어요");
-      console.log(response);
       return;
     }
 
