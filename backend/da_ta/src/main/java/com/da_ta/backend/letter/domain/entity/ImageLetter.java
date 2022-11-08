@@ -15,7 +15,6 @@ import javax.validation.constraints.NotNull;
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@DiscriminatorValue("Image")
 public class ImageLetter extends Letter {
 
     @NotNull
