@@ -5,8 +5,8 @@ import { Wave } from "../../components/atoms/Wave";
 import { MypageMenuBar } from "../../components/molecules/mypage/MypageMenubar";
 import { MypageContentsBox } from "../../components/organisms/mypage/MypageContentsBox";
 import { media } from "../../utils/styleUtil";
+import ReportModal from "../../components/organisms/ReportModal";
 
-//Todo : 해수면 높이 올리기
 const Mypage = () => (
   <>
     <Wraper>
@@ -14,6 +14,7 @@ const Mypage = () => (
         <MypageMenuBar />
         <MypageContentsBox />
       </MypageWebContents>
+      <ReportModal />
     </Wraper>
     <Wave opacity={0.5} frequency={16} isRight={true}></Wave>
     <Wave opacity={0.3} frequency={8} isRight={true}></Wave>

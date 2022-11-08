@@ -12,18 +12,18 @@ const { persistAtom } = recoilPersist();
  * @example true false
  */
 export const loginState = atom({
-	key: "loginState",
-	default: false,
-	effects_UNSTABLE: [persistAtom],
+  key: "loginState",
+  default: false,
+  effects_UNSTABLE: [persistAtom],
 });
 
 /**
  * @description 사용자 정보
  */
 export const userState = atom({
-	key: "userState",
-	default: {},
-	effects_UNSTABLE: [persistAtom],
+  key: "userState",
+  default: {},
+  effects_UNSTABLE: [persistAtom],
 });
 
 /**
@@ -31,14 +31,32 @@ export const userState = atom({
  * @return {number} 0~2
  */
 export const mypageRouterState = atom({
-	key: "mypageRouterState",
-	default: 0,
+  key: "mypageRouterState",
+  default: 0,
 });
 
 /**
  * @description 로딩스피너
  */
 export const loadingState = atom({
-	key: "loading",
-	default: false,
+  key: "loading",
+  default: false,
+});
+
+/**
+ * @description 편지 신고하기 모달 toggle
+ * @return {boolean}
+ */
+export const reportModalState = atom({
+  key: "reportModalState",
+  default: false,
+});
+
+/**
+ * @description 읽고있는 편지 id
+ * @return {number}
+ */
+export const readingLetterIdState = atom({
+  key: "readingLetterIdState",
+  default: null,
 });
