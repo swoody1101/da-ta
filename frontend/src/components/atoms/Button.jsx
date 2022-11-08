@@ -28,8 +28,8 @@ Button.defaultProps = {
 
 const StyledButton = styled.button`
   display: flex;
-  opacity: ${(props) => props.bgOpacity};
-  background-color: ${(props) => props.bgColor || "rgba(217,217,217)"};
+  background-color: rgba(217, 217, 217, ${(props) => props.bgOpacity});
+  background-color: ${(props) => props.bgColor};
   margin: ${(props) => props.margin};
   padding: ${(props) => props.padding};
   width: ${(props) => props.width};
@@ -50,6 +50,7 @@ const StyledButton = styled.button`
   transition: all 0.2s ease-in;
   &:hover {
     background-color: rgba(217, 217, 217, ${(props) => props.hoverBgOpacity});
+    background-color: ${(props) => props.bgColor};
   }
 
   ${media.phone`

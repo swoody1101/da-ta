@@ -48,6 +48,7 @@ const AdminPage = () => {
             color="black"
             margin="0.5rem 0 0.5rem 0"
             padding="2rem"
+            hoverEffect
             onClick={() => navigate("/admin/reports")}
           >
             신고 관리
@@ -56,6 +57,7 @@ const AdminPage = () => {
             color="black"
             margin="0.5rem 0 0.5rem 0"
             padding="2rem"
+            hoverEffect
             onClick={() => navigate("/admin/userinfos")}
           >
             사용자 관리
@@ -64,6 +66,7 @@ const AdminPage = () => {
             color="black"
             margin="0.5rem 0 0.5rem 0"
             padding="2rem"
+            hoverEffect
             onClick={() => navigate("/admin/todayquestions")}
           >
             오늘의 질문 관리
@@ -108,8 +111,9 @@ const MenuText = styled(MainSmallText)`
   user-select: none;
 
   &:hover {
-    transition: 0.25s ease;
-    background-color: rgba(128, 75, 64, 0.3);
+    ${(props) =>
+      props.hoverEffect &&
+      "transition: 0.25s ease; background-color: rgba(128, 75, 64, 0.3);"}
   }
 `;
 

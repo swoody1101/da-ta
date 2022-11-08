@@ -25,7 +25,7 @@ const Modal = ({
     document.body.style.cssText = `
       position: absolute; 
       top: -${window.scrollY}px;
-			overflow: overlay;
+			overflow: hidden;
       width: 100%;`;
     return () => {
       const scrollY = document.body.style.top;

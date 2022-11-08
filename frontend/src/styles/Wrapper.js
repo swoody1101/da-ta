@@ -22,6 +22,7 @@ export const RowCenterWrapper = styled(Wrapper)`
 
 export const AdminWrapper = styled.div`
   display: flex;
+  flex-direction: column;
   position: relative;
   width: 100%;
   min-height: calc(100vh - 6rem);
