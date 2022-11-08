@@ -1,43 +1,49 @@
 import React from "react";
 import { useEffect } from "react";
 import { MypageLetter } from "../../atoms/mypage/MypageLetter";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { mypageRouterState } from "../../../recoil/Atoms";
 import { useState } from "react";
 import Loading from "../Loading";
 
 export const MypageCollect = () => {
-  const [selectedIndex, setSelectedIndex] = useRecoilState(mypageRouterState);
+  const setSelectedIndex = useSetRecoilState(mypageRouterState);
   const [letters, setLetters] = useState([]);
-  const [isLoading, setIsLoading] = useState(true)
-  useEffect( async () => {
-    setSelectedIndex(0)
-    //n ms이후에 api 요청으로 편지를 받아왔다고 가정
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(async () => {
+    setSelectedIndex(0);
+    //setLetters(collectLetter());
+    //setIsLoading(false);
+
     setTimeout(() => {
       setLetters([
         {
-          letterId: 0,
-          letterTitle: '첫번째 수집 편지',
-          userId: 1,
-          userNickName: '법정에 선 삼겹살 스테이크',
-          time: new Date(), 
+          id: 0,
+          title: "첫번째 수집 편지",
+          writerId: 1,
+          writerNickname: "법정에 선 삼겹살 스테이크",
+          writtenDate: new Date(),
         },
         {
-          letterId: 1,
-          letterTitle: '두번째 수집 편지',
-          userId: 3,
-          userNickName: '노려보는 레쓰비 마일드 커피',
-          time: new Date(),
-        }
-      ])
-      setIsLoading(false)
-    }, 1000)
-  }, [])
+          id: 0,
+          title: "두번째 수집 편지",
+          writerId: 1,
+          writerNickname: "노려보는 레쓰비 마일드 커피",
+          writtenDate: new Date(),
+        },
+      ]);
+      setIsLoading(false);
+    }, 1000);
+  }, []);
   return (
     <>
-      {
-        isLoading ? <Loading /> : letters.map((letter, index) => <MypageLetter letter={letter} key={index}></MypageLetter>)
-      }
-    </> 
-  )
-}
+      {isLoading ? (
+        <Loading />
+      ) : (
+        letters.map((letter, index) => (
+          <MypageLetter letter={letter} key={index}></MypageLetter>
+        ))
+      )}
+    </>
+  );
+};
