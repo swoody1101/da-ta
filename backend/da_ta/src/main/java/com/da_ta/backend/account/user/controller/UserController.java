@@ -43,13 +43,15 @@ public class UserController {
     }
 
     @PutMapping("/update/1")
-    public ResponseEntity<Message> updateAgeRange(@RequestHeader(AUTHORIZATION) String token, @RequestBody UpdateAgeRangeRequest updateAgeRangeRequest) {
+    public ResponseEntity<Message> updateAgeRange(@RequestHeader(AUTHORIZATION) String token,
+                                                  @RequestBody UpdateAgeRangeRequest updateAgeRangeRequest) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(userService.updateAgeRange(jwtTokenProvider.findUserByToken(token), updateAgeRangeRequest));
     }
 
     @PutMapping("/update/2")
-    public ResponseEntity<Message> updateAlertOption(@RequestHeader(AUTHORIZATION) String token, @RequestBody UpdateAlertOptionRequest updateAlertOptionRequest) {
+    public ResponseEntity<Message> updateAlertOption(@RequestHeader(AUTHORIZATION) String token,
+                                                     @RequestBody UpdateAlertOptionRequest updateAlertOptionRequest) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(userService.updateAlertOption(jwtTokenProvider.findUserByToken(token), updateAlertOptionRequest));
     }
