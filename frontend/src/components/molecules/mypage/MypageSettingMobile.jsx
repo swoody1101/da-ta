@@ -1,9 +1,6 @@
 /**
  * @author boyeon
  */
-/**
- *
- */
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -17,8 +14,12 @@ export const MypageSettingMobile = () => {
     ageRange: "0",
     alertOption: false,
   });
-  useEffect(() => {
-    setUser(userInfo());
+  useEffect(async () => {
+    const response = await userInfo();
+    if (response.status === 200) {
+      setUser({ ...response.data });
+      console.log(response.data.alertOption);
+    }
   }, []);
 
   return (
@@ -49,19 +50,21 @@ export const MypageSettingMobile = () => {
         </SettingWordsDiv>
         <SettingButtonDiv>
           <ClickableSpan
-            isHide={user.alertOption}
-            onClick={() => {
-              setUserAlert(true);
-              console.log("카카오톡 알림 설정 ON");
+            isHide={!user.alertOption}
+            onClick={async () => {
+              const response = await setUserAlert(false);
+              console.log(response);
+              console.log("카카오톡 알림 설정 OFF");
             }}
           >
             OFF
           </ClickableSpan>
           <ClickableSpan
-            isHide={!user.alertOption}
-            onClick={() => {
-              setUserAlert(false);
-              console.log("카카오톡 알림 설정 OFF");
+            isHide={user.alertOption}
+            onClick={async () => {
+              const response = await setUserAlert(true);
+              console.log(response);
+              console.log("카카오톡 알림 설정 ON");
             }}
           >
             ON

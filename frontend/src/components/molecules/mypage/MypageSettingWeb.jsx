@@ -21,9 +21,12 @@ export const MypageSettingWeb = () => {
     alertOption: false,
   });
 
-  useEffect(() => {
+  useEffect(async () => {
     setSelectedIndex(2);
-    setUser(userInfo());
+    const response = await userInfo();
+    if (response.status === 200) {
+      setUser({ ...response.data });
+    }
   }, []);
 
   return (
