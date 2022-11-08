@@ -11,8 +11,7 @@ const Chatbox = () => {
 
 const StyledChatbox = styled(
   styled.div({
-    position: "relative",
-    width: "40%",
+    width: "50%",
     minWidth: "300px",
     height: "200px",
     padding: "0px",
@@ -23,15 +22,22 @@ const StyledChatbox = styled(
     mozBorderRadius: "25px",
     // border-radius: "25px",
     borderRadius: "25px",
+    display: "flex",
+    position: "absolute",
+    flexDirection: "column",
+    justifyContent: "center",
+    top: "56%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
   })
 )`
-  &::before {
+  &::after {
     content: "";
+    display: flex;
     position: absolute;
     border-style: solid;
     border-width: 34px 17px 0;
     border-color: #ffffff transparent;
-    display: block;
     width: 0;
     bottom: -34px;
     left: 45%;
