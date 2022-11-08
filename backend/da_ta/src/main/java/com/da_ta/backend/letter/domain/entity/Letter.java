@@ -18,7 +18,6 @@ import javax.validation.constraints.NotNull;
 @AttributeOverride(name = "id", column = @Column(name = "letter_id"))
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "letter_type")
 public class Letter extends CommonEntity {
 
     @NotNull
