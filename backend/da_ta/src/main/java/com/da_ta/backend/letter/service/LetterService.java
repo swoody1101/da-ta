@@ -27,7 +27,7 @@ public class LetterService {
     private final static String TYPE_TEXT = "Text";
     private final static String TYPE_IMAGE = "Image";
 
-    private final CollectedLetterRepository collectedLetterRepository;
+    private final CollectionRepository collectionRepository;
     private final FloatedLetterRepository floatedLetterRepository;
     private final FloatedLetterLogRepository floatedLetterLogRepository;
     private final ImageLetterRepository imageLetterRepository;
@@ -38,11 +38,11 @@ public class LetterService {
     private final UserRepository userRepository;
 
     @Transactional
-    public Message createTextLetter(TextLetterCreateRequest textLetterCreateRequest) {
+    public Message createTextLetter(User user, TextLetterCreateRequest textLetterCreateRequest) {
         Option option = textLetterCreateRequest.getOption();
         TextLetterInfo textLetterInfo = textLetterCreateRequest.getTextLetterInfo();
         TextLetter textLetter = TextLetter.builder()
-                .writer(findUserById(textLetterCreateRequest.getUserId()))
+                .writer(findUserById(user.getId()))
                 .ageOption(option.getAgeOption())
                 .replyOption(option.getReplyOption())
                 .backgroundId(textLetterInfo.getBackgroundId())
@@ -56,11 +56,11 @@ public class LetterService {
     }
 
     @Transactional
-    public Message createImageLetter(ImageLetterCreateRequest imageLetterCreateRequest) {
+    public Message createImageLetter(User user, ImageLetterCreateRequest imageLetterCreateRequest) {
         Option option = imageLetterCreateRequest.getOption();
         ImageLetterInfo imageLetterInfo = imageLetterCreateRequest.getImageLetterInfo();
         ImageLetter imageLetter = ImageLetter.builder()
-                .writer(findUserById(imageLetterCreateRequest.getUserId()))
+                .writer(findUserById(user.getId()))
                 .ageOption(option.getAgeOption())
                 .replyOption(option.getReplyOption())
                 .backgroundId(imageLetterInfo.getBackgroundId())
@@ -73,13 +73,12 @@ public class LetterService {
     }
 
     @Transactional
-    public ReceiveFloatedLetterResponse receiveFloatedLetter(Long recipientId) {
-        User recipient = findUserById(recipientId);
-        FloatedLetter floatedLetter = findFloatedLetterByAge(recipientId, recipient.getAge());
+    public ReceiveFloatedLetterResponse receiveFloatedLetter(User recipient) {
+        FloatedLetter floatedLetter = findFloatedLetterByRecipientIdAndAgeOption(recipient.getId(), recipient.getAge());
         floatedLetter.updateRecipient(recipient);
         floatedLetterRepository.save(floatedLetter);
         floatedLetterLogRepository.save(FloatedLetterLog.builder()
-                .loggedRecipientId(recipientId)
+                .loggedRecipientId(recipient.getId())
                 .floatedLetter(floatedLetter)
                 .build());
         long letterId = floatedLetter.getLetter().getId();
@@ -118,9 +117,10 @@ public class LetterService {
         }
     }
 
-    public Message createReply(Long letterId, CreateReplyRequset createReplyRequset) {
+    public Message createReply(User writer, Long originLetterId, CreateReplyRequset createReplyRequset) {
         TextLetterInfo textLetterInfo = createReplyRequset.getTextLetterInfo();
         TextLetter textLetter = TextLetter.builder()
+                .writer(writer)
                 .title(textLetterInfo.getTitle())
                 .content(textLetterInfo.getContent())
                 .backgroundId(textLetterInfo.getBackgroundId())
@@ -129,21 +129,21 @@ public class LetterService {
         textLetterRepository.save(textLetter);
         replyRepository.save(Reply.builder()
                 .recipient(findUserById(createReplyRequset.getRecipientId()))
-                .originLetterId(letterId)
-                .replyLetter(textLetter)
+                .originLetterId(originLetterId)
+                .repliedLetter(textLetter)
                 .build());
         return new Message(REPLY_SENT.getMessage());
     }
 
-    public Message checkReplyReception(Long replyId) {
-        Reply reply = findReplyById(replyId);
+    public Message checkReplyReception(User recipient, Long repliedLetterId) {
+        Reply reply = findReplyByRepliedLetterIdAndRecipientId(repliedLetterId, recipient.getId());
         reply.updateIsRead();
         replyRepository.save(reply);
         return new Message(REPLY_RECEPTION_CHECKED.getMessage());
     }
 
-    public Message updateFloatedLetter(Long floatedLetterId) {
-        FloatedLetter floatedLetter = findFloatedLetterById(floatedLetterId);
+    public Message updateFloatedLetter(User user, Long floatedLetterId) {
+        FloatedLetter floatedLetter = findFloatedLetterByLetterIdAndRecipientId(floatedLetterId, user.getId());
         if (floatedLetterLogRepository.countByFloatedLetterId(floatedLetter.getId()) == MAX_FLOAT_COUNT) {
             floatedLetter.deleteFloatedLetter();
         }
@@ -152,22 +152,27 @@ public class LetterService {
         return new Message(LETTER_REFLOATED.getMessage());
     }
 
-    public Message collectLetter(Long userId, Long letterId) {
+    public Message collectLetter(User user, Long letterId) {
         Letter letter = findLetterById(letterId);
         if (letter.isReplyOption()) {
             throw new BadRequestException(COLLECT_LETTER_REJECTED);
         }
-        collectedLetterRepository.save(CollectedLetter.builder()
+        collectionRepository.save(CollectedLetter.builder()
                 .letter(letter)
-                .user(findUserById(userId))
+                .user(user)
                 .build());
         return new Message(LETTER_COLLECTED.getMessage());
     }
 
-    public Message createLetterAccusation(Long userId, Long letterId, AccuseLetterRequest accuseLetterRequest) {
+    public Message createLetterAccusation(User reporter, Long letterId, AccuseLetterRequest accuseLetterRequest) {
+        if(accuseLetterRequest.isReply()){
+            findReplyByRepliedLetterIdAndRecipientId(letterId, reporter.getId());
+        } else {
+            findFloatedLetterByLetterIdAndRecipientId(letterId, reporter.getId());
+        }
         letterAccusationRepository.save(LetterAccusation.builder()
                 .letter(findLetterById(letterId))
-                .reporterId(userId)
+                .reporterId(reporter.getId())
                 .reason(accuseLetterRequest.getReason())
                 .build());
         return new Message(LETTER_ACCUSED.getMessage());
@@ -179,9 +184,9 @@ public class LetterService {
                 .build());
     }
 
-    public FindLetterCollectionResponse findLetterCollection(Long userId) {
+    public FindLetterCollectionResponse findLetterCollection(User user) {
         return FindLetterCollectionResponse.builder()
-                .collection(collectedLetterRepository.findAllByUserIdAndIsActiveTrueOrderByCreatedDateDesc(userId)
+                .collection(collectionRepository.findAllByUserIdAndIsActiveTrueOrderByCreatedDateDesc(user.getId())
                         .stream()
                         .map(collectedLetter ->
                                 CollectionItem.builder()
@@ -195,8 +200,8 @@ public class LetterService {
                 .build();
     }
 
-    public FindCollectedLetterDetailResponse findCollectedLetterDetail(Long letterId) {
-        Letter letter = findLetterById(letterId);
+    public FindCollectedLetterDetailResponse findCollectedLetterDetail(User user, Long letterId) {
+        Letter letter = findCollectionByLetterIdAndUserId(letterId, user.getId()).getLetter();
         if (letter.getLetterType().equals(TYPE_TEXT)) {
             TextLetter textLetter = findTextLetterById(letterId);
             return FindCollectedLetterDetailResponse.builder()
@@ -228,40 +233,40 @@ public class LetterService {
         }
     }
 
-    public Message deleteCollectedLetter(Long letterId) {
-        CollectedLetter collectedLetter = findCollectedLetterByLetterId(letterId);
+    public Message deleteCollectedLetter(User user, Long letterId) {
+        CollectedLetter collectedLetter = findCollectionByLetterIdAndUserId(letterId, user.getId());
         collectedLetter.deleteCollectedLetter();
-        collectedLetterRepository.save(collectedLetter);
+        collectionRepository.save(collectedLetter);
         return new Message(COLLECTED_LETTER_DELETED.getMessage());
     }
 
-    public FindUnreadReplyResponse checkUnreadReply(Long userId) {
+    public FindUnreadReplyResponse checkUnreadReply(User recipient) {
         return FindUnreadReplyResponse.builder()
-                .isUnreadReply(replyRepository.existsByIsReadTrueAndIsActiveTrueAndRecipientId(userId))
+                .isUnreadReply(replyRepository.existsByIsReadTrueAndIsActiveTrueAndRecipientId(recipient.getId()))
                 .build();
     }
 
-    public FindRepliesResponse findReplies(Long userId) {
+    public FindRepliesResponse findReplies(User recipient) {
         return FindRepliesResponse.builder()
-                .replies(replyRepository.findAllByRecipientIdAndIsActiveTrueOrderByCreatedDateDesc(userId)
+                .replies(replyRepository.findAllByRecipientIdAndIsActiveTrueOrderByCreatedDateDesc(recipient.getId())
                         .stream()
                         .map(reply ->
                                 ReplyItem.builder()
-                                        .replyId(reply.getReplyLetter().getId())
-                                        .replyTitle(reply.getReplyLetter().getTitle())
-                                        .writerId(reply.getReplyLetter().getWriter().getId())
-                                        .writerNickname(reply.getReplyLetter().getWriter().getNickname())
-                                        .writtenDate(reply.getReplyLetter().getCreatedDate())
+                                        .replyId(reply.getRepliedLetter().getId())
+                                        .replyTitle(reply.getRepliedLetter().getTitle())
+                                        .writerId(reply.getRepliedLetter().getWriter().getId())
+                                        .writerNickname(reply.getRepliedLetter().getWriter().getNickname())
+                                        .writtenDate(reply.getRepliedLetter().getCreatedDate())
                                         .isRead(reply.isRead())
                                         .build())
                         .collect(Collectors.toList()))
                 .build();
     }
 
-    public FindReplyDetailResponse findReplyDetail(Long replyId) {
-        Long originLetterId = findReplyById(replyId).getOriginLetterId();
+    public FindReplyDetailResponse findReplyDetail(User recipient, Long repliedLetterId) {
+        Long originLetterId = findReplyByRepliedLetterIdAndRecipientId(repliedLetterId, recipient.getId()).getOriginLetterId();
         Letter originLetter = findLetterById(originLetterId);
-        TextLetter replyLetter = findTextLetterById(replyId);
+        TextLetter replyLetter = findTextLetterById(repliedLetterId);
         ReplyInfo replyInfo = ReplyInfo.builder()
                 .writerId(replyLetter.getWriter().getId())
                 .writerNickname(replyLetter.getWriter().getNickname())
@@ -301,8 +306,8 @@ public class LetterService {
         }
     }
 
-    public Message deleteReply(Long replyLetterId) {
-        Reply reply = findReplyByReplyLetterId(replyLetterId);
+    public Message deleteReply(User recipient, Long repliedLetterId) {
+        Reply reply = findReplyByRepliedLetterIdAndRecipientId(repliedLetterId, recipient.getId());
         reply.deleteReplyLetter();
         replyRepository.save(reply);
         return new Message(REPLY_DELETED.getMessage());
@@ -313,8 +318,8 @@ public class LetterService {
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
     }
 
-    private Letter findLetterById(Long LetterId) {
-        return letterRepository.findById(LetterId)
+    private Letter findLetterById(Long letterId) {
+        return letterRepository.findById(letterId)
                 .orElseThrow(() -> new NotFoundException(LETTER_NOT_FOUND));
     }
 
@@ -328,28 +333,23 @@ public class LetterService {
                 .orElseThrow(() -> new NotFoundException(IMAGE_LETTER_NOT_FOUND));
     }
 
-    private FloatedLetter findFloatedLetterById(Long floatedLetterId) {
-        return floatedLetterRepository.findById(floatedLetterId)
+    private FloatedLetter findFloatedLetterByLetterIdAndRecipientId(Long floatedLetterId, Long recipientId) {
+        return floatedLetterRepository.findByLetterIdAndRecipientId(floatedLetterId, recipientId)
                 .orElseThrow(() -> new NotFoundException(FLOATED_LETTER_NOT_FOUND));
     }
 
-    private FloatedLetter findFloatedLetterByAge(Long recipientId, Age age) {
-        return floatedLetterRepository.findFloatedLetterByAgeOption(recipientId, age.toString())
+    private FloatedLetter findFloatedLetterByRecipientIdAndAgeOption(Long recipientId, Age age) {
+        return floatedLetterRepository.findByRecipientIdAndAgeOption(recipientId, age.toString())
                 .orElseThrow(() -> new NotFoundException(FLOATED_LETTER_NOT_FOUND));
     }
 
-    private Reply findReplyById(Long replyId) {
-        return replyRepository.findById(replyId)
+    private Reply findReplyByRepliedLetterIdAndRecipientId(Long repliedLetterId, Long recipientId) {
+        return replyRepository.findByRepliedLetterIdAndRecipientId(repliedLetterId, recipientId)
                 .orElseThrow(() -> new NotFoundException(REPLY_NOT_FOUND));
     }
 
-    private Reply findReplyByReplyLetterId(Long replyLetterId) {
-        return replyRepository.findByReplyLetterId(replyLetterId)
-                .orElseThrow(() -> new NotFoundException(REPLY_NOT_FOUND));
-    }
-
-    private CollectedLetter findCollectedLetterByLetterId(Long letterId) {
-        return collectedLetterRepository.findByLetterId(letterId)
+    private CollectedLetter findCollectionByLetterIdAndUserId(Long letterId, Long userId) {
+        return collectionRepository.findByLetterIdAndUserId(letterId, userId)
                 .orElseThrow(() -> new NotFoundException(COLLECTED_LETTER_NOT_FOUND));
     }
 }

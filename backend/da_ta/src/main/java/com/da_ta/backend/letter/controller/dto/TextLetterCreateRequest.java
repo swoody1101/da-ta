@@ -7,7 +7,6 @@ import lombok.Getter;
 @Getter
 public class TextLetterCreateRequest {
 
-    private Long userId;
     private Option option;
     private TextLetterInfo textLetterInfo;
 }

@@ -1,6 +1,5 @@
 package com.da_ta.backend.letter.domain.repository;
 
-import com.da_ta.backend.letter.domain.entity.CollectedLetter;
 import com.da_ta.backend.letter.domain.entity.Reply;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -11,7 +10,7 @@ public interface ReplyRepository extends JpaRepository<Reply, Long> {
 
     boolean existsByIsReadTrueAndIsActiveTrueAndRecipientId(Long RecipientId);
 
-    List<Reply> findAllByRecipientIdAndIsActiveTrueOrderByCreatedDateDesc(Long recipient_id);
+    List<Reply> findAllByRecipientIdAndIsActiveTrueOrderByCreatedDateDesc(Long recipientId);
 
-    Optional<Reply> findByReplyLetterId(Long replyLetterId);
+    Optional<Reply> findByRepliedLetterIdAndRecipientId(Long repliedLetterId, Long recipientId);
 }
