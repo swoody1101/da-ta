@@ -8,14 +8,23 @@ import { media } from "../../../utils/styleUtil";
 import Checkbox from "../../atoms/Checkbox";
 import { ClickableSpan } from "../../atoms/ClickableSpan";
 import { useEffect } from "react";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { mypageRouterState } from "../../../recoil/Atoms";
+import { userInfo } from "../../../api/mypageAPI";
+import { useState } from "react";
 
 export const MypageSettingWeb = () => {
-  const [selectedIndex, setSelectedIndex] = useRecoilState(mypageRouterState);
+  const setSelectedIndex = useSetRecoilState(mypageRouterState);
+  const [user, setUser] = useState({
+    userId: 0,
+    ageRange: "0",
+    alertOption: false,
+  });
+
   useEffect(() => {
-    setSelectedIndex(2)
-  }, [])
+    setSelectedIndex(2);
+    setUser(userInfo());
+  }, []);
 
   return (
     <>
@@ -28,8 +37,10 @@ export const MypageSettingWeb = () => {
           </SettingExpln>
           <SettingChange>
             <Span>현재 회원님의 나이대 : </Span>
-            <Span>10살</Span>
-            <ClickableSpan margin={'0 0 0 20px'} fontSize={'20px'}>변경하기</ClickableSpan>
+            <Span>{user.ageRange}</Span>
+            <ClickableSpan margin={"0 0 0 20px"} fontSize={"20px"}>
+              변경하기
+            </ClickableSpan>
           </SettingChange>
         </SettingWordsDiv>
       </SettingDiv>
@@ -44,7 +55,7 @@ export const MypageSettingWeb = () => {
           </SettingExpln>
           <SettingChange>
             <Checkbox text={"실시간 알림을 받습니다"} tagname={"알림설정"} />
-            <div style={{width:'290px'}}></div>
+            <div style={{ width: "290px" }}></div>
           </SettingChange>
         </SettingWordsDiv>
       </SettingDiv>
@@ -56,9 +67,7 @@ export const MypageSettingWeb = () => {
             <p>계정을 비활성화 하실 수 있습니다. 나중에 다시 뵙길 바래요!</p>
           </SettingExpln>
           <SettingChange>
-            <ClickableSpan>
-              탈퇴하기
-            </ClickableSpan>
+            <ClickableSpan>탈퇴하기</ClickableSpan>
           </SettingChange>
         </SettingWordsDiv>
       </SettingDiv>
@@ -109,4 +118,4 @@ const SettingChange = styled.div`
 
 const Span = styled.span`
   margin: 0;
-`
+`;
