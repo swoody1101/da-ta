@@ -31,4 +31,11 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(adminService.updateRole(token, userId, updateRoleRequest));
     }
+
+    @PostMapping("/accusation/{user_id}")
+    public ResponseEntity<Message> updateWarningCount(@RequestHeader(AUTHORIZATION) String token,
+                                                      @PathVariable("user_id") Long userId) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(adminService.updateWarningCount(token, userId));
+    }
 }

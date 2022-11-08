@@ -16,11 +16,13 @@ import java.util.stream.Collectors;
 
 import static com.da_ta.backend.common.domain.ErrorCode.USER_NOT_FOUND;
 import static com.da_ta.backend.common.domain.SuccessCode.ROLE_UPDATED;
+import static com.da_ta.backend.common.domain.SuccessCode.WARNING_COUNT_UPDATED;
 
 @Service
 @RequiredArgsConstructor
 public class AdminService {
 
+    private final int MAX_WARNING_COUNT = 3;
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -50,6 +52,17 @@ public class AdminService {
         user.updateRole(updateRoleRequest.getRole());
         userRepository.save(user);
         return new Message(ROLE_UPDATED.getMessage());
+    }
+
+    public Message updateWarningCount(String token, Long userId) {
+        jwtTokenProvider.findUserByToken(token);
+        User user = findUserById(userId);
+        user.getBanStatus().updateWarningCount();
+        if (user.getBanStatus().getWarningCount() == MAX_WARNING_COUNT) {
+            user.getBanStatus().updateIsBan();
+        }
+        userRepository.save(user);
+        return new Message(WARNING_COUNT_UPDATED.getMessage());
     }
 
     private User findUserById(Long userId) {
