@@ -82,13 +82,16 @@ public class LetterService {
 
     @Transactional
     public ReceiveFloatedLetterResponse receiveFloatedLetter(User recipient) {
-        FloatedLetter floatedLetter = findFloatedLetterByRecipientIdAndAgeOption(recipient.getId(), recipient.getAge());
-        floatedLetter.updateRecipient(recipient);
-        floatedLetterRepository.save(floatedLetter);
-        floatedLetterLogRepository.save(FloatedLetterLog.builder()
-                .loggedRecipientId(recipient.getId())
-                .floatedLetter(floatedLetter)
-                .build());
+        FloatedLetter floatedLetter = floatedLetterRepository.findByRecipientId(recipient.getId()).get();
+        if (floatedLetter == null) {
+            floatedLetter = findFloatedLetterByRecipientIdAndAgeOption(recipient.getId(), recipient.getAge());
+            floatedLetter.updateRecipient(recipient);
+            floatedLetterRepository.save(floatedLetter);
+            floatedLetterLogRepository.save(FloatedLetterLog.builder()
+                    .loggedRecipientId(recipient.getId())
+                    .floatedLetter(floatedLetter)
+                    .build());
+        }
         long letterId = floatedLetter.getLetter().getId();
         Letter letter = findLetterById(letterId);
         if (letter.getLetterType().equals(TYPE_TEXT)) {
