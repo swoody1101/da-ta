@@ -13,12 +13,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/user")
 public class UserController {
 
-    private final String AUTHORIZATION = "Authorization";
     private final UserService userService;
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -41,13 +42,15 @@ public class UserController {
     }
 
     @PutMapping("/update/1")
-    public ResponseEntity<Message> updateAgeRange(@RequestHeader(AUTHORIZATION) String token, @RequestBody UpdateAgeRangeRequest updateAgeRangeRequest) {
+    public ResponseEntity<Message> updateAgeRange(@RequestHeader(AUTHORIZATION) String token,
+                                                  @RequestBody UpdateAgeRangeRequest updateAgeRangeRequest) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(userService.updateAgeRange(jwtTokenProvider.findUserByToken(token), updateAgeRangeRequest));
     }
 
     @PutMapping("/update/2")
-    public ResponseEntity<Message> updateAlertOption(@RequestHeader(AUTHORIZATION) String token, @RequestBody UpdateAlertOptionRequest updateAlertOptionRequest) {
+    public ResponseEntity<Message> updateAlertOption(@RequestHeader(AUTHORIZATION) String token,
+                                                     @RequestBody UpdateAlertOptionRequest updateAlertOptionRequest) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(userService.updateAlertOption(jwtTokenProvider.findUserByToken(token), updateAlertOptionRequest));
     }
