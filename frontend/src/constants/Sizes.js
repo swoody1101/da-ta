@@ -33,4 +33,8 @@ export const SizeTypes = {
   PC_MAIN_BOTTLE_HEIGHT: "30vh",
   MOBILE_MAIN_BOTTLE_WIDTH: "50px",
   MOBILE_MAIN_BOTTLE_HEIGHT: "50px",
+
+  // 헤더 높이
+  PC_HEADER_HEIGHT: "6rem",
+  MOBILE_HEADER_HEIGHT: "4.5rem",
 };
