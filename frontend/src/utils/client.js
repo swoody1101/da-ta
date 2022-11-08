@@ -32,7 +32,7 @@ client.interceptors.response.use(
     return config;
   },
   (error) => {
-    console.log(error); // error
+    console.log(error);
     return Promise.reject(error);
   }
 );
