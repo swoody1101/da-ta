@@ -72,6 +72,12 @@ public class LetterService {
         return new Message(IMAGE_LETTER_FLOATED.getMessage());
     }
 
+    public CountFloatedLetterResponse countFloatedLetter() {
+        return CountFloatedLetterResponse.builder()
+                .letterCount(floatedLetterLogRepository.countByIsActiveTrue())
+                .build();
+    }
+
     @Transactional
     public ReceiveFloatedLetterResponse receiveFloatedLetter(User recipient) {
         FloatedLetter floatedLetter = findFloatedLetterByRecipientIdAndAgeOption(recipient.getId(), recipient.getAge());
@@ -165,7 +171,7 @@ public class LetterService {
     }
 
     public Message createLetterAccusation(User reporter, Long letterId, AccuseLetterRequest accuseLetterRequest) {
-        if(accuseLetterRequest.isReply()){
+        if (accuseLetterRequest.isReply()) {
             findReplyByRepliedLetterIdAndRecipientId(letterId, reporter.getId());
         } else {
             findFloatedLetterByLetterIdAndRecipientId(letterId, reporter.getId());
