@@ -120,43 +120,38 @@ const LetterWritePage = () => {
         return;
       }
 
-      // const response = await saveTextLetter(
-      //   options,
-      //   user.userId,
-      //   title,
-      //   content
-      // );
-      // console.log(response);
-      // if (response.status !== 200) {
-      //   popErrorAlert("편지 전송 오류", "편지 전송 중 오류가 발생했습니다.");
-      //   return;
-      // }
+      const response = await saveTextLetter(options, title, content);
+      console.log(response);
+      if (response.status < 200 && response.status >= 300) {
+        popErrorAlert("편지 전송 오류", "편지 전송 중 오류가 발생했습니다.");
+        return;
+      }
+
+      // 편지 보내는 애니메이션
+      for (let r of unshowRef.current) {
+        r.style.opacity = 0;
+      }
+
+      setTimeout(() => {
+        wrapRef.current.style.margin = "-2rem 0 0 0";
+      }, 500);
+      setTimeout(() => {
+        titleInput.current.style.opacity = 0;
+        contentInput.current.style.opacity = 0;
+        wrapRef.current.style.height = 0;
+      }, 1000);
+      setTimeout(() => {
+        wrapRef.current.style.margin = "2rem 0 0 0";
+      }, 1500);
+
+      setTimeout(() => {
+        navigate("/writesuccess");
+      }, 2500);
     }
-    // 도화지l
+    // 도화지
     else {
       setCanvasSaveTrigger(true);
     }
-
-    // 편지 보내는 애니메이션
-    for (let r of unshowRef.current) {
-      r.style.opacity = 0;
-    }
-
-    setTimeout(() => {
-      wrapRef.current.style.margin = "-2rem 0 0 0";
-    }, 500);
-    setTimeout(() => {
-      titleInput.current.style.opacity = 0;
-      contentInput.current.style.opacity = 0;
-      wrapRef.current.style.height = 0;
-    }, 1000);
-    setTimeout(() => {
-      wrapRef.current.style.margin = "2rem 0 0 0";
-    }, 1500);
-
-    setTimeout(() => {
-      navigate("/writesuccess");
-    }, 2500);
   };
 
   useEffect(() => {
