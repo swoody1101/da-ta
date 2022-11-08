@@ -9,6 +9,7 @@ import { useSetRecoilState } from "recoil";
 import { loadingState } from "../../recoil/Atoms";
 import ReportModal from "../../components/organisms/ReportModal";
 import { readingLetterIdState } from "../../recoil/Atoms";
+import ReadLetterPic from "../../components/molecules/ReadLetterPic";
 
 const LetterReadPage = () => {
   const [blur, setBlur] = useState(false);
@@ -57,7 +58,7 @@ const LetterReadPage = () => {
         {loading &&
           (isPicture ? (
             <>
-              <ReadLetterText info={letter.letterInfo}></ReadLetterText>
+              <ReadLetterPic info={letter.letterInfo}></ReadLetterPic>
               <ReadButtons index={letter.reply_option ? 0 : 1}></ReadButtons>
             </>
           ) : (
