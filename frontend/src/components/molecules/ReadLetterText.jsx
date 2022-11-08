@@ -4,8 +4,14 @@ import { media } from "../../utils/styleUtil";
 import ContentBlock from "../atoms/letter/ContentBlock";
 import LetterImg from "../atoms/letter/LetterImg";
 import { LetterOptions } from "../../constants/Options";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
+import { useSetRecoilState } from "recoil";
+import { reportModalState } from "../../recoil/Atoms";
 
 const ReadLetterText = ({ info }) => {
+  const setReportModal = useSetRecoilState(reportModalState);
+
   return (
     <ContentBlock
       height={SizeTypes.PC_LETTER_HEIGHT}
@@ -26,6 +32,19 @@ const ReadLetterText = ({ info }) => {
       >
         <LetterTitle width="96%" fontSize="1.2rem" fontWeight="bold">
           {info.title}
+          <IconReportBtn>
+            <FontAwesomeIcon
+              icon={faTriangleExclamation}
+              style={{
+                color: "#F44336",
+                cursor: "pointer",
+              }}
+              size="lg"
+              onClick={() => {
+                setReportModal(true);
+              }}
+            />
+          </IconReportBtn>
         </LetterTitle>
       </Container>
       <LetterContent fontFamily={LetterOptions.FONTS[info.fontId]}>
@@ -45,7 +64,8 @@ const Container = styled.div`
   position: relative;
 `;
 
-const LetterTitle = styled.p`
+const LetterTitle = styled.div`
+  display: flex;
   width: 100%;
   height: 100%;
   text-align: left;
@@ -86,4 +106,11 @@ const LetterContent = styled.div`
   `}
 `;
 
+const IconReportBtn = styled.div`
+  margin-right: 15px;
+  display: none;
+  ${media.phone`
+    display: block;
+  `}
+`;
 export default ReadLetterText;
