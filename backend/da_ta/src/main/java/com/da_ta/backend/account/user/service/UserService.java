@@ -218,6 +218,14 @@ public class UserService {
         return AGE_60S;
     }
 
+    public MyPageResponse findSetting(User user) {
+        return MyPageResponse.builder()
+                .userId(user.getId())
+                .ageRange(user.getAge())
+                .alertOption(user.isAlertOption())
+                .build();
+    }
+
     public Message updateAgeRange(User user, UpdateAgeRangeRequest updateAgeRangeRequest) {
         user.updateAgeRange(updateAgeRangeRequest.getAgeRange());
         userRepository.save(user);
