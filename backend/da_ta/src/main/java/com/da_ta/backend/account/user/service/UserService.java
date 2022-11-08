@@ -61,6 +61,9 @@ public class UserService {
     @Value("${provider.kakao.user-info-uri}")
     private String userInfoUri;
 
+    @Value("${provider.kakao.token-info-uri}")
+    private String tokenInfoUri;
+
     @Value("${spring.jwt.response.header}")
     private String jwtHeader;
 
@@ -127,6 +130,28 @@ public class UserService {
         return kakaoToken;
     }
 
+    private Long getKakaoUserId(String accessToken) {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(jwtHeader, jwtTokenPrefix + DELIMITER + accessToken);
+        httpHeaders.add(CONTENT_TYPE, CONTENT_TYPE_VALUE);
+        HttpEntity<MultiValueMap<String, String>> kakaoTokenInfoRequest = new HttpEntity<>(httpHeaders);
+        ResponseEntity<String> kakaoTokenInfoResponse = restTemplate.exchange(
+                tokenInfoUri,
+                HttpMethod.GET,
+                kakaoTokenInfoRequest,
+                String.class
+        );
+        ObjectMapper objectMapper = new ObjectMapper();
+        KakaoTokenInfo kakaoTokenInfo = null;
+        try {
+            kakaoTokenInfo = objectMapper.readValue(kakaoTokenInfoResponse.getBody(), KakaoTokenInfo.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return kakaoTokenInfo.getId();
+    }
+
     private KakaoProfile getKakaoProfile(String accessToken) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -150,17 +175,18 @@ public class UserService {
     }
 
     private User getUser(String accessToken) {
+        Long kakaoUserId = getKakaoUserId(accessToken);
         KakaoProfile kakaoProfile = getKakaoProfile(accessToken);
-        User user = userRepository.findByKakaoIdAndIsActiveTrue(kakaoProfile.getKakaoAccount().getEmail())
-                .orElseGet(() -> signUp(kakaoProfile));
+        User user = userRepository.findByKakaoUserIdAndIsActiveTrue(kakaoUserId)
+                .orElseGet(() -> signUp(kakaoUserId, kakaoProfile));
         return user;
     }
 
-    private User signUp(KakaoProfile kakaoProfile) {
+    private User signUp(Long kakaoUserId, KakaoProfile kakaoProfile) {
         BanStatus banStatus = BanStatus.builder()
                 .build();
         User user = User.builder()
-                .kakaoId(kakaoProfile.getKakaoAccount().getEmail())
+                .kakaoUserId(kakaoUserId)
                 .nickname(generateRamdomNickname())
                 .age(mapToAge(kakaoProfile.getKakaoAccount().getAgeRange()))
                 .banStatus(banStatus)

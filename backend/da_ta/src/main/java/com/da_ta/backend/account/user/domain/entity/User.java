@@ -26,7 +26,7 @@ import java.util.List;
 public class User extends CommonEntity implements UserDetails {
 
     @Column(nullable = false)
-    private String kakaoId;
+    private Long kakaoUserId;
 
     @Column(nullable = false, unique = true)
     private String nickname;
