@@ -9,6 +9,8 @@ import java.util.Optional;
 
 public interface FloatedLetterRepository extends JpaRepository<FloatedLetter, Long> {
 
+    Optional<FloatedLetter> findByLetterIdAndRecipientId(Long letterId, Long recipientId);
+
     @Query(value = "select f.* " +
             "from floated_letter f " +
             "left join letter l " +
