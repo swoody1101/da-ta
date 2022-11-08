@@ -42,13 +42,14 @@ public class LetterService {
         Option option = textLetterCreateRequest.getOption();
         TextLetterInfo textLetterInfo = textLetterCreateRequest.getTextLetterInfo();
         TextLetter textLetter = TextLetter.builder()
-                .writer(findUserById(user.getId()))
+                .letterType(TYPE_TEXT)
+                .writer(user)
                 .ageOption(option.getAgeOption())
                 .replyOption(option.getReplyOption())
                 .backgroundId(textLetterInfo.getBackgroundId())
-                .fontId(textLetterInfo.getFontId())
                 .title(textLetterInfo.getTitle())
                 .content(textLetterInfo.getContent())
+                .fontId(textLetterInfo.getFontId())
                 .build();
         textLetterRepository.save(textLetter);
         floatLetter(textLetter);
@@ -60,7 +61,8 @@ public class LetterService {
         Option option = imageLetterCreateRequest.getOption();
         ImageLetterInfo imageLetterInfo = imageLetterCreateRequest.getImageLetterInfo();
         ImageLetter imageLetter = ImageLetter.builder()
-                .writer(findUserById(user.getId()))
+                .letterType(TYPE_IMAGE)
+                .writer(user)
                 .ageOption(option.getAgeOption())
                 .replyOption(option.getReplyOption())
                 .backgroundId(imageLetterInfo.getBackgroundId())
@@ -70,6 +72,12 @@ public class LetterService {
         imageLetterRepository.save(imageLetter);
         floatLetter(imageLetter);
         return new Message(IMAGE_LETTER_FLOATED.getMessage());
+    }
+
+    public CountFloatedLetterResponse countFloatedLetter() {
+        return CountFloatedLetterResponse.builder()
+                .letterCount(floatedLetterLogRepository.countByIsActiveTrue())
+                .build();
     }
 
     @Transactional
@@ -120,6 +128,7 @@ public class LetterService {
     public Message createReply(User writer, Long originLetterId, CreateReplyRequset createReplyRequset) {
         TextLetterInfo textLetterInfo = createReplyRequset.getTextLetterInfo();
         TextLetter textLetter = TextLetter.builder()
+                .letterType(TYPE_TEXT)
                 .writer(writer)
                 .title(textLetterInfo.getTitle())
                 .content(textLetterInfo.getContent())
@@ -165,7 +174,7 @@ public class LetterService {
     }
 
     public Message createLetterAccusation(User reporter, Long letterId, AccuseLetterRequest accuseLetterRequest) {
-        if(accuseLetterRequest.isReply()){
+        if (accuseLetterRequest.isReply()) {
             findReplyByRepliedLetterIdAndRecipientId(letterId, reporter.getId());
         } else {
             findFloatedLetterByLetterIdAndRecipientId(letterId, reporter.getId());

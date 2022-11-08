@@ -33,6 +33,12 @@ public class LetterController {
                 .body(letterService.createImageLetter(jwtTokenProvider.findUserByToken(token), imageLetterCreateRequest));
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<CountFloatedLetterResponse> countFloatedLetter() {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(letterService.countFloatedLetter());
+    }
+
     @GetMapping()
     public ResponseEntity<ReceiveFloatedLetterResponse> receiveFloatedLetter(@RequestHeader(AUTHORIZATION) String token) {
         return ResponseEntity.status(HttpStatus.OK)
