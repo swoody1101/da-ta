@@ -3,8 +3,9 @@ import { SizeTypes } from "../../constants/Sizes";
 import { media } from "../../utils/styleUtil";
 import ContentBlock from "../atoms/letter/ContentBlock";
 import LetterImg from "../atoms/letter/LetterImg";
+import { LetterOptions } from "../../constants/Options";
 
-const ReadLetter = () => {
+const ReadLetterText = ({ info }) => {
   return (
     <ContentBlock
       height={SizeTypes.PC_LETTER_HEIGHT}
@@ -12,10 +13,11 @@ const ReadLetter = () => {
       mHeight={SizeTypes.MOBILE_LETTER_HEIGHT}
       flexDirection="column"
       optionToggle={false}
-      style={{ opacity: 0.6 }}
     >
       <LetterImg
-        src={`${process.env.PUBLIC_URL}/assets/images/letter/${"핑크"}.png`}
+        src={`${process.env.PUBLIC_URL}/assets/images/letter/${
+          LetterOptions.PAPERS[info.backgroundId]
+        }.png`}
       />
       <Container
         width="96%"
@@ -23,25 +25,11 @@ const ReadLetter = () => {
         padding="0.5rem 0 0.5rem 0"
       >
         <LetterTitle width="96%" fontSize="1.2rem" fontWeight="bold">
-          타이틀
+          {info.title}
         </LetterTitle>
       </Container>
-      <LetterContent>
-        You can now view frontend in the browser. Local: http://localhost:3000
-        On Your Network: http://192.168.31.78:3000 Note that the development
-        build is not optimized. To create a production build, use npm run build.
-        You can now view frontend in the browser. Local: http://localhost:3000
-        On Your Network: http://192.168.31.78:3000 Note that the development
-        build is not optimized. To create a production build, use npm run build.
-        You can now view frontend in the browser. Local: http://localhost:3000
-        On Your Network: http://192.168.31.78:3000 Note that the development
-        build is not optimized. To create a production build, use npm run build.
-        You can now view frontend in the browser. Local: http://localhost:3000
-        On Your Network: http://192.168.31.78:3000 Note that the development
-        build is not optimized. To create a production build, use npm run build.
-        You can now view frontend in the browser. Local: http://localhost:3000
-        On Your Network: http://192.168.31.78:3000 Note that the development
-        build is not optimized. To create a production build, use npm run build.
+      <LetterContent fontFamily={LetterOptions.FONTS[info.fontId]}>
+        {info.content}
       </LetterContent>
     </ContentBlock>
   );
@@ -60,6 +48,7 @@ const Container = styled.div`
 const LetterTitle = styled.p`
   width: 100%;
   height: 100%;
+  text-align: left;
   font-size: ${(props) => props.fontSize};
   font-weight: ${(props) => props.fontWeight};
   padding: 0.6rem 0.4rem;
@@ -79,6 +68,7 @@ const LetterContent = styled.div`
   display: flex;
   resize: none;
   border: none;
+  text-align: left;
   z-index: 10;
   width: 100%;
   height: ${SizeTypes.PC_CONTENT_HEIGHT};
@@ -96,4 +86,4 @@ const LetterContent = styled.div`
   `}
 `;
 
-export default ReadLetter;
+export default ReadLetterText;
