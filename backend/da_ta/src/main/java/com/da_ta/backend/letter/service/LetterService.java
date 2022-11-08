@@ -14,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.da_ta.backend.common.domain.ErrorCode.*;
@@ -43,6 +42,7 @@ public class LetterService {
         Option option = textLetterCreateRequest.getOption();
         TextLetterInfo textLetterInfo = textLetterCreateRequest.getTextLetterInfo();
         TextLetter textLetter = TextLetter.builder()
+                .letterType(TYPE_TEXT)
                 .writer(user)
                 .ageOption(option.getAgeOption())
                 .replyOption(option.getReplyOption())
@@ -61,6 +61,7 @@ public class LetterService {
         Option option = imageLetterCreateRequest.getOption();
         ImageLetterInfo imageLetterInfo = imageLetterCreateRequest.getImageLetterInfo();
         ImageLetter imageLetter = ImageLetter.builder()
+                .letterType(TYPE_IMAGE)
                 .writer(user)
                 .ageOption(option.getAgeOption())
                 .replyOption(option.getReplyOption())
@@ -127,6 +128,7 @@ public class LetterService {
     public Message createReply(User writer, Long originLetterId, CreateReplyRequset createReplyRequset) {
         TextLetterInfo textLetterInfo = createReplyRequset.getTextLetterInfo();
         TextLetter textLetter = TextLetter.builder()
+                .letterType(TYPE_TEXT)
                 .writer(writer)
                 .title(textLetterInfo.getTitle())
                 .content(textLetterInfo.getContent())
