@@ -20,7 +20,7 @@ import { SizeTypes, SIZE_WIDE } from "./../../constants/Sizes";
 import BackgroundGradient from "../../components/atoms/BackgroundGradient";
 import MouseScrollDownArrowGroup from "../../components/molecules/MouseScrollDownArrowGroup";
 
-import ChatboxGroup from "../../components/molecules/landing/ChatBoxGroup";
+import ChatBoxGroup from "../../components/molecules/landing/ChatBoxGroup";
 import { BottleOfLetterBtn } from "../../components/atoms/BottleOfLetterBtn";
 
 import Modal from "../../components/organisms/Modal";

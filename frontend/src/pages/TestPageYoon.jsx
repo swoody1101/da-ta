@@ -10,7 +10,7 @@ import { userState } from "../recoil/Atoms";
 import { useNavigate } from "react-router-dom";
 import { MainText } from "../components/atoms/Text";
 import { QuestionTextArea } from "../components/atoms/TextArea";
-import QuestionProgressBar from "../components/molecules/landing/QuestionProgressBar";
+// import QuestionProgressBar from "../components/molecules/landing/QuestionProgressBar";
 import Button from "../components/atoms/Button";
 
 import { MAX_CHAR_COUNT_Q } from "../constants/Variables";
