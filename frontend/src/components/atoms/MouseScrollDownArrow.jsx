@@ -25,7 +25,7 @@ MouseScrollDownArrow.defaultProps = {
   width: "10vw",
   height: "10vh",
   animation_delay: "0s",
-  margin: "0 0 50px 0",
+  margin: "0 0 0 0",
   padding: "6rem 0 0 0",
   isRight: "1",
 };
