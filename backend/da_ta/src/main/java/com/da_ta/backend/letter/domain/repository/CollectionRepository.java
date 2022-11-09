@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface CollectionRepository extends JpaRepository<CollectedLetter, Long> {
 
-    Optional<CollectedLetter> findByLetterIdAndUserId(Long letterId, Long userId);
+    Optional<CollectedLetter> findByLetterIdAndUserIdAndIsActiveTrue(Long letterId, Long userId);
 
     List<CollectedLetter> findAllByUserIdAndIsActiveTrueOrderByCreatedDateDesc(Long userId);
 }

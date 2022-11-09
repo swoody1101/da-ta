@@ -1,7 +1,6 @@
 package com.da_ta.backend.letter.service;
 
 import com.da_ta.backend.account.user.domain.entity.User;
-import com.da_ta.backend.account.user.domain.repository.UserRepository;
 import com.da_ta.backend.common.domain.Age;
 import com.da_ta.backend.common.domain.Message;
 import com.da_ta.backend.common.domain.exception.BadRequestException;
@@ -35,7 +34,6 @@ public class LetterService {
     private final LetterRepository letterRepository;
     private final ReplyRepository replyRepository;
     private final TextLetterRepository textLetterRepository;
-    private final UserRepository userRepository;
 
     @Transactional
     public Message createTextLetter(User user, TextLetterCreateRequest textLetterCreateRequest) {
@@ -76,19 +74,22 @@ public class LetterService {
 
     public CountFloatedLetterResponse countFloatedLetter() {
         return CountFloatedLetterResponse.builder()
-                .letterCount(floatedLetterLogRepository.countByIsActiveTrue())
+                .letterCount(floatedLetterRepository.countByIsActiveTrueAndRecipientIdIsNull())
                 .build();
     }
 
     @Transactional
     public ReceiveFloatedLetterResponse receiveFloatedLetter(User recipient) {
-        FloatedLetter floatedLetter = findFloatedLetterByRecipientIdAndAgeOption(recipient.getId(), recipient.getAge());
-        floatedLetter.updateRecipient(recipient);
-        floatedLetterRepository.save(floatedLetter);
-        floatedLetterLogRepository.save(FloatedLetterLog.builder()
-                .loggedRecipientId(recipient.getId())
-                .floatedLetter(floatedLetter)
-                .build());
+        FloatedLetter floatedLetter = floatedLetterRepository.findByRecipientId(recipient.getId());
+        if (floatedLetter == null) {
+            floatedLetter = findFloatedLetterByRecipientIdAndAgeOption(recipient.getId(), recipient.getAge());
+            floatedLetter.updateRecipient(recipient);
+            floatedLetterRepository.save(floatedLetter);
+            floatedLetterLogRepository.save(FloatedLetterLog.builder()
+                    .loggedRecipientId(recipient.getId())
+                    .floatedLetter(floatedLetter)
+                    .build());
+        }
         long letterId = floatedLetter.getLetter().getId();
         Letter letter = findLetterById(letterId);
         if (letter.getLetterType().equals(TYPE_TEXT)) {
@@ -96,7 +97,7 @@ public class LetterService {
             return ReceiveFloatedLetterResponse.builder()
                     .writerId(textLetter.getWriter().getId())
                     .writerNickname(textLetter.getWriter().getNickname())
-                    .floatedLetterId(floatedLetter.getId())
+                    .replyOption(textLetter.isReplyOption())
                     .letterInfo(LetterInfo.builder()
                             .letterId(textLetter.getId())
                             .title(textLetter.getTitle())
@@ -111,7 +112,7 @@ public class LetterService {
             return ReceiveFloatedLetterResponse.builder()
                     .writerId(imageLetter.getWriter().getId())
                     .writerNickname(imageLetter.getWriter().getNickname())
-                    .floatedLetterId(floatedLetter.getId())
+                    .replyOption(imageLetter.isReplyOption())
                     .letterInfo(LetterInfo.builder()
                             .letterId(imageLetter.getId())
                             .title(imageLetter.getTitle())
@@ -125,8 +126,12 @@ public class LetterService {
         }
     }
 
-    public Message createReply(User writer, Long originLetterId, CreateReplyRequset createReplyRequset) {
-        TextLetterInfo textLetterInfo = createReplyRequset.getTextLetterInfo();
+    @Transactional
+    public Message createReply(User writer, Long originLetterId, CreateReplyRequest createReplyRequest) {
+        FloatedLetter floatedLetter = findFloatedLetterByLetterIdAndRecipientId(originLetterId, writer.getId());
+        floatedLetter.updateFloatedLetter();
+        floatedLetterRepository.save(floatedLetter);
+        TextLetterInfo textLetterInfo = createReplyRequest.getTextLetterInfo();
         TextLetter textLetter = TextLetter.builder()
                 .letterType(TYPE_TEXT)
                 .writer(writer)
@@ -137,22 +142,15 @@ public class LetterService {
                 .build();
         textLetterRepository.save(textLetter);
         replyRepository.save(Reply.builder()
-                .recipient(findUserById(createReplyRequset.getRecipientId()))
+                .recipient(floatedLetter.getLetter().getWriter())
                 .originLetterId(originLetterId)
                 .repliedLetter(textLetter)
                 .build());
         return new Message(REPLY_SENT.getMessage());
     }
 
-    public Message checkReplyReception(User recipient, Long repliedLetterId) {
-        Reply reply = findReplyByRepliedLetterIdAndRecipientId(repliedLetterId, recipient.getId());
-        reply.updateIsRead();
-        replyRepository.save(reply);
-        return new Message(REPLY_RECEPTION_CHECKED.getMessage());
-    }
-
-    public Message updateFloatedLetter(User user, Long floatedLetterId) {
-        FloatedLetter floatedLetter = findFloatedLetterByLetterIdAndRecipientId(floatedLetterId, user.getId());
+    public Message updateFloatedLetter(User user, Long letterId) {
+        FloatedLetter floatedLetter = findFloatedLetterByLetterIdAndRecipientId(letterId, user.getId());
         if (floatedLetterLogRepository.countByFloatedLetterId(floatedLetter.getId()) == MAX_FLOAT_COUNT) {
             floatedLetter.deleteFloatedLetter();
         }
@@ -161,11 +159,15 @@ public class LetterService {
         return new Message(LETTER_REFLOATED.getMessage());
     }
 
+    @Transactional
     public Message collectLetter(User user, Long letterId) {
         Letter letter = findLetterById(letterId);
         if (letter.isReplyOption()) {
             throw new BadRequestException(COLLECT_LETTER_REJECTED);
         }
+        FloatedLetter floatedLetter = findFloatedLetterByLetterIdAndRecipientId(letterId, user.getId());
+        floatedLetter.updateFloatedLetter();
+        floatedLetterRepository.save(floatedLetter);
         collectionRepository.save(CollectedLetter.builder()
                 .letter(letter)
                 .user(user)
@@ -174,7 +176,7 @@ public class LetterService {
     }
 
     public Message createLetterAccusation(User reporter, Long letterId, AccuseLetterRequest accuseLetterRequest) {
-        if (accuseLetterRequest.isReply()) {
+        if (accuseLetterRequest.getIsReply()) {
             findReplyByRepliedLetterIdAndRecipientId(letterId, reporter.getId());
         } else {
             findFloatedLetterByLetterIdAndRecipientId(letterId, reporter.getId());
@@ -218,6 +220,7 @@ public class LetterService {
                     .writerId(textLetter.getWriter().getId())
                     .writerNickname(textLetter.getWriter().getNickname())
                     .letterInfo(LetterInfo.builder()
+                            .letterId(textLetter.getId())
                             .title(textLetter.getTitle())
                             .content(textLetter.getContent())
                             .backgroundId(textLetter.getBackgroundId())
@@ -232,7 +235,9 @@ public class LetterService {
                     .writerId(imageLetter.getWriter().getId())
                     .writerNickname(imageLetter.getWriter().getNickname())
                     .letterInfo(LetterInfo.builder()
+                            .letterId(imageLetter.getId())
                             .title(imageLetter.getTitle())
+                            .imageLetterUrl(imageLetter.getImageLetterUrl())
                             .backgroundId(imageLetter.getBackgroundId())
                             .writtenDate(imageLetter.getCreatedDate())
                             .build())
@@ -251,7 +256,7 @@ public class LetterService {
 
     public FindUnreadReplyResponse checkUnreadReply(User recipient) {
         return FindUnreadReplyResponse.builder()
-                .isUnreadReply(replyRepository.existsByIsReadTrueAndIsActiveTrueAndRecipientId(recipient.getId()))
+                .isUnreadReply(replyRepository.existsByIsReadFalseAndIsActiveTrueAndRecipientId(recipient.getId()))
                 .build();
     }
 
@@ -261,8 +266,8 @@ public class LetterService {
                         .stream()
                         .map(reply ->
                                 ReplyItem.builder()
-                                        .replyId(reply.getRepliedLetter().getId())
-                                        .replyTitle(reply.getRepliedLetter().getTitle())
+                                        .id(reply.getRepliedLetter().getId())
+                                        .title(reply.getRepliedLetter().getTitle())
                                         .writerId(reply.getRepliedLetter().getWriter().getId())
                                         .writerNickname(reply.getRepliedLetter().getWriter().getNickname())
                                         .writtenDate(reply.getRepliedLetter().getCreatedDate())
@@ -273,7 +278,10 @@ public class LetterService {
     }
 
     public FindReplyDetailResponse findReplyDetail(User recipient, Long repliedLetterId) {
-        Long originLetterId = findReplyByRepliedLetterIdAndRecipientId(repliedLetterId, recipient.getId()).getOriginLetterId();
+        Reply reply = findReplyByRepliedLetterIdAndRecipientId(repliedLetterId, recipient.getId());
+        reply.updateIsRead();
+        replyRepository.save(reply);
+        Long originLetterId = reply.getOriginLetterId();
         Letter originLetter = findLetterById(originLetterId);
         TextLetter replyLetter = findTextLetterById(repliedLetterId);
         ReplyInfo replyInfo = ReplyInfo.builder()
@@ -322,23 +330,18 @@ public class LetterService {
         return new Message(REPLY_DELETED.getMessage());
     }
 
-    private User findUserById(Long userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
-    }
-
     private Letter findLetterById(Long letterId) {
         return letterRepository.findById(letterId)
                 .orElseThrow(() -> new NotFoundException(LETTER_NOT_FOUND));
     }
 
-    private TextLetter findTextLetterById(Long LetterId) {
-        return textLetterRepository.findById(LetterId)
+    private TextLetter findTextLetterById(Long letterId) {
+        return textLetterRepository.findById(letterId)
                 .orElseThrow(() -> new NotFoundException(TEXT_LETTER_NOT_FOUND));
     }
 
-    private ImageLetter findImageLetterById(Long LetterId) {
-        return imageLetterRepository.findById(LetterId)
+    private ImageLetter findImageLetterById(Long letterId) {
+        return imageLetterRepository.findById(letterId)
                 .orElseThrow(() -> new NotFoundException(IMAGE_LETTER_NOT_FOUND));
     }
 
@@ -353,12 +356,12 @@ public class LetterService {
     }
 
     private Reply findReplyByRepliedLetterIdAndRecipientId(Long repliedLetterId, Long recipientId) {
-        return replyRepository.findByRepliedLetterIdAndRecipientId(repliedLetterId, recipientId)
+        return replyRepository.findByRepliedLetterIdAndRecipientIdAndIsActiveTrue(repliedLetterId, recipientId)
                 .orElseThrow(() -> new NotFoundException(REPLY_NOT_FOUND));
     }
 
     private CollectedLetter findCollectionByLetterIdAndUserId(Long letterId, Long userId) {
-        return collectionRepository.findByLetterIdAndUserId(letterId, userId)
+        return collectionRepository.findByLetterIdAndUserIdAndIsActiveTrue(letterId, userId)
                 .orElseThrow(() -> new NotFoundException(COLLECTED_LETTER_NOT_FOUND));
     }
 }
