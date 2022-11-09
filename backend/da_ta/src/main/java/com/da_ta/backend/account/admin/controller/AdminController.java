@@ -1,5 +1,6 @@
 package com.da_ta.backend.account.admin.controller;
 
+import com.da_ta.backend.account.admin.controller.dto.FindAccusedLettersResponse;
 import com.da_ta.backend.account.admin.controller.dto.FindUsersResponse;
 import com.da_ta.backend.account.admin.controller.dto.UpdateRoleRequest;
 import com.da_ta.backend.account.admin.service.AdminService;
@@ -32,10 +33,9 @@ public class AdminController {
                 .body(adminService.updateRole(token, userId, updateRoleRequest));
     }
 
-    @PostMapping("/accusation/{user_id}")
-    public ResponseEntity<Message> updateWarningCount(@RequestHeader(AUTHORIZATION) String token,
-                                                      @PathVariable("user_id") Long userId) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(adminService.updateWarningCount(token, userId));
+    @GetMapping("/accusation/letter")
+    public ResponseEntity<FindAccusedLettersResponse> findAccusedLetters(@RequestHeader(AUTHORIZATION) String token) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(adminService.findAccusedLetters(token));
     }
 }
