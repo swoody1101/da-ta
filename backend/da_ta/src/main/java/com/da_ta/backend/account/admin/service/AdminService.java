@@ -1,22 +1,30 @@
 package com.da_ta.backend.account.admin.service;
 
-import com.da_ta.backend.account.admin.controller.dto.FindUsersResponse;
-import com.da_ta.backend.account.admin.controller.dto.UpdateRoleRequest;
-import com.da_ta.backend.account.admin.controller.dto.UserItem;
+import com.da_ta.backend.account.admin.controller.dto.*;
 import com.da_ta.backend.account.jwt.JwtTokenProvider;
 import com.da_ta.backend.account.user.controller.dto.BanStatusInfo;
 import com.da_ta.backend.account.user.domain.entity.User;
 import com.da_ta.backend.account.user.domain.repository.UserRepository;
 import com.da_ta.backend.common.domain.Message;
 import com.da_ta.backend.common.domain.exception.NotFoundException;
+import com.da_ta.backend.letter.domain.entity.ImageLetter;
+import com.da_ta.backend.letter.domain.entity.Letter;
+import com.da_ta.backend.letter.domain.entity.LetterAccusation;
+import com.da_ta.backend.letter.domain.entity.TextLetter;
+import com.da_ta.backend.letter.domain.repository.ImageLetterRepository;
+import com.da_ta.backend.letter.domain.repository.LetterAccusationRepository;
+import com.da_ta.backend.letter.domain.repository.LetterRepository;
+import com.da_ta.backend.letter.domain.repository.TextLetterRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.da_ta.backend.common.domain.ErrorCode.USER_NOT_FOUND;
+import static com.da_ta.backend.common.domain.ErrorCode.*;
+import static com.da_ta.backend.common.domain.SuccessCode.ACCUSED_LETTER_SOLVED;
 import static com.da_ta.backend.common.domain.SuccessCode.ROLE_UPDATED;
-import static com.da_ta.backend.common.domain.SuccessCode.WARNING_COUNT_UPDATED;
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +34,10 @@ public class AdminService {
     private final static String TYPE_TEXT = "Text";
     private final static String TYPE_IMAGE = "Image";
     private final UserRepository userRepository;
+    private final LetterRepository letterRepository;
+    private final TextLetterRepository textLetterRepository;
+    private final ImageLetterRepository imageLetterRepository;
+    private final LetterAccusationRepository letterAccusationRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
     public FindUsersResponse findUsers(String token) {
@@ -107,5 +119,25 @@ public class AdminService {
     private User findUserById(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
+    }
+
+    private Letter findLetterById(Long letterId) {
+        return letterRepository.findById(letterId)
+                .orElseThrow(() -> new NotFoundException(LETTER_NOT_FOUND));
+    }
+
+    private TextLetter findTextLetterById(Long letterId) {
+        return textLetterRepository.findById(letterId)
+                .orElseThrow(() -> new NotFoundException(TEXT_LETTER_NOT_FOUND));
+    }
+
+    private ImageLetter findImageLetterById(Long letterId) {
+        return imageLetterRepository.findById(letterId)
+                .orElseThrow(() -> new NotFoundException(IMAGE_LETTER_NOT_FOUND));
+    }
+
+    private LetterAccusation findLetterAccusationById(Long accusationId) {
+        return letterAccusationRepository.findById(accusationId)
+                .orElseThrow(() -> new NotFoundException(LETTER_ACCUSATION_NOT_FOUND));
     }
 }
