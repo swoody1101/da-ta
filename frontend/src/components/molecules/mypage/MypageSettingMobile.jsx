@@ -1,57 +1,97 @@
 /**
  * @author boyeon
  */
-/**
- *
- */
 import React from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 import styled from "styled-components";
+import { deleteUser, setUserAlert, userInfo } from "../../../api/mypageAPI";
 import { ClickableSpan } from "../../atoms/ClickableSpan";
 
-export const MypageSettingMobile = () => (
-  <>
-    <SettingDiv>
-      <SettingWordsDiv>
-        <SettingTitleDiv>회원님의 연령: 80대</SettingTitleDiv>
-        <SettingExpln>
-          회원님의 연령대를 등록하거나 변경하실 수 있습니다.
-        </SettingExpln>
-      </SettingWordsDiv>
-      <SettingButtonDiv>
-        <ClickableSpan onClick={()=>{console.log('연령대 변경')}}>
-          변경하기
-        </ClickableSpan>
-      </SettingButtonDiv>
-    </SettingDiv>
-    <SettingDiv>
-      <SettingWordsDiv>
-        <SettingTitleDiv>카카오톡 알림 설정</SettingTitleDiv>
-        <SettingExpln>
-          보낸 편지에 대한 답장의 실시간 알림을 받으실 수 있습니다.
-        </SettingExpln>
-      </SettingWordsDiv>
-      <SettingButtonDiv>
-        <ClickableSpan onClick={()=>{console.log('카카오톡 알림 설정')}}>
-          OFF
-        </ClickableSpan>
-      </SettingButtonDiv>
-    </SettingDiv>
-    <SettingDiv>
-      <SettingWordsDiv>
-        <SettingTitleDiv>계정 비활성화</SettingTitleDiv>
-        <SettingExpln>
-          현재 접속한 계정의 정보를 비활성화 합니다.
-        </SettingExpln>
-      </SettingWordsDiv>
-      <SettingButtonDiv>
-        <ClickableSpan onClick={()=>{console.log('탈퇴 버튼 클릭')}}>
-          계정탈퇴
-        </ClickableSpan>
-      </SettingButtonDiv>
-    </SettingDiv>
-  </>
-);
+export const MypageSettingMobile = () => {
+  const [user, setUser] = useState({
+    userId: 0,
+    ageRange: "0",
+    alertOption: false,
+  });
+  useEffect(async () => {
+    const response = await userInfo();
+    if (response.status === 200) {
+      setUser({ ...response.data });
+      console.log(response.data.alertOption);
+    }
+  }, []);
 
+  return (
+    <>
+      <SettingDiv>
+        <SettingWordsDiv>
+          <SettingTitleDiv>{`회원님의 연령: ${user.ageRange}`}</SettingTitleDiv>
+          <SettingExpln>
+            회원님의 연령대를 등록하거나 변경하실 수 있습니다.
+          </SettingExpln>
+        </SettingWordsDiv>
+        <SettingButtonDiv>
+          <ClickableSpan
+            onClick={() => {
+              console.log("연령대 변경");
+            }}
+          >
+            변경하기
+          </ClickableSpan>
+        </SettingButtonDiv>
+      </SettingDiv>
+      <SettingDiv>
+        <SettingWordsDiv>
+          <SettingTitleDiv>카카오톡 알림 설정</SettingTitleDiv>
+          <SettingExpln>
+            보낸 편지에 대한 답장의 실시간 알림을 받으실 수 있습니다.
+          </SettingExpln>
+        </SettingWordsDiv>
+        <SettingButtonDiv>
+          <ClickableSpan
+            isHide={!user.alertOption}
+            onClick={async () => {
+              const response = await setUserAlert(false);
+              console.log(response);
+              console.log("카카오톡 알림 설정 OFF");
+            }}
+          >
+            OFF
+          </ClickableSpan>
+          <ClickableSpan
+            isHide={user.alertOption}
+            onClick={async () => {
+              const response = await setUserAlert(true);
+              console.log(response);
+              console.log("카카오톡 알림 설정 ON");
+            }}
+          >
+            ON
+          </ClickableSpan>
+        </SettingButtonDiv>
+      </SettingDiv>
+      <SettingDiv>
+        <SettingWordsDiv>
+          <SettingTitleDiv>계정 비활성화</SettingTitleDiv>
+          <SettingExpln>
+            현재 접속한 계정의 정보를 비활성화 합니다.
+          </SettingExpln>
+        </SettingWordsDiv>
+        <SettingButtonDiv>
+          <ClickableSpan
+            onClick={() => {
+              deleteUser();
+              console.log("탈퇴 버튼 클릭");
+            }}
+          >
+            계정탈퇴
+          </ClickableSpan>
+        </SettingButtonDiv>
+      </SettingDiv>
+    </>
+  );
+};
 
 const SettingDiv = styled.div`
   display: flex;
