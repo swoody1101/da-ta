@@ -6,58 +6,47 @@ import styled from "styled-components";
 import ReadButtons from "../../components/molecules/ReadButtons";
 import ReadLetterText from "../../components/molecules/ReadLetterText";
 import { useSetRecoilState } from "recoil";
-import { loadingState } from "../../recoil/Atoms";
 import ReportModal from "../../components/organisms/ReportModal";
 import { readingLetterIdState } from "../../recoil/Atoms";
+import ReadLetterPic from "../../components/molecules/ReadLetterPic";
 
 const LetterReadPage = () => {
-  const [blur, setBlur] = useState(false);
   const [loading, setLoading] = useState(false);
-  const loadingSpinner = useSetRecoilState(loadingState);
   const setReadingLetterId = useSetRecoilState(readingLetterIdState);
   const [letter, setLetter] = useState({ letterInfo: {} });
   const [isPicture, setIsPicture] = useState(false);
 
   useEffect(async () => {
-    loadingSpinner(true);
-    setTimeout(() => {
-      setBlur(true);
-
-      //이후에 Api 연결할 예정
-      setLetter({
-        writerId: 7,
-        writerName: "길가다 5만원을 주운 후라이드치킨",
-        reply_option: true,
-        floatLetterId: 0,
-        letterInfo: {
-          letterId: 10,
-          title: "메밀꽃 필 무렵",
-          content: memilggot,
-          imageLetterUrl: null,
-          backgroundId: 2,
-          fontId: 1,
-          createTime: new Date(),
-        },
-      });
-      setReadingLetterId(letter.letterInfo.letterId);
-
-      //편지를 출력하기 전에 그림인지 글인지 분기
-      letter.letterInfo.imageLetterUrl
-        ? setIsPicture(true)
-        : setIsPicture(false);
-
-      //편지를 표시
-      setLoading(true);
-      loadingSpinner(false);
-    }, 1000);
+    setLetter({
+      writerId: 7,
+      writerName: "길가다 5만원을 주운 후라이드치킨",
+      reply_option: true,
+      floatLetterId: 0,
+      letterInfo: {
+        letterId: 10,
+        title: "메밀꽃 필 무렵",
+        content: memilggot,
+        imageLetterUrl:
+          process.env.PUBLIC_URL + "/assets/images/mypage/gear.png",
+        backgroundId: 2,
+        fontId: 1,
+        createTime: new Date(),
+      },
+    });
+    setReadingLetterId(letter.letterInfo.letterId);
   }, []);
+
+  useEffect(() => {
+    letter.letterInfo.imageLetterUrl ? setIsPicture(true) : setIsPicture(false);
+    setLoading(true);
+  }, [letter]);
   return (
     <>
       <ReadWrapper>
         {loading &&
           (isPicture ? (
             <>
-              <ReadLetterText info={letter.letterInfo}></ReadLetterText>
+              <ReadLetterPic info={letter.letterInfo}></ReadLetterPic>
               <ReadButtons index={letter.reply_option ? 0 : 1}></ReadButtons>
             </>
           ) : (
@@ -69,7 +58,7 @@ const LetterReadPage = () => {
         <ReportModal />
       </ReadWrapper>
       <BackgroundVideo
-        isBlur={blur}
+        isBlur={true}
         path={`${process.env.PUBLIC_URL}/assets/video/bg2.mp4`}
       />
     </>
