@@ -7,8 +7,6 @@ import { MainText } from "../components/atoms/Text";
 import Input from "../components/atoms/Input";
 import DropDownInput from "../components/atoms/DropDownInput";
 import MainNav from "./../components/templates/MainNav";
-import "../utils/progress_bar/loading-bar.js";
-import "../utils/progress_bar/loading-bar.css";
 import { useRecoilState } from "recoil";
 import { loginState } from "./../recoil/Atoms";
 import { getLetterBackgrounds } from "../api/letterWriteAPI";
