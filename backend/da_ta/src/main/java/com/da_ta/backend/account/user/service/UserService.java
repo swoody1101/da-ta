@@ -187,6 +187,7 @@ public class UserService {
                 .build();
         User user = User.builder()
                 .kakaoUserId(kakaoUserId)
+                .email(kakaoProfile.getKakaoAccount().getEmail())
                 .nickname(generateRamdomNickname())
                 .age(mapToAge(kakaoProfile.getKakaoAccount().getAgeRange()))
                 .banStatus(banStatus)

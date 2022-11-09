@@ -28,6 +28,8 @@ public class User extends CommonEntity implements UserDetails {
     @Column(nullable = false)
     private Long kakaoUserId;
 
+    private String email;
+
     @Column(nullable = false, unique = true)
     private String nickname;
 
