@@ -21,10 +21,27 @@ export const MainText = styled.p`
 `}
 `;
 
+export const MainTestText = styled.p`
+  display: flex;
+  font-size: 1.5rem;
+  color: black;
+  width: 100%;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin: ${(props) => props.margin};
+  font-weight: ${(props) => props.fontWeight};
+  z-index: 20;
+
+  ${media.phone`
+  font-size: ${(props) => props.mFont_size};
+`}
+`;
+
 export const MainSmallText = styled.p`
   display: flex;
   font-size: 1.3rem;
-  color: white;
+  color: ${(props) => props.color || "white"};
   width: 100%;
   text-align: center;
   align-items: center;

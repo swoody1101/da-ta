@@ -23,6 +23,10 @@ import { useRecoilState } from "recoil";
 import { loadingState } from "./recoil/Atoms";
 import { firestore } from "./firebase-config";
 import LetterWriteSuccessPage from "./pages/letter_write/LetterWriteSuccessPage";
+import AdminPage from "./pages/admin/AdminPage";
+import Reports from "./pages/admin/Reports";
+import UserInfos from "./pages/admin/UserInfos";
+import TodayQuestions from "./pages/admin/TodayQuestions";
 
 function App() {
   const [loading, setLoading] = useRecoilState(loadingState);
@@ -40,6 +44,24 @@ function App() {
             <Route path="/testyoon" element={<TestPageYoon />} />
             <Route path="/bytest" element={<TestBoyeon />} />
             <Route path="/auth/oauth" element={<SocialLogin />} />
+            <Route
+              path="/admin"
+              element={<PrivateRoute component={<AdminPage />} />}
+            >
+              <Route
+                index
+                path="reports"
+                element={<PrivateRoute component={<Reports />} />}
+              />
+              <Route
+                path="userinfos"
+                element={<PrivateRoute component={<UserInfos />} />}
+              />
+              <Route
+                path="todayquestions"
+                element={<PrivateRoute component={<TodayQuestions />} />}
+              />
+            </Route>
             <Route
               path="/write"
               element={<PrivateRoute component={<LetterWritePage />} />}

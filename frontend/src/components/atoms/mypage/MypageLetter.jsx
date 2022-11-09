@@ -17,17 +17,23 @@ import { useSetRecoilState } from "recoil";
 import { reportModalState } from "../../../recoil/Atoms";
 import { readingLetterIdState } from "../../../recoil/Atoms";
 
+const DateToString = (writtenDate) =>
+  `${writtenDate.getFullYear()}년 ${
+    writtenDate.getMonth() + 1
+  }월 ${writtenDate.getDate()}일`;
+
 export const MypageLetter = ({ letter }) => {
   const setModalToggle = useSetRecoilState(reportModalState);
   const setReadingLetterId = useSetRecoilState(readingLetterIdState);
+  const writtenTime = DateToString(letter.writtenDate);
 
   return (
     <LetterDiv>
       <LetterWordsDiv>
-        <LetterTitle>{letter.letterTitle}</LetterTitle>
-        <LetterDate>{`${letter.userNickName}, ${letter.time}`}</LetterDate>
-        <LetterDateWeb>{`${letter.userNickName}`}</LetterDateWeb>
-        <LetterDateWeb>{`${letter.time}`}</LetterDateWeb>
+        <LetterTitle>{letter.title}</LetterTitle>
+        <LetterDate>{`${letter.writerNickname}, ${writtenTime}`}</LetterDate>
+        <LetterDateWeb>{`${letter.writerNickname}`}</LetterDateWeb>
+        <LetterDateWeb>{`${writtenTime}`}</LetterDateWeb>
       </LetterWordsDiv>
       <FontAwesomeIcon
         icon={faTriangleExclamation}
@@ -37,7 +43,7 @@ export const MypageLetter = ({ letter }) => {
           setModalToggle(true);
           setReadingLetterId(letter.id);
           console.log(
-            `${letter.letterId}번 글을 쓴 글쓴이 아이디 ${letter.userId}를 신고버튼`
+            `${letter.id}번 글을 쓴 글쓴이 아이디 ${letter.writerId}를 신고버튼`
           );
         }}
       />
@@ -46,7 +52,7 @@ export const MypageLetter = ({ letter }) => {
         style={{ margin: "0 15px 0 0", cursor: "pointer" }}
         size="lg"
         onClick={() => {
-          console.log(`${letter.letterId}번 글 삭제버튼`);
+          console.log(`${letter.id}번 글 삭제버튼`);
         }}
       />
     </LetterDiv>

@@ -29,6 +29,7 @@ Button.defaultProps = {
 const StyledButton = styled.button`
   display: flex;
   background-color: rgba(217, 217, 217, ${(props) => props.bgOpacity});
+  background-color: ${(props) => props.bgColor};
   margin: ${(props) => props.margin};
   padding: ${(props) => props.padding};
   width: ${(props) => props.width};
@@ -37,7 +38,8 @@ const StyledButton = styled.button`
   filter: ${(props) =>
     props.shadow ? "drop-shadow(4px 8px 12px rgba(38,38,38,0.5))" : ""};
   cursor: pointer;
-  border: ${(props) => (props.hasBorder ? "2px solid white" : "0")};
+  border: ${(props) =>
+    props.hasBorder ? "2px solid white" : props.borderStyle};
   border-radius: ${(props) => props.borderRadius};
   color: ${(props) => props.color || "white"};
   align-items: center;
@@ -48,6 +50,7 @@ const StyledButton = styled.button`
   transition: all 0.2s ease-in;
   &:hover {
     background-color: rgba(217, 217, 217, ${(props) => props.hoverBgOpacity});
+    background-color: ${(props) => props.bgColor};
   }
 
   ${media.phone`

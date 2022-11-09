@@ -24,8 +24,8 @@ const MouseScrollDownArrowGroup = ({ ...props }) => {
   return (
     <S1_arrow {...props}>
       {/* <MainText>Scroll</MainText> */}
-      <MouseScrollDownMouse margin_top="115px"></MouseScrollDownMouse>
-      <ArrowWrapper margin_toparrowWrapper="280px">
+      <MouseScrollDownMouse></MouseScrollDownMouse>
+      <ArrowWrapper margin_toparrowWrapper="3rem">
         <MouseScrollDownArrow
           width="2rem"
           height="2rem"

@@ -19,3 +19,13 @@ export const RowCenterWrapper = styled(Wrapper)`
   align-items: center;
   flex-direction: column;
 `;
+
+export const AdminWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  min-height: calc(100vh - 6rem);
+  box-sizing: border-box;
+  padding: 2rem;
+`;

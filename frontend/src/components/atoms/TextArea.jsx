@@ -25,3 +25,23 @@ export const LetterTextArea = styled.textarea`
     outline: none;
   }
 `;
+
+export const QuestionTextArea = styled.textarea`
+  display: flex;
+  resize: none;
+  border: 1px solid black;
+  border-radius: 1em;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
+  background: transparent;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: black;
+
+  &:focus {
+    outline: none;
+  }
+`;

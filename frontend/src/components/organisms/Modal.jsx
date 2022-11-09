@@ -25,7 +25,7 @@ const Modal = ({
     document.body.style.cssText = `
       position: absolute; 
       top: -${window.scrollY}px;
-			overflow: overlay;
+			overflow: hidden;
       width: 100%;`;
     return () => {
       const scrollY = document.body.style.top;
@@ -38,7 +38,6 @@ const Modal = ({
     <>
       {modalToggle && (
         <>
-          l
           <TranslucentBackground onClick={() => setModalToggle(false)} />
           <ModalContainer height={height} width={width} maxWidth={maxWidth}>
             {/* 닫기 버튼 */}
