@@ -335,8 +335,8 @@ public class LetterService {
                 .orElseThrow(() -> new NotFoundException(LETTER_NOT_FOUND));
     }
 
-    private TextLetter findTextLetterById(Long LetterId) {
-        return textLetterRepository.findById(LetterId)
+    private TextLetter findTextLetterById(Long letterId) {
+        return textLetterRepository.findById(letterId)
                 .orElseThrow(() -> new NotFoundException(TEXT_LETTER_NOT_FOUND));
     }
 
