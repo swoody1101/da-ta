@@ -5,35 +5,32 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { media } from "../../utils/styleUtil";
 
-import MainBackgroundSky from "../../components/atoms/MainBackgroundSky";
+import { popWarningAlert } from "./../../utils/sweetAlert";
+import { useRecoilValue } from "recoil";
+import { loginState } from "./../../recoil/Atoms";
+
 import Footer from "../../components/molecules/Footer";
-import Chatbox from "../../components/atoms/Chatbox";
 import MainSeaGradient from "../../components/atoms/MainSeaGradient";
-import Title from "../../components/atoms/Title";
-import { MainWave } from "../../components/atoms/MainWave";
 import { MainWave2 } from "../../components/atoms/MainWave2";
-import {
-  MainText,
-  MainTestText,
-  MainSmallText,
-} from "../../components/atoms/Text";
+import { MainText, MainSmallText } from "../../components/atoms/Text";
 // import BottleOfLetter from "../../components/atoms/BottleOfLetter";
 import ScrollToTop from "react-scroll-to-top";
 import Button from "./../../components/atoms/Button";
 import { SizeTypes, SIZE_WIDE } from "./../../constants/Sizes";
-
 import BackgroundGradient from "../../components/atoms/BackgroundGradient";
 import MouseScrollDownArrowGroup from "../../components/molecules/MouseScrollDownArrowGroup";
-import MouseScrollDownMouse from "../../components/atoms/MainScrollDownMouse";
 
 import ChatboxGroup from "../../components/molecules/landing/ChatBoxGroup";
-import Modal from "../../components/organisms/Modal";
 import { BottleOfLetterBtn } from "../../components/atoms/BottleOfLetterBtn";
+
+import Modal from "../../components/organisms/Modal";
 
 const LandingPage = () => {
   const navigate = useNavigate();
 
   const [chatboxVisible, setChatBoxVisible] = useState(false); // 물병 클릭시 뜨는 말풍선 토글
+
+  const isLogin = useRecoilValue(loginState);
 
   /**
    * @description chatbox visible event
@@ -42,6 +39,9 @@ const LandingPage = () => {
     setChatBoxVisible(!chatboxVisible);
   };
 
+  /**
+   * @description AOS 이벤트 조정용 UseEffect
+   */
   useEffect(() => {
     AOS.init({ duration: 500, easing: "ease-in-out-back" });
   });
@@ -231,15 +231,6 @@ const MouseScrollDownArrowWrapper = styled.div`
   ${media.phone`
   top: 65%;
 `};
-`;
-
-const MouseScrollDownMouseWrapper = styled.div`
-  width: 100vw;
-  display: flex;
-  position: absolute;
-  justify-content: center;
-  align-items: center;
-  z-index: 5;
 `;
 
 const ChatBoxWrapper = styled.div`

@@ -8,22 +8,33 @@ import Button from "../../atoms/Button";
 
 import { MainTestText } from "../../atoms/Text";
 
-// import { popWarningAlert } from "../../../utils/sweetAlert";
-import { useRecoilValue } from "recoil";
-// import { loginState } from "./../../recoil/Atoms";
 import Modal from "../../organisms/Modal";
 
-//현재 누락된 부분 => 로그인 0 or 1과 관련해서 alert와 묶기
+//isLogin 여부 관련 import 요소들
+
+import { popWarningAlert } from "../../../utils/sweetAlert";
+import { useRecoilValue } from "recoil";
+import { loginState } from "../../../recoil/Atoms";
 
 const ChatboxGroup = ({ children, onClick, ...props }) => {
   const [answerModalShow, setAnswerModalShow] = useState(false); // 답변 보내는 모달창 show 여부
   const [anotherAnswerModalShow, setAnotherAnswerModalShow] = useState(false); // 타인 답변보기 모달창 show 여부
   const [chatBoxShow, setChatBoxShow] = useState(false); //chatbox show 여부
 
-  // const isLogin = useRecoilValue(loginState);
+  const isLogin = useRecoilValue(loginState);
 
   const answerModalHandleClick = (event) => {
-    setAnswerModalShow((current) => !current);
+    return isLogin
+      ? setAnswerModalShow((answerModalShow) => !answerModalShow)
+      : { ...popWarningAlert("", "로그인 후 이용해주세요.") };
+  };
+
+  const anotherAnswerModalHandleClick = (event) => {
+    return isLogin
+      ? setAnotherAnswerModalShow(
+          (anotherAnswerModalShow) => !anotherAnswerModalShow
+        )
+      : { ...popWarningAlert("", "로그인 후 이용해주세요.") };
   };
 
   return (
@@ -44,6 +55,7 @@ const ChatboxGroup = ({ children, onClick, ...props }) => {
           color="#5F0EB0"
           borderStyle="2px solid #5F0EB0"
           hasBorder={false}
+          onClick={() => answerModalHandleClick(!answerModalShow)}
         >
           답변하기
         </Button>
@@ -57,6 +69,7 @@ const ChatboxGroup = ({ children, onClick, ...props }) => {
           color="#5F0EB0"
           borderStyle="2px solid #5F0EB0"
           hasBorder={false}
+          onClick={() => answerModalHandleClick(!answerModalShow)}
         >
           다른 답변보기
         </Button>
@@ -124,3 +137,18 @@ const TextBox = styled.div`
 `;
 
 export default ChatboxGroup;
+
+// import React from "react";
+// import { popWarningAlert } from "./../../utils/sweetAlert";
+
+// import { useRecoilValue } from "recoil";
+// import { loginState } from "./../../recoil/Atoms";
+
+// const PrivateModalRoute = ({ component: Component }) => {
+//   const isLogin = useRecoilValue(loginState);
+//   return isLogin
+//     ? Component
+//     : { ...popWarningAlert("", "로그인 후 이용해주세요.") };
+// };
+
+// export default PrivateModalRoute;
