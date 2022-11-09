@@ -27,4 +27,8 @@ public class LetterAccusation extends CommonEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "letter_id")
     private Letter letter;
+
+    public void updateIsSolved() {
+        this.isSolved = true;
+    }
 }
