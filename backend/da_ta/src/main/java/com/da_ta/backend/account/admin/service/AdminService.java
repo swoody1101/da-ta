@@ -19,8 +19,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.da_ta.backend.common.domain.ErrorCode.*;
@@ -71,22 +69,21 @@ public class AdminService {
 
     public FindAccusedLettersResponse findAccusedLetters(String token) {
         jwtTokenProvider.findUserByToken(token);
-        List<AccusedLetter> accusedLetters = new ArrayList<>();
-        letterAccusationRepository.findAll()
-                .stream()
-                .forEach(accusedLetter -> {
-                    Letter letter = findLetterById(accusedLetter.getLetter().getId());
-                    User reportedUser = findUserById(letter.getWriter().getId());
-                    String content;
-                    if (letter.getLetterType().equals(TYPE_TEXT)) {
-                        content = findTextLetterById(letter.getId()).getContent();
-                    } else if (letter.getLetterType().equals(TYPE_IMAGE)) {
-                        content = findImageLetterById(letter.getId()).getImageLetterUrl();
-                    } else {
-                        throw new NotFoundException(LETTER_TYPE_NOT_FOUND);
-                    }
-                    accusedLetters.add(
-                            AccusedLetter.builder()
+        return FindAccusedLettersResponse.builder()
+                .accusedLetters(letterAccusationRepository.findAll()
+                        .stream()
+                        .map(accusedLetter -> {
+                            Letter letter = findLetterById(accusedLetter.getLetter().getId());
+                            User reportedUser = findUserById(letter.getWriter().getId());
+                            String content;
+                            if (letter.getLetterType().equals(TYPE_TEXT)) {
+                                content = findTextLetterById(letter.getId()).getContent();
+                            } else if (letter.getLetterType().equals(TYPE_IMAGE)) {
+                                content = findImageLetterById(letter.getId()).getImageLetterUrl();
+                            } else {
+                                throw new NotFoundException(LETTER_TYPE_NOT_FOUND);
+                            }
+                            return AccusedLetter.builder()
                                     .accusedLetterId(accusedLetter.getId())
                                     .reportedTime(accusedLetter.getCreatedDate())
                                     .reporterNickname(findUserById(accusedLetter.getReporterId()).getNickname())
@@ -95,11 +92,9 @@ public class AdminService {
                                     .reason(accusedLetter.getReason())
                                     .content(content)
                                     .isSolved(accusedLetter.isSolved())
-                                    .build()
-                    );
-                });
-        return FindAccusedLettersResponse.builder()
-                .accusedLetters(accusedLetters)
+                                    .build();
+                        })
+                        .collect(Collectors.toList()))
                 .build();
     }
 
