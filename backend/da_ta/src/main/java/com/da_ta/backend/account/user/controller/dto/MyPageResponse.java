@@ -10,5 +10,5 @@ public class MyPageResponse {
 
     private Long userId;
     private Age ageRange;
-    private boolean alertOption;
+    private Boolean isAlertActive;
 }

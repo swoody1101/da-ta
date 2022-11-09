@@ -187,6 +187,7 @@ public class UserService {
                 .build();
         User user = User.builder()
                 .kakaoUserId(kakaoUserId)
+                .email(kakaoProfile.getKakaoAccount().getEmail())
                 .nickname(generateRamdomNickname())
                 .age(mapToAge(kakaoProfile.getKakaoAccount().getAgeRange()))
                 .banStatus(banStatus)
@@ -248,7 +249,7 @@ public class UserService {
         return MyPageResponse.builder()
                 .userId(user.getId())
                 .ageRange(user.getAge())
-                .alertOption(user.isAlertOption())
+                .isAlertActive(user.isAlertActive())
                 .build();
     }
 
@@ -259,7 +260,7 @@ public class UserService {
     }
 
     public Message updateAlertOption(User user, UpdateAlertOptionRequest updateAlertOptionRequest) {
-        user.updateAlertOption(updateAlertOptionRequest.isAlertOption());
+        user.updateAlertOption(updateAlertOptionRequest.getIsAlertActive());
         userRepository.save(user);
         return new Message(ALERT_OPTION_UPDATED.getMessage());
     }
