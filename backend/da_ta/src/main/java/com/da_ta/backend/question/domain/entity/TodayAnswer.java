@@ -32,5 +32,4 @@ public class TodayAnswer extends CommonEntity {
 
     @OneToOne(mappedBy = "todayAnswer")
     private AnswerAccusation answerAccusation;
-
 }
