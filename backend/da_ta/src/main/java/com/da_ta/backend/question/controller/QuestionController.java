@@ -2,7 +2,7 @@ package com.da_ta.backend.question.controller;
 
 import com.da_ta.backend.account.jwt.JwtTokenProvider;
 import com.da_ta.backend.common.domain.Message;
-import com.da_ta.backend.question.controller.dto.TodayAnswerCreateRequest;
+import com.da_ta.backend.question.controller.dto.CreateTodayAnswerRequest;
 import com.da_ta.backend.question.controller.dto.TodayAnswerResponse;
 import com.da_ta.backend.question.controller.dto.TodayQuestionResponse;
 import com.da_ta.backend.question.service.TodayAnswerService;
@@ -32,15 +32,14 @@ public class QuestionController {
     }
 
     @PostMapping("/answer")
-    public ResponseEntity<Message> createAnswer(@RequestHeader(AUTHORIZATION) String token, @RequestBody TodayAnswerCreateRequest todayAnswerCreateRequest) {
-        System.out.println("User: "+jwtTokenProvider.findUserByToken(token).getId());
+    public ResponseEntity<Message> createAnswer(@RequestHeader(AUTHORIZATION) String token, @RequestBody CreateTodayAnswerRequest createTodayAnswerRequest) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(answerService.createTodayQuestion(todayAnswerCreateRequest,jwtTokenProvider.findUserByToken(token)));
+                .body(answerService.createTodayAnswer(createTodayAnswerRequest, jwtTokenProvider.findUserByToken(token)));
     }
 
     @GetMapping("/answer")
     public ResponseEntity<List<TodayAnswerResponse>> findAnswer() {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(answerService.findTodayAnswer());
+                .body(answerService.findTodayAnswers());
     }
 }
