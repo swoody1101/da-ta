@@ -6,6 +6,22 @@ import { client } from "../utils/client";
 /**
  * @description
  */
+export const collectLetterList = async () => {
+  const result = await client
+    .get(`/letters/collection`)
+    .then((response) => response)
+    .catch((error) => error);
+  return result;
+};
+
+export const receiveLetterList = async () => {
+  const result = await client
+    .get(`/letters/replies`)
+    .then((response) => response)
+    .catch((error) => error);
+  return result;
+};
+
 export const deleteLetter = async (letter_id) => {
   const result = await client
     .delete(`/letters/collection/${letter_id}`)
