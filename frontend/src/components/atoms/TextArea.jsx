@@ -30,12 +30,10 @@ export const QuestionTextArea = styled.textarea`
   display: flex;
   resize: none;
   border: 1px solid black;
-  border-radius: 3em;
+  border-radius: 1em;
   z-index: 10;
   width: 100%;
-  height: ${screen.width > 480
-    ? SizeTypes.PC_CONTENT_HEIGHT
-    : SizeTypes.MOBILE_CONTENT_HEIGHT};
+  height: 100%;
   padding: 1rem;
   box-sizing: border-box;
   background: transparent;
