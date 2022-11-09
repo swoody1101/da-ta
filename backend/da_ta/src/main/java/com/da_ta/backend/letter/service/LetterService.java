@@ -349,7 +349,7 @@ public class LetterService {
     }
 
     private Reply findReplyByRepliedLetterIdAndRecipientId(Long repliedLetterId, Long recipientId) {
-        return replyRepository.findByRepliedLetterIdAndRecipientId(repliedLetterId, recipientId)
+        return replyRepository.findByRepliedLetterIdAndRecipientIdAndIsActiveTrue(repliedLetterId, recipientId)
                 .orElseThrow(() -> new NotFoundException(REPLY_NOT_FOUND));
     }
 

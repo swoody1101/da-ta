@@ -96,7 +96,7 @@ public class LetterController {
     }
 
     @GetMapping("/replies/check")
-    public ResponseEntity<FindUnreadReplyResponse> checkUnreadReplyResponse(@RequestHeader(AUTHORIZATION) String token) {
+    public ResponseEntity<FindUnreadReplyResponse> checkUnreadReply(@RequestHeader(AUTHORIZATION) String token) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(letterService.checkUnreadReply(jwtTokenProvider.findUserByToken(token)));
     }

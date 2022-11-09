@@ -12,5 +12,5 @@ public interface ReplyRepository extends JpaRepository<Reply, Long> {
 
     List<Reply> findAllByRecipientIdAndIsActiveTrueOrderByCreatedDateDesc(Long recipientId);
 
-    Optional<Reply> findByRepliedLetterIdAndRecipientId(Long repliedLetterId, Long recipientId);
+    Optional<Reply> findByRepliedLetterIdAndRecipientIdAndIsActiveTrue(Long repliedLetterId, Long recipientId);
 }
