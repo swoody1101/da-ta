@@ -32,7 +32,8 @@ public class QuestionController {
     }
 
     @PostMapping("/answer")
-    public ResponseEntity<Message> createAnswer(@RequestHeader(AUTHORIZATION) String token, @RequestBody CreateTodayAnswerRequest createTodayAnswerRequest) {
+    public ResponseEntity<Message> createAnswer(@RequestHeader(AUTHORIZATION) String token,
+                                                @RequestBody CreateTodayAnswerRequest createTodayAnswerRequest) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(answerService.createTodayAnswer(createTodayAnswerRequest, jwtTokenProvider.findUserByToken(token)));
     }
