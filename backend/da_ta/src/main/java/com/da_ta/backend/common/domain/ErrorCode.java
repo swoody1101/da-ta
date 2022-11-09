@@ -21,7 +21,8 @@ public enum ErrorCode {
     LETTER_NOT_FOUND("편지를 찾을 수 없습니다."),
     LETTER_TYPE_NOT_FOUND("존재하지 않는 편지 타입입니다."),
     REPLY_NOT_FOUND("답장을 찾을 수 없습니다."),
-    TEXT_LETTER_NOT_FOUND("텍스트 편지를 찾을 수 없습니다.");
+    TEXT_LETTER_NOT_FOUND("텍스트 편지를 찾을 수 없습니다."),
+    LETTER_ACCUSATION_NOT_FOUND("신고된 편지를 찾을 수 없습니다.");
 
     private final String message;
 }
