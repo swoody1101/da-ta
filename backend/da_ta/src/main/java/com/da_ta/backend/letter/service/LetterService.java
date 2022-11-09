@@ -361,7 +361,7 @@ public class LetterService {
     }
 
     private CollectedLetter findCollectionByLetterIdAndUserId(Long letterId, Long userId) {
-        return collectionRepository.findByLetterIdAndUserId(letterId, userId)
+        return collectionRepository.findByLetterIdAndUserIdAndIsActiveTrue(letterId, userId)
                 .orElseThrow(() -> new NotFoundException(COLLECTED_LETTER_NOT_FOUND));
     }
 }
