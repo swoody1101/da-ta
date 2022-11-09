@@ -90,6 +90,20 @@ public class AdminService {
                 .build();
     }
 
+    public Message updateAccusedLetter(String token, Long letterAccusationId) {
+        jwtTokenProvider.findUserByToken(token);
+        LetterAccusation letterAccusation = findLetterAccusationById(letterAccusationId);
+        letterAccusation.updateIsSolved();
+        User reportedUser = findUserById(findLetterById(letterAccusation.getLetter().getId()).getWriter().getId());
+        reportedUser.getBanStatus().updateWarningCount();
+        if (reportedUser.getBanStatus().getWarningCount() == MAX_WARNING_COUNT) {
+            reportedUser.getBanStatus().updateIsBan();
+        }
+        letterAccusationRepository.save(letterAccusation);
+        userRepository.save(reportedUser);
+        return new Message(ACCUSED_LETTER_SOLVED.getMessage());
+    }
+
     private User findUserById(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
