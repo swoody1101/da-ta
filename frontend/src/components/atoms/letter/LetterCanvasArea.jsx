@@ -15,6 +15,7 @@ import { popSuccessAlert } from "./../../../utils/sweetAlert";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../../recoil/Atoms";
+import { SIZE_PHONE } from "./../../../constants/Sizes";
 
 /**
  *
@@ -95,7 +96,10 @@ const LetterCanvasArea = ({
 
     return {
       offsetX: e.touches[0].clientX - left,
-      offsetY: e.touches[0].clientY - top,
+      offsetY:
+        window.innerWidth < SIZE_PHONE
+          ? e.touches[0].clientY - top + 30
+          : e.touches[0].clientY - top,
     };
   };
 
