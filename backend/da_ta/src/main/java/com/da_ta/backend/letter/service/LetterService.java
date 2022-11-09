@@ -1,7 +1,6 @@
 package com.da_ta.backend.letter.service;
 
 import com.da_ta.backend.account.user.domain.entity.User;
-import com.da_ta.backend.account.user.domain.repository.UserRepository;
 import com.da_ta.backend.common.domain.Age;
 import com.da_ta.backend.common.domain.Message;
 import com.da_ta.backend.common.domain.exception.BadRequestException;
@@ -127,9 +126,10 @@ public class LetterService {
         }
     }
 
+    @Transactional
     public Message createReply(User writer, Long originLetterId, CreateReplyRequest createReplyRequest) {
         FloatedLetter floatedLetter = findFloatedLetterByLetterIdAndRecipientId(originLetterId, writer.getId());
-        floatedLetter.replyFloatedLetter();
+        floatedLetter.updateFloatedLetter();
         floatedLetterRepository.save(floatedLetter);
         TextLetterInfo textLetterInfo = createReplyRequest.getTextLetterInfo();
         TextLetter textLetter = TextLetter.builder()
@@ -159,11 +159,15 @@ public class LetterService {
         return new Message(LETTER_REFLOATED.getMessage());
     }
 
+    @Transactional
     public Message collectLetter(User user, Long letterId) {
         Letter letter = findLetterById(letterId);
         if (letter.isReplyOption()) {
             throw new BadRequestException(COLLECT_LETTER_REJECTED);
         }
+        FloatedLetter floatedLetter = findFloatedLetterByLetterIdAndRecipientId(letterId, user.getId());
+        floatedLetter.updateFloatedLetter();
+        floatedLetterRepository.save(floatedLetter);
         collectionRepository.save(CollectedLetter.builder()
                 .letter(letter)
                 .user(user)

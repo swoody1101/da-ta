@@ -40,7 +40,7 @@ public class FloatedLetter extends CommonEntity {
         letter.deleteLetter();
     }
 
-    public void replyFloatedLetter() {
+    public void updateFloatedLetter() {
         super.delete();
         this.recipient = null;
     }
