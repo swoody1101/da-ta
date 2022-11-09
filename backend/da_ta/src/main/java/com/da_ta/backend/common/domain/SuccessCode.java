@@ -22,8 +22,9 @@ public enum SuccessCode {
     REPLY_DELETED("답장 받은 편지가 삭제되었습니다."),
     REPLY_RECEPTION_CHECKED("답장 읽음 처리에 성공하였습니다."),
     REPLY_SENT("답장을 발송하였습니다."),
-    TODAY_ANSWER_CREATED("답변을 성공적으로 작성하였습니다."),
-    TEXT_LETTER_FLOATED("텍스트 편지를 바다에 띄웠습니다.");
+    TEXT_LETTER_FLOATED("텍스트 편지를 바다에 띄웠습니다."),
+
+    TODAY_ANSWER_CREATED("답변을 성공적으로 작성하였습니다.");
 
     private final String message;
 }
