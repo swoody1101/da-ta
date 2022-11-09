@@ -40,7 +40,12 @@ public class TodayAnswerService {
     public List<TodayAnswerResponse> findTodayAnswers() {
         return todayAnswerRepository.findAll()
                 .stream()
-                .map(m -> new TodayAnswerResponse(m.getId(), m.getAnswer(), m.getUser().getId(), m.getTodayQuestion().getId()))
-                .collect(Collectors.toList());
+                .map(todayAnswer -> TodayAnswerResponse.builder()
+                        .todayAnswerId(todayAnswer.getId())
+                        .answer(todayAnswer.getAnswer())
+                        .userId(todayAnswer.getUser().getId())
+                        .todayQuestionId(todayAnswer.getTodayQuestion().getId())
+                        .build()
+                ).collect(Collectors.toList());
     }
 }
