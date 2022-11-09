@@ -38,4 +38,11 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(adminService.findAccusedLetters(token));
     }
+
+    @PostMapping("/accusation/letter/{letter_accusation_id}")
+    public ResponseEntity<Message> updateAccusedLetter(@RequestHeader(AUTHORIZATION) String token,
+                                                       @PathVariable("letter_accusation_id") Long letterAccusationId) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(adminService.updateAccusedLetter(token, letterAccusationId));
+    }
 }
