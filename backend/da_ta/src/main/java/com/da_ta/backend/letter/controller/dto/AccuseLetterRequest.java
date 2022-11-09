@@ -5,6 +5,6 @@ import lombok.Getter;
 @Getter
 public class AccuseLetterRequest {
 
-    private boolean isReply;
+    private Boolean isReply;
     private String reason;
 }

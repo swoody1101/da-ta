@@ -6,8 +6,7 @@ import lombok.Getter;
 
 @Getter
 public class ImageLetterCreateRequest {
-
-    private Long userId;
+    
     private Option option;
     private ImageLetterInfo imageLetterInfo;
 }

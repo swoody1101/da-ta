@@ -23,7 +23,7 @@ public class Reply extends CommonEntity {
 
     @NotNull
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "reply_letter_id", unique = true)
+    @JoinColumn(name = "replied_letter_id", unique = true)
     private Letter repliedLetter;
 
     @Builder.Default
