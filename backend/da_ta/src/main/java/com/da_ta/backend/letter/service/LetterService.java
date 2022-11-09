@@ -340,8 +340,8 @@ public class LetterService {
                 .orElseThrow(() -> new NotFoundException(TEXT_LETTER_NOT_FOUND));
     }
 
-    private ImageLetter findImageLetterById(Long LetterId) {
-        return imageLetterRepository.findById(LetterId)
+    private ImageLetter findImageLetterById(Long letterId) {
+        return imageLetterRepository.findById(letterId)
                 .orElseThrow(() -> new NotFoundException(IMAGE_LETTER_NOT_FOUND));
     }
 
