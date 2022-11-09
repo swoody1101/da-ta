@@ -7,8 +7,7 @@ import com.da_ta.backend.question.domain.repository.TodayQuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
 
 import static com.da_ta.backend.common.domain.ErrorCode.*;
 
@@ -20,15 +19,13 @@ public class TodayQuestionService {
     private final TodayQuestionRepository todayQuestionRepository;
 
     public TodayQuestionResponse findTodayQuestion() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date now = new Date();
-        String nowTime = simpleDateFormat.format(now);
+        LocalDate nowTime = LocalDate.now();
         TodayQuestion todayQuestion = todayQuestionRepository.findByDate(nowTime)
                 .orElseThrow(() -> new NotFoundException(TODAY_QUESTION_NOT_FOUND));
         return TodayQuestionResponse.builder()
                 .todayQuestionId(todayQuestion.getId())
                 .question(todayQuestion.getQuestion())
-                .date(todayQuestion.getDate())
+                .date(todayQuestion.getDate().toString())
                 .build();
     }
 }

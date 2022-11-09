@@ -27,7 +27,7 @@ public class TodayAnswerService {
 
     public Message createTodayAnswer(CreateTodayAnswerRequest createTodayAnswerRequest, User user) {
         TodayQuestion todayQuestion = todayQuestionRepository.findById(createTodayAnswerRequest.getTodayQuestionId())
-                .orElseThrow(()-> new NotFoundException(TODAY_QUESTION_NOT_FOUND));
+                .orElseThrow(() -> new NotFoundException(TODAY_QUESTION_NOT_FOUND));
         TodayAnswer todayAnswer = TodayAnswer.builder()
                 .answer(createTodayAnswerRequest.getAnswer())
                 .user(user)

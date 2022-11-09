@@ -11,6 +11,7 @@ import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 @Getter
 @SuperBuilder
@@ -24,5 +25,5 @@ public class TodayQuestion extends CommonEntity {
     private String question;
 
     @NotNull
-    private String date;
+    private LocalDate date;
 }

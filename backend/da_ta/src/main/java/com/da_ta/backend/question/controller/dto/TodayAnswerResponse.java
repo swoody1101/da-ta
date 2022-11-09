@@ -4,7 +4,6 @@ import lombok.*;
 
 @Getter
 @Builder
-@AllArgsConstructor
 public class TodayAnswerResponse {
 
     private Long todayAnswerId;
