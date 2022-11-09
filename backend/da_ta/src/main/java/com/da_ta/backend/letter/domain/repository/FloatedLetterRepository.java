@@ -13,14 +13,15 @@ public interface FloatedLetterRepository extends JpaRepository<FloatedLetter, Lo
 
     @Query(value = "select f.* " +
             "from floated_letter f " +
-            "left join letter l " +
-            "on f.letter_id = l.letter_id " +
+            "join letter l " +
+            "using(letter_id) " +
             "where f.is_active = true " +
             "and f.recipient_id is null " +
             "and l.writer_id != :recipientId " +
-            "and l.age_option like concat('%', :ageOption, '%') " +
+            "and (l.age_option like concat('%', :ageOption, '%') " +
+                "or l.age_option like concat('%', 'AGE_ALL', '%')) " +
             "and f.floated_letter_id " +
-            "NOT IN " +
+            "not in " +
                 "(select log.floated_letter_id " +
                 "from floated_letter_log log " +
                 "where logged_recipient_id = :recipientId) " +
@@ -28,4 +29,8 @@ public interface FloatedLetterRepository extends JpaRepository<FloatedLetter, Lo
             nativeQuery = true)
     Optional<FloatedLetter> findByRecipientIdAndAgeOption(@Param("recipientId") Long recipientId,
                                                          @Param("ageOption") String ageOption);
+
+    long countByIsActiveTrueAndRecipientIdIsNull();
+
+    FloatedLetter findByRecipientId(Long recipientId);
 }

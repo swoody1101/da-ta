@@ -45,26 +45,19 @@ public class LetterController {
                 .body(letterService.receiveFloatedLetter(jwtTokenProvider.findUserByToken(token)));
     }
 
-    @PutMapping("/{floated_letter_id}")
+    @PutMapping("/{letter_id}")
     public ResponseEntity<Message> refloatLetter(@RequestHeader(AUTHORIZATION) String token,
-                                                 @PathVariable("floated_letter_id") Long floatedLetterId) {
+                                                 @PathVariable("letter_id") Long letterId) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(letterService.updateFloatedLetter(jwtTokenProvider.findUserByToken(token), floatedLetterId));
+                .body(letterService.updateFloatedLetter(jwtTokenProvider.findUserByToken(token), letterId));
     }
 
     @PostMapping("/replies/{origin_letter_id}")
     public ResponseEntity<Message> createReply(@RequestHeader(AUTHORIZATION) String token,
                                                @PathVariable("origin_letter_id") Long originLetterId,
-                                               @RequestBody CreateReplyRequset createReplyRequset) {
+                                               @RequestBody CreateReplyRequest createReplyRequest) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(letterService.createReply(jwtTokenProvider.findUserByToken(token), originLetterId, createReplyRequset));
-    }
-
-    @PutMapping("/replies/{replied_letter_id}")
-    public ResponseEntity<Message> checkReplyReception(@RequestHeader(AUTHORIZATION) String token,
-                                                       @PathVariable("replied_letter_id") Long repliedLetterId) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(letterService.checkReplyReception(jwtTokenProvider.findUserByToken(token), repliedLetterId));
+                .body(letterService.createReply(jwtTokenProvider.findUserByToken(token), originLetterId, createReplyRequest));
     }
 
     @PostMapping("/collect/{letter_id}")
@@ -103,7 +96,7 @@ public class LetterController {
     }
 
     @GetMapping("/replies/check")
-    public ResponseEntity<FindUnreadReplyResponse> checkUnreadReplyResponse(@RequestHeader(AUTHORIZATION) String token) {
+    public ResponseEntity<FindUnreadReplyResponse> checkUnreadReply(@RequestHeader(AUTHORIZATION) String token) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(letterService.checkUnreadReply(jwtTokenProvider.findUserByToken(token)));
     }

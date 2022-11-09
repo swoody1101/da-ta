@@ -11,8 +11,8 @@ public class ReplyItem {
 
     private Long writerId;
     private String writerNickname;
-    private Long replyId;
-    private String replyTitle;
+    private Long id;
+    private String title;
     private LocalDateTime writtenDate;
     private boolean isRead;
 }

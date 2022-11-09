@@ -5,7 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface FloatedLetterLogRepository extends JpaRepository<FloatedLetterLog, Long> {
 
-    long countByIsActiveTrue();
-
     int countByFloatedLetterId(Long floatedLetterId);
 }
