@@ -8,7 +8,4 @@ import java.util.Optional;
 public interface TodayQuestionRepository extends JpaRepository<TodayQuestion, Long> {
 
     Optional<TodayQuestion> findByDate(String date);
-
-    @Override
-    Optional<TodayQuestion> findById(Long id);
 }
