@@ -18,6 +18,7 @@ import com.da_ta.backend.letter.domain.repository.TextLetterRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -102,6 +103,7 @@ public class AdminService {
                 .build();
     }
 
+    @Transactional
     public Message updateAccusedLetter(String token, Long letterAccusationId) {
         jwtTokenProvider.findUserByToken(token);
         LetterAccusation letterAccusation = findLetterAccusationById(letterAccusationId);
