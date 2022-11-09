@@ -267,8 +267,8 @@ public class LetterService {
                         .stream()
                         .map(reply ->
                                 ReplyItem.builder()
-                                        .replyId(reply.getRepliedLetter().getId())
-                                        .replyTitle(reply.getRepliedLetter().getTitle())
+                                        .id(reply.getRepliedLetter().getId())
+                                        .title(reply.getRepliedLetter().getTitle())
                                         .writerId(reply.getRepliedLetter().getWriter().getId())
                                         .writerNickname(reply.getRepliedLetter().getWriter().getNickname())
                                         .writtenDate(reply.getRepliedLetter().getCreatedDate())
