@@ -26,3 +26,11 @@ export const receiveLetter = async () => {
     .catch((error) => error);
   return result;
 };
+
+export const tossLetter = async (letterId) => {
+  const result = await client
+    .put(`/letters/${letterId}`)
+    .then((response) => response)
+    .catch((error) => error);
+  return result;
+};
