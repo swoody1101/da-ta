@@ -56,15 +56,38 @@ public class AdminService {
         return new Message(ROLE_UPDATED.getMessage());
     }
 
-    public Message updateWarningCount(String token, Long userId) {
+    public FindAccusedLettersResponse findAccusedLetters(String token) {
         jwtTokenProvider.findUserByToken(token);
-        User user = findUserById(userId);
-        user.getBanStatus().updateWarningCount();
-        if (user.getBanStatus().getWarningCount() == MAX_WARNING_COUNT) {
-            user.getBanStatus().updateIsBan();
-        }
-        userRepository.save(user);
-        return new Message(WARNING_COUNT_UPDATED.getMessage());
+        List<AccusedLetter> accusedLetters = new ArrayList<>();
+        letterAccusationRepository.findAll()
+                .stream()
+                .forEach(accusedLetter -> {
+                    Letter letter = findLetterById(accusedLetter.getLetter().getId());
+                    User reportedUser = findUserById(letter.getWriter().getId());
+                    String content;
+                    if (letter.getLetterType().equals(TYPE_TEXT)) {
+                        content = findTextLetterById(letter.getId()).getContent();
+                    } else if (letter.getLetterType().equals(TYPE_IMAGE)) {
+                        content = findImageLetterById(letter.getId()).getImageLetterUrl();
+                    } else {
+                        throw new NotFoundException(LETTER_TYPE_NOT_FOUND);
+                    }
+                    accusedLetters.add(
+                            AccusedLetter.builder()
+                                    .accusedLetterId(accusedLetter.getId())
+                                    .reportedTime(accusedLetter.getCreatedDate())
+                                    .reporterNickname(findUserById(accusedLetter.getReporterId()).getNickname())
+                                    .reportedUserId(reportedUser.getId())
+                                    .reportedNickname(reportedUser.getNickname())
+                                    .reason(accusedLetter.getReason())
+                                    .content(content)
+                                    .isSolved(accusedLetter.isSolved())
+                                    .build()
+                    );
+                });
+        return FindAccusedLettersResponse.builder()
+                .accusedLetters(accusedLetters)
+                .build();
     }
 
     private User findUserById(Long userId) {
