@@ -6,7 +6,7 @@ import { mypageRouterState } from "../../../recoil/Atoms";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { loadingState } from "../../../recoil/Atoms";
-import { collectLetter } from "../../../api/letterReadAPI";
+import { collectLetterList } from "../../../api/mypageAPI";
 
 export const MypageCollect = () => {
   const setSelectedIndex = useSetRecoilState(mypageRouterState);
@@ -16,8 +16,6 @@ export const MypageCollect = () => {
   useEffect(async () => {
     setIsLoading(true);
     setSelectedIndex(0);
-    //setLetters(collectLetter());
-    //setIsLoading(false);
 
     setTimeout(() => {
       setLetters([
