@@ -4,3 +4,4 @@
  */
 export const MIN_CHAR_COUNT = 30; // 편지지 최소 글자 수
 export const MAX_CHAR_COUNT = 1000; // 편지지 최대 글자 수
+export const MAX_CHAR_COUNT_Q = 150; // 오늘의 질문 최대 글자 수

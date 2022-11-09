@@ -16,29 +16,46 @@ import { popWarningAlert } from "../../../utils/sweetAlert";
 import { useRecoilValue } from "recoil";
 import { loginState } from "../../../recoil/Atoms";
 
-const ChatboxGroup = ({ children, onClick, ...props }) => {
+const ChatBoxGroup = ({ children, onClick, ...props }) => {
   const [answerModalShow, setAnswerModalShow] = useState(false); // 답변 보내는 모달창 show 여부
   const [anotherAnswerModalShow, setAnotherAnswerModalShow] = useState(false); // 타인 답변보기 모달창 show 여부
-  const [chatBoxShow, setChatBoxShow] = useState(false); //chatbox show 여부
+  // const [chatBoxShow, setChatBoxShow] = useState(false); //chatbox show 여부
 
   const isLogin = useRecoilValue(loginState);
 
   const answerModalHandleClick = (event) => {
     return isLogin
       ? setAnswerModalShow((answerModalShow) => !answerModalShow)
-      : { ...popWarningAlert("", "로그인 후 이용해주세요.") };
+      : setAnswerModalShow((answerModalShow) => !answerModalShow);
   };
+
+  // 나중에 작업 끝나면 바꿔끼워넣기
+
+  // const answerModalHandleClick = (event) => {
+  //   return isLogin
+  //     ? setAnswerModalShow((answerModalShow) => !answerModalShow)
+  //     : { ...popWarningAlert("", "로그인 후 이용해주세요.") };
+  // };
 
   const anotherAnswerModalHandleClick = (event) => {
     return isLogin
       ? setAnotherAnswerModalShow(
           (anotherAnswerModalShow) => !anotherAnswerModalShow
         )
-      : { ...popWarningAlert("", "로그인 후 이용해주세요.") };
+      : (anotherAnswerModalShow) => !anotherAnswerModalShow;
   };
 
+  // 나중에 작업 끝나면 바꿔끼워넣기
+  // const anotherAnswerModalHandleClick = (event) => {
+  //   return isLogin
+  //     ? setAnotherAnswerModalShow(
+  //         (anotherAnswerModalShow) => !anotherAnswerModalShow
+  //       )
+  //     : { ...popWarningAlert("", "로그인 후 이용해주세요.")};
+  // };
+
   return (
-    <ChatboxMolecure {...props} onClick={onClick}>
+    <ChatBoxMolecure {...props} onClick={onClick}>
       {children}
       {/* <Chatbox></Chatbox> */}
       <TextBox>
@@ -69,16 +86,16 @@ const ChatboxGroup = ({ children, onClick, ...props }) => {
           color="#5F0EB0"
           borderStyle="2px solid #5F0EB0"
           hasBorder={false}
-          onClick={() => answerModalHandleClick(!answerModalShow)}
+          onClick={() => anotherAnswerModalHandleClick(!anotherAnswerModalShow)}
         >
           다른 답변보기
         </Button>
       </ButtonBox>
-    </ChatboxMolecure>
+    </ChatBoxMolecure>
   );
 };
 
-const ChatboxMolecure = styled(
+const ChatBoxMolecure = styled(
   styled.div({
     width: "40%",
     minWidth: "300px",
@@ -136,7 +153,7 @@ const TextBox = styled.div`
   transform: translate(-50%, -50%);
 `;
 
-export default ChatboxGroup;
+export default ChatBoxGroup;
 
 // import React from "react";
 // import { popWarningAlert } from "./../../utils/sweetAlert";

@@ -40,6 +40,15 @@ const LandingPage = () => {
   };
 
   /**
+   * @description 물병 던지기 Button의 isLogin 확인 및 navigate
+   */
+  const HandleIsLoginCheck = (event) => {
+    return isLogin
+      ? navigate("/write")
+      : { ...popWarningAlert("", "로그인 후 이용해주세요.") };
+  };
+
+  /**
    * @description AOS 이벤트 조정용 UseEffect
    */
   useEffect(() => {
@@ -115,7 +124,7 @@ const LandingPage = () => {
             width="18rem"
             margin="1% 0 0 0"
             shadow={true}
-            onClick={() => navigate("/write")}
+            onClick={() => HandleIsLoginCheck()}
           >
             💌 &nbsp; 물병 던지기 &nbsp; 💌
           </Button>
