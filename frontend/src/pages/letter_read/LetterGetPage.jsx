@@ -1,18 +1,23 @@
 import React from "react";
 import { useState } from "react";
-import BackgroundVideo from "../components/atoms/BackgroundVideo";
-import { Wrapper } from "../styles/Wrapper";
-import Button from "../components/atoms/Button";
+import BackgroundVideo from "../../components/atoms/BackgroundVideo";
+import { Wrapper } from "../../styles/Wrapper";
+import Button from "../../components/atoms/Button";
 import styled from "styled-components";
-import { getLetter } from "../api/letterReadAPI";
+import { getLetter } from "../../api/letterReadAPI";
 import { useSetRecoilState } from "recoil";
-import { letterState } from "../recoil/Atoms";
+import { letterState, mypageRouterState } from "../../recoil/Atoms";
 import { useNavigate } from "react-router";
+import { useEffect } from "react";
 
-const TestBoyeon = () => {
+const LetterGetPage = () => {
   const navigate = useNavigate();
+  const setRouterIndex = useSetRecoilState(mypageRouterState);
   const setLetter = useSetRecoilState(letterState);
   let [blur, SetBlur] = useState(true);
+  useEffect(() => {
+    setRouterIndex(0);
+  }, []);
 
   const openBottle = async () => {
     const response = await getLetter();
@@ -70,4 +75,4 @@ const ReadWrapper = styled(Wrapper)`
   justify-content: center;
 `;
 
-export default TestBoyeon;
+export default LetterGetPage;

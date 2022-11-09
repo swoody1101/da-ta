@@ -5,6 +5,7 @@ const BASE_URL = process.env.REACT_APP_REST_API_DOMAIN;
 
 export const client = axios.create({
   baseURL: BASE_URL,
+  timeout: 5000,
 });
 
 /**
@@ -20,6 +21,7 @@ client.interceptors.request.use(
     return config;
   },
   (error) => {
+    console.log(error); // error
     return Promise.reject(error);
   }
 );
@@ -32,7 +34,7 @@ client.interceptors.response.use(
     return config;
   },
   (error) => {
-    console.log(error);
+    console.log(error); // error
     return Promise.reject(error);
   }
 );

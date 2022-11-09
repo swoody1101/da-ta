@@ -64,3 +64,13 @@ export const readingLetterIdState = atom({
   key: "readingLetterIdState",
   default: null,
 });
+
+/**
+ * @description 받은 편지 내용 보관 (새로고침 대응하기)
+ * @return {object}
+ */
+export const letterState = atom({
+  key: "letterState",
+  default: {},
+  effects_UNSTABLE: [persistAtom],
+});
