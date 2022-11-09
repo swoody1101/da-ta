@@ -115,7 +115,7 @@ const MainNav = () => {
             <HeaderContent onClick={() => navigate("/write")}>
               편지 쓰기
             </HeaderContent>
-            <HeaderContent onClick={() => navigate("/read")}>
+            <HeaderContent onClick={() => navigate("/get")}>
               편지 읽기
             </HeaderContent>
             <HeaderContent
