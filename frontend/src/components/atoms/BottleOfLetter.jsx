@@ -27,7 +27,7 @@ const BottleOfLetter = ({ path }) => {
 };
 
 BottleOfLetter.defaultProps = {
-  path: `${process.env.PUBLIC_URL}/assets/images/common/bottle_of_letter.png`,
+  path: `${process.env.PUBLIC_URL}/assets/images/common/bottle_of_letter_btn.png`,
   width: "10%",
   height: "10%", //원래는 20vh
   isRight: "1",
