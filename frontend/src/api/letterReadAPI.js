@@ -18,3 +18,11 @@ export const tossLetter = async (letterId) => {
     .catch((error) => error);
   return result;
 };
+
+export const collectLetter = async (letterId) => {
+  const result = await client
+    .post(`/letters/collect/${letterId}`)
+    .then((response) => response)
+    .catch((error) => error);
+  return result;
+};

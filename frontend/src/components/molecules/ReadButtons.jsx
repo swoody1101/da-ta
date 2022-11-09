@@ -4,7 +4,7 @@ import { media } from "../../utils/styleUtil";
 import Button from "../atoms/Button";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { readingLetterIdState, reportModalState } from "../../recoil/Atoms";
-import { tossLetter } from "../../api/letterReadAPI";
+import { collectLetter, tossLetter } from "../../api/letterReadAPI";
 
 const ReadButtons = ({ index }) => {
   const letterId = useRecoilValue(readingLetterIdState);
@@ -32,7 +32,10 @@ const ReadButtons = ({ index }) => {
             mWidth={"40%"}
             mHeight={"40px"}
             mBorderRadius={"8px"}
-            onClick={() => console.log("보관하기")}
+            onClick={() => {
+              console.log("보관하기");
+              // const response = await collectLetter(letterId);
+            }}
           >
             보관하기
           </Button>,
