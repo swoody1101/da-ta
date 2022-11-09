@@ -14,12 +14,9 @@ export const deleteLetter = async (letter_id) => {
   return result;
 };
 
-export const reportLetter = async (reporter_id, letter_id) => {
-  const body = {
-    reason: "ㅣ",
-  };
+export const reportLetter = async (letter_id, body) => {
   const result = await client
-    .post(`/letters/accusation/${reporter_id}/${letter_id}`, body)
+    .post(`/letters/accusation/${letter_id}`, body)
     .then((response) => response)
     .catch((error) => error);
   return result;
