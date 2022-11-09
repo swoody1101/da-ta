@@ -1,15 +1,15 @@
 import React from "react";
 import { useState } from "react";
-import BackgroundVideo from "../components/atoms/BackgroundVideo";
-import { Wrapper } from "../styles/Wrapper";
-import Button from "../components/atoms/Button";
+import BackgroundVideo from "../../components/atoms/BackgroundVideo";
+import { Wrapper } from "../../styles/Wrapper";
+import Button from "../../components/atoms/Button";
 import styled from "styled-components";
-import { getLetter } from "../api/letterReadAPI";
+import { getLetter } from "../../api/letterReadAPI";
 import { useSetRecoilState } from "recoil";
-import { letterState } from "../recoil/Atoms";
+import { letterState } from "../../recoil/Atoms";
 import { useNavigate } from "react-router";
 
-const TestBoyeon = () => {
+const LetterGetPage = () => {
   const navigate = useNavigate();
   const setLetter = useSetRecoilState(letterState);
   let [blur, SetBlur] = useState(true);
@@ -70,4 +70,4 @@ const ReadWrapper = styled(Wrapper)`
   justify-content: center;
 `;
 
-export default TestBoyeon;
+export default LetterGetPage;

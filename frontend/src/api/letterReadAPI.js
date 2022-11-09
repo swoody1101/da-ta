@@ -3,6 +3,14 @@
  */
 import { client } from "../utils/client";
 
+export const getLetter = async () => {
+  const result = await client
+    .get(`/letters`)
+    .then((response) => response)
+    .catch((error) => error);
+  return result;
+};
+
 export const collectLetter = async () => {
   const result = await client
     .get(`/letters/collection`)
