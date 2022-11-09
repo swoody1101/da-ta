@@ -13,14 +13,14 @@ import { QuestionTextArea } from "../components/atoms/TextArea";
 import QuestionProgressBar from "../components/molecules/landing/QuestionProgressBar";
 import Button from "../components/atoms/Button";
 
+import { MAX_CHAR_COUNT_Q } from "../constants/Variables";
+
 const TestPageYoon = () => {
   const [charCount, setCharCount] = useState(0); // 오늘의 질문 답변 글자 수
   const [charCountWarning, setCharCountWarning] = useState(true); // 글자수 미만 또는 초과로 인한 경고 표시
   const user = useRecoilValue(userState);
 
   const [modalToggle, setModalToggle] = useState(true); // 편지지 선택 모달창 토글
-
-  const navigate = useNavigate();
 
   /**
    * @description 오늘의 질문 답변(텍스트) 입력 시 이벤트
@@ -65,12 +65,34 @@ const TestPageYoon = () => {
         height="40%"
         modalToggle={modalToggle}
         setModalToggle={setModalToggle}
-        titleText={"다른 답변 모아보기"}
+        titleText={"오늘의질문 api 연결"}
       >
         {/* <MainText>오늘의 질문 api 연결 예정</MainText> */}
-        <AnswerBox width="70%" height="60%" margin="0 0 1rem 0">
-          <QuestionTextArea placeholder="내용" />
+        <AnswerBox width="70%" height="50%" margin="0 0 2rem 0">
+          <QuestionTextArea
+            onChange={(e) => handleQuestionAnswerWrite(e.target.value.length)}
+            placeholder="내용"
+          />
+          {/* <QuestionProgressBar
+            charCount={charCount}
+            charCountWarning={charCountWarning}
+          /> */}
         </AnswerBox>
+
+        <ButtonBox>
+          <Button
+            fontSize="1.2rem"
+            height="3rem"
+            width="9rem"
+            shadow={true}
+            color="#5F0EB0"
+            borderStyle="2px solid #5F0EB0"
+            hasBorder={false}
+            onClick={() => handleAnswerSend()}
+          >
+            쪽지 보내기
+          </Button>
+        </ButtonBox>
       </Modal>
       {/* <Wave opacity={.4} frequency={13} isRight={false}></Wave> */}
     </>
@@ -92,7 +114,7 @@ TestPageYoon.defaultProps = {
 const AnswerBox = styled.div`
   display: flex;
   background-color: none;
-  margin: ${(props) => props.margin};ㅁ
+  margin: ${(props) => props.margin};
   padding: ${(props) => props.padding};
   width: ${(props) => props.width};
   height: ${(props) => props.height};
@@ -111,7 +133,7 @@ const AnswerBox = styled.div`
   z-index: ${(props) => props.zIndex};
 
   position: absolute;
-  top: 60%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 
