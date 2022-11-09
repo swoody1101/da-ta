@@ -16,30 +16,27 @@ export const MypageMenu = ({ ...props }) => {
   return [
     <MenuDiv onClick={() => navigate("/mypage/collect")}>
       <IconDiv>
-        <img
+        <Icon
           src={
             process.env.PUBLIC_URL + "/assets/images/mypage/bottleletter.png"
           }
-          height="100px"
-        ></img>
+        ></Icon>
       </IconDiv>
       <MenuName isSelected={isSelected}>수집한 편지</MenuName>
     </MenuDiv>,
     <MenuDiv onClick={() => navigate("/mypage/receive")}>
       <IconDiv>
-        <img
+        <Icon
           src={process.env.PUBLIC_URL + "/assets/images/mypage/postbox.png"}
-          height="100px"
-        ></img>
+        ></Icon>
       </IconDiv>
       <MenuName isSelected={isSelected}>받은 답장</MenuName>
     </MenuDiv>,
     <MenuDiv onClick={() => navigate("/mypage/setting")}>
       <IconDiv>
-        <img
+        <Icon
           src={process.env.PUBLIC_URL + "/assets/images/mypage/gear.png"}
-          height="100px"
-        ></img>
+        ></Icon>
       </IconDiv>
       <MenuName isSelected={isSelected}>개인설정</MenuName>
     </MenuDiv>,
@@ -47,7 +44,7 @@ export const MypageMenu = ({ ...props }) => {
 };
 
 const MenuDiv = styled.div`
-  width: 200px;
+  width: 100%;
   height: 144px;
   background-color: #f5f5f5;
   cursor: pointer;
@@ -71,6 +68,11 @@ const IconDiv = styled.div`
   @media screen and (max-height: 700px) {
     display: none;
   }
+`;
+
+const Icon = styled.img`
+  src: ${(props) => props.src};
+  height: 100%;
 `;
 
 const MenuName = styled.p`
