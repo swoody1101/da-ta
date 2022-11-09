@@ -18,7 +18,8 @@ public interface FloatedLetterRepository extends JpaRepository<FloatedLetter, Lo
             "where f.is_active = true " +
             "and f.recipient_id is null " +
             "and l.writer_id != :recipientId " +
-            "and l.age_option like concat('%', :ageOption, '%') " +
+            "and (l.age_option like concat('%', :ageOption, '%') " +
+                "or l.age_option like concat('%', 'AGE_ALL', '%')) " +
             "and f.floated_letter_id " +
             "NOT IN " +
                 "(select log.floated_letter_id " +
