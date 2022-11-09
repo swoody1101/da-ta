@@ -176,7 +176,7 @@ public class LetterService {
     }
 
     public Message createLetterAccusation(User reporter, Long letterId, AccuseLetterRequest accuseLetterRequest) {
-        if (accuseLetterRequest.isReply()) {
+        if (accuseLetterRequest.getIsReply()) {
             findReplyByRepliedLetterIdAndRecipientId(letterId, reporter.getId());
         } else {
             findFloatedLetterByLetterIdAndRecipientId(letterId, reporter.getId());
