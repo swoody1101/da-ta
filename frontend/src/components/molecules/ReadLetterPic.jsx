@@ -9,7 +9,7 @@ import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { useSetRecoilState } from "recoil";
 import { reportModalState } from "../../recoil/Atoms";
 
-const ReadLetterText = ({ info }) => {
+const ReadLetterPic = ({ info }) => {
   const setReportModal = useSetRecoilState(reportModalState);
 
   return (
@@ -25,13 +25,13 @@ const ReadLetterText = ({ info }) => {
           LetterOptions.PAPERS[info.backgroundId]
         }.png`}
       />
+      <LetterContent src={info.imageLetterUrl} />
       <Container
         width="96%"
         height={SizeTypes.PC_TITLE_HEIGHT}
         padding="0.5rem 0 0.5rem 0"
       >
         <LetterTitle width="96%" fontSize="1.2rem" fontWeight="bold">
-          {info.title}
           <IconReportBtn>
             <FontAwesomeIcon
               icon={faTriangleExclamation}
@@ -47,9 +47,6 @@ const ReadLetterText = ({ info }) => {
           </IconReportBtn>
         </LetterTitle>
       </Container>
-      <LetterContent fontFamily={LetterOptions.FONTS[info.fontId]}>
-        {info.content}
-      </LetterContent>
     </ContentBlock>
   );
 };
@@ -84,26 +81,11 @@ LetterTitle.defaultProps = {
   fontSize: "1rem",
 };
 
-const LetterContent = styled.div`
-  display: flex;
-  resize: none;
-  border: none;
-  text-align: left;
+const LetterContent = styled.img`
+  position: absolute;
   z-index: 10;
   width: 100%;
-  height: ${SizeTypes.PC_CONTENT_HEIGHT};
-  padding: 1rem;
-  box-sizing: border-box;
-  background: transparent;
-  font-family: ${(props) => props.fontFamily || ""};
-  font-size: 1rem;
-  line-height: 1.5rem;
-  color: black;
-  overflow-y: auto;
-
-  ${media.phone`
-    height: ${SizeTypes.MOBILE_CONTENT_HEIGHT};
-  `}
+  height: 100%;
 `;
 
 const IconReportBtn = styled.div`
@@ -113,4 +95,4 @@ const IconReportBtn = styled.div`
     display: block;
   `}
 `;
-export default ReadLetterText;
+export default ReadLetterPic;
