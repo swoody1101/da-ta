@@ -7,5 +7,5 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UpdateAlertOptionRequest {
 
-    private boolean alertOption;
+    private Boolean isAlertActive;
 }
