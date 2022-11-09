@@ -135,6 +135,6 @@ public class AdminService {
 
     private LetterAccusation findLetterAccusationById(Long accusationId) {
         return letterAccusationRepository.findById(accusationId)
-                .orElseThrow(() -> new NotFoundException(LETTER_ACCUSATION_NOT_FOUND));
+                .orElseThrow(() -> new NotFoundException(ACCUSED_LETTER_NOT_FOUND));
     }
 }
