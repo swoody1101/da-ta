@@ -2,11 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import { media } from "../../utils/styleUtil";
 import Button from "../atoms/Button";
-import { useSetRecoilState } from "recoil";
-import { reportModalState } from "../../recoil/Atoms";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { readingLetterIdState, reportModalState } from "../../recoil/Atoms";
+import { collectLetter, tossLetter } from "../../api/letterReadAPI";
 
 const ReadButtons = ({ index }) => {
-  const setRecoilState = useSetRecoilState(reportModalState);
+  const letterId = useRecoilValue(readingLetterIdState);
+  const setReportModal = useSetRecoilState(reportModalState);
 
   return (
     <ButtonDiv>
@@ -30,7 +32,10 @@ const ReadButtons = ({ index }) => {
             mWidth={"40%"}
             mHeight={"40px"}
             mBorderRadius={"8px"}
-            onClick={() => console.log("보관하기")}
+            onClick={() => {
+              console.log("보관하기");
+              // const response = await collectLetter(letterId);
+            }}
           >
             보관하기
           </Button>,
@@ -54,7 +59,10 @@ const ReadButtons = ({ index }) => {
         mWidth={"40%"}
         mHeight={"40px"}
         mBorderRadius={"8px"}
-        onClick={() => console.log("다시 띄우기")}
+        onClick={async () => {
+          console.log("다시 띄우기");
+          // const response = await tossLetter(letterId);
+        }}
       >
         다시 띄우기
       </Button>
@@ -65,7 +73,7 @@ const ReadButtons = ({ index }) => {
         mWidth={"40%"}
         mHeight={"40px"}
         mBorderRadius={"8px"}
-        onClick={() => setRecoilState(true)}
+        onClick={() => setReportModal(true)}
       >
         신고하기
       </ReportButton>

@@ -2,11 +2,34 @@ import styled from "styled-components";
 import { media } from "../../utils/styleUtil";
 import Checkbox from "./Checkbox";
 import Button from "./Button";
-import { reportModalState } from "../../recoil/Atoms";
-import { useSetRecoilState } from "recoil";
+import {
+  letterState,
+  mypageRouterState,
+  readingLetterIdState,
+  reportModalState,
+} from "../../recoil/Atoms";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { reportLetter } from "../../api/mypageAPI";
 
 const ReportModalContent = () => {
   const setReportModal = useSetRecoilState(reportModalState);
+  const letter = useRecoilValue(letterState);
+  const routerIndex = useRecoilValue(mypageRouterState);
+  const letterId = useRecoilValue(readingLetterIdState);
+  let isReply = false;
+  if (routerIndex === 1) {
+    isReply = true;
+  }
+  const reportReasons = [
+    "욕설 기재",
+    "성희롱",
+    "악의적인 콘텐츠",
+    "광고성 편지",
+    "특정인에 대한 부적절한 내용",
+    "도배성 글",
+    "기타",
+  ];
+  let sendingReasons = ["", "", "", "", "", "", ""];
 
   return (
     <ReportModal>
@@ -22,30 +45,37 @@ const ReportModalContent = () => {
       <ReportModalMobileText>
         해당하는 내용을 체크해주세요
       </ReportModalMobileText>
-      <div style={{ marginTop: "20px" }}>
-        <Checkbox text={"욕설 기재"}></Checkbox>
-      </div>
-      <div style={{ marginTop: "5px" }}>
-        <Checkbox text={"성희롱"}></Checkbox>
-      </div>
-      <div style={{ marginTop: "5px" }}>
-        <Checkbox text={"악의적인 콘텐츠"}></Checkbox>
-      </div>
-      <div style={{ marginTop: "5px" }}>
-        <Checkbox text={"광고성 편지"}></Checkbox>
-      </div>
-      <div style={{ marginTop: "5px" }}>
-        <Checkbox text={"특정인에 대한 부적절한 내용"}></Checkbox>
-      </div>
-      <div style={{ marginTop: "5px" }}>
-        <Checkbox text={"도배성 글"}></Checkbox>
-      </div>
-      <div style={{ margin: "5px 0 10px 0" }}>
-        <Checkbox text={"기타"}></Checkbox>
-      </div>
+
+      <InputDiv>
+        {reportReasons.map((value, index) => (
+          <CheckBoxDiv key={index}>
+            <Checkbox
+              text={value}
+              onCheckHandler={(e) => {
+                e.target.checked
+                  ? (sendingReasons[index] = `${value}, `)
+                  : (sendingReasons[index] = "");
+              }}
+            ></Checkbox>
+          </CheckBoxDiv>
+        ))}
+      </InputDiv>
       <hr />
       <ReportModalBtnDiv>
         <Button
+          onClick={async () => {
+            let reasonsString = sendingReasons.reduce(
+              (pre, cur) => pre + cur,
+              ""
+            );
+            console.log(reasonsString);
+            // const response = await reportLetter(letterId, {
+            //   isReply: isReply,
+            //   reason: reasonsString,
+            // });
+            console.log(letterId);
+            console.log(isReply);
+          }}
           width={"30%"}
           height={"30px"}
           color={"black"}
@@ -105,6 +135,14 @@ const ReportModalBtnDiv = styled.div`
   width: 90%;
   margin-top: 10px;
   margin-bottom: 15px;
+`;
+
+const CheckBoxDiv = styled.div`
+  margin-top: 5px;
+`;
+
+const InputDiv = styled.div`
+  margin: 15px 0 20px 0;
 `;
 
 export default ReportModalContent;

@@ -11,17 +11,17 @@ export const getLetter = async () => {
   return result;
 };
 
-export const collectLetter = async () => {
+export const tossLetter = async (letterId) => {
   const result = await client
-    .get(`/letters/collection`)
+    .put(`/letters/${letterId}`)
     .then((response) => response)
     .catch((error) => error);
   return result;
 };
 
-export const receiveLetter = async () => {
+export const collectLetter = async (letterId) => {
   const result = await client
-    .get(`/letters/replies`)
+    .post(`/letters/collect/${letterId}`)
     .then((response) => response)
     .catch((error) => error);
   return result;
