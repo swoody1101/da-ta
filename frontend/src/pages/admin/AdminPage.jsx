@@ -27,7 +27,7 @@ const AdminPage = () => {
       return;
     }
 
-    navigate("/admin/reports");
+    navigate("/admin/reports?listType=letter");
   }, []);
 
   return (
@@ -49,9 +49,18 @@ const AdminPage = () => {
             margin="0.5rem 0 0.5rem 0"
             padding="2rem"
             hoverEffect
-            onClick={() => navigate("/admin/reports")}
+            onClick={() => navigate("/admin/reports?listType=letter")}
           >
-            신고 관리
+            신고 관리 - 편지
+          </MenuText>
+          <MenuText
+            color="black"
+            margin="0.5rem 0 0.5rem 0"
+            padding="2rem"
+            hoverEffect
+            onClick={() => navigate("/admin/reports?listType=answer")}
+          >
+            신고 관리 - 오늘의질문 답변
           </MenuText>
           <MenuText
             color="black"

@@ -95,7 +95,7 @@ const LetterCanvasArea = ({
 
     return {
       offsetX: e.touches[0].clientX - left,
-      offsetY: e.touches[0].clientY - top + 100,
+      offsetY: e.touches[0].clientY - top,
     };
   };
 
