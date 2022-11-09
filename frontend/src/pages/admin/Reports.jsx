@@ -24,7 +24,7 @@ const Reports = () => {
     "신고자",
     "신고 대상",
     "신고 사유",
-    "편지 내용",
+    "내용",
     "신고 처리",
   ];
 
@@ -34,12 +34,13 @@ const Reports = () => {
     content: null, // 편지텍스트 또는 이미지url
   });
   const setLoading = useSetRecoilState(loadingState);
-  let itemList = [];
+  const [itemList, setItemList] = useState([]);
 
   useEffect(async () => {
-    console.log(listType);
+    setLoading(true);
+    setItemList([]);
     const response = await getReportList(listType);
-
+    setLoading(false);
     if (response.status !== 200) {
       popErrorAlert(
         "목록 불러올 수 없음",
@@ -48,7 +49,13 @@ const Reports = () => {
       return;
     }
 
-    itemList = [...response.data];
+    console.log(response);
+
+    setItemList([
+      ...(listType === "letter"
+        ? response.data.accusedLetters
+        : response.data.accusedAnswers),
+    ]);
   }, [listType]);
 
   /** [편지, 오늘의질문 답변] 내용 보기 */
@@ -112,9 +119,7 @@ const Reports = () => {
       <ReportsTemplate
         listType={listType}
         title={
-          listType === "letter"
-            ? "신고 관리 - 편지"
-            : "신고 관리 - 오늘의질문 답변"
+          listType === "letter" ? "신고 관리 - 편지" : "신고 관리 - 오늘의 답변"
         }
         categoryList={categoryList}
         // itemList={letterList}

@@ -19,7 +19,7 @@ const ReportsTemplate = ({
         {title}
       </Title>
       <ContentWrapper>
-        <ContentLine>
+        <ContentLine backgroundColor="#B3E5FC">
           {categoryList.map((item, index) => (
             <ContentElement
               flex={flexRate[index]}
@@ -31,7 +31,7 @@ const ReportsTemplate = ({
           ))}
         </ContentLine>
         <>
-          {itemList.length > 0 ? (
+          {itemList && itemList.length > 0 ? (
             itemList.map((item, index) => (
               <ContentLine key={index}>
                 <ContentElement flex={flexRate[0]}>{index + 1}</ContentElement>
@@ -80,7 +80,7 @@ const ReportsTemplate = ({
   );
 };
 
-const ContentWrapper = styled.div`
+export const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -89,16 +89,17 @@ const ContentWrapper = styled.div`
   overflow-x: hidden;
 `;
 
-const ContentLine = styled.div`
+export const ContentLine = styled.div`
   display: flex;
   width: 100%;
   border-bottom: ${(props) => props.borderBottom};
   font-size: 1rem;
   margin: ${(props) => props.margin};
   padding: ${(props) => props.padding};
+  background-color: ${(props) => props.backgroundColor};
 `;
 
-const ContentElement = styled.div`
+export const ContentElement = styled.div`
   display: flex;
   flex: ${(props) => props.flex};
   height: 4rem;
