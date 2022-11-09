@@ -60,13 +60,6 @@ public class LetterController {
                 .body(letterService.createReply(jwtTokenProvider.findUserByToken(token), originLetterId, createReplyRequest));
     }
 
-    @PutMapping("/replies/{replied_letter_id}")
-    public ResponseEntity<Message> checkReplyReception(@RequestHeader(AUTHORIZATION) String token,
-                                                       @PathVariable("replied_letter_id") Long repliedLetterId) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(letterService.checkReplyReception(jwtTokenProvider.findUserByToken(token), repliedLetterId));
-    }
-
     @PostMapping("/collect/{letter_id}")
     public ResponseEntity<Message> collectLetter(@RequestHeader(AUTHORIZATION) String token,
                                                  @PathVariable("letter_id") Long letterId) {

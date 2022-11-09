@@ -35,7 +35,6 @@ public class LetterService {
     private final LetterRepository letterRepository;
     private final ReplyRepository replyRepository;
     private final TextLetterRepository textLetterRepository;
-    private final UserRepository userRepository;
 
     @Transactional
     public Message createTextLetter(User user, TextLetterCreateRequest textLetterCreateRequest) {
@@ -150,13 +149,6 @@ public class LetterService {
         return new Message(REPLY_SENT.getMessage());
     }
 
-    public Message checkReplyReception(User recipient, Long repliedLetterId) {
-        Reply reply = findReplyByRepliedLetterIdAndRecipientId(repliedLetterId, recipient.getId());
-        reply.updateIsRead();
-        replyRepository.save(reply);
-        return new Message(REPLY_RECEPTION_CHECKED.getMessage());
-    }
-
     public Message updateFloatedLetter(User user, Long floatedLetterId) {
         FloatedLetter floatedLetter = findFloatedLetterByLetterIdAndRecipientId(floatedLetterId, user.getId());
         if (floatedLetterLogRepository.countByFloatedLetterId(floatedLetter.getId()) == MAX_FLOAT_COUNT) {
@@ -257,7 +249,7 @@ public class LetterService {
 
     public FindUnreadReplyResponse checkUnreadReply(User recipient) {
         return FindUnreadReplyResponse.builder()
-                .isUnreadReply(replyRepository.existsByIsReadTrueAndIsActiveTrueAndRecipientId(recipient.getId()))
+                .isUnreadReply(replyRepository.existsByIsReadFalseAndIsActiveTrueAndRecipientId(recipient.getId()))
                 .build();
     }
 
@@ -279,7 +271,10 @@ public class LetterService {
     }
 
     public FindReplyDetailResponse findReplyDetail(User recipient, Long repliedLetterId) {
-        Long originLetterId = findReplyByRepliedLetterIdAndRecipientId(repliedLetterId, recipient.getId()).getOriginLetterId();
+        Reply reply = findReplyByRepliedLetterIdAndRecipientId(repliedLetterId, recipient.getId());
+        reply.updateIsRead();
+        replyRepository.save(reply);
+        Long originLetterId = reply.getOriginLetterId();
         Letter originLetter = findLetterById(originLetterId);
         TextLetter replyLetter = findTextLetterById(repliedLetterId);
         ReplyInfo replyInfo = ReplyInfo.builder()
@@ -326,11 +321,6 @@ public class LetterService {
         reply.deleteReplyLetter();
         replyRepository.save(reply);
         return new Message(REPLY_DELETED.getMessage());
-    }
-
-    private User findUserById(Long userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
     }
 
     private Letter findLetterById(Long letterId) {
