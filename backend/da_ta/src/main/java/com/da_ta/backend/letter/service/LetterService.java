@@ -130,6 +130,8 @@ public class LetterService {
 
     public Message createReply(User writer, Long originLetterId, CreateReplyRequest createReplyRequest) {
         FloatedLetter floatedLetter = findFloatedLetterByLetterIdAndRecipientId(originLetterId, writer.getId());
+        floatedLetter.replyFloatedLetter();
+        floatedLetterRepository.save(floatedLetter);
         TextLetterInfo textLetterInfo = createReplyRequest.getTextLetterInfo();
         TextLetter textLetter = TextLetter.builder()
                 .letterType(TYPE_TEXT)
