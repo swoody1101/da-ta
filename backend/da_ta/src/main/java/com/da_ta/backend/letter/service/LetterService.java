@@ -149,8 +149,8 @@ public class LetterService {
         return new Message(REPLY_SENT.getMessage());
     }
 
-    public Message updateFloatedLetter(User user, Long floatedLetterId) {
-        FloatedLetter floatedLetter = findFloatedLetterByLetterIdAndRecipientId(floatedLetterId, user.getId());
+    public Message updateFloatedLetter(User user, Long letterId) {
+        FloatedLetter floatedLetter = findFloatedLetterByLetterIdAndRecipientId(letterId, user.getId());
         if (floatedLetterLogRepository.countByFloatedLetterId(floatedLetter.getId()) == MAX_FLOAT_COUNT) {
             floatedLetter.deleteFloatedLetter();
         }

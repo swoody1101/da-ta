@@ -45,11 +45,11 @@ public class LetterController {
                 .body(letterService.receiveFloatedLetter(jwtTokenProvider.findUserByToken(token)));
     }
 
-    @PutMapping("/{floated_letter_id}")
+    @PutMapping("/{letter_id}")
     public ResponseEntity<Message> refloatLetter(@RequestHeader(AUTHORIZATION) String token,
-                                                 @PathVariable("floated_letter_id") Long floatedLetterId) {
+                                                 @PathVariable("letter_id") Long letterId) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(letterService.updateFloatedLetter(jwtTokenProvider.findUserByToken(token), floatedLetterId));
+                .body(letterService.updateFloatedLetter(jwtTokenProvider.findUserByToken(token), letterId));
     }
 
     @PostMapping("/replies/{origin_letter_id}")
