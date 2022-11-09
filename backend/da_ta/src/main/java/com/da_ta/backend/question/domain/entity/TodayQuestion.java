@@ -14,9 +14,9 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @SuperBuilder
-@AttributeOverride(name = "id", column = @Column(name = "today_question_id"))
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
+@AttributeOverride(name = "id", column = @Column(name = "today_question_id"))
 @Entity
 public class TodayQuestion extends CommonEntity {
 
