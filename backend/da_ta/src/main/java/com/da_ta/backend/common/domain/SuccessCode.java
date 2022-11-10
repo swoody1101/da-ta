@@ -27,7 +27,8 @@ public enum SuccessCode {
 
     TODAY_ANSWER_CREATED("답변을 성공적으로 작성하였습니다."),
     TODAY_QUESTION_CREATED("오늘의 질문 등록이 완료되었습니다."),
-    TODAY_QUESTION_UPDATED("오늘의 질문 수정이 완료되었습니다.");
+    TODAY_QUESTION_UPDATED("오늘의 질문 수정이 완료되었습니다."),
+    TODAY_QUESTION_DELETED("오늘의 질문이 삭제되었습니다.");
 
     private final String message;
 }
