@@ -50,12 +50,16 @@ const Modal = ({ children, modalToggle, setModalToggle, onModalClick, titleText,
 
 const ModalContainer = styled.div`
 	display: flex;
-	position: absolute;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 	flex-direction: column;
 	z-index: 1001;
 	width: ${(props) => props.width || "55rem"};
 	height: ${(props) => props.height || "80vh"};
 	max-width: ${(props) => props.maxWidth || ""};
+	min-height: 25rem;
 	border-radius: 1rem;
 	background-color: white;
 	align-items: center;
