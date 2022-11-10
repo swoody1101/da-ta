@@ -65,11 +65,18 @@ public class AdminController {
                 .body(adminService.createTodayQuestion(token, createTodayQuestionRequest));
     }
 
-    @PutMapping("question/{question_id}")
+    @PutMapping("/question/{question_id}")
     public ResponseEntity<Message> updateTodayQuestion(@RequestHeader(AUTHORIZATION) String token,
                                                        @PathVariable("question_id") Long questionId,
                                                        @RequestBody UpdateTodayQuestionRequest updateTodayQuestionRequest) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(adminService.updateTodayQuestion(token, questionId, updateTodayQuestionRequest));
+    }
+
+    @DeleteMapping("/question/{question_id}")
+    public ResponseEntity<Message> deleteTodayQuestion(@RequestHeader(AUTHORIZATION) String token,
+                                                       @PathVariable("question_id") Long questionId) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(adminService.deleteTodayQuestion(token, questionId));
     }
 }

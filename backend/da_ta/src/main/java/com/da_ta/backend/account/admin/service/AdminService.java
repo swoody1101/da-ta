@@ -156,6 +156,14 @@ public class AdminService {
         return new Message(TODAY_QUESTION_UPDATED.getMessage());
     }
 
+    public Message deleteTodayQuestion(String token, Long questionId) {
+        jwtTokenProvider.findUserByToken(token);
+        TodayQuestion todayQuestion = findTodayQuestionById(questionId);
+        todayQuestion.deleteQuestion();
+        todayQuestionRepository.save(todayQuestion);
+        return new Message(TODAY_QUESTION_DELETED.getMessage());
+    }
+
     private User findUserById(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));

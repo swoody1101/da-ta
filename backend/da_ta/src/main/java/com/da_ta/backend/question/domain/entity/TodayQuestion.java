@@ -30,4 +30,8 @@ public class TodayQuestion extends CommonEntity {
     public void updateQuestion(String question) {
         this.question = question;
     }
+
+    public void deleteQuestion() {
+        super.delete();
+    }
 }
