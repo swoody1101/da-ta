@@ -15,5 +15,5 @@ public class LetterInfo {
     String imageLetterUrl;
     Long backgroundId;
     Long fontId;
-    LocalDateTime createdDate;
+    LocalDateTime writtenDate;
 }

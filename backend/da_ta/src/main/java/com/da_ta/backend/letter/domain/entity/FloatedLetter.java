@@ -20,7 +20,7 @@ import java.util.List;
 public class FloatedLetter extends CommonEntity {
 
     @NotNull
-    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "letter_id", unique = true)
     private Letter letter;
 
@@ -28,7 +28,7 @@ public class FloatedLetter extends CommonEntity {
     @JoinColumn(name = "recipient_id", unique = true)
     private User recipient;
 
-    @OneToMany(mappedBy = "floatedLetter", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "floatedLetter", cascade = CascadeType.ALL)
     private List<FloatedLetterLog> logs = new ArrayList<>();
 
     public void updateRecipient(User recipient) {
@@ -37,5 +37,11 @@ public class FloatedLetter extends CommonEntity {
 
     public void deleteFloatedLetter() {
         super.delete();
+        letter.deleteLetter();
+    }
+
+    public void updateFloatedLetter() {
+        super.delete();
+        this.recipient = null;
     }
 }
