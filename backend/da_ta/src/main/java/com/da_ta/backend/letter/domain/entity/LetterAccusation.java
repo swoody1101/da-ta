@@ -17,7 +17,10 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class LetterAccusation extends CommonEntity {
 
+    @NotNull
     private Long reporterId;
+
+    @NotNull
     private String reason;
 
     @NotNull
