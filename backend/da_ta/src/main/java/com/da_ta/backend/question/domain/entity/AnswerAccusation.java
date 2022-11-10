@@ -1,10 +1,7 @@
 package com.da_ta.backend.question.domain.entity;
 
 import com.da_ta.backend.common.domain.CommonEntity;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
@@ -19,10 +16,14 @@ import javax.validation.constraints.NotNull;
 public class AnswerAccusation extends CommonEntity {
 
     @NotNull
-    private Long reporter;
+    private Long reporterId;
 
     @NotNull
     private String reason;
+
+    @NotNull
+    @Builder.Default
+    private boolean isSolved = false;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "today_answer_id")
