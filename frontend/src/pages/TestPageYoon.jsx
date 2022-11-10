@@ -20,7 +20,7 @@ const TestPageYoon = () => {
   const [charCountWarning, setCharCountWarning] = useState(true); // 글자수 미만 또는 초과로 인한 경고 표시
   const user = useRecoilValue(userState);
 
-  const [modalToggle, setModalToggle] = useState(true); // 편지지 선택 모달창 토글
+  const [modalToggle, setModalToggle] = useState(true); // 모달창 토글
 
   /**
    * @description 오늘의 질문 답변(텍스트) 입력 시 이벤트
@@ -49,7 +49,7 @@ const TestPageYoon = () => {
     }, []);
 
     useEffect(() => {
-      charCount > MAX_CHAR_COUNT
+      charCount > MAX_CHAR_COUNT_Q
         ? setCharCountWarning(true)
         : setCharCountWarning(false);
     }, [charCount]);
