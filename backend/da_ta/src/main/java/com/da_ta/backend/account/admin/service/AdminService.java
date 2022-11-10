@@ -15,6 +15,7 @@ import com.da_ta.backend.letter.domain.repository.ImageLetterRepository;
 import com.da_ta.backend.letter.domain.repository.LetterAccusationRepository;
 import com.da_ta.backend.letter.domain.repository.LetterRepository;
 import com.da_ta.backend.letter.domain.repository.TextLetterRepository;
+import com.da_ta.backend.question.domain.entity.AnswerAccusation;
 import com.da_ta.backend.question.domain.entity.TodayAnswer;
 import com.da_ta.backend.question.domain.entity.TodayQuestion;
 import com.da_ta.backend.question.domain.repository.AnswerAccusationRepository;
@@ -112,9 +113,7 @@ public class AdminService {
         letterAccusation.updateIsSolved();
         User reportedUser = findUserById(findLetterById(letterAccusation.getLetter().getId()).getWriter().getId());
         reportedUser.getBanStatus().updateWarningCount();
-        if (reportedUser.getBanStatus().getWarningCount() == MAX_WARNING_COUNT) {
-            reportedUser.getBanStatus().updateIsBan();
-        }
+        checkWarningCount(reportedUser);
         letterAccusationRepository.save(letterAccusation);
         userRepository.save(reportedUser);
         return new Message(ACCUSED_LETTER_SOLVED.getMessage());
@@ -123,7 +122,7 @@ public class AdminService {
     public FindAccusedAnswersResponse findAccusedAnswers(String token) {
         jwtTokenProvider.findUserByToken(token);
         return FindAccusedAnswersResponse.builder()
-                .accusedAnswers(answerAccusationRepository.findAll()
+                .accusedAnswers(answerAccusationRepository.findAllByIsActiveTrue()
                         .stream()
                         .map(accusedAnswer -> {
                             TodayAnswer todayAnswer = findTodayAnswerById(accusedAnswer.getTodayAnswer().getId());
@@ -141,6 +140,19 @@ public class AdminService {
                         })
                         .collect(Collectors.toList()))
                 .build();
+    }
+
+    @Transactional
+    public Message updateAccusedAnswer(String token, Long answerAccusationId) {
+        jwtTokenProvider.findUserByToken(token);
+        AnswerAccusation answerAccusation = findAnswerAccusationById(answerAccusationId);
+        answerAccusation.updateIsSolved();
+        User reportedUser = findUserById(findTodayAnswerById(answerAccusation.getTodayAnswer().getId()).getUser().getId());
+        reportedUser.getBanStatus().updateWarningCount();
+        checkWarningCount(reportedUser);
+        answerAccusationRepository.save(answerAccusation);
+        userRepository.save(reportedUser);
+        return new Message(ACCUSED_ANSWER_SOLVED.getMessage());
     }
 
     public FindTodayQuestionsResponse findTodayQuestions(String token, String date) {
@@ -210,6 +222,12 @@ public class AdminService {
                 .build();
     }
 
+    private void checkWarningCount(User reportedUser) {
+        if (reportedUser.getBanStatus().getWarningCount() == MAX_WARNING_COUNT) {
+            reportedUser.getBanStatus().updateIsBan();
+        }
+    }
+
     private User findUserById(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
@@ -230,9 +248,14 @@ public class AdminService {
                 .orElseThrow(() -> new NotFoundException(IMAGE_LETTER_NOT_FOUND));
     }
 
-    private LetterAccusation findLetterAccusationById(Long accusationId) {
-        return letterAccusationRepository.findById(accusationId)
+    private LetterAccusation findLetterAccusationById(Long letterAccusationId) {
+        return letterAccusationRepository.findById(letterAccusationId)
                 .orElseThrow(() -> new NotFoundException(ACCUSED_LETTER_NOT_FOUND));
+    }
+
+    private AnswerAccusation findAnswerAccusationById(Long answerAccusationId) {
+        return answerAccusationRepository.findById(answerAccusationId)
+                .orElseThrow(() -> new NotFoundException(ACCUSED_ANSWER_NOT_FOUNT));
     }
 
     private TodayQuestion findTodayQuestionById(Long todayQuestionId) {

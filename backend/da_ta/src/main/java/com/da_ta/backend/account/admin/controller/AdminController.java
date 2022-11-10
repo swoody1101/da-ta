@@ -50,6 +50,13 @@ public class AdminController {
                 .body(adminService.findAccusedAnswers(token));
     }
 
+    @PostMapping("/accusation/answer/{answer_accusation_id}")
+    public ResponseEntity<Message> updateAccusedAnswer(@RequestHeader(AUTHORIZATION) String token,
+                                                       @PathVariable("answer_accusation_id") Long answerAccusationId) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(adminService.updateAccusedAnswer(token, answerAccusationId));
+    }
+
     @GetMapping("/question")
     public ResponseEntity<FindTodayQuestionsResponse> findTodayQuestions(@RequestHeader(AUTHORIZATION) String token,
                                                                          @RequestParam String date) {
