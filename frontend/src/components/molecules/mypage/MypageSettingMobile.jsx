@@ -18,7 +18,6 @@ export const MypageSettingMobile = () => {
     const response = await userInfo();
     if (response.status === 200) {
       setUser({ ...response.data });
-      console.log(response.data.alertOption);
     } // TODO : 예외처리
   }, []);
 
