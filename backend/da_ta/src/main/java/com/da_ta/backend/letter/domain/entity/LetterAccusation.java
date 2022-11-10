@@ -34,4 +34,8 @@ public class LetterAccusation extends CommonEntity {
     public void updateIsSolved() {
         this.isSolved = true;
     }
+
+    public void deleteLetterAccusation() {
+        super.delete();
+    }
 }

@@ -44,6 +44,13 @@ public class AdminController {
                 .body(adminService.updateAccusedLetter(token, letterAccusationId));
     }
 
+    @DeleteMapping("/accusation/letter/{letter_accusation_id}")
+    public ResponseEntity<Message> deleteAccusedLetter(@RequestHeader(AUTHORIZATION) String token,
+                                                       @PathVariable("letter_accusation_id") Long letterAccusationId) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(adminService.deleteAccusedLetter(token, letterAccusationId));
+    }
+
     @GetMapping("/accusation/answer")
     public ResponseEntity<FindAccusedAnswersResponse> findAccusedAnswers(@RequestHeader(AUTHORIZATION) String token) {
         return ResponseEntity.status(HttpStatus.OK)

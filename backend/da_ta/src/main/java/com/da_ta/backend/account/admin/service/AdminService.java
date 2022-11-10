@@ -78,7 +78,7 @@ public class AdminService {
     public FindAccusedLettersResponse findAccusedLetters(String token) {
         jwtTokenProvider.findUserByToken(token);
         return FindAccusedLettersResponse.builder()
-                .accusedLetters(letterAccusationRepository.findAll()
+                .accusedLetters(letterAccusationRepository.findAllByIsActiveTrue()
                         .stream()
                         .map(accusedLetter -> {
                             Letter letter = findLetterById(accusedLetter.getLetter().getId());
@@ -117,6 +117,14 @@ public class AdminService {
         letterAccusationRepository.save(letterAccusation);
         userRepository.save(reportedUser);
         return new Message(ACCUSED_LETTER_SOLVED.getMessage());
+    }
+
+    public Message deleteAccusedLetter(String token, Long letterAccusationId) {
+        jwtTokenProvider.findUserByToken(token);
+        LetterAccusation letterAccusation = findLetterAccusationById(letterAccusationId);
+        letterAccusation.deleteLetterAccusation();
+        letterAccusationRepository.save(letterAccusation);
+        return new Message(ACCUSED_LETTER_DELETED.getMessage());
     }
 
     public FindAccusedAnswersResponse findAccusedAnswers(String token) {
