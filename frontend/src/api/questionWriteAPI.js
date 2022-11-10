@@ -2,13 +2,10 @@
  * @author chaeyoon
  */
 import { client } from "../utils/client";
-import { useRecoilValue } from "recoil";
-import { userState } from "../recoil/Atoms";
-import { LetterOptions } from "./../constants/Options";
 
 /**
- * @description 오늘의 편지 텍스트 쓰기
- */
+ * @description 오늘의 편지 답변 쓰기
+ */ //수정 예정
 export const saveTextAnswer = async (content) => {
   const body = {
     textAnswerInfo: {
