@@ -32,4 +32,8 @@ public class AnswerAccusation extends CommonEntity {
     public void updateIsSolved() {
         this.isSolved = true;
     }
+
+    public void deleteAnswerAccusation() {
+        super.delete();
+    }
 }

@@ -155,6 +155,14 @@ public class AdminService {
         return new Message(ACCUSED_ANSWER_SOLVED.getMessage());
     }
 
+    public Message deleteAccusedAnswer(String token, Long answerAccusationId) {
+        jwtTokenProvider.findUserByToken(token);
+        AnswerAccusation answerAccusation = findAnswerAccusationById(answerAccusationId);
+        answerAccusation.deleteAnswerAccusation();
+        answerAccusationRepository.save(answerAccusation);
+        return new Message(ACCUSED_ANSWER_DELETED.getMessage());
+    }
+
     public FindTodayQuestionsResponse findTodayQuestions(String token, String date) {
         jwtTokenProvider.findUserByToken(token);
         return FindTodayQuestionsResponse.builder()
