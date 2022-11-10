@@ -4,10 +4,13 @@ import com.da_ta.backend.account.jwt.JwtTokenProvider;
 import com.da_ta.backend.common.domain.Message;
 import com.da_ta.backend.letter.controller.dto.*;
 import com.da_ta.backend.letter.service.LetterService;
+import com.da_ta.backend.util.DetectSafeSearch;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
@@ -119,5 +122,12 @@ public class LetterController {
                                                @PathVariable("replied_letter_id") Long repliedLetterId) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(letterService.deleteReply(jwtTokenProvider.findUserByToken(token), repliedLetterId));
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<Message> test(@RequestHeader(AUTHORIZATION) String token) throws IOException {
+        DetectSafeSearch.detectSafeSearch();
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new Message("test"));
     }
 }
