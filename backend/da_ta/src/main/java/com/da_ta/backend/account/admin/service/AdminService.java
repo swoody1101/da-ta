@@ -15,6 +15,7 @@ import com.da_ta.backend.letter.domain.repository.ImageLetterRepository;
 import com.da_ta.backend.letter.domain.repository.LetterAccusationRepository;
 import com.da_ta.backend.letter.domain.repository.LetterRepository;
 import com.da_ta.backend.letter.domain.repository.TextLetterRepository;
+import com.da_ta.backend.question.domain.repository.TodayQuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +37,7 @@ public class AdminService {
     private final LetterRepository letterRepository;
     private final TextLetterRepository textLetterRepository;
     private final ImageLetterRepository imageLetterRepository;
+    private final TodayQuestionRepository todayQuestionRepository;
     private final LetterAccusationRepository letterAccusationRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -111,6 +113,20 @@ public class AdminService {
         letterAccusationRepository.save(letterAccusation);
         userRepository.save(reportedUser);
         return new Message(ACCUSED_LETTER_SOLVED.getMessage());
+    }
+
+    public FindTodayQuestionsResponse findTodayQuestions(String token, String date) {
+        jwtTokenProvider.findUserByToken(token);
+        return FindTodayQuestionsResponse.builder()
+                .questions(todayQuestionRepository.findTodayQuestionsByYearAndMonth(date)
+                        .stream()
+                        .map(todayQuestion -> TodayQuestionItem.builder()
+                                .todayQuestionId(todayQuestion.getId())
+                                .question(todayQuestion.getQuestion())
+                                .date(todayQuestion.getDate())
+                                .build())
+                        .collect(Collectors.toList()))
+                .build();
     }
 
     private User findUserById(Long userId) {

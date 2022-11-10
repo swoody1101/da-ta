@@ -1,6 +1,7 @@
 package com.da_ta.backend.account.admin.controller;
 
 import com.da_ta.backend.account.admin.controller.dto.FindAccusedLettersResponse;
+import com.da_ta.backend.account.admin.controller.dto.FindTodayQuestionsResponse;
 import com.da_ta.backend.account.admin.controller.dto.FindUsersResponse;
 import com.da_ta.backend.account.admin.controller.dto.UpdateRoleRequest;
 import com.da_ta.backend.account.admin.service.AdminService;
@@ -44,5 +45,12 @@ public class AdminController {
                                                        @PathVariable("letter_accusation_id") Long letterAccusationId) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(adminService.updateAccusedLetter(token, letterAccusationId));
+    }
+
+    @GetMapping("/question")
+    public ResponseEntity<FindTodayQuestionsResponse> findTodayQuestions(@RequestHeader(AUTHORIZATION) String token,
+                                                                         @RequestParam String date) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(adminService.findTodayQuestions(token, date));
     }
 }
