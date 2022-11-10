@@ -69,12 +69,13 @@ const ReportModalContent = () => {
               ""
             );
             console.log(reasonsString);
-            // const response = await reportLetter(letterId, {
-            //   isReply: isReply,
-            //   reason: reasonsString,
-            // });
+            const response = await reportLetter(letterId, {
+              isReply: isReply,
+              reason: reasonsString,
+            });
             console.log(letterId);
             console.log(isReply);
+            console.log(response);
           }}
           width={"30%"}
           height={"30px"}

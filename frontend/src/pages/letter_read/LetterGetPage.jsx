@@ -21,29 +21,27 @@ const LetterGetPage = () => {
 
   const openBottle = async () => {
     const response = await getLetter();
-    console.log(response);
-    // if (response.status - 200 < 2) {
-    //   setLetter(response.data);
-    //   navigate("/read");
-    // }
-    setLetter({
-      writerId: 7,
-      writerName: "길가다 5만원을 주운 후라이드치킨",
-      replyOption: true,
-      floatLetterId: 0,
-      letterInfo: {
-        letterId: 10,
-        title: "메밀꽃 필 무렵",
-        content: "여름장이란 애시당초에 글러서 해는 아직 중천에 있건만",
-        imageLetterUrl:
-          // process.env.PUBLIC_URL + "/assets/images/mypage/gear.png",
-          null,
-        backgroundId: 2,
-        fontId: 1,
-        createTime: new Date(),
-      },
-    });
-    navigate("/read");
+    if (response.status - 200 < 2) {
+      setLetter(response.data);
+      console.log(response.data);
+      navigate("/read");
+    }
+    // setLetter({
+    //   writerId: 1111,
+    //   writerNickname: "이ㅣ",
+    //   replyOption: false,
+    //   letterInfo: {
+    //     letterId: 3,
+    //     title: null,
+    //     content: null,
+    //     imageLetterUrl:
+    //       "https://firebasestorage.googleapis.com/v0/b/da-ta-8db6c.appspot.com/o/drawings/1668043144153.png",
+    //     backgroundId: 0,
+    //     fontId: 0,
+    //     writtenDate: new Date(),
+    //   },
+    // });
+    // navigate("/read");
   };
 
   return (
