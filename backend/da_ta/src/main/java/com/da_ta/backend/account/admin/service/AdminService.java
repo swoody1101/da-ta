@@ -15,6 +15,7 @@ import com.da_ta.backend.letter.domain.repository.ImageLetterRepository;
 import com.da_ta.backend.letter.domain.repository.LetterAccusationRepository;
 import com.da_ta.backend.letter.domain.repository.LetterRepository;
 import com.da_ta.backend.letter.domain.repository.TextLetterRepository;
+import com.da_ta.backend.question.domain.entity.TodayQuestion;
 import com.da_ta.backend.question.domain.repository.TodayQuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -129,6 +130,16 @@ public class AdminService {
                 .build();
     }
 
+    public TodayQuestionItem findTodayQuestion(String token, Long questionId) {
+        jwtTokenProvider.findUserByToken(token);
+        TodayQuestion todayQuestion = findTodayQuestionById(questionId);
+        return TodayQuestionItem.builder()
+                .todayQuestionId(todayQuestion.getId())
+                .question(todayQuestion.getQuestion())
+                .date(todayQuestion.getDate())
+                .build();
+    }
+
     private User findUserById(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
@@ -152,5 +163,10 @@ public class AdminService {
     private LetterAccusation findLetterAccusationById(Long accusationId) {
         return letterAccusationRepository.findById(accusationId)
                 .orElseThrow(() -> new NotFoundException(ACCUSED_LETTER_NOT_FOUND));
+    }
+
+    private TodayQuestion findTodayQuestionById(Long todayQuestionId) {
+        return todayQuestionRepository.findById(todayQuestionId)
+                .orElseThrow(() -> new NotFoundException(TODAY_QUESTION_NOT_FOUND));
     }
 }

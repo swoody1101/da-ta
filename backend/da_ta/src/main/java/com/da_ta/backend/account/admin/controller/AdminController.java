@@ -1,9 +1,6 @@
 package com.da_ta.backend.account.admin.controller;
 
-import com.da_ta.backend.account.admin.controller.dto.FindAccusedLettersResponse;
-import com.da_ta.backend.account.admin.controller.dto.FindTodayQuestionsResponse;
-import com.da_ta.backend.account.admin.controller.dto.FindUsersResponse;
-import com.da_ta.backend.account.admin.controller.dto.UpdateRoleRequest;
+import com.da_ta.backend.account.admin.controller.dto.*;
 import com.da_ta.backend.account.admin.service.AdminService;
 import com.da_ta.backend.common.domain.Message;
 import lombok.RequiredArgsConstructor;
@@ -52,5 +49,12 @@ public class AdminController {
                                                                          @RequestParam String date) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(adminService.findTodayQuestions(token, date));
+    }
+
+    @GetMapping("/question/{question_id}")
+    public ResponseEntity<TodayQuestionItem> findTodayQuestion(@RequestHeader(AUTHORIZATION) String token,
+                                                               @PathVariable("question_id") Long questionId) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(adminService.findTodayQuestion(token, questionId));
     }
 }
