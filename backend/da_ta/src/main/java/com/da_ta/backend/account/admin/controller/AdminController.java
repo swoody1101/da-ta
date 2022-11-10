@@ -64,4 +64,12 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(adminService.createTodayQuestion(token, createTodayQuestionRequest));
     }
+
+    @PutMapping("question/{question_id}")
+    public ResponseEntity<Message> updateTodayQuestion(@RequestHeader(AUTHORIZATION) String token,
+                                                       @PathVariable("question_id") Long questionId,
+                                                       @RequestBody UpdateTodayQuestionRequest updateTodayQuestionRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(adminService.updateTodayQuestion(token, questionId, updateTodayQuestionRequest));
+    }
 }

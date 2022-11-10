@@ -26,4 +26,8 @@ public class TodayQuestion extends CommonEntity {
 
     @NotNull
     private LocalDate date;
+
+    public void updateQuestion(String question) {
+        this.question = question;
+    }
 }
