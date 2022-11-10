@@ -17,10 +17,12 @@ import { useSetRecoilState } from "recoil";
 import { reportModalState } from "../../../recoil/Atoms";
 import { readingLetterIdState } from "../../../recoil/Atoms";
 
-const DateToString = (writtenDate) =>
-  `${writtenDate.getFullYear()}년 ${
-    writtenDate.getMonth() + 1
-  }월 ${writtenDate.getDate()}일`;
+const DateToString = (writtenDate) => {
+  const ToDate = new Date(writtenDate);
+  return `${ToDate.getFullYear()}년 ${
+    ToDate.getMonth() + 1
+  }월 ${ToDate.getDate()}일`;
+};
 
 export const MypageLetter = ({ letter }) => {
   const setModalToggle = useSetRecoilState(reportModalState);
@@ -30,7 +32,7 @@ export const MypageLetter = ({ letter }) => {
   return (
     <LetterDiv>
       <LetterWordsDiv>
-        <LetterTitle>{letter.title}</LetterTitle>
+        <LetterTitle>{letter.letterTitle}</LetterTitle>
         <LetterDate>{`${letter.writerNickname}, ${writtenTime}`}</LetterDate>
         <LetterDateWeb>{`${letter.writerNickname}`}</LetterDateWeb>
         <LetterDateWeb>{`${writtenTime}`}</LetterDateWeb>
@@ -41,7 +43,7 @@ export const MypageLetter = ({ letter }) => {
         size="lg"
         onClick={() => {
           setModalToggle(true);
-          setReadingLetterId(letter.id);
+          setReadingLetterId(letter.letterId);
           console.log(
             `${letter.id}번 글을 쓴 글쓴이 아이디 ${letter.writerId}를 신고버튼`
           );
@@ -82,7 +84,7 @@ const LetterWordsDiv = styled.div`
   width: 530px;
   justify-content: center;
   align-items: center;
-  margin: 0;
+  margin: 10px 0 10px 0;
 
   ${media.tablet1`
     width: 80%;
