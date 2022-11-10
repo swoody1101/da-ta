@@ -13,6 +13,7 @@ import { mypageRouterState } from "../../../recoil/Atoms";
 import { userInfo } from "../../../api/mypageAPI";
 import { useState } from "react";
 import DropDownInput from "../../atoms/DropDownInput";
+import { popErrorAlert } from "../../../utils/sweetAlert";
 
 export const MypageSettingWeb = () => {
   const setSelectedIndex = useSetRecoilState(mypageRouterState);
@@ -27,7 +28,7 @@ export const MypageSettingWeb = () => {
       setUser(response.data);
       setIsLoading(false);
     } else {
-      console.log("32323");
+      popErrorAlert("", "유저 정보를 불러오는데 실패했습니다.")
     }
   }, []);
 
