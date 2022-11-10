@@ -42,7 +42,7 @@ public class TodayAnswerService {
     }
 
     public List<TodayAnswerResponse> findTodayAnswers() {
-        return todayAnswerRepository.findAll()
+        return todayAnswerRepository.findAllUnaccusedAnswers()
                 .stream()
                 .map(todayAnswer -> TodayAnswerResponse.builder()
                         .todayAnswerId(todayAnswer.getId())
