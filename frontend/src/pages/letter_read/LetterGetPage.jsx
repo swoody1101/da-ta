@@ -26,6 +26,21 @@ const LetterGetPage = () => {
       console.log(response.data);
       navigate("/read");
     }
+    // setLetter({
+    //   writerId: 1111,
+    //   writerNickname: "이ㅣ",
+    //   replyOption: false,
+    //   letterInfo: {
+    //     letterId: 3,
+    //     title: null,
+    //     content: null,
+    //     imageLetterUrl:
+    //       "https://firebasestorage.googleapis.com/v0/b/da-ta-8db6c.appspot.com/o/drawings/1668043144153.png",
+    //     backgroundId: 0,
+    //     fontId: 0,
+    //     writtenDate: new Date(),
+    //   },
+    // });
     navigate("/read");
   };
 
