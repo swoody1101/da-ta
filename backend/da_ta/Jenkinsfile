@@ -4,7 +4,7 @@ node {
   }
   stage('SonarQube Analysis') {
     withSonarQubeEnv() {
-    dir('./backend/da_ta/')
+    dir('/backend/da_ta/')
       sh "./gradlew sonarqube -Dsonar.projectKey='s07-final_S07P31B106_AYRgCqbkTzBUe-dX_IJ_' -Dsonar.login='squ_ae01afe9edcf219db406d3310e2ac9f5dc90d192'"
     }
   }
