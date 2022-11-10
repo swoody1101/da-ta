@@ -5,8 +5,7 @@ node {
   stage('SonarQube Analysis') {
     withSonarQubeEnv() {
       dir('./backend/da_ta/') {
-        sh "chmod +x ./gradlew"
-        sh "./gradlew sonarqube"
+        sh "sudo ./gradlew sonarqube"
       }
     }
   }
