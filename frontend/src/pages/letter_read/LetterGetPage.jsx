@@ -41,7 +41,7 @@ const LetterGetPage = () => {
     //     writtenDate: new Date(),
     //   },
     // });
-    navigate("/read");
+    // navigate("/read");
   };
 
   return (
