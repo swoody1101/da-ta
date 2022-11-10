@@ -50,3 +50,70 @@ export const putPermission = async (userId, role) => {
     .catch((error) => error.response);
   return result;
 };
+
+/**
+ * @description 오늘의 질문 목록 조회
+ * @param {string} 질문 날짜 (YYYY-MM-DD)
+ */
+export const getQuestionList = async (date) => {
+  const result = await client
+    .get(`/admin/question?date=${date}`)
+    .then((res) => res)
+    .catch((error) => error.response);
+  return result;
+};
+
+/**
+ * @description 오늘의 질문 조회
+ * @param {number} 질문 번호
+ */
+export const getQuestion = async (questionId) => {
+  const result = await client
+    .get(`/admin/question/${questionId}`)
+    .then((res) => res)
+    .catch((error) => error.response);
+  return result;
+};
+
+/**
+ * @description 오늘의 질문 등록
+ * @param {string} question 질문 내용
+ * @param {string} date 날짜 (YYYY-MM-DD)
+ */
+export const saveQuestion = async (question, date) => {
+  const result = await client
+    .post(`/admin/question`, {
+      question: question,
+      date: date,
+    })
+    .then((res) => res)
+    .catch((error) => error.response);
+  return result;
+};
+
+/**
+ * @description 오늘의 질문 수정
+ * @param {number} questionId 질문 번호
+ * @param {string} question 질문 내용
+ */
+export const modifyQuestion = async (questionId, question) => {
+  const result = await client
+    .put(`/admin/question/${questionId}`, {
+      question: question,
+    })
+    .then((res) => res)
+    .catch((error) => error.response);
+  return result;
+};
+
+/**
+ * @description 오늘의 질문 삭제
+ * @param {number} questionId 질문 번호
+ */
+export const deleteQuestion = async (questionId) => {
+  const result = await client
+    .delete(`/admin/question/${questionId}`)
+    .then((res) => res)
+    .catch((error) => error.response);
+  return result;
+};

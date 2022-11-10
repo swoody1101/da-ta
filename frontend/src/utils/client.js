@@ -34,7 +34,11 @@ client.interceptors.response.use(
     return config;
   },
   (error) => {
-    console.log(error); // error
+    const isJWT = error.response.data.message.substr(0, 3) === "JWT";
+    if (isJWT) {
+      // 리프레싵 토큰 재발급 로직
+    }
+
     return Promise.reject(error);
   }
 );

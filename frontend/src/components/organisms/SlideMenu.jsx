@@ -86,7 +86,7 @@ const SlideMenu = ({
             <FontAwesomeIcon icon={faPenToSquare} />
           </FaWrapper>
         </MenuContent>
-        <MenuContent jc={true} onClick={() => handleMenuClick("/read")}>
+        <MenuContent jc={true} onClick={() => handleMenuClick("/get")}>
           편지 받기
           <FaWrapper>
             <FontAwesomeIcon icon={faEnvelopeOpenText} />
