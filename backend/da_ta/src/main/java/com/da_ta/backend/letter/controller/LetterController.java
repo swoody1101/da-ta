@@ -126,6 +126,7 @@ public class LetterController {
 
     @GetMapping("/test")
     public ResponseEntity<Message> test(@RequestHeader(AUTHORIZATION) String token) throws IOException {
+        jwtTokenProvider.findUserByToken(token);
         DetectSafeSearch.detectSafeSearch();
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new Message("test"));

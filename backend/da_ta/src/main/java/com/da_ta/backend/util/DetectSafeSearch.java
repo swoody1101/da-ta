@@ -19,7 +19,7 @@ import java.util.List;
 public class DetectSafeSearch {
     public static void detectSafeSearch() throws IOException {
         // TODO(developer): Replace these variables before running the sample.
-        String filePath = "classpath:/fuck.png";
+        String filePath = "C:/Users/multicampus/Desktop/fuck.png";
         detectSafeSearch(filePath);
     }
 
