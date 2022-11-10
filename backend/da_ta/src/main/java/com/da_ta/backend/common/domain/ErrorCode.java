@@ -23,6 +23,7 @@ public enum ErrorCode {
     REPLY_NOT_FOUND("답장을 찾을 수 없습니다."),
     TEXT_LETTER_NOT_FOUND("텍스트 편지를 찾을 수 없습니다."),
 
+    ACCUSED_ANSWER_NOT_FOUNT("신고된 답변을 찾을 수 없습니다."),
     ACCUSED_LETTER_NOT_FOUND("신고된 편지를 찾을 수 없습니다."),
     TODAY_ANSWER_NOT_FOUND("오늘의 답변을 찾을 수 없습니다."),
     TODAY_QUESTION_NOT_FOUND("오늘의 질문을 찾을 수 없습니다.");
