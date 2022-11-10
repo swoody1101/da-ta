@@ -7,8 +7,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum SuccessCode {
 
+    ACCUSED_ANSWER_DELETED("답변 신고가 반려되었습니다."),
     ACCUSED_ANSWER_SOLVED("답변 신고 처리가 완료되었습니다."),
-    ACCUSED_ANSWER_DELETED("답변 신고 처리가 반려되었습니다."),
+    ACCUSED_LETTER_DELETED("편지 신고가 반려되었습니다."),
     ACCUSED_LETTER_SOLVED("편지 신고 처리가 완료되었습니다."),
     AGE_RANGE_UPDATED("연령대 수정이 완료되었습니다."),
     ALERT_OPTION_UPDATED("알림 활성 여부 수정이 완료되었습니다."),
