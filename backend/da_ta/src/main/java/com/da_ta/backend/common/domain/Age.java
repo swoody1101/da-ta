@@ -7,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum Age {
 
-    AGE_0S("0대", 0, 9),
+    AGE_0S("0대", 1,9),
     AGE_10S("10대", 10, 19),
     AGE_20S("20대", 20, 29),
     AGE_30S("30대", 30, 39),

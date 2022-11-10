@@ -4,8 +4,10 @@ import com.da_ta.backend.common.domain.CommonEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.persistence.AttributeOverride;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 
 @Getter
 @SuperBuilder
@@ -21,7 +23,14 @@ public class BanStatus extends CommonEntity {
     @Builder.Default
     private boolean isBan = false;
 
-    @NotNull
-    @OneToOne(mappedBy = "banStatus", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToOne(mappedBy = "banStatus")
     private User user;
+
+    public void updateWarningCount() {
+        this.warningCount++;
+    }
+
+    public void updateIsBan() {
+        this.isBan = true;
+    }
 }

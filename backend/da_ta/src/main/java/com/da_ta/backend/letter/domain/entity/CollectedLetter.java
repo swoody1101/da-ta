@@ -13,16 +13,21 @@ import javax.validation.constraints.NotNull;
 @Getter
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AttributeOverride(name = "id", column = @Column(name = "collected_letter_id"))
+@AttributeOverride(name = "id", column = @Column(name = "collectie_letter_id"))
 @Entity
 public class CollectedLetter extends CommonEntity {
 
     @NotNull
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "letter_id", unique = true)
     private Letter letter;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    public void deleteCollectedLetter() {
+        super.delete();
+        this.letter.deleteLetter();
+    }
 }

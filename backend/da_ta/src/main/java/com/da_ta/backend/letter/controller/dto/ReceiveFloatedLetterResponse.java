@@ -10,6 +10,6 @@ public class ReceiveFloatedLetterResponse {
 
     private Long writerId;
     private String writerNickname;
-    private Long floatedLetterId;
+    private boolean replyOption;
     private LetterInfo letterInfo;
 }
