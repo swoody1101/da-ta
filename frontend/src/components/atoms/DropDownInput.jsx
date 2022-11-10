@@ -26,6 +26,7 @@ const Container = styled.select`
   box-sizing: border-box;
   padding: 0.6rem 0.4rem;
   transition: 0.2s ease;
+  margin: ${(props) => props.margin};
 
   &:focus {
     outline: none;

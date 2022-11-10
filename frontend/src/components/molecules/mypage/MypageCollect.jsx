@@ -4,38 +4,20 @@ import { MypageLetter } from "../../atoms/mypage/MypageLetter";
 import { useSetRecoilState } from "recoil";
 import { mypageRouterState } from "../../../recoil/Atoms";
 import { useState } from "react";
-import { useRecoilState } from "recoil";
-import { loadingState } from "../../../recoil/Atoms";
 import { collectLetterList } from "../../../api/mypageAPI";
 
 export const MypageCollect = () => {
   const setSelectedIndex = useSetRecoilState(mypageRouterState);
   const [letters, setLetters] = useState([]);
-  const [isLoading, setIsLoading] = useRecoilState(loadingState);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(async () => {
-    setIsLoading(true);
     setSelectedIndex(0);
-
-    setTimeout(() => {
-      setLetters([
-        {
-          id: 0,
-          title: "첫번째 수집 편지",
-          writerId: 1,
-          writerNickname: "법정에 선 삼겹살 스테이크",
-          writtenDate: new Date(),
-        },
-        {
-          id: 0,
-          title: "두번째 수집 편지",
-          writerId: 1,
-          writerNickname: "노려보는 레쓰비 마일드 커피",
-          writtenDate: new Date(),
-        },
-      ]);
+    const response = await collectLetterList();
+    if (response.status - 200 < 3 && response.status) {
+      setLetters(response.data.collection);
       setIsLoading(false);
-    }, 1000);
+    } //TODO: 예외처리 구문 추가
   }, []);
   return (
     <>

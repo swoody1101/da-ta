@@ -18,15 +18,14 @@ export const MypageSettingMobile = () => {
     const response = await userInfo();
     if (response.status === 200) {
       setUser({ ...response.data });
-      console.log(response.data.alertOption);
-    }
+    } // TODO : 예외처리
   }, []);
 
   return (
     <>
       <SettingDiv>
         <SettingWordsDiv>
-          <SettingTitleDiv>{`회원님의 연령: ${user.ageRange}`}</SettingTitleDiv>
+          <SettingTitleDiv>{"회원님의 연령: "}</SettingTitleDiv>
           <SettingExpln>
             회원님의 연령대를 등록하거나 변경하실 수 있습니다.
           </SettingExpln>

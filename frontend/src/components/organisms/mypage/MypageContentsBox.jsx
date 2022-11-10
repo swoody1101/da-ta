@@ -21,6 +21,7 @@ const ContentsBoxDiv = styled.div`
   width: 700px;
   height: 90%;
   background-color: #f5f5f5;
+  overflow-y: auto;
 
   ${media.tablet1`
     width: 100%;
