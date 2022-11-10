@@ -12,6 +12,7 @@ import { useSetRecoilState } from "recoil";
 import { mypageRouterState } from "../../../recoil/Atoms";
 import { userInfo } from "../../../api/mypageAPI";
 import { useState } from "react";
+import DropDownInput from "../../atoms/DropDownInput";
 
 export const MypageSettingWeb = () => {
   const setSelectedIndex = useSetRecoilState(mypageRouterState);
@@ -20,13 +21,17 @@ export const MypageSettingWeb = () => {
     ageRange: "0",
     alertOption: false,
   });
+  const [checked, setChecked] = useState(false);
+  const itemList = ["0대", "10대", "20대", "30대", "40대", "50대", "60대"];
 
   useEffect(async () => {
     setSelectedIndex(2);
     const response = await userInfo();
     if (response.status === 200) {
       setUser({ ...response.data });
+      setChecked(user.alertOption);
     }
+    console.log(response);
   }, []);
 
   return (
@@ -40,10 +45,12 @@ export const MypageSettingWeb = () => {
           </SettingExpln>
           <SettingChange>
             <Span>현재 회원님의 나이대 : </Span>
-            <Span>{user.ageRange}</Span>
-            <ClickableSpan margin={"0 0 0 20px"} fontSize={"20px"}>
-              변경하기
-            </ClickableSpan>
+            <DropDownInput
+              itemList={itemList}
+              width={"80px"}
+              height={"40px"}
+              margin={"0 0 0 10px"}
+            ></DropDownInput>
           </SettingChange>
         </SettingWordsDiv>
       </SettingDiv>
@@ -57,7 +64,11 @@ export const MypageSettingWeb = () => {
             </p>
           </SettingExpln>
           <SettingChange>
-            <Checkbox text={"실시간 알림을 받습니다"} tagname={"알림설정"} />
+            <Checkbox
+              text={"실시간 알림을 받습니다"}
+              tagname={"알림설정"}
+              checked={checked}
+            />
             <div style={{ width: "290px" }}></div>
           </SettingChange>
         </SettingWordsDiv>

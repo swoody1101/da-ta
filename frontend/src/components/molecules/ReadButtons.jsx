@@ -5,10 +5,38 @@ import Button from "../atoms/Button";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { readingLetterIdState, reportModalState } from "../../recoil/Atoms";
 import { collectLetter, tossLetter } from "../../api/letterReadAPI";
+import { popSuccessAlert, popErrorAlert } from "../../utils/sweetAlert";
 
 const ReadButtons = ({ index }) => {
   const letterId = useRecoilValue(readingLetterIdState);
   const setReportModal = useSetRecoilState(reportModalState);
+
+  const collectBtn = async (letterId) => {
+    const response = await collectLetter(letterId);
+    if (response.status - 200 < 3 && response.status) {
+      popSuccessAlert("", "편지를 보관함에 저장하셨습니다");
+    } else {
+      popErrorAlert("", "편지 수집에 실패했습니다");
+    }
+    console.log(response);
+  };
+  const deleteBtn = async (letterId) => {
+    console.log("삭제하기");
+  };
+  const tossBtn = async (letterId) => {
+    console.log("다시 띄우기");
+    const response = await tossLetter(letterId);
+    // 따로 페이지로 뺄 예정
+    if (response.status - 200 < 3 && response.status) {
+      popSuccessAlert("", "편지를 다시 띄워보냈습니다.");
+    } else {
+      popErrorAlert("", "요청에 실패했습니다.");
+    }
+    console.log(response);
+  };
+  const replyBtn = async (letterId) => {
+    console.log("답장버튼 딸깍");
+  };
 
   return (
     <ButtonDiv>
@@ -21,7 +49,7 @@ const ReadButtons = ({ index }) => {
             mWidth={"40%"}
             mHeight={"40px"}
             mBorderRadius={"8px"}
-            onClick={() => console.log("답장하기")}
+            onClick={() => replyBtn(letterId)}
           >
             답장하기
           </Button>,
@@ -32,10 +60,7 @@ const ReadButtons = ({ index }) => {
             mWidth={"40%"}
             mHeight={"40px"}
             mBorderRadius={"8px"}
-            onClick={async () => {
-              const response = await collectLetter(letterId);
-              console.log(response);
-            }}
+            onClick={() => collectBtn(letterId)}
           >
             보관하기
           </Button>,
@@ -46,7 +71,7 @@ const ReadButtons = ({ index }) => {
             mWidth={"40%"}
             mHeight={"40px"}
             mBorderRadius={"8px"}
-            onClick={() => console.log("삭제하기")}
+            onClick={() => deleteBtn(letterId)}
           >
             삭제하기
           </Button>,
@@ -59,11 +84,7 @@ const ReadButtons = ({ index }) => {
         mWidth={"40%"}
         mHeight={"40px"}
         mBorderRadius={"8px"}
-        onClick={async () => {
-          console.log("다시 띄우기");
-          const response = await tossLetter(letterId);
-          console.log(response);
-        }}
+        onClick={() => tossBtn(letterId)}
       >
         다시 띄우기
       </Button>

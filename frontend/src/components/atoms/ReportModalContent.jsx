@@ -10,6 +10,7 @@ import {
 } from "../../recoil/Atoms";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { reportLetter } from "../../api/mypageAPI";
+import { popSuccessAlert, popErrorAlert } from "../../utils/sweetAlert";
 
 const ReportModalContent = () => {
   const setReportModal = useSetRecoilState(reportModalState);
@@ -30,6 +31,20 @@ const ReportModalContent = () => {
     "기타",
   ];
   let sendingReasons = ["", "", "", "", "", "", ""];
+
+  const reportBtn = async () => {
+    let reasonsString = sendingReasons.reduce((pre, cur) => pre + cur, "");
+    const response = await reportLetter(letterId, {
+      isReply: isReply,
+      reason: reasonsString,
+    });
+    setReportModal(false);
+    if (response.status - 200 < 3 && response.status) {
+      popSuccessAlert("", "신고가 접수되었습니다.");
+    } else {
+      popErrorAlert("", "신고내역 전송에 실패했습니다.");
+    }
+  };
 
   return (
     <ReportModal>
@@ -63,20 +78,7 @@ const ReportModalContent = () => {
       <hr />
       <ReportModalBtnDiv>
         <Button
-          onClick={async () => {
-            let reasonsString = sendingReasons.reduce(
-              (pre, cur) => pre + cur,
-              ""
-            );
-            console.log(reasonsString);
-            const response = await reportLetter(letterId, {
-              isReply: isReply,
-              reason: reasonsString,
-            });
-            console.log(letterId);
-            console.log(isReply);
-            console.log(response);
-          }}
+          onClick={reportBtn()}
           width={"30%"}
           height={"30px"}
           color={"black"}
