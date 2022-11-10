@@ -40,7 +40,7 @@ const ReportsTemplate = ({ title, categoryList, itemList, handleModal, handleAcc
 										bgColor={item.isSolved ? "#d9d9d9" : "#FF6C00"}
 										width="90%"
 										height="70%"
-										onClick={(e) => handleAccuse(item, item.reportedUserId, e)}
+										onClick={(e) => handleAccuse(item, item.letterAccusationId, e)}
 									>
 										{item.isSolved ? "완료" : "처리"}
 									</Button>
