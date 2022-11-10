@@ -75,12 +75,14 @@ const LandingPage = () => {
     <>
       {modalToggleA && (
         <Modal
+          width="50%"
+          height="50%"
           modalToggle={modalToggleA}
           setModalToggle={setModalToggleA}
-          titleText={"오늘의질문 api 연결 예정"}
+          titleText={"오늘의질문"}
         >
           {/* <MainText>오늘의 질문 api 연결 예정</MainText> */}
-          <AnswerBox width="70%" height="50%" margin="0 0 2rem 0">
+          <AnswerBox width="80%" height="65%" margin="0 0 0 0">
             <QuestionTextArea
               onChange={(e) => handleQuestionAnswerWrite(e.target.value.length)}
               placeholder="내용"
@@ -93,6 +95,7 @@ const LandingPage = () => {
 
           <ButtonBox>
             <Button
+              margin="9rem 0 0 0"
               fontSize="1.2rem"
               height="3rem"
               width="9rem"
@@ -102,7 +105,7 @@ const LandingPage = () => {
               hasBorder={false}
               onClick={() => handleAnswerSend()}
             >
-              쪽지 보내기
+              답변 보내기
             </Button>
           </ButtonBox>
         </Modal>
@@ -111,7 +114,7 @@ const LandingPage = () => {
         <Modal
           modalToggle={modalToggleB}
           setModalToggle={setModalToggleB}
-          titleText={"답변 모음"}
+          titleText={"오늘의 질문 답변 모음"}
         >
           {/* <MainText>오늘의 질문 api 연결 예정</MainText> */}
           <AnswerBox width="70%" height="50%" margin="0 0 2rem 0">
