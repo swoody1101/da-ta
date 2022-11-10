@@ -2,6 +2,7 @@ package com.da_ta.backend.question.controller;
 
 import com.da_ta.backend.account.jwt.JwtTokenProvider;
 import com.da_ta.backend.common.domain.Message;
+import com.da_ta.backend.question.controller.dto.AccuseAnswerRequest;
 import com.da_ta.backend.question.controller.dto.CreateTodayAnswerRequest;
 import com.da_ta.backend.question.controller.dto.TodayAnswerResponse;
 import com.da_ta.backend.question.controller.dto.TodayQuestionResponse;
@@ -42,5 +43,13 @@ public class QuestionController {
     public ResponseEntity<List<TodayAnswerResponse>> findAnswers() {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(answerService.findTodayAnswers());
+    }
+
+    @PostMapping("/answer/accusation/{today_answer_id}")
+    public ResponseEntity<Message> accuseAnswer(@RequestHeader(AUTHORIZATION) String token,
+                                                @PathVariable("today_answer_id") Long todayAnswerId,
+                                                @RequestBody AccuseAnswerRequest accuseAnswerRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(answerService.createAnswerAccusation(jwtTokenProvider.findUserByToken(token), todayAnswerId, accuseAnswerRequest));
     }
 }
