@@ -16,6 +16,7 @@ import com.da_ta.backend.letter.domain.repository.LetterAccusationRepository;
 import com.da_ta.backend.letter.domain.repository.LetterRepository;
 import com.da_ta.backend.letter.domain.repository.TextLetterRepository;
 import com.da_ta.backend.question.domain.entity.TodayQuestion;
+import com.da_ta.backend.question.domain.repository.TodayAnswerRepository;
 import com.da_ta.backend.question.domain.repository.TodayQuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,7 @@ public class AdminService {
     private final TextLetterRepository textLetterRepository;
     private final ImageLetterRepository imageLetterRepository;
     private final TodayQuestionRepository todayQuestionRepository;
+    private final TodayAnswerRepository todayAnswerRepository;
     private final LetterAccusationRepository letterAccusationRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -162,6 +164,24 @@ public class AdminService {
         todayQuestion.deleteQuestion();
         todayQuestionRepository.save(todayQuestion);
         return new Message(TODAY_QUESTION_DELETED.getMessage());
+    }
+
+    public FindTodayAnswersResponse findTodayAnswers(String token, Long questionId) {
+        jwtTokenProvider.findUserByToken(token);
+        return FindTodayAnswersResponse.builder()
+                .answers(todayAnswerRepository.findAllByTodayQuestionId(questionId)
+                        .stream()
+                        .map(todayAnswer -> {
+                            User user = todayAnswer.getUser();
+                            return TodayAnswerItem.builder()
+                                    .todayAnswerId(todayAnswer.getId())
+                                    .answer(todayAnswer.getAnswer())
+                                    .userId(user.getId())
+                                    .nickname(user.getNickname())
+                                    .build();
+                        })
+                        .collect(Collectors.toList()))
+                .build();
     }
 
     private User findUserById(Long userId) {

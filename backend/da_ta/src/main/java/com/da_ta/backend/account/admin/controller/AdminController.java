@@ -79,4 +79,11 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(adminService.deleteTodayQuestion(token, questionId));
     }
+
+    @GetMapping("/answer/{question_id}")
+    public ResponseEntity<FindTodayAnswersResponse> findTodayAnswers(@RequestHeader(AUTHORIZATION) String token,
+                                                                     @PathVariable("question_id") Long questionId) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(adminService.findTodayAnswers(token, questionId));
+    }
 }
