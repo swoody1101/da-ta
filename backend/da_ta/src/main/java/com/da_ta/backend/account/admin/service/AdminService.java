@@ -15,7 +15,9 @@ import com.da_ta.backend.letter.domain.repository.ImageLetterRepository;
 import com.da_ta.backend.letter.domain.repository.LetterAccusationRepository;
 import com.da_ta.backend.letter.domain.repository.LetterRepository;
 import com.da_ta.backend.letter.domain.repository.TextLetterRepository;
+import com.da_ta.backend.question.domain.entity.TodayAnswer;
 import com.da_ta.backend.question.domain.entity.TodayQuestion;
+import com.da_ta.backend.question.domain.repository.AnswerAccusationRepository;
 import com.da_ta.backend.question.domain.repository.TodayAnswerRepository;
 import com.da_ta.backend.question.domain.repository.TodayQuestionRepository;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +43,7 @@ public class AdminService {
     private final TodayQuestionRepository todayQuestionRepository;
     private final TodayAnswerRepository todayAnswerRepository;
     private final LetterAccusationRepository letterAccusationRepository;
+    private final AnswerAccusationRepository answerAccusationRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
     public FindUsersResponse findUsers(String token) {
@@ -115,6 +118,29 @@ public class AdminService {
         letterAccusationRepository.save(letterAccusation);
         userRepository.save(reportedUser);
         return new Message(ACCUSED_LETTER_SOLVED.getMessage());
+    }
+
+    public FindAccusedAnswersResponse findAccusedAnswers(String token) {
+        jwtTokenProvider.findUserByToken(token);
+        return FindAccusedAnswersResponse.builder()
+                .accusedAnswers(answerAccusationRepository.findAll()
+                        .stream()
+                        .map(accusedAnswer -> {
+                            TodayAnswer todayAnswer = findTodayAnswerById(accusedAnswer.getTodayAnswer().getId());
+                            User reportedUser = findUserById(todayAnswer.getUser().getId());
+                            return AccusedAnswer.builder()
+                                    .accusedAnswerId(accusedAnswer.getId())
+                                    .reportedTime(accusedAnswer.getCreatedDate())
+                                    .reporterNickname(findUserById(accusedAnswer.getReporterId()).getNickname())
+                                    .reportedUserId(reportedUser.getId())
+                                    .reportedNickname(reportedUser.getNickname())
+                                    .reason(accusedAnswer.getReason())
+                                    .content(todayAnswer.getAnswer())
+                                    .isSolved(accusedAnswer.isSolved())
+                                    .build();
+                        })
+                        .collect(Collectors.toList()))
+                .build();
     }
 
     public FindTodayQuestionsResponse findTodayQuestions(String token, String date) {
@@ -212,5 +238,10 @@ public class AdminService {
     private TodayQuestion findTodayQuestionById(Long todayQuestionId) {
         return todayQuestionRepository.findById(todayQuestionId)
                 .orElseThrow(() -> new NotFoundException(TODAY_QUESTION_NOT_FOUND));
+    }
+
+    private TodayAnswer findTodayAnswerById(Long todayAnswerId) {
+        return todayAnswerRepository.findById(todayAnswerId)
+                .orElseThrow(() -> new NotFoundException(TODAY_ANSWER_NOT_FOUND));
     }
 }

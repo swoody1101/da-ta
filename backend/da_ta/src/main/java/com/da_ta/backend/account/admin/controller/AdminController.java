@@ -44,6 +44,12 @@ public class AdminController {
                 .body(adminService.updateAccusedLetter(token, letterAccusationId));
     }
 
+    @GetMapping("/accusation/answer")
+    public ResponseEntity<FindAccusedAnswersResponse> findAccusedAnswers(@RequestHeader(AUTHORIZATION) String token) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(adminService.findAccusedAnswers(token));
+    }
+
     @GetMapping("/question")
     public ResponseEntity<FindTodayQuestionsResponse> findTodayQuestions(@RequestHeader(AUTHORIZATION) String token,
                                                                          @RequestParam String date) {
