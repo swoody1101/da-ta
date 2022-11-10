@@ -15,12 +15,13 @@ public interface FloatedLetterRepository extends JpaRepository<FloatedLetter, Lo
             "from floated_letter f " +
             "join letter l " +
             "using(letter_id) " +
-            "join letter_accusation la" +
-            "using(letter_id)" +
             "where f.is_active = true " +
             "and f.recipient_id is null " +
             "and l.writer_id != :recipientId " +
-            "and la.is_active = true " +
+            "and l.letter_id not in " +
+                "(select la.letter_id " +
+                "from letter_accusation la " +
+                "where la.is_active = true) " +
             "and (l.age_option like concat('%', :ageOption, '%') " +
                 "or l.age_option like concat('%', 'AGE_ALL', '%')) " +
             "and f.floated_letter_id " +
