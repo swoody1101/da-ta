@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import AOS from "aos";
@@ -30,6 +30,9 @@ import { BottleOfLetterBtn } from "../../components/atoms/BottleOfLetterBtn";
 import Modal from "../../components/organisms/Modal";
 import { QuestionTextArea } from "../../components/atoms/TextArea";
 import QuestionProgressBar from "../../components/molecules/landing/QuestionProgressBar";
+import { MIN_CHAR_COUNT_Q, MAX_CHAR_COUNT_Q } from "../../constants/Variables";
+
+import { saveTextAnswer } from "../../api/questionWriteAPI";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -43,6 +46,9 @@ const LandingPage = () => {
   const [modalToggleB, setModalToggleB] = useState(false); // 답변리스트 보기 모달창 토글
 
   const isLogin = useRecoilValue(loginState);
+
+  const contentInput = useRef(); // 내용 ref (값 가져오기, ref)
+  const unshowRef = useRef([]); // 보내기 버튼 누를 시 사라질 영역들 ref
 
   /**
    * @description 물병 누를 경우 chatbox visible
@@ -78,6 +84,32 @@ const LandingPage = () => {
     setCharCount(length);
   };
 
+  /**
+   * @description "보내기" 버튼 눌렀을 시 이벤트
+   */
+  const handleAnswerSend = async () => {
+    //유효성 검사
+    const content = contentInput.current.value;
+    if (content.length < MIN_CHAR_COUNT_Q) {
+      popWarningAlert(`편지 내용을 ${MIN_CHAR_COUNT_Q}자 이상 입력해주세요.`);
+      return;
+    } else if (content.length > MAX_CHAR_COUNT_Q) {
+      popWarningAlert(`편지 내용을 ${MAX_CHAR_COUNT_Q}자 이하 입력해주세요.`);
+      return;
+    }
+
+    const response = await saveTextAnswer(content); //API 파트
+    console.log(response);
+    if (response.status < 200 && response.status >= 300) {
+      popErrorAlert("답변 전송 오류", "답변 전송 중 오류가 발생했습니다.");
+      return;
+    }
+
+    setTimeout(() => {
+      navigate("/");
+    }, 1000);
+  };
+
   //소개글 animation 효과 변경용 AOS
   useEffect(() => {
     AOS.init({ duration: 500, easing: "ease-in-out-back" });
@@ -103,6 +135,7 @@ const LandingPage = () => {
             <QuestionTextArea
               onChange={(e) => handleQuestionAnswerWrite(e.target.value.length)}
               placeholder="내용"
+              ref={contentInput}
             />
             <QuestionProgressBar
               charCount={charCount}
