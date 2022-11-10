@@ -24,8 +24,7 @@ import javax.transaction.Transactional;
 import java.util.stream.Collectors;
 
 import static com.da_ta.backend.common.domain.ErrorCode.*;
-import static com.da_ta.backend.common.domain.SuccessCode.ACCUSED_LETTER_SOLVED;
-import static com.da_ta.backend.common.domain.SuccessCode.ROLE_UPDATED;
+import static com.da_ta.backend.common.domain.SuccessCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -138,6 +137,15 @@ public class AdminService {
                 .question(todayQuestion.getQuestion())
                 .date(todayQuestion.getDate())
                 .build();
+    }
+
+    public Message createTodayQuestion(String token, CreateTodayQuestionRequest createTodayQuestionRequest) {
+        jwtTokenProvider.findUserByToken(token);
+        todayQuestionRepository.save(TodayQuestion.builder()
+                .question(createTodayQuestionRequest.getQuestion())
+                .date(createTodayQuestionRequest.getDate())
+                .build());
+        return new Message(TODAY_QUESTION_CREATED.getMessage());
     }
 
     private User findUserById(Long userId) {

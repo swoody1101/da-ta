@@ -57,4 +57,11 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(adminService.findTodayQuestion(token, questionId));
     }
+
+    @PostMapping("/question")
+    public ResponseEntity<Message> createTodayQuestion(@RequestHeader(AUTHORIZATION) String token,
+                                                       @RequestBody CreateTodayQuestionRequest createTodayQuestionRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(adminService.createTodayQuestion(token, createTodayQuestionRequest));
+    }
 }
