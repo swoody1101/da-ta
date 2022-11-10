@@ -32,9 +32,9 @@ const ReadButtons = ({ index }) => {
             mWidth={"40%"}
             mHeight={"40px"}
             mBorderRadius={"8px"}
-            onClick={() => {
-              console.log("보관하기");
-              // const response = await collectLetter(letterId);
+            onClick={async () => {
+              const response = await collectLetter(letterId);
+              console.log(response);
             }}
           >
             보관하기
@@ -61,7 +61,8 @@ const ReadButtons = ({ index }) => {
         mBorderRadius={"8px"}
         onClick={async () => {
           console.log("다시 띄우기");
-          // const response = await tossLetter(letterId);
+          const response = await tossLetter(letterId);
+          console.log(response);
         }}
       >
         다시 띄우기
