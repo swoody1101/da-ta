@@ -5,7 +5,11 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { media } from "../../utils/styleUtil";
 
-import { popWarningAlert } from "./../../utils/sweetAlert";
+import {
+  popWarningAlert,
+  popConfirmAlert,
+  popErrorAlert,
+} from "./../../utils/sweetAlert";
 import { useRecoilValue } from "recoil";
 import { loginState } from "./../../recoil/Atoms";
 
@@ -41,7 +45,7 @@ const LandingPage = () => {
   const isLogin = useRecoilValue(loginState);
 
   /**
-   * @description chatbox visible event
+   * @description 물병 누를 경우 chatbox visible
    */
   const handleChatboxVisible = () => {
     setChatBoxVisible(!chatboxVisible);
@@ -58,7 +62,7 @@ const LandingPage = () => {
   };
 
   /**
-   * @description 물병 던지기 Button의 isLogin 확인 및 navigate
+   * @description 메인 하단의 물병 던지기 Button의 isLogin 확인 및 navigate
    */
   const HandleIsLoginCheck = () => {
     return isLogin
@@ -66,10 +70,23 @@ const LandingPage = () => {
       : { ...popWarningAlert("", "로그인 후 이용해주세요.") };
   };
 
+  /**
+   * @description 오늘의 질문 답변 입력 시 이벤트
+   * @param {number} length
+   */
+  const handleQuestionAnswerWrite = (length) => {
+    setCharCount(length);
+  };
+
   //소개글 animation 효과 변경용 AOS
   useEffect(() => {
     AOS.init({ duration: 500, easing: "ease-in-out-back" });
   });
+
+  //오늘의 질문 답변보내기 입력때 사용하는 글자 수 카운트
+  useEffect(() => {
+    setCharCount(0);
+  }, [true]);
 
   return (
     <>
