@@ -26,7 +26,7 @@ public class LetterService {
     private final static String TYPE_TEXT = "Text";
     private final static String TYPE_IMAGE = "Image";
 
-    private final CollectionRepository collectionRepository;
+    private final CollectedLetterRepository collectedLetterRepository;
     private final FloatedLetterRepository floatedLetterRepository;
     private final FloatedLetterLogRepository floatedLetterLogRepository;
     private final ImageLetterRepository imageLetterRepository;
@@ -168,7 +168,7 @@ public class LetterService {
         FloatedLetter floatedLetter = findFloatedLetterByLetterIdAndRecipientId(letterId, user.getId());
         floatedLetter.updateFloatedLetter();
         floatedLetterRepository.save(floatedLetter);
-        collectionRepository.save(CollectedLetter.builder()
+        collectedLetterRepository.save(CollectedLetter.builder()
                 .letter(letter)
                 .user(user)
                 .build());
@@ -177,9 +177,13 @@ public class LetterService {
 
     public Message createLetterAccusation(User reporter, Long letterId, AccuseLetterRequest accuseLetterRequest) {
         if (accuseLetterRequest.getIsReply()) {
-            findReplyByRepliedLetterIdAndRecipientId(letterId, reporter.getId());
+            Reply reply = findReplyByRepliedLetterIdAndRecipientId(letterId, reporter.getId());
+            reply.deleteReplyLetter();
+            replyRepository.save(reply);
         } else {
-            findFloatedLetterByLetterIdAndRecipientId(letterId, reporter.getId());
+            FloatedLetter floatedLetter = findFloatedLetterByLetterIdAndRecipientId(letterId, reporter.getId());
+            floatedLetter.updateRecipient(null);
+            floatedLetterRepository.save(floatedLetter);
         }
         letterAccusationRepository.save(LetterAccusation.builder()
                 .letter(findLetterById(letterId))
@@ -197,7 +201,7 @@ public class LetterService {
 
     public FindLetterCollectionResponse findLetterCollection(User user) {
         return FindLetterCollectionResponse.builder()
-                .collection(collectionRepository.findAllByUserIdAndIsActiveTrueOrderByCreatedDateDesc(user.getId())
+                .collection(collectedLetterRepository.findAllByUserIdAndIsActiveTrueOrderByCreatedDateDesc(user.getId())
                         .stream()
                         .map(collectedLetter ->
                                 CollectionItem.builder()
@@ -250,7 +254,7 @@ public class LetterService {
     public Message deleteCollectedLetter(User user, Long letterId) {
         CollectedLetter collectedLetter = findCollectionByLetterIdAndUserId(letterId, user.getId());
         collectedLetter.deleteCollectedLetter();
-        collectionRepository.save(collectedLetter);
+        collectedLetterRepository.save(collectedLetter);
         return new Message(COLLECTED_LETTER_DELETED.getMessage());
     }
 
@@ -361,7 +365,7 @@ public class LetterService {
     }
 
     private CollectedLetter findCollectionByLetterIdAndUserId(Long letterId, Long userId) {
-        return collectionRepository.findByLetterIdAndUserIdAndIsActiveTrue(letterId, userId)
+        return collectedLetterRepository.findByLetterIdAndUserIdAndIsActiveTrue(letterId, userId)
                 .orElseThrow(() -> new NotFoundException(COLLECTED_LETTER_NOT_FOUND));
     }
 }
