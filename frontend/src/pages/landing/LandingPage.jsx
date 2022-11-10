@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { media } from "../../utils/styleUtil";
 
-import { popWarningAlert } from "./../../utils/sweetAlert";
+import {
+  popWarningAlert,
+  popConfirmAlert,
+  popErrorAlert,
+} from "./../../utils/sweetAlert";
 import { useRecoilValue } from "recoil";
 import { loginState } from "./../../recoil/Atoms";
 
@@ -20,43 +24,160 @@ import { SizeTypes, SIZE_WIDE } from "./../../constants/Sizes";
 import BackgroundGradient from "../../components/atoms/BackgroundGradient";
 import MouseScrollDownArrowGroup from "../../components/molecules/MouseScrollDownArrowGroup";
 
-import ChatboxGroup from "../../components/molecules/landing/ChatBoxGroup";
+import ChatBoxGroup from "../../components/molecules/landing/ChatBoxGroup";
 import { BottleOfLetterBtn } from "../../components/atoms/BottleOfLetterBtn";
 
 import Modal from "../../components/organisms/Modal";
+import { QuestionTextArea } from "../../components/atoms/TextArea";
+import QuestionProgressBar from "../../components/molecules/landing/QuestionProgressBar";
+import { MIN_CHAR_COUNT_Q, MAX_CHAR_COUNT_Q } from "../../constants/Variables";
+
+import { saveTextAnswer } from "../../api/questionWriteAPI";
 
 const LandingPage = () => {
   const navigate = useNavigate();
 
   const [chatboxVisible, setChatBoxVisible] = useState(false); // 물병 클릭시 뜨는 말풍선 토글
 
+  const [charCount, setCharCount] = useState(0); // 오늘의 질문 답변 글자 수
+  const [charCountWarning, setCharCountWarning] = useState(false); // 글자수 미만 또는 초과로 인한 경고 표시
+
+  const [modalToggleA, setModalToggleA] = useState(false); // 답변보내기 모달창 토글
+  const [modalToggleB, setModalToggleB] = useState(false); // 답변리스트 보기 모달창 토글
+
   const isLogin = useRecoilValue(loginState);
 
+  const contentInput = useRef(); // 내용 ref (값 가져오기, ref)
+  const unshowRef = useRef([]); // 보내기 버튼 누를 시 사라질 영역들 ref
+
   /**
-   * @description chatbox visible event
+   * @description 물병 누를 경우 chatbox visible
    */
-  const handleChatboxVisible = (e) => {
+  const handleChatboxVisible = () => {
     setChatBoxVisible(!chatboxVisible);
   };
 
+  /** [오늘의질문] 답변 입력창 열기 */
+  const handleModalA = () => {
+    setModalToggleA(true);
+  };
+
+  /** [오늘의질문] 답변 모음창 열기 */
+  const handleModalB = () => {
+    setModalToggleB(true);
+  };
+
   /**
-   * @description 물병 던지기 Button의 isLogin 확인 및 navigate
+   * @description 메인 하단의 물병 던지기 Button의 isLogin 확인 및 navigate
    */
-  const HandleIsLoginCheck = (event) => {
+  const HandleIsLoginCheck = () => {
     return isLogin
       ? navigate("/write")
       : { ...popWarningAlert("", "로그인 후 이용해주세요.") };
   };
 
   /**
-   * @description AOS 이벤트 조정용 UseEffect
+   * @description 오늘의 질문 답변 입력 시 이벤트
+   * @param {number} length
    */
+  const handleQuestionAnswerWrite = (length) => {
+    setCharCount(length);
+  };
+
+  /**
+   * @description "보내기" 버튼 눌렀을 시 이벤트
+   */
+  const handleAnswerSend = async () => {
+    //유효성 검사
+    const content = contentInput.current.value;
+    if (content.length < MIN_CHAR_COUNT_Q) {
+      popWarningAlert(`편지 내용을 ${MIN_CHAR_COUNT_Q}자 이상 입력해주세요.`);
+      return;
+    } else if (content.length > MAX_CHAR_COUNT_Q) {
+      popWarningAlert(`편지 내용을 ${MAX_CHAR_COUNT_Q}자 이하 입력해주세요.`);
+      return;
+    }
+
+    const response = await saveTextAnswer(content); //API 파트
+    console.log(response);
+    if (response.status < 200 && response.status >= 300) {
+      popErrorAlert("답변 전송 오류", "답변 전송 중 오류가 발생했습니다.");
+      return;
+    }
+
+    setTimeout(() => {
+      navigate("/");
+    }, 1000);
+  };
+
+  //소개글 animation 효과 변경용 AOS
   useEffect(() => {
     AOS.init({ duration: 500, easing: "ease-in-out-back" });
   });
 
+  //오늘의 질문 답변보내기 입력때 사용하는 글자 수 카운트
+  useEffect(() => {
+    setCharCount(0);
+  }, [true]);
+
   return (
     <>
+      {modalToggleA && (
+        <Modal
+          width="50%"
+          height="50%"
+          modalToggle={modalToggleA}
+          setModalToggle={setModalToggleA}
+          titleText={"오늘의질문"}
+        >
+          {/* <MainText>오늘의 질문 api 연결 예정</MainText> */}
+          <AnswerBox width="80%" height="65%" margin="0 0 0 0">
+            <QuestionTextArea
+              onChange={(e) => handleQuestionAnswerWrite(e.target.value.length)}
+              placeholder="내용"
+              ref={contentInput}
+            />
+            <QuestionProgressBar
+              charCount={charCount}
+              charCountWarning={charCountWarning}
+            />
+          </AnswerBox>
+
+          <ButtonBox>
+            <Button
+              margin="9rem 0 0 0"
+              fontSize="1.2rem"
+              height="3rem"
+              width="9rem"
+              shadow={true}
+              color="#5F0EB0"
+              borderStyle="2px solid #5F0EB0"
+              hasBorder={false}
+              onClick={() => handleAnswerSend()}
+            >
+              답변 보내기
+            </Button>
+          </ButtonBox>
+        </Modal>
+      )}
+      {modalToggleB && (
+        <Modal
+          modalToggle={modalToggleB}
+          setModalToggle={setModalToggleB}
+          titleText={"오늘의 질문 답변 모음"}
+        >
+          {/* <MainText>오늘의 질문 api 연결 예정</MainText> */}
+          <AnswerBox width="70%" height="50%" margin="0 0 2rem 0">
+            <QuestionTextArea
+              // onChange={(e) => handleQuestionAnswerWrite(e.target.value.length)}
+              placeholder="내용"
+            />
+          </AnswerBox>
+        </Modal>
+      )}
+
+      {/* 여기는 현재 answerListModal만 있는 곳 */}
+
       {/* <BackgroundGradient start={"aaa"} end={"aaa"} /> */}
       <BackgroundGradient start={"E2AAFD"} end={"FFDFC2"} />
 
@@ -136,19 +257,17 @@ const LandingPage = () => {
 
       {/* 물병 수정 예정 */}
       <BottleWrapper>
-        {/* <BottleOfLetter
-          mWidth={SizeTypes.MOBILE_MAIN_BOTTLE_WIDTH}
-          mHeight={SizeTypes.MOBILE_MAIN_BOTTLE_HEIGHT}
-          // setChatBoxToggle={() => setChatBoxToggle(true)}
-        /> */}
-
         <BottleOfLetterBtn
           onClick={() => handleChatboxVisible(!chatboxVisible)}
         ></BottleOfLetterBtn>
       </BottleWrapper>
+
       {chatboxVisible ? (
         <ChatBoxWrapper>
-          <ChatboxGroup></ChatboxGroup>
+          <ChatBoxGroup
+            handleModalA={handleModalA}
+            handleModalB={handleModalB}
+          ></ChatBoxGroup>
         </ChatBoxWrapper>
       ) : null}
 
@@ -215,7 +334,7 @@ const BottleWrapper = styled.div`
   top: 10rem;
 `};
   ${media.phone`
-  top: 3.5rem;
+  top: 3rem;
 `};
 `;
 
@@ -257,6 +376,50 @@ const ChatBoxWrapper = styled.div`
   ${media.phone`
   top: 12rem;
 `};
+`;
+
+const AnswerBox = styled.div`
+  display: flex;
+  background-color: none;
+  margin: ${(props) => props.margin};
+  padding: ${(props) => props.padding};
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+  font-size: ${(props) => props.fontSize};
+  filter: ${(props) =>
+    props.shadow ? "drop-shadow(4px 8px 12px rgba(38,38,38,0.5))" : ""};
+  cursor: pointer;
+  border: ${(props) =>
+    props.hasBorder ? "2px solid black" : props.borderStyle};
+  border-radius: ${(props) => props.borderRadius};
+  color: ${(props) => props.color || "black"};
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: bold;
+  z-index: ${(props) => props.zIndex};
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  transition: all 0.2s ease-in;
+
+  ${media.phone`
+           width: ${(props) => (props.mWidth ? props.mWidth : props.width)};
+       `}
+`;
+
+const ButtonBox = styled.div`
+  display: flex;
+  position: absolute;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  top: 75%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 export default LandingPage;
