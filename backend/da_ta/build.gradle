@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.7.1'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id "org.sonarqube" version "3.4.0.2513"
 }
 
 group = 'com.da_ta'
@@ -44,4 +45,9 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+sonarqube {
+    properties {
+        property "sonar.projectKey", "s07-final_S07P31B106_AYRgCqbkTzBUe-dX_IJ_"
+    }
 }
