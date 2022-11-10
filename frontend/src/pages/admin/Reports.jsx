@@ -25,7 +25,12 @@ const Reports = () => {
 	const setLoading = useSetRecoilState(loadingState);
 	const [itemList, setItemList] = useState([]);
 
-	useEffect(async () => {
+	useEffect(() => {
+		initList();
+	}, [listType]);
+
+	/** 신고 목록 초기화 */
+	const initList = async () => {
 		setLoading(true);
 		setItemList([]);
 		const response = await getReportList(listType);
@@ -35,10 +40,8 @@ const Reports = () => {
 			return;
 		}
 
-		console.log(response);
-
 		setItemList([...(listType === "letter" ? response.data.accusedLetters : response.data.accusedAnswers)]);
-	}, [listType]);
+	};
 
 	/** [편지, 오늘의질문 답변] 내용 보기 */
 	const handleModal = (item) => {
@@ -51,7 +54,8 @@ const Reports = () => {
 
 	/** [편지, 오늘의질문 답변]신고 처리 */
 	const handleAccuse = async (item, userId, e) => {
-		if (item.isAccused) {
+		console.log(itemList);
+		if (item.isSolved) {
 			popWarningAlert("신고 처리 실패", "이미 경고처리된 신고입니다.");
 			return;
 		}
@@ -66,8 +70,7 @@ const Reports = () => {
 		}
 
 		popSuccessAlert("신고 처리 성공", "신고에 대한 경고 처리가 완료되었습니다.");
-		// # setstate를 통해 리스트[idx].isAccused = true 처리
-		e.target.style.backgroundColor = "#d9d9d9";
+		initList();
 	};
 
 	return (
@@ -95,7 +98,6 @@ const Reports = () => {
 				listType={listType}
 				title={listType === "letter" ? "신고 관리 - 편지" : "신고 관리 - 오늘의 답변"}
 				categoryList={categoryList}
-				// itemList={letterList}
 				itemList={itemList}
 				handleModal={handleModal}
 				handleAccuse={handleAccuse}

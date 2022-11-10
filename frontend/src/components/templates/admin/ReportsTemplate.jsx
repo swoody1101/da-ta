@@ -37,12 +37,12 @@ const ReportsTemplate = ({ title, categoryList, itemList, handleModal, handleAcc
 								</ContentElement>
 								<ContentElement flex={flexRate[6]}>
 									<Button
-										bgColor={item.isAccused ? "#d9d9d9" : "#FF6C00"}
+										bgColor={item.isSolved ? "#d9d9d9" : "#FF6C00"}
 										width="90%"
 										height="70%"
 										onClick={(e) => handleAccuse(item, item.reportedUserId, e)}
 									>
-										{item.isAccused ? "완료" : "처리"}
+										{item.isSolved ? "완료" : "처리"}
 									</Button>
 								</ContentElement>
 							</ContentLine>

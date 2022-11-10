@@ -48,6 +48,7 @@ const SocialLogin = () => {
 
 		if (response.data.banStatus.isBan) {
 			popWarningAlert("로그인 실패", "해당 유저는 사이트 이용규칙 위반으로 인해 이용정지 상태입니다.");
+			navigate("/");
 			return;
 		}
 
