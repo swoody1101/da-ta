@@ -39,7 +39,7 @@ public class QuestionController {
     }
 
     @GetMapping("/answer")
-    public ResponseEntity<List<TodayAnswerResponse>> findAnswer() {
+    public ResponseEntity<List<TodayAnswerResponse>> findAnswers() {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(answerService.findTodayAnswers());
     }
