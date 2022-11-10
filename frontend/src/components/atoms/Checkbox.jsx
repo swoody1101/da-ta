@@ -32,10 +32,10 @@ const StyledP = styled.p`
   font-size: 1.1rem;
 `;
 
-const Checkbox = ({ text, tagName, onCheckHandler }) => {
+const Checkbox = ({ text, tagName, onCheckHandler, checked }) => {
   return (
     <StyledLabel htmlFor={text} onChange={onCheckHandler}>
-      <StyledInput type="checkbox" id={text} name={tagName} />
+      <StyledInput type="checkbox" id={text} name={tagName} checked={checked} />
       <StyledP>{text}</StyledP>
     </StyledLabel>
   );
