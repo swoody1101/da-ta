@@ -177,9 +177,14 @@ public class LetterService {
 
     public Message createLetterAccusation(User reporter, Long letterId, AccuseLetterRequest accuseLetterRequest) {
         if (accuseLetterRequest.getIsReply()) {
-            findReplyByRepliedLetterIdAndRecipientId(letterId, reporter.getId());
+            Reply reply = findReplyByRepliedLetterIdAndRecipientId(letterId, reporter.getId());
+            reply.deleteReplyLetter();
+            replyRepository.save(reply);
         } else {
-            findFloatedLetterByLetterIdAndRecipientId(letterId, reporter.getId());
+            FloatedLetter floatedLetter = findFloatedLetterByLetterIdAndRecipientId(letterId, reporter.getId());
+            floatedLetter.updateRecipient(null);
+            floatedLetter.deleteFloatedLetter();
+            floatedLetterRepository.save(floatedLetter);
         }
         letterAccusationRepository.save(LetterAccusation.builder()
                 .letter(findLetterById(letterId))
