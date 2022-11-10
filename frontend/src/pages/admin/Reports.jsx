@@ -54,7 +54,6 @@ const Reports = () => {
 
 	/** [편지, 오늘의질문 답변]신고 처리 */
 	const handleAccuse = async (item, userId, e) => {
-		console.log(itemList);
 		if (item.isSolved) {
 			popWarningAlert("신고 처리 실패", "이미 경고처리된 신고입니다.");
 			return;
