@@ -28,4 +28,8 @@ public class AnswerAccusation extends CommonEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "today_answer_id")
     private TodayAnswer todayAnswer;
+
+    public void updateIsSolved() {
+        this.isSolved = true;
+    }
 }
