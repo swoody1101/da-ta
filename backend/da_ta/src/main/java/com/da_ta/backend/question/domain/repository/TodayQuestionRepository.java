@@ -15,6 +15,7 @@ public interface TodayQuestionRepository extends JpaRepository<TodayQuestion, Lo
 
     @Query(value = "select * " +
             "from today_question " +
-            "where date_format(date, '%Y-%m') = :date", nativeQuery = true)
-    List<TodayQuestion> findTodayQuestionsByYearAndMonth(@Param("date") String date);
+            "where date_format(date, '%Y-%m') = :date " +
+            "and is_active = true ", nativeQuery = true)
+    List<TodayQuestion> findTodayQuestionsByYearAndMonthAndIsActiveTrue(@Param("date") String date);
 }

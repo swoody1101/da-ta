@@ -118,7 +118,7 @@ public class AdminService {
     public FindTodayQuestionsResponse findTodayQuestions(String token, String date) {
         jwtTokenProvider.findUserByToken(token);
         return FindTodayQuestionsResponse.builder()
-                .questions(todayQuestionRepository.findTodayQuestionsByYearAndMonth(date)
+                .questions(todayQuestionRepository.findTodayQuestionsByYearAndMonthAndIsActiveTrue(date)
                         .stream()
                         .map(todayQuestion -> TodayQuestionItem.builder()
                                 .todayQuestionId(todayQuestion.getId())
