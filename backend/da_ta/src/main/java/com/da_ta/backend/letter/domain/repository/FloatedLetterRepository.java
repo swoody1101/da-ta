@@ -16,7 +16,7 @@ public interface FloatedLetterRepository extends JpaRepository<FloatedLetter, Lo
             "join letter l " +
             "using(letter_id) " +
             "join letter_accusation la" +
-            "useing(letter_id)" +
+            "using(letter_id)" +
             "where f.is_active = true " +
             "and f.recipient_id is null " +
             "and l.writer_id != :recipientId " +
