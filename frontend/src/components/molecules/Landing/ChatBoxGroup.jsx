@@ -27,14 +27,14 @@ const ChatBoxGroup = ({
 
     const handlerClickModalA = () => {
       return isLogin
-        ? { ...popWarningAlert("", "로그인 후 이용해주세요.") }
-        : handleModalA();
+        ? handleModalA()
+        : { ...popWarningAlert("", "로그인 후 이용해주세요.") };
     };
 
     const handlerClickModalB = () => {
       return isLogin
-        ? { ...popWarningAlert("", "로그인 후 이용해주세요.") }
-        : handleModalB();
+        ? handleModalB()
+        : { ...popWarningAlert("", "로그인 후 이용해주세요.") };
     };
 
     return (

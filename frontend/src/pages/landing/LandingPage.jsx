@@ -162,21 +162,17 @@ const LandingPage = () => {
       )}
       {modalToggleB && (
         <Modal
+          width="50%"
+          height="50%"
           modalToggle={modalToggleB}
           setModalToggle={setModalToggleB}
           titleText={"오늘의 질문 답변 모음"}
         >
-          {/* <MainText>오늘의 질문 api 연결 예정</MainText> */}
-          <AnswerBox width="70%" height="50%" margin="0 0 2rem 0">
-            <QuestionTextArea
-              // onChange={(e) => handleQuestionAnswerWrite(e.target.value.length)}
-              placeholder="내용"
-            />
+          <AnswerBox width="80%" height="70%" margin="2rem 0 0 0">
+            <QuestionAnswerListArea />
           </AnswerBox>
         </Modal>
       )}
-
-      {/* 여기는 현재 answerListModal만 있는 곳 */}
 
       {/* <BackgroundGradient start={"aaa"} end={"aaa"} /> */}
       <BackgroundGradient start={"E2AAFD"} end={"FFDFC2"} />
@@ -251,9 +247,6 @@ const LandingPage = () => {
           </Button>
         </div>
       </TextWrapper>
-
-      {/* 오늘의 질문 말풍선 */}
-      {/* <ChatboxGroup></ChatboxGroup> */}
 
       {/* 물병 수정 예정 */}
       <BottleWrapper>
@@ -422,11 +415,24 @@ const ButtonBox = styled.div`
   transform: translate(-50%, -50%);
 `;
 
-export default LandingPage;
+const QuestionAnswerListArea = styled.div`
+  display: flex;
+  resize: none;
+  border: 1px solid black;
+  border-radius: 1em;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
+  background: transparent;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: black;
 
-{
-  /* <div id="title-div" onclick="sayHello()"></div>;
-function sayHello() {
-  console.log("Hello there !!");
-} */
-}
+  &:focus {
+    outline: none;
+  }
+`;
+
+export default LandingPage;
