@@ -9,6 +9,7 @@ import { useSetRecoilState } from "recoil";
 import { letterState, mypageRouterState } from "../../recoil/Atoms";
 import { useNavigate } from "react-router";
 import { useEffect } from "react";
+import { downloadFirebaseStorage } from "../../utils/firebaseStorage";
 
 const LetterGetPage = () => {
   const navigate = useNavigate();
@@ -20,10 +21,18 @@ const LetterGetPage = () => {
   }, []);
 
   const openBottle = async () => {
+    // 로딩스피너
     const response = await getLetter();
     if (response.status - 200 < 2) {
-      setLetter(response.data);
-      console.log(response.data);
+      const letter = response.data;
+      console.log(letter.letterInfo.imageLetterUrl);
+      if (letter.letterInfo.imageLetterUrl) {
+        letter.letterInfo.imageLetterUrl = await downloadFirebaseStorage(
+          `${letter.letterInfo.imageLetterUrl}.png`
+        );
+      }
+      // 얘도 예외처리
+      setLetter(letter);
       navigate("/read");
     }
     // setLetter({
@@ -35,7 +44,7 @@ const LetterGetPage = () => {
     //     title: null,
     //     content: null,
     //     imageLetterUrl:
-    //       "https://firebasestorage.googleapis.com/v0/b/da-ta-8db6c.appspot.com/o/drawings/1668043144153.png",
+    //       "https://firebasestorage.googleapis.com/v0/b/da-ta-8db6c.appspot.com/o/drawings/1668043144153.png?alt=media",
     //     backgroundId: 0,
     //     fontId: 0,
     //     writtenDate: new Date(),
