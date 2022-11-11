@@ -3,8 +3,10 @@ package com.da_ta.backend.letter.controller;
 import com.da_ta.backend.account.jwt.JwtTokenProvider;
 import com.da_ta.backend.common.domain.Message;
 import com.da_ta.backend.letter.controller.dto.*;
+import com.da_ta.backend.letter.controller.dto.common.CheckImageLetterResponse;
 import com.da_ta.backend.letter.service.LetterService;
-import com.da_ta.backend.util.DetectSafeSearch;
+import com.da_ta.backend.util.Base64Util;
+import com.da_ta.backend.util.DetectSafeSearchUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -124,11 +126,11 @@ public class LetterController {
                 .body(letterService.deleteReply(jwtTokenProvider.findUserByToken(token), repliedLetterId));
     }
 
-    @GetMapping("/test")
-    public ResponseEntity<Message> test(@RequestHeader(AUTHORIZATION) String token) throws IOException {
+    @GetMapping("/check/2")
+    public ResponseEntity<CheckImageLetterResponse> checkImageLetterHarmfulness (@RequestHeader(AUTHORIZATION) String token,
+                                                                                 @RequestBody CheckImageLetterRequest checkImageLetterRequest) throws IOException {
         jwtTokenProvider.findUserByToken(token);
-        DetectSafeSearch.detectSafeSearch();
         return ResponseEntity.status(HttpStatus.OK)
-                .body(new Message("test"));
+                .body(letterService.checkImageLetter(checkImageLetterRequest));
     }
 }
