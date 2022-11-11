@@ -4,11 +4,11 @@
 import { client } from "../utils/client";
 
 /**
- * @description 오늘의 질문 답변모음 읽기
+ * @description 오늘의 질문 답변모음 받아오기
  */ //수정 예정
-export const getTodayQuestionAnswer = async () => {
+export const getTodayQuestionAnswerList = async (listType) => {
   const result = await client
-    .get(`/today/answer`)
+    .get(`/today/answer/${listType}`)
     .then((response) => response)
     .catch((error) => error);
   return result;
