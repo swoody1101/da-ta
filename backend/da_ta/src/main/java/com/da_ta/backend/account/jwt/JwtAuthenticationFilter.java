@@ -1,7 +1,9 @@
 package com.da_ta.backend.account.jwt;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
@@ -21,13 +23,22 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if (!request.getServletPath().startsWith("/api/v1/user/reissue") && !request.getServletPath().startsWith("/api/v1/user/login")) {
-            String accessToken = jwtTokenProvider.resolveAccessToken(request);
-            if (StringUtils.hasText(accessToken) && jwtTokenProvider.validateToken(accessToken)) {
-                this.setAuthentication(accessToken);
+        try {
+            String path = request.getServletPath();
+            if (path.startsWith("/api/v1/user/login") || path.startsWith("/api/v1/user/reissue")) { // 토큰을 재발급하는 API 경우 토큰 체크 로직 건너뛰기
+                filterChain.doFilter(request, response);
+            } else {
+                String accessToken = jwtTokenProvider.resolveAccessToken(request);
+                boolean isTokenValid = jwtTokenProvider.validateToken(accessToken);
+                if (StringUtils.hasText(accessToken) && isTokenValid) {
+                    this.setAuthentication(accessToken);
+                }
+                filterChain.doFilter(request, response);
             }
+        } catch (ExpiredJwtException e) {
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            response.getWriter().flush();
         }
-        filterChain.doFilter(request, response);
     }
 
     private void setAuthentication(String token) {
