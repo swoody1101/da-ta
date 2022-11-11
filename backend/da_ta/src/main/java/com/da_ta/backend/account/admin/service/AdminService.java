@@ -161,8 +161,6 @@ public class AdminService {
         reportedUser.getBanStatus().updateWarningCount();
         checkWarningCount(reportedUser);
         answerAccusationRepository.save(answerAccusation);
-        todayAnswerRepository.save(todayAnswer);
-        userRepository.save(reportedUser);
         return new Message(ACCUSED_ANSWER_SOLVED.getMessage());
     }
 
