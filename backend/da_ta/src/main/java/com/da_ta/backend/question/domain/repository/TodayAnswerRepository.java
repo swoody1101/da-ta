@@ -16,7 +16,8 @@ public interface TodayAnswerRepository extends JpaRepository<TodayAnswer, Long> 
             "not in " +
                 "(select a.today_answer_id " +
                 "from answer_accusation a " +
-                "where a.is_active=true)"
+                "where a.is_active=true)" +
+            "and t.is_active=true"
             , nativeQuery = true)
     List<TodayAnswer> findAllUnaccusedAnswers();
 }
