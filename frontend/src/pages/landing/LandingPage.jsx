@@ -33,6 +33,7 @@ import QuestionProgressBar from "../../components/molecules/landing/QuestionProg
 import { MIN_CHAR_COUNT_Q, MAX_CHAR_COUNT_Q } from "../../constants/Variables";
 
 import { saveTextAnswer } from "../../api/questionWriteAPI";
+import { MainAnimationText } from "../../components/atoms/MainAnimationText";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -110,6 +111,8 @@ const LandingPage = () => {
     }, 1000);
   };
 
+  //오늘의 질문 받아오기 위한 const=
+
   //소개글 animation 효과 변경용 AOS
   useEffect(() => {
     AOS.init({ duration: 500, easing: "ease-in-out-back" });
@@ -185,12 +188,25 @@ const LandingPage = () => {
         >
           [100]개의 편지가 바다에 떠 있습니다
         </MainSmallText>
-        <MainText
+
+        {/* <MainText
           margin="8vh 0 0 0"
           mFont_size={SizeTypes.MOBILE_MAIN_TEXT_SIZE}
         >
           안녕하세요! 😏 <br /> 여기는 '닿다'예요
-        </MainText>
+        </MainText> */}
+        {/* <MainText
+          mFont_size={SizeTypes.MOBILE_MAIN_TEXT_SIZE}
+          margin="8vh 0 0 0"
+        >
+          안녕하세요!
+        </MainText> */}
+        <MainAnimationText
+          mFont_size={SizeTypes.MOBILE_MAIN_TEXT_SIZE}
+          margin="8vh 0 0 0"
+        >
+          안녕하세요! 😏 여기는 '닿다'예요
+        </MainAnimationText>
 
         <div data-aos="zoom-in-up" data-aos-anchor-placement="bottom-bottom">
           <MainText
@@ -434,5 +450,55 @@ const QuestionAnswerListArea = styled.div`
     outline: none;
   }
 `;
+
+//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+//이 아래는  현재 메인의 글자 타이핑 애니메이션용입니다.
+
+// .MainTitleWrapper {
+//   height: 100vh;
+//   /*This part is important for centering*/
+//   display: grid;
+//   place-items: center;
+// }
+
+// .typing-demo {
+//   width: 22ch;
+//   animation: typing 2s steps(22), blink .5s step-end infinite alternate;
+//   white-space: nowrap;
+//   overflow: hidden;
+//   border-right: 3px solid;
+//   font-family: monospace;
+//   font-size: 2em;
+// }
+
+// @keyframes typing {
+//   from {
+//     width: 0
+//   }
+// }
+
+// @keyframes blink {
+//   50% {
+//     border-color: transparent
+//   }
+// }
+//mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+// const typing = keyframes`
+//   0% {
+//     background-position: 1280px;
+//   }
+//   100% {
+//     background-position: 0;
+//   }
+// `;
+
+// const blink = keyframes`
+//   0% {
+//     background-position: 1280px;
+//   }
+//   100% {
+//     background-position: 0;
+//   }
+// `;
 
 export default LandingPage;

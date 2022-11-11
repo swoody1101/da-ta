@@ -6,17 +6,19 @@ import { client } from "../utils/client";
 /**
  * @description 오늘의 편지 답변 쓰기
  */ //수정 예정
-export const saveTextAnswer = async (content) => {
+export const saveTextAnswer = async (answer) => {
   const body = {
     textAnswerInfo: {
-      content: content,
+      answer: answer,
+      userId: userId,
+      todayQuestionId: todayQuestionId,
     },
   };
 
   console.log(body);
 
   const result = await client
-    .post(`/today/question/1`, body)
+    .post(`/today/answer`, body)
     .then((response) => response)
     .catch((error) => error);
   return result;
