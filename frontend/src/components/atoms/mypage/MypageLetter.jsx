@@ -2,9 +2,8 @@
  * @author boyeon
  */
 /**
- * @param LetterObject //ToDo: API명세서 보고 변수양식 맞추기
+ * @param LetterObject
  */
-// 나중에 API로 받아온 친구들을 props 해줘야함
 import React from "react";
 import styled from "styled-components";
 import { media } from "../../../utils/styleUtil";
@@ -13,9 +12,17 @@ import {
   faTriangleExclamation,
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
-import { useSetRecoilState } from "recoil";
-import { reportModalState } from "../../../recoil/Atoms";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  letterState,
+  mypageRouterState,
+  reportModalState,
+} from "../../../recoil/Atoms";
 import { readingLetterIdState } from "../../../recoil/Atoms";
+import { collectDetail } from "../../../api/mypageAPI";
+import { popErrorAlert } from "../../../utils/sweetAlert";
+import { downloadFirebaseStorage } from "../../../utils/firebaseStorage";
+import { useNavigate } from "react-router-dom";
 
 const DateToString = (writtenDate) => {
   const ToDate = new Date(writtenDate);
@@ -25,14 +32,45 @@ const DateToString = (writtenDate) => {
 };
 
 export const MypageLetter = ({ letter }) => {
-  const setModalToggle = useSetRecoilState(reportModalState);
+  const navigate = useNavigate();
+  const setReportModal = useSetRecoilState(reportModalState);
   const setReadingLetterId = useSetRecoilState(readingLetterIdState);
+  const mypageRouterIndex = useRecoilValue(mypageRouterState);
+  const setLetter = useSetRecoilState(letterState);
   const writtenTime = DateToString(letter.writtenDate);
+
+  const readLetter = async (index, letterId) => {
+    console.log(letterId);
+    if (index === 0) {
+      const response = await collectDetail(letterId);
+      if (response.status - 200 < 3 && response.status) {
+        const letter = response.data;
+        if (letter.letterInfo.imageLetterUrl) {
+          letter.letterInfo.imageLetterUrl = await downloadFirebaseStorage(
+            `${letter.letterInfo.imageLetterUrl}.png`
+          );
+        }
+        // 얘도 예외처리
+        setLetter(letter);
+        navigate("/read");
+      } else {
+        popErrorAlert("", "요청실패");
+      }
+    } else {
+      popErrorAlert("", "답장편지인 경우 요청하기");
+    }
+  };
 
   return (
     <LetterDiv>
       <LetterWordsDiv>
-        <LetterTitle>{letter.letterTitle}</LetterTitle>
+        <LetterTitle
+          onClick={() => {
+            readLetter(mypageRouterIndex, letter.letterId);
+          }}
+        >
+          {letter.letterTitle}
+        </LetterTitle>
         <LetterDate>{`${letter.writerNickname}, ${writtenTime}`}</LetterDate>
         <LetterDateWeb>{`${letter.writerNickname}`}</LetterDateWeb>
         <LetterDateWeb>{`${writtenTime}`}</LetterDateWeb>
@@ -42,7 +80,7 @@ export const MypageLetter = ({ letter }) => {
         style={{ margin: "0 15px 0 0", color: "#F44336", cursor: "pointer" }}
         size="lg"
         onClick={() => {
-          setModalToggle(true);
+          setReportModal(true);
           setReadingLetterId(letter.letterId);
           console.log(
             `${letter.id}번 글을 쓴 글쓴이 아이디 ${letter.writerId}를 신고버튼`
