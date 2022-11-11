@@ -14,21 +14,24 @@ import { userInfo } from "../../../api/mypageAPI";
 import { useState } from "react";
 import DropDownInput from "../../atoms/DropDownInput";
 import { popErrorAlert } from "../../../utils/sweetAlert";
+import { LetterOptions } from "../../../constants/Options";
 
 export const MypageSettingWeb = () => {
   const setSelectedIndex = useSetRecoilState(mypageRouterState);
   const [user, setUser] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const itemList = ["0대", "10대", "20대", "30대", "40대", "50대", "60대"];
+  const [dropDownIndex, setDropDownIndex] = useState(0);
+  const itemList = LetterOptions.AGES;
 
   useEffect(async () => {
     setSelectedIndex(2);
     const response = await userInfo();
     if (response.status === 200) {
       setUser(response.data);
+      setDropDownIndex(parseInt(response.data.ageRange[4]) + 1);
       setIsLoading(false);
     } else {
-      popErrorAlert("", "유저 정보를 불러오는데 실패했습니다.")
+      popErrorAlert("", "유저 정보를 불러오는데 실패했습니다.");
     }
   }, []);
 
@@ -50,6 +53,7 @@ export const MypageSettingWeb = () => {
                   width={"80px"}
                   height={"40px"}
                   margin={"0 0 0 10px"}
+                  selectedIndex={dropDownIndex}
                 ></DropDownInput>
               </SettingChange>
             </SettingWordsDiv>
