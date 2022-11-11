@@ -16,6 +16,6 @@ public class AccusedAnswer {
     private Long reportedUserId;
     private String reportedNickname;
     private String reason;
-    private String content;
+    private String answer;
     private Boolean isSolved;
 }

@@ -142,7 +142,7 @@ public class AdminService {
                                     .reportedUserId(reportedUser.getId())
                                     .reportedNickname(reportedUser.getNickname())
                                     .reason(accusedAnswer.getReason())
-                                    .content(todayAnswer.getAnswer())
+                                    .answer(todayAnswer.getAnswer())
                                     .isSolved(accusedAnswer.isSolved())
                                     .build();
                         })
