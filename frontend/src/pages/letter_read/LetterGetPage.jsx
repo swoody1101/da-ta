@@ -23,9 +23,8 @@ const LetterGetPage = () => {
   const openBottle = async () => {
     // 로딩스피너
     const response = await getLetter();
-    if (response.status - 200 < 2) {
+    if (response.status - 200 < 3 && response.status) {
       const letter = response.data;
-      console.log(letter.letterInfo.imageLetterUrl);
       if (letter.letterInfo.imageLetterUrl) {
         letter.letterInfo.imageLetterUrl = await downloadFirebaseStorage(
           `${letter.letterInfo.imageLetterUrl}.png`
