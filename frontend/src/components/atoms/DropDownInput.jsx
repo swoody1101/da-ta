@@ -4,10 +4,10 @@
 import React from "react";
 import styled from "styled-components";
 
-const DropDownInput = ({ itemList, onChange, ...props }) => {
+const DropDownInput = ({ itemList, onChange, value, ...props }) => {
   return (
-    <Container {...props} onChange={onChange}>
-      {itemList.map((item) => (
+    <Container {...props} onChange={onChange} defaultValue={value}>
+      {itemList.map((item, index) => (
         <option value={item} key={item}>
           {item}
         </option>
