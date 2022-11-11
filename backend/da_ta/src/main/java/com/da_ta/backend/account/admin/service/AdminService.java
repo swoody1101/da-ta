@@ -155,10 +155,13 @@ public class AdminService {
         jwtTokenProvider.findUserByToken(token);
         AnswerAccusation answerAccusation = findAnswerAccusationById(answerAccusationId);
         answerAccusation.updateIsSolved();
-        User reportedUser = findUserById(findTodayAnswerById(answerAccusation.getTodayAnswer().getId()).getUser().getId());
+        TodayAnswer todayAnswer = answerAccusation.getTodayAnswer();
+        todayAnswer.deleteTodayAnswer();
+        User reportedUser = findUserById(findTodayAnswerById(todayAnswer.getId()).getUser().getId());
         reportedUser.getBanStatus().updateWarningCount();
         checkWarningCount(reportedUser);
         answerAccusationRepository.save(answerAccusation);
+        todayAnswerRepository.save(todayAnswer);
         userRepository.save(reportedUser);
         return new Message(ACCUSED_ANSWER_SOLVED.getMessage());
     }
