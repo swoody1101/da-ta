@@ -11,20 +11,55 @@ import { media } from "../../../utils/styleUtil";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTriangleExclamation,
-  faTrashCan
+  faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
+import { useSetRecoilState } from "recoil";
+import { reportModalState } from "../../../recoil/Atoms";
+import { readingLetterIdState } from "../../../recoil/Atoms";
 
-export const MypageLetter = ({letter}) => (
-  <LetterDiv>
-    <LetterWordsDiv>
-      <LetterTitle>{letter.letterTitle}</LetterTitle>
-      <LetterDate>{`${letter.userNickName}, ${letter.time}`}</LetterDate>
-    </LetterWordsDiv>
-    {/* 아이콘이 들어갈 영역 임시 코드 Aaa */}
-    <FontAwesomeIcon icon={faTriangleExclamation} style={{margin:'0 15px 0 0', color:'#F44336', cursor:'pointer'}} size="lg" onClick={() => {console.log(`${letter.letterId}번 글을 쓴 글쓴이 아이디 ${letter.userId}를 신고버튼`)}} />
-    <FontAwesomeIcon icon={faTrashCan} style={{margin:'0', cursor:'pointer'}} size="lg" onClick={() => {console.log(`${letter.letterId}번 글 삭제버튼`)}} />
-  </LetterDiv>
-);
+const DateToString = (writtenDate) => {
+  const ToDate = new Date(writtenDate);
+  return `${ToDate.getFullYear()}년 ${
+    ToDate.getMonth() + 1
+  }월 ${ToDate.getDate()}일`;
+};
+
+export const MypageLetter = ({ letter }) => {
+  const setModalToggle = useSetRecoilState(reportModalState);
+  const setReadingLetterId = useSetRecoilState(readingLetterIdState);
+  const writtenTime = DateToString(letter.writtenDate);
+
+  return (
+    <LetterDiv>
+      <LetterWordsDiv>
+        <LetterTitle>{letter.letterTitle}</LetterTitle>
+        <LetterDate>{`${letter.writerNickname}, ${writtenTime}`}</LetterDate>
+        <LetterDateWeb>{`${letter.writerNickname}`}</LetterDateWeb>
+        <LetterDateWeb>{`${writtenTime}`}</LetterDateWeb>
+      </LetterWordsDiv>
+      <FontAwesomeIcon
+        icon={faTriangleExclamation}
+        style={{ margin: "0 15px 0 0", color: "#F44336", cursor: "pointer" }}
+        size="lg"
+        onClick={() => {
+          setModalToggle(true);
+          setReadingLetterId(letter.letterId);
+          console.log(
+            `${letter.id}번 글을 쓴 글쓴이 아이디 ${letter.writerId}를 신고버튼`
+          );
+        }}
+      />
+      <FontAwesomeIcon
+        icon={faTrashCan}
+        style={{ margin: "0 15px 0 0", cursor: "pointer" }}
+        size="lg"
+        onClick={() => {
+          console.log(`${letter.id}번 글 삭제버튼`);
+        }}
+      />
+    </LetterDiv>
+  );
+};
 
 const LetterDiv = styled.div`
   display: flex;
@@ -38,6 +73,7 @@ const LetterDiv = styled.div`
 
   ${media.tablet1`
     width: 90%;
+    height: 87px;
     align-items: space-between;
   `}
 `;
@@ -48,7 +84,7 @@ const LetterWordsDiv = styled.div`
   width: 530px;
   justify-content: center;
   align-items: center;
-  margin: 0;
+  margin: 10px 0 10px 0;
 
   ${media.tablet1`
     width: 80%;
@@ -62,6 +98,9 @@ const LetterTitle = styled.p`
   height: 20px;
   text-align: start;
   cursor: pointer;
+  ${media.tablet1`
+    margin-bottom: 8px;
+  `}
 `;
 
 const LetterDate = styled.p`
@@ -71,12 +110,16 @@ const LetterDate = styled.p`
   color: #8f8f8f;
   margin-top: 5px;
   text-align: start;
+
+  ${media.tablet1`
+    display: none;
+  `}
 `;
 
-// 아이콘이 들어갈 영역 test코드
-const Aaa = styled.div`
-  width: 20px;
-  height: 20px;
-  background-color: bisque;
-  margin: 0 10px 0 0;
+const LetterDateWeb = styled(LetterDate)`
+  display: none;
+  margin: 0;
+  ${media.tablet1`
+    display: inline;
+  `}
 `;

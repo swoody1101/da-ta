@@ -16,7 +16,7 @@ const moveRight = keyframes`
   0% {
     background-position: 0;
   }
-  100% {
+  100% {z
     background-position: 1280px;
   }
 `;

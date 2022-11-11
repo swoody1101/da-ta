@@ -8,11 +8,13 @@
  */
 import styled from "styled-components";
 
-const BackgroundGradient = ({ start, end }) => <BG start={start} end={end} />;
+const BackgroundGradient = ({ start, end, height }) => (
+  <BG start={start} end={end} height={height} />
+);
 
 const BG = styled.div`
   width: 100vw;
-  height: 100vh;
+  height: ${(props) => props.height || "100vh"};
   overflow: hidden;
   position: absolute;
   background: linear-gradient(
