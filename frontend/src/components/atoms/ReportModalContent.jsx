@@ -36,16 +36,20 @@ const ReportModalContent = () => {
 
   const reportBtn = async () => {
     let reasonsString = sendingReasons.reduce((pre, cur) => pre + cur, "");
-    const response = await reportLetter(letterId, {
-      isReply: isReply,
-      reason: reasonsString,
-    });
-    setReportModal(false);
-    if (response.status - 200 < 3 && response.status) {
-      popSuccessAlert("", "신고가 접수되었습니다.");
-      navigate("/");
+    if (reasonsString) {
+      const response = await reportLetter(letterId, {
+        isReply: isReply,
+        reason: reasonsString,
+      });
+      setReportModal(false);
+      if (response.status - 200 < 3 && response.status) {
+        popSuccessAlert("", "신고가 접수되었습니다.");
+        navigate("/");
+      } else {
+        popErrorAlert("", "신고내역 전송에 실패했습니다.");
+      }
     } else {
-      popErrorAlert("", "신고내역 전송에 실패했습니다.");
+      popErrorAlert("", "신고 내용을 기입해주세요.");
     }
   };
 
@@ -81,7 +85,9 @@ const ReportModalContent = () => {
       <hr />
       <ReportModalBtnDiv>
         <Button
-          onClick={reportBtn()}
+          onClick={async () => {
+            reportBtn();
+          }}
           width={"30%"}
           height={"30px"}
           color={"black"}
