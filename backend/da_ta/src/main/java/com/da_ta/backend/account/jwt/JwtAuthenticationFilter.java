@@ -23,7 +23,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
             String path = request.getServletPath();
-            if (path.startsWith("/api/v1/user/login") || path.startsWith("/api/v1/user/reissue")) { // 토큰을 재발급하는 API 경우 토큰 체크 로직 건너뛰기
+            if (path.startsWith("/api/v1/user/login") || path.startsWith("/api/v1/user/reissue")) {
                 filterChain.doFilter(request, response);
             } else {
                 String accessToken = jwtTokenProvider.resolveAccessToken(request);
