@@ -10,10 +10,19 @@ import { ClickableSpan } from "../../atoms/ClickableSpan";
 import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 import { mypageRouterState } from "../../../recoil/Atoms";
-import { userInfo } from "../../../api/mypageAPI";
+import {
+  userInfo,
+  setUserAge,
+  setUserAlert,
+  cancellation,
+} from "../../../api/mypageAPI";
 import { useState } from "react";
 import DropDownInput from "../../atoms/DropDownInput";
-import { popErrorAlert } from "../../../utils/sweetAlert";
+import {
+  popConfirmAlert,
+  popErrorAlert,
+  popSuccessAlert,
+} from "../../../utils/sweetAlert";
 import { LetterOptions } from "../../../constants/Options";
 
 export const MypageSettingWeb = () => {
@@ -35,6 +44,33 @@ export const MypageSettingWeb = () => {
     }
   }, []);
 
+  const setAge = async (body) => {
+    console.log(body);
+    const response = await setUserAge(body);
+    if (response.status - 200 < 3 && response.status) {
+      popSuccessAlert("", "연령대를 수정하였습니다");
+    } else {
+      popErrorAlert("", "연령대 변경 요청 실패!");
+    }
+    // 새로고침
+  };
+
+  const setAlert = async (body) => {
+    const response = await setUserAlert(body);
+    if (response.status - 200 < 3 && response.status) {
+      popSuccessAlert("", "알람 설정을 변경하였습니다.");
+    } else {
+      popErrorAlert("", "알람 요청 실패!");
+    }
+    // 새로고침
+  };
+
+  const setCancellation = () => {
+    popConfirmAlert("", "탈퇴를 진행하시겠습니까?", "네", "아니오");
+    // 로그아웃
+    // 홈화면으로 발사
+  };
+
   return (
     <>
       {isLoading ? null : (
@@ -53,7 +89,10 @@ export const MypageSettingWeb = () => {
                   width={"80px"}
                   height={"40px"}
                   margin={"0 0 0 10px"}
-                  selectedIndex={dropDownIndex}
+                  value={LetterOptions.AGES[dropDownIndex]}
+                  onChange={(e) => {
+                    setAge({ age: LetterOptions.AGES_VALUE[e.target.value] });
+                  }}
                 ></DropDownInput>
               </SettingChange>
             </SettingWordsDiv>
@@ -74,7 +113,7 @@ export const MypageSettingWeb = () => {
                   tagname={"알림설정"}
                   checked={user.isAlertActive}
                   onCheckHandler={(e) => {
-                    console.log(e.target.checked);
+                    setAlert({ isAlertActive: e.target.checked });
                   }}
                 />
                 <div style={{ width: "290px" }}></div>
@@ -91,7 +130,13 @@ export const MypageSettingWeb = () => {
                 </p>
               </SettingExpln>
               <SettingChange>
-                <ClickableSpan>탈퇴하기</ClickableSpan>
+                <ClickableSpan
+                  onClick={() => {
+                    setCancellation();
+                  }}
+                >
+                  탈퇴하기
+                </ClickableSpan>
               </SettingChange>
             </SettingWordsDiv>
           </SettingDiv>

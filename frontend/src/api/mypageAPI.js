@@ -46,10 +46,10 @@ export const userInfo = async () => {
   return result;
 };
 
-export const setUserAge = async () => {
-  const body = {
-    age: "string",
-  };
+export const setUserAge = async (body) => {
+  // const body = {
+  //   age: "string",
+  // };
   const result = await client
     .put("/user/update/1", body)
     .then((response) => response)
@@ -57,10 +57,10 @@ export const setUserAge = async () => {
   return result;
 };
 
-export const setUserAlert = async (input) => {
-  const body = {
-    isAlertActive: input,
-  };
+export const setUserAlert = async (body) => {
+  // const body = {
+  //   isAlertActive: input,
+  // };
   const result = await client
     .put("/user/update/2", body)
     .then((response) => response)
@@ -68,7 +68,7 @@ export const setUserAlert = async (input) => {
   return result;
 };
 
-export const deleteUser = async () => {
+export const cancellation = async () => {
   const result = await client
     .delete("/user")
     .then((response) => response)
