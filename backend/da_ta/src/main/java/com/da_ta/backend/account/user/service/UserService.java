@@ -254,7 +254,7 @@ public class UserService {
     }
 
     public Message updateAgeRange(User user, UpdateAgeRangeRequest updateAgeRangeRequest) {
-        user.updateAgeRange(updateAgeRangeRequest.getAgeRange());
+        user.updateAgeRange(updateAgeRangeRequest.getAge());
         userRepository.save(user);
         return new Message(AGE_RANGE_UPDATED.getMessage());
     }

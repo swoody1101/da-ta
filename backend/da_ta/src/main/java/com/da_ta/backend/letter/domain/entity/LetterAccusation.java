@@ -17,7 +17,10 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class LetterAccusation extends CommonEntity {
 
+    @NotNull
     private Long reporterId;
+
+    @NotNull
     private String reason;
 
     @NotNull
@@ -30,5 +33,9 @@ public class LetterAccusation extends CommonEntity {
 
     public void updateIsSolved() {
         this.isSolved = true;
+    }
+
+    public void deleteLetterAccusation() {
+        super.delete();
     }
 }
