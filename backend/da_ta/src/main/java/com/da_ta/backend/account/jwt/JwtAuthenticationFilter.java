@@ -1,5 +1,7 @@
 package com.da_ta.backend.account.jwt;
 
+import com.da_ta.backend.common.domain.ErrorCode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -35,6 +37,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
         } catch (ExpiredJwtException e) {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            response.setContentType("application/json;charset=UTF-8");
+            response.getWriter().write(new ObjectMapper().writeValueAsString(ErrorCode.ACCESS_TOKEN_EXPIRED.getMessage()));
             response.getWriter().flush();
         }
     }
