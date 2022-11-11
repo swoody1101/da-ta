@@ -5,5 +5,5 @@ import lombok.Getter;
 @Getter
 public class UpdateAgeRangeRequest {
 
-    private String ageRange;
+    private String age;
 }

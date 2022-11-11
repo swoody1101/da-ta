@@ -44,6 +44,33 @@ public class AdminController {
                 .body(adminService.updateAccusedLetter(token, letterAccusationId));
     }
 
+    @DeleteMapping("/accusation/letter/{letter_accusation_id}")
+    public ResponseEntity<Message> deleteAccusedLetter(@RequestHeader(AUTHORIZATION) String token,
+                                                       @PathVariable("letter_accusation_id") Long letterAccusationId) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(adminService.deleteAccusedLetter(token, letterAccusationId));
+    }
+
+    @GetMapping("/accusation/answer")
+    public ResponseEntity<FindAccusedAnswersResponse> findAccusedAnswers(@RequestHeader(AUTHORIZATION) String token) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(adminService.findAccusedAnswers(token));
+    }
+
+    @PostMapping("/accusation/answer/{answer_accusation_id}")
+    public ResponseEntity<Message> updateAccusedAnswer(@RequestHeader(AUTHORIZATION) String token,
+                                                       @PathVariable("answer_accusation_id") Long answerAccusationId) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(adminService.updateAccusedAnswer(token, answerAccusationId));
+    }
+
+    @DeleteMapping("/accusation/answer/{answer_accusation_id}")
+    public ResponseEntity<Message> deleteAccusedAnswer(@RequestHeader(AUTHORIZATION) String token,
+                                                       @PathVariable("answer_accusation_id") Long answerAccusationId) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(adminService.deleteAccusedAnswer(token, answerAccusationId));
+    }
+
     @GetMapping("/question")
     public ResponseEntity<FindTodayQuestionsResponse> findTodayQuestions(@RequestHeader(AUTHORIZATION) String token,
                                                                          @RequestParam String date) {
@@ -78,5 +105,12 @@ public class AdminController {
                                                        @PathVariable("question_id") Long questionId) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(adminService.deleteTodayQuestion(token, questionId));
+    }
+
+    @GetMapping("/answer/{question_id}")
+    public ResponseEntity<FindTodayAnswersResponse> findTodayAnswers(@RequestHeader(AUTHORIZATION) String token,
+                                                                     @PathVariable("question_id") Long questionId) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(adminService.findTodayAnswers(token, questionId));
     }
 }

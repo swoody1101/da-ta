@@ -32,4 +32,8 @@ public class TodayAnswer extends CommonEntity {
 
     @OneToOne(mappedBy = "todayAnswer")
     private AnswerAccusation answerAccusation;
+
+    public void deleteTodayAnswer() {
+        super.delete();
+    }
 }
