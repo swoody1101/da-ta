@@ -88,7 +88,7 @@ const LetterCanvasArea = ({ wrap, canvasOptions, canvasSaveTrigger, setCanvasSav
 		// 계산한 범위 리턴
 		return {
 			offsetX: e.touches[0].clientX - left,
-			offsetY: window.innerWidth < SIZE_PHONE ? e.touches[0].clientY - top + 50 : e.touches[0].clientY - top + 50,
+			offsetY: window.innerWidth < SIZE_PHONE ? e.touches[0].clientY - top + 25 : e.touches[0].clientY - top + 25,
 		};
 	};
 
