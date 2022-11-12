@@ -1,56 +1,73 @@
 import React from "react";
 import { useState } from "react";
+import BackgroundVideo from "../components/atoms/BackgroundVideo";
+import { Wrapper } from "../styles/Wrapper";
+import Button from "../components/atoms/Button";
 import styled from "styled-components";
-import BackgroundGradient from "../components/atoms/BackgroundGradient";
-import { Wave } from "../components/atoms/Wave";
-import { MypageMenuBar } from "../components/molecules/mypage/MypageMenubar";
-import { MypageContentsBox } from "../components/organisms/mypage/MypageContentsBox";
+import { getLetter } from "../api/letterReadAPI";
+import { useSetRecoilState } from "recoil";
+import { letterState } from "../recoil/Atoms";
+import { useNavigate } from "react-router";
 
-//Todo : 해수면 높이 올리기
 const TestBoyeon = () => {
-  // Todo: MenuBar molecule 의 selectedIndex와 같이 전역으로 관리하기
-  let [selectedIndex, setSelectedIndex] = useState(0);
+  const navigate = useNavigate();
+  const setLetter = useSetRecoilState(letterState);
+  let [blur, SetBlur] = useState(true);
+
+  const openBottle = async () => {
+    const response = await getLetter();
+    console.log(response);
+    // if (response.status - 200 < 2) {
+    //   setLetter(response.data);
+    //   navigate("/read");
+    // }
+    setLetter({
+      writerId: 7,
+      writerName: "길가다 5만원을 주운 후라이드치킨",
+      replyOption: true,
+      floatLetterId: 0,
+      letterInfo: {
+        letterId: 10,
+        title: "메밀꽃 필 무렵",
+        content: "여름장이란 애시당초에 글러서 해는 아직 중천에 있건만",
+        imageLetterUrl:
+          // process.env.PUBLIC_URL + "/assets/images/mypage/gear.png",
+          null,
+        backgroundId: 2,
+        fontId: 1,
+        createTime: new Date(),
+      },
+    });
+    navigate("/read");
+  };
 
   return (
     <>
-      <Wraper>
-        <MypageWebContents>
-          <MypageMenuBar />
-          <MypageContentsBox />
-        </MypageWebContents>
-      </Wraper>
-      <Wave opacity={0.5} frequency={16} isRight={true}></Wave>
-      <Wave opacity={0.3} frequency={8} isRight={true}></Wave>
-      <Wave opacity={0.4} frequency={13} isRight={false}></Wave>
-      <BackgroundGradient start={"E2AAFD"} end={"FFDFC2"} />
+      <ReadWrapper>
+        나중에 애니메이션 들어갈 예정
+        <Button
+          width={"300px"}
+          height={"150px"}
+          hasBorder={true}
+          onClick={async () => {
+            openBottle();
+          }}
+        >
+          편지 받기
+        </Button>
+      </ReadWrapper>
+      <BackgroundVideo
+        isBlur={blur}
+        path={`${process.env.PUBLIC_URL}/assets/video/bg2.mp4`}
+      />
     </>
   );
 };
 
-const Wraper = styled.div`
-  display: flex;
-  min-height: 100vh;
-  justify-content: center;
+const ReadWrapper = styled(Wrapper)`
+  flex-direction: column;
   align-items: center;
-`;
-
-const MypageWebContents = styled.div`
-  display: flex;
-  height: 656px;
-  width: 900px;
   justify-content: center;
-  align-items: center;
-  background-color: #f5f5f5;
-  z-index: 1;
-  border-radius: 20px;
-
-  @media screen and (max-width: 900px) {
-    width: 100vw;
-    height: 100vh;
-    border-radius: 0px;
-    flex-direction: column;
-    justify-content: flex-start;
-  }
 `;
 
 export default TestBoyeon;

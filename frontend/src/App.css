@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  width: 105%;
+  margin: auto;
 }
 
 * {
@@ -9,7 +11,12 @@
   padding: 0 auto;
 }
 
+body {
+  overflow: overlay;
+}
+
 *::-webkit-scrollbar {
+  position: absolute;
   width: 8px;
   border-radius: 16px;
   z-index: 9999;

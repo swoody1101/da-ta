@@ -10,6 +10,8 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 import Button from "./../atoms/Button";
+import { useRecoilValue } from "recoil";
+import { userState } from "../../recoil/Atoms";
 
 const SlideMenu = ({
   show,
@@ -20,7 +22,7 @@ const SlideMenu = ({
 }) => {
   const navigate = useNavigate();
 
-  const [nickname, setNickname] = useState("길가의 돌멩이");
+  const nickname = useRecoilValue(userState).nickname;
 
   useEffect(() => {
     document.body.style.overflow = show ? "hidden" : "auto";
@@ -84,7 +86,7 @@ const SlideMenu = ({
             <FontAwesomeIcon icon={faPenToSquare} />
           </FaWrapper>
         </MenuContent>
-        <MenuContent jc={true} onClick={() => handleMenuClick("/read")}>
+        <MenuContent jc={true} onClick={() => handleMenuClick("/get")}>
           편지 받기
           <FaWrapper>
             <FontAwesomeIcon icon={faEnvelopeOpenText} />

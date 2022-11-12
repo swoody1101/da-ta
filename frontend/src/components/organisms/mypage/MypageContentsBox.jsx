@@ -19,8 +19,9 @@ const ContentsBoxDiv = styled.div`
   display: flex;
   flex-direction: column;
   width: 700px;
-  height: 536px;
+  height: 90%;
   background-color: #f5f5f5;
+  overflow-y: auto;
 
   ${media.tablet1`
     width: 100%;
