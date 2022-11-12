@@ -13,9 +13,10 @@ import Button from "./../atoms/Button";
 import LogoImage from "./../molecules/LogoImage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { useRecoilState } from "recoil";
-import { loginState, mypageRouterState } from "./../../recoil/Atoms";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { loginState, mypageRouterState, userState } from "./../../recoil/Atoms";
 import { clickToKakao } from "../../api/authAPI";
+import { SIZE_WIDE } from "./../../constants/Sizes";
 
 const MainNav = () => {
   const navigate = useNavigate();
@@ -23,12 +24,14 @@ const MainNav = () => {
   const [scrollY, setScrollY] = useState(0); // 높이 스크롤 값
   const [headerShow, setHeaderShow] = useState(true); // 헤더 show 여부
   const [headerMobileMode, setHeaderMobileMode] = useState(false); // pc모드인지 모바일모드인지 여부
-  const [slideMenuToggle, setSlideMenuToggle] = useState(false); // 슬라이딩메뉴 토
+  const [slideMenuToggle, setSlideMenuToggle] = useState(false); // 슬라이딩메뉴 토글
+  const [speechBubble, setSpeechBubble] = useState(false);
   const [isLogin, setIsLogin] = useRecoilState(loginState); // Recoil로 관리하는 로그인 정보
+  const [user, setUserState] = useRecoilState(userState);
   const [mypageIndex, setMypageIndex] = useRecoilState(mypageRouterState); // Recoil로 관리하는 현재 마이페이지의 index
 
   const handleHeaderShow = () => {
-    if (window.scrollY === 0 || window.scrollY - scrollY < 0) {
+    if (window.scrollY <= 0 || window.scrollY - scrollY < 0) {
       setHeaderShow(true);
     } else {
       setHeaderShow(false);
@@ -37,26 +40,24 @@ const MainNav = () => {
   };
 
   const handleHeaderMode = () => {
-    setHeaderMobileMode(window.innerWidth <= 1280 ? true : false);
+    setHeaderMobileMode(window.innerWidth <= SIZE_WIDE ? true : false);
   };
 
   const handleLogin = () => {
     clickToKakao();
-    // setIsLogin(true);
   };
 
   const handleLogout = () => {
-    // setIsLogin(false);
+    setIsLogin(false);
+    setUserState({});
+    sessionStorage.removeItem("ACCESS_TOKEN");
+    window.location.href = "/";
   };
 
   useEffect(() => {
     handleHeaderMode();
     handleHeaderShow();
   }, []);
-
-  useEffect(() => {
-    console.log(isLogin);
-  }, [isLogin]);
 
   useEffect(() => {
     window.addEventListener("scroll", handleHeaderShow);
@@ -87,6 +88,7 @@ const MainNav = () => {
         <HamburgerButtonWrapper>
           <Button
             hasBorder={false}
+            borderStyle="0"
             width={"4rem"}
             height={"4rem"}
             onClick={() => setSlideMenuToggle(true)}
@@ -114,7 +116,7 @@ const MainNav = () => {
             <HeaderContent onClick={() => navigate("/write")}>
               편지 쓰기
             </HeaderContent>
-            <HeaderContent onClick={() => navigate("/read")}>
+            <HeaderContent onClick={() => navigate("/get")}>
               편지 읽기
             </HeaderContent>
             <HeaderContent
@@ -140,13 +142,19 @@ const MainNav = () => {
               <>
                 <Button
                   hoverBgOpacity="0.3"
-                  fontSize="1.2rem"
+                  fontSize="1rem"
                   height="3rem"
                   width="11rem"
-                  margin="0 -3.5rem 0 0 "
-                  onClick={handleLogout}
+                  margin="0 -3.5rem 0 0"
+                  color="white"
+                  bgColor="#1A9459b5"
+                  onMouseOver={() => setSpeechBubble(true)}
+                  onMouseOut={() => setSpeechBubble(false)}
                 >
-                  로그아웃
+                  {user.nickname} 님
+                  <SpeechBubble act={speechBubble} onClick={handleLogout}>
+                    로그아웃
+                  </SpeechBubble>
                 </Button>
               </>
             ) : (
@@ -215,6 +223,26 @@ const HamburgerButtonWrapper = styled.div`
   right: 5rem;
   align-items: center;
   justify-content: center;
+`;
+
+const SpeechBubble = styled.div`
+  display: flex;
+  position: absolute;
+  // top: ${(props) => (props.act ? "0rem" : "-3rem")};
+  top: 0rem;
+  width: 11rem;
+  height: 3rem;
+  background-color: white;
+  border-radius: 8px;
+  filter: drop-shadow(0 8px 16px #5778ec);
+  transition: 0.2s ease;
+  justify-content: center;
+  align-items: center;
+  color: #383838;
+  font-size: 1.2rem;
+  font-weight: bold;
+  transform: ${(props) => (props.act ? `scale(1)` : `scale(0)`)};
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
 `;
 
 export default MainNav;
