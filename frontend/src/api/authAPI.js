@@ -12,7 +12,7 @@ const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=co
  * @description 클릭 시 카카오 소셜 로그인 페이지로 리다이렉트하는 함수
  */
 export const clickToKakao = () => {
-	window.location.href = `${KAKAO_AUTH_URL}`;
+  window.location.href = `${KAKAO_AUTH_URL}`;
 };
 
 /**
@@ -21,23 +21,23 @@ export const clickToKakao = () => {
  * @returns response
  */
 export const kakaoLoginByAuthCode = async (code) => {
-	const response = await client
-		.post("/user/login", {
-			authorizationCode: code,
-		})
-		.then((res) => res)
-		.catch((error) => error.response);
+  const response = await client
+    .post("/user/login", {
+      authorizationCode: code,
+    })
+    .then((res) => res)
+    .catch((error) => error.response);
 
-	return response;
+  return response;
 };
 
 /**
  * @description 리프레시 토큰 재발급
  */
 export const reissue = async () => {
-	const response = await client
-		.post(`/user/reissue`)
-		.then((res) => res)
-		.catch((error) => error.response);
-	return response;
+  const response = await client
+    .get(`/user/reissue`)
+    .then((res) => res)
+    .catch((error) => error.response);
+  return response;
 };
