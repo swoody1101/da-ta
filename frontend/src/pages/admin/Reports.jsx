@@ -35,7 +35,7 @@ const Reports = () => {
 		setItemList([]);
 		const response = await getReportList(listType);
 		setLoading(false);
-		if (response.status !== 200) {
+		if (!response || response.status !== 200) {
 			popErrorAlert("목록 불러올 수 없음", "신고 목록을 불러오던 중 문제가 발생했습니다.");
 			return;
 		}
@@ -53,14 +53,14 @@ const Reports = () => {
 	};
 
 	/** [편지, 오늘의질문 답변]신고 처리 */
-	const handleAccuse = async (item, letterAccusationId, e) => {
+	const handleAccuse = async (item, e) => {
 		if (item.isSolved) {
 			popWarningAlert("신고 처리 실패", "이미 경고처리된 신고입니다.");
 			return;
 		}
 
 		setLoading(true);
-		const response = await accuseUser(letterAccusationId, listType);
+		const response = await accuseUser(listType === "letter" ? item.accusedLetterId : item.answerAccusationId, listType);
 		setLoading(false);
 
 		if (response.status !== 200 && response.status !== 201) {
