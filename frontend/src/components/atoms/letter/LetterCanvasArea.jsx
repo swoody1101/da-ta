@@ -87,7 +87,7 @@ const LetterCanvasArea = ({ wrap, canvasOptions, canvasSaveTrigger, setCanvasSav
 
 		return {
 			offsetX: e.touches[0].clientX - left,
-			offsetY: window.innerWidth < SIZE_PHONE ? e.touches[0].clientY - top + 30 : e.touches[0].clientY - top,
+			offsetY: window.innerWidth < SIZE_PHONE ? e.touches[0].clientY - top + 100 : e.touches[0].clientY - top + 100,
 		};
 	};
 
