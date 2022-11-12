@@ -47,6 +47,7 @@ const Reports = () => {
     setItemList([]);
     const response = await getReportList(listType);
     setLoading(false);
+    console.log(response);
     if (response.status !== 200) {
       popErrorAlert(
         "목록 불러올 수 없음",
