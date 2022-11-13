@@ -38,23 +38,28 @@ const LetterGetPage = () => {
   return (
     <>
       <ReadWrapper>
-        <ShakerDiv>
-          <Bottle
-            src={`${process.env.PUBLIC_URL}/assets/images/common/bottle_of_letter_btn.png`}
-          ></Bottle>
-        </ShakerDiv>
-        <TextDiv delay="2.0s">하나둘 추억이 떠오르면</TextDiv>
-        <TextDiv delay="3.2s">많이 많이 그리워 할거야</TextDiv>
-        <Button
-          width={"200px"}
-          height={"50px"}
-          hasBorder={true}
-          onClick={async () => {
-            openBottle();
-          }}
-        >
-          편지 받기
-        </Button>
+        <Contents>
+          {/* <BGBG></BGBG> */}
+          <ShakerDiv>
+            <Bottle
+              src={`${process.env.PUBLIC_URL}/assets/images/common/bottle_of_letter_btn.png`}
+            ></Bottle>
+          </ShakerDiv>
+          <TextDiv delay="2.0s">편지가 떠내려왔습니다.</TextDiv>
+          <TextDiv delay="3.2s">클릭하셔서 열어보세요!</TextDiv>
+          <TextDiv delay="4.4s">
+            <Button
+              width={"200px"}
+              height={"50px"}
+              hasBorder={true}
+              onClick={async () => {
+                openBottle();
+              }}
+            >
+              편지 받기
+            </Button>
+          </TextDiv>
+        </Contents>
       </ReadWrapper>
       <BackgroundVideo
         isBlur={blur}
@@ -130,4 +135,22 @@ const TextDiv = styled.div`
   opacity: 0;
   animation: ${appearing} 1.2s ${(props) => props.delay} linear forwards;
 `;
+
+const Contents = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-contents: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+`;
+
+const BGBG = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0.3;
+`;
+
 export default LetterGetPage;
