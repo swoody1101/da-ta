@@ -65,7 +65,7 @@ export const MypageLetter = ({ letter }) => {
     }
   };
 
-  const deleteLetter = async (letterId) => {
+  const deleteLetter = async (index, letterId) => {
     console.log(letterId);
     if (index === 0) {
       const response = await collectDeleteLetter(letterId);
@@ -115,7 +115,7 @@ export const MypageLetter = ({ letter }) => {
         style={{ margin: "0 15px 0 0", cursor: "pointer" }}
         size="lg"
         onClick={() => {
-          deleteLetter(letter.letterId);
+          deleteLetter(mypageRouterIndex, letter.letterId);
         }}
       />
     </LetterDiv>
