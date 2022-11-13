@@ -1,5 +1,7 @@
 package com.da_ta.backend.account.jwt;
 
+import com.da_ta.backend.common.domain.ErrorCode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,7 +25,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
             String path = request.getServletPath();
-            if (path.startsWith("/api/v1/user/login") || path.startsWith("/api/v1/user/reissue")) { // 토큰을 재발급하는 API 경우 토큰 체크 로직 건너뛰기
+            if (path.startsWith("/api/v1/user/login") || path.startsWith("/api/v1/user/reissue")) {
                 filterChain.doFilter(request, response);
             } else {
                 String accessToken = jwtTokenProvider.resolveAccessToken(request);
@@ -35,6 +37,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
         } catch (ExpiredJwtException e) {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            response.setContentType("application/json;charset=UTF-8");
+            response.getWriter().write(new ObjectMapper().writeValueAsString(ErrorCode.ACCESS_TOKEN_EXPIRED.getMessage()));
             response.getWriter().flush();
         }
     }
