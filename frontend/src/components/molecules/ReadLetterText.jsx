@@ -28,7 +28,7 @@ const ReadLetterText = ({ info }) => {
       <Container
         width="96%"
         height={SizeTypes.PC_TITLE_HEIGHT}
-        padding="0.5rem 0 0.5rem 0"
+        padding="0.5rem 0 0 0"
       >
         <LetterTitle width="96%" fontSize="1.2rem" fontWeight="bold">
           {info.title}
@@ -47,6 +47,15 @@ const ReadLetterText = ({ info }) => {
           </IconReportBtn>
         </LetterTitle>
       </Container>
+      <Container
+        width="96%"
+        height={SizeTypes.PC_TITLE_HEIGHT}
+        padding="0 0 0.5rem 0"
+      >
+        <LetterTitle width="96%" fontSize="1rem" fontWeight="bold">
+          {`${info.writtenDate}, ${info.writerNickname}`}
+        </LetterTitle>
+      </Container>
       <LetterContent fontFamily={LetterOptions.FONTS[info.fontId]}>
         {info.content}
       </LetterContent>
@@ -55,7 +64,6 @@ const ReadLetterText = ({ info }) => {
 };
 
 const Container = styled.div`
-  display: flex;
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   padding: ${(props) => props.padding};
