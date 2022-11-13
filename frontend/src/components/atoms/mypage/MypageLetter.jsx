@@ -19,8 +19,12 @@ import {
   reportModalState,
 } from "../../../recoil/Atoms";
 import { readingLetterIdState } from "../../../recoil/Atoms";
-import { collectDetail } from "../../../api/mypageAPI";
-import { popErrorAlert } from "../../../utils/sweetAlert";
+import {
+  collectDeleteLetter,
+  collectDetail,
+  replyDeleteLetter,
+} from "../../../api/mypageAPI";
+import { popErrorAlert, popSuccessAlert } from "../../../utils/sweetAlert";
 import { downloadFirebaseStorage } from "../../../utils/firebaseStorage";
 import { useNavigate } from "react-router-dom";
 
@@ -31,7 +35,7 @@ const DateToString = (writtenDate) => {
   }월 ${ToDate.getDate()}일`;
 };
 
-export const MypageLetter = ({ letter }) => {
+export const MypageLetter = ({ letter, reload }) => {
   const navigate = useNavigate();
   const setReportModal = useSetRecoilState(reportModalState);
   const setReadingLetterId = useSetRecoilState(readingLetterIdState);
@@ -40,8 +44,8 @@ export const MypageLetter = ({ letter }) => {
   const writtenTime = DateToString(letter.writtenDate);
 
   const readLetter = async (index, letterId) => {
-    console.log(letterId);
     if (index === 0) {
+      // routerIndex=0 인 경우 => 수집한 편지인 경우
       const response = await collectDetail(letterId);
       if (response.status - 200 < 3 && response.status) {
         const letter = response.data;
@@ -50,14 +54,35 @@ export const MypageLetter = ({ letter }) => {
             `${letter.letterInfo.imageLetterUrl}.png`
           );
         }
-        // 얘도 예외처리
         setLetter(letter);
         navigate("/read");
       } else {
-        popErrorAlert("", "요청실패");
+        popErrorAlert("", "수집한 편지 읽기 요청실패");
       }
     } else {
+      // routerIndex=0 이 아닌 경우 => 답장받은 편지인 경우
       popErrorAlert("", "답장편지인 경우 요청하기");
+    }
+  };
+
+  const deleteLetter = async (index, letterId) => {
+    if (index === 0) {
+      // routerIndex=0 인 경우 => 수집한 편지인 경우
+      const response = await collectDeleteLetter(letterId);
+      if (response.status - 200 < 3 && response.status) {
+        popSuccessAlert("", "수집한 편지를 삭제했습니다.");
+        reload();
+      } else {
+        popErrorAlert("", "수집한 편지 삭제 요청실패");
+      }
+    } else {
+      // routerIndex=0 이 아닌 경우 => 답장받은 편지인 경우
+      const response = await replyDeleteLetter(letterId);
+      if (response.status - 200 < 3 && response.status) {
+        popSuccessAlert("", "답장한 편지를 삭제했습니다.");
+      } else {
+        popErrorAlert("", "요청실패");
+      }
     }
   };
 
@@ -83,7 +108,7 @@ export const MypageLetter = ({ letter }) => {
           setReportModal(true);
           setReadingLetterId(letter.letterId);
           console.log(
-            `${letter.id}번 글을 쓴 글쓴이 아이디 ${letter.writerId}를 신고버튼`
+            `${letter.letterId}번 글을 쓴 글쓴이 아이디 ${letter.writerId}를 신고버튼`
           );
         }}
       />
@@ -92,7 +117,7 @@ export const MypageLetter = ({ letter }) => {
         style={{ margin: "0 15px 0 0", cursor: "pointer" }}
         size="lg"
         onClick={() => {
-          console.log(`${letter.id}번 글 삭제버튼`);
+          deleteLetter(mypageRouterIndex, letter.letterId);
         }}
       />
     </LetterDiv>

@@ -19,49 +19,72 @@ import {
   popErrorAlert,
   popSuccessAlert,
 } from "../../../utils/sweetAlert";
-import { useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
+import { loginState, userState } from "../../../recoil/Atoms";
 
 export const MypageSettingMobile = () => {
   const [user, setUser] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const setIsLogin = useSetRecoilState(loginState);
+  const setUserState = useSetRecoilState(userState);
   const [dropDownIndex, setDropDownIndex] = useState(0);
   const itemList = LetterOptions.AGES;
-  const navigate = useNavigate();
 
-  useEffect(async () => {
+  useEffect(() => {
+    callUserInfo();
+  }, []);
+
+  const callUserInfo = async () => {
     const response = await userInfo();
     if (response.status === 200) {
       setUser(response.data);
       setDropDownIndex(parseInt(response.data.ageRange[4]) + 1);
       setIsLoading(false);
     }
-  }, []);
+  };
 
   const setAge = async (body) => {
     console.log(body);
     const response = await setUserAge(body);
     if (response.status - 200 < 3 && response.status) {
       popSuccessAlert("", "연령대를 수정하였습니다");
+      callUserInfo();
     } else {
       popErrorAlert("", "연령대 변경 요청 실패!");
     }
-    // 새로고침
   };
 
   const setAlert = async (body) => {
     const response = await setUserAlert(body);
     if (response.status - 200 < 3 && response.status) {
       popSuccessAlert("", "알람 설정을 변경하였습니다.");
+      callUserInfo();
     } else {
       popErrorAlert("", "알람 요청 실패!");
     }
-    // 새로고침
   };
 
   const setCancellation = () => {
-    popConfirmAlert("", "탈퇴를 진행하시겠습니까?", "네", "아니오");
-    // 로그아웃
-    // 홈화면으로 발사
+    popConfirmAlert(
+      "",
+      "탈퇴를 진행하시겠습니까?",
+      "네",
+      "아니오",
+      async () => {
+        const response = await cancellation();
+        if (response.status - 200 < 3 && response.status) {
+          popSuccessAlert("", "회원 탈퇴 되셨습니다");
+          setUserState({});
+          sessionStorage.removeItem("ACCESS_TOKEN");
+          setTimeout(() => {
+            setIsLogin(false);
+            window.location.href = "/";
+          }, 1000);
+        } else {
+          popErrorAlert("", "회원 탈퇴 요청 실패!");
+        }
+      }
+    );
   };
 
   return (
