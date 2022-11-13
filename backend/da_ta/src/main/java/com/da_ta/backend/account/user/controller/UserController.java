@@ -5,7 +5,6 @@ import com.da_ta.backend.account.user.controller.dto.*;
 import com.da_ta.backend.account.user.service.UserService;
 import com.da_ta.backend.common.domain.Message;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
