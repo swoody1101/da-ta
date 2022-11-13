@@ -32,8 +32,12 @@ export const MypageSettingWeb = () => {
   const [dropDownIndex, setDropDownIndex] = useState(0);
   const itemList = LetterOptions.AGES;
 
-  useEffect(async () => {
+  useEffect(() => {
     setSelectedIndex(2);
+    callUserInfo();
+  }, []);
+
+  const callUserInfo = async () => {
     const response = await userInfo();
     if (response.status === 200) {
       setUser(response.data);
@@ -42,13 +46,14 @@ export const MypageSettingWeb = () => {
     } else {
       popErrorAlert("", "유저 정보를 불러오는데 실패했습니다.");
     }
-  }, []);
+  };
 
   const setAge = async (body) => {
     console.log(body);
     const response = await setUserAge(body);
     if (response.status - 200 < 3 && response.status) {
       popSuccessAlert("", "연령대를 수정하였습니다");
+      callUserInfo();
     } else {
       popErrorAlert("", "연령대 변경 요청 실패!");
     }
@@ -59,6 +64,7 @@ export const MypageSettingWeb = () => {
     const response = await setUserAlert(body);
     if (response.status - 200 < 3 && response.status) {
       popSuccessAlert("", "알람 설정을 변경하였습니다.");
+      callUserInfo();
     } else {
       popErrorAlert("", "알람 요청 실패!");
     }
