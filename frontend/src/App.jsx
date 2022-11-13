@@ -28,6 +28,7 @@ import Reports from "./pages/admin/Reports";
 import UserInfos from "./pages/admin/UserInfos";
 import TodayQuestions from "./pages/admin/TodayQuestions";
 import LetterGetPage from "./pages/letter_read/LetterGetPage";
+import LetterNonePage from "./pages/letter_read/LetterNonePage";
 
 function App() {
   const [loading, setLoading] = useRecoilState(loadingState);
@@ -78,6 +79,10 @@ function App() {
             <Route
               path="/read"
               element={<PrivateRoute component={<LetterReadPage />} />}
+            />
+            <Route
+              path="/noletter"
+              element={<PrivateRoute component={<LetterNonePage />} />}
             />
             <Route
               path="/mypage"

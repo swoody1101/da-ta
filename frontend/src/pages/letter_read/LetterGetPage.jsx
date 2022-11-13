@@ -32,9 +32,8 @@ const LetterGetPage = () => {
       }
       setLetter(letter);
       navigate("/read");
-    } else if (response.status === 404) {
-      // 페이지 따로 빼야함
-      popErrorAlert("편지가 없다", "아니요 없어요");
+    } else if (response.response.status === 404) {
+      navigate("/noletter");
     } else {
       popErrorAlert("", "편지 가져오기 요청에 실패했습니다.");
     }
