@@ -9,8 +9,15 @@ import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { useSetRecoilState } from "recoil";
 import { reportModalState } from "../../recoil/Atoms";
 
-const ReadLetterText = ({ info }) => {
+const ReadLetterText = ({ info, nickname }) => {
   const setReportModal = useSetRecoilState(reportModalState);
+
+  const DateToString = (writtenDate) => {
+    const ToDate = new Date(writtenDate);
+    return `${ToDate.getFullYear()}년 ${
+      ToDate.getMonth() + 1
+    }월 ${ToDate.getDate()}일`;
+  };
 
   return (
     <ContentBlock
@@ -53,7 +60,7 @@ const ReadLetterText = ({ info }) => {
         padding="0 0 0.5rem 0"
       >
         <LetterTitle width="96%" fontSize="1rem" fontWeight="bold">
-          {`${info.writtenDate}, ${info.writerNickname}`}
+          {`${DateToString(info.writtenDate)}, ${nickname}`}
         </LetterTitle>
       </Container>
       <LetterContent fontFamily={LetterOptions.FONTS[info.fontId]}>

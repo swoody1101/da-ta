@@ -44,7 +44,10 @@ const LetterReadPage = () => {
             </>
           ) : (
             <>
-              <ReadLetterText info={letter.letterInfo}></ReadLetterText>
+              <ReadLetterText
+                info={letter.letterInfo}
+                nickname={letter.writerNickname}
+              ></ReadLetterText>
               <ReadButtons index={letter.replyOption ? 0 : 1}></ReadButtons>
             </>
           ))}
