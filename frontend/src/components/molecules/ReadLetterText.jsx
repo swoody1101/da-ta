@@ -8,9 +8,32 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { useSetRecoilState } from "recoil";
 import { reportModalState } from "../../recoil/Atoms";
+import { useRef } from "react";
+import { useEffect } from "react";
 
 const ReadLetterText = ({ info, nickname }) => {
   const setReportModal = useSetRecoilState(reportModalState);
+  const wrapRef = useRef();
+  const appearingRef = useRef([]);
+
+  useEffect(async () => {
+    wrapRef.current.style.height = 0;
+    for (let e of appearingRef.current) {
+      e.style.opacity = 0;
+    }
+    setTimeout(() => {
+      if (window.innerWidth > 480) {
+        wrapRef.current.style.height = SizeTypes.PC_LETTER_HEIGHT;
+      } else {
+        wrapRef.current.style.height = SizeTypes.MOBILE_LETTER_HEIGHT;
+      }
+    }, 500);
+    setTimeout(() => {
+      for (let e of appearingRef.current) {
+        e.style.opacity = 1;
+      }
+    }, 1000);
+  }, []);
 
   const DateToString = (writtenDate) => {
     const ToDate = new Date(writtenDate);
@@ -26,6 +49,7 @@ const ReadLetterText = ({ info, nickname }) => {
       mHeight={SizeTypes.MOBILE_LETTER_HEIGHT}
       flexDirection="column"
       optionToggle={false}
+      ref={wrapRef}
     >
       <LetterImg
         src={`${process.env.PUBLIC_URL}/assets/images/letter/${
@@ -36,6 +60,7 @@ const ReadLetterText = ({ info, nickname }) => {
         width="96%"
         height={SizeTypes.PC_TITLE_HEIGHT}
         padding="0.5rem 0 0 0"
+        ref={(el) => (appearingRef.current[0] = el)}
       >
         <LetterTitle width="96%" fontSize="1.2rem" fontWeight="bold">
           {info.title}
@@ -58,12 +83,16 @@ const ReadLetterText = ({ info, nickname }) => {
         width="96%"
         height={SizeTypes.PC_TITLE_HEIGHT}
         padding="0 0 0.5rem 0"
+        ref={(el) => (appearingRef.current[1] = el)}
       >
         <LetterTitle width="96%" fontSize="1rem" fontWeight="bold">
           {`${DateToString(info.writtenDate)}, ${nickname}`}
         </LetterTitle>
       </Container>
-      <LetterContent fontFamily={LetterOptions.FONTS[info.fontId]}>
+      <LetterContent
+        fontFamily={LetterOptions.FONTS[info.fontId]}
+        ref={(el) => (appearingRef.current[2] = el)}
+      >
         {info.content}
       </LetterContent>
     </ContentBlock>
