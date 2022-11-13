@@ -8,10 +8,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { useSetRecoilState } from "recoil";
 import { reportModalState } from "../../recoil/Atoms";
+import { useRef } from "react";
+import { useEffect } from "react";
 
 const ReadLetterPic = ({ info }) => {
   const setReportModal = useSetRecoilState(reportModalState);
-  console.log(info.imageLetterUrl);
+  const wrapRef = useRef();
+  useEffect(async () => {
+    wrapRef.current.style.height = 0;
+    setTimeout(() => {
+      if (window.innerWidth > 480) {
+        wrapRef.current.style.height = SizeTypes.PC_LETTER_HEIGHT;
+      } else {
+        wrapRef.current.style.height = SizeTypes.MOBILE_LETTER_HEIGHT;
+      }
+    }, 500);
+  }, []);
 
   return (
     <ContentBlock
@@ -20,6 +32,7 @@ const ReadLetterPic = ({ info }) => {
       mHeight={SizeTypes.MOBILE_LETTER_HEIGHT}
       flexDirection="column"
       optionToggle={false}
+      ref={wrapRef}
     >
       <LetterImg
         src={`${process.env.PUBLIC_URL}/assets/images/letter/${

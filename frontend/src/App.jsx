@@ -28,6 +28,7 @@ import Reports from "./pages/admin/Reports";
 import UserInfos from "./pages/admin/UserInfos";
 import TodayQuestions from "./pages/admin/TodayQuestions";
 import LetterGetPage from "./pages/letter_read/LetterGetPage";
+import LetterNonePage from "./pages/letter_read/LetterNonePage";
 import ReplyPage from "./pages/letter_read/ReplyPage";
 
 function App() {
@@ -66,6 +67,7 @@ function App() {
 						<Route path="/get" element={<PrivateRoute component={<LetterGetPage />} />} />
 						<Route path="/read" element={<PrivateRoute component={<LetterReadPage />} />} />
 						<Route path="/reply" element={<PrivateRoute component={<ReplyPage />} />} />
+            <Route path="/noletter" element={<PrivateRoute component={<LetterNonePage />} />} />
 						<Route path="/mypage" element={<PrivateRoute component={<Mypage />} />}>
 							<Route index path="collect" element={<Collect />} />
 							<Route path="receive" element={<Receive />} />
