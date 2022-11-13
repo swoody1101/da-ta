@@ -51,8 +51,8 @@ const ReadButtons = ({ index }) => {
         [
           <Button
             width={"120px"}
-            height={"120px"}
-            borderRadius={"50%"}
+            height={"40px"}
+            borderRadius={"8px"}
             mWidth={"40%"}
             mHeight={"40px"}
             mBorderRadius={"8px"}
@@ -62,8 +62,8 @@ const ReadButtons = ({ index }) => {
           </Button>,
           <Button
             width={"120px"}
-            height={"120px"}
-            borderRadius={"50%"}
+            height={"40px"}
+            borderRadius={"8px"}
             mWidth={"40%"}
             mHeight={"40px"}
             mBorderRadius={"8px"}
@@ -73,8 +73,8 @@ const ReadButtons = ({ index }) => {
           </Button>,
           <Button
             width={"120px"}
-            height={"120px"}
-            borderRadius={"50%"}
+            height={"40px"}
+            borderRadius={"8px"}
             mWidth={"40%"}
             mHeight={"40px"}
             mBorderRadius={"8px"}
@@ -86,8 +86,8 @@ const ReadButtons = ({ index }) => {
       }
       <Button
         width={"120px"}
-        height={"120px"}
-        borderRadius={"50%"}
+        height={"40px"}
+        borderRadius={"8px"}
         mWidth={"40%"}
         mHeight={"40px"}
         mBorderRadius={"8px"}
@@ -97,8 +97,8 @@ const ReadButtons = ({ index }) => {
       </Button>
       <ReportButton
         width={"120px"}
-        height={"120px"}
-        borderRadius={"50%"}
+        height={"40px"}
+        borderRadius={"8px"}
         mWidth={"40%"}
         mHeight={"40px"}
         mBorderRadius={"8px"}
@@ -115,7 +115,7 @@ const ButtonDiv = styled.div`
   flex-wrap: wrap-reverse;
   justify-content: space-between;
   align-items: space-between;
-  height: 140px;
+  height: 60px;
   width: 500px;
 
   ${media.phone`
