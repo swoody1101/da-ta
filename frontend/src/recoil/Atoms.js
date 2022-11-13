@@ -74,3 +74,25 @@ export const letterState = atom({
   default: {},
   effects_UNSTABLE: [persistAtom],
 });
+
+/**
+ * @description 받은 편지 수 (새로고침 대응하기)
+ * @return {object}
+ */
+export const letterNumState = atom({
+  key: "letterNumState",
+  default: null,
+});
+
+/**
+ * @description 오늘의 질문
+ */
+export const todayQuestionState = atom({
+  key: "userState",
+  default: {
+    date: null,
+    question: null,
+    todayQuestionId: null,
+  },
+  effects_UNSTABLE: [persistAtom],
+});
