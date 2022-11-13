@@ -28,6 +28,7 @@ import Reports from "./pages/admin/Reports";
 import UserInfos from "./pages/admin/UserInfos";
 import TodayQuestions from "./pages/admin/TodayQuestions";
 import LetterGetPage from "./pages/letter_read/LetterGetPage";
+import ReplyPage from "./pages/letter_read/ReplyPage";
 
 function App() {
 	const [loading, setLoading] = useRecoilState(loadingState);
@@ -64,6 +65,7 @@ function App() {
 						<Route path="/writesuccess" element={<PrivateRoute component={<LetterWriteSuccessPage />} />} />
 						<Route path="/get" element={<PrivateRoute component={<LetterGetPage />} />} />
 						<Route path="/read" element={<PrivateRoute component={<LetterReadPage />} />} />
+						<Route path="/reply" element={<PrivateRoute component={<ReplyPage />} />} />
 						<Route path="/mypage" element={<PrivateRoute component={<Mypage />} />}>
 							<Route index path="collect" element={<Collect />} />
 							<Route path="receive" element={<Receive />} />
