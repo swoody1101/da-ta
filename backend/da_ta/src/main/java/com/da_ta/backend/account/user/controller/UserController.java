@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
-@Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/user")
@@ -26,7 +25,6 @@ public class UserController {
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
         HttpHeaders headers = new HttpHeaders();
         LoginResponse loginResponse = userService.login(loginRequest, headers);
-        log.info("header: " + headers);
         return ResponseEntity.status(HttpStatus.OK)
                 .headers(headers)
                 .body(loginResponse);
