@@ -3,7 +3,6 @@ package com.da_ta.backend.letter.domain.entity;
 import com.da_ta.backend.account.user.domain.entity.User;
 import com.da_ta.backend.common.domain.CommonEntity;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -29,9 +28,8 @@ public class FloatedLetter extends CommonEntity {
     @JoinColumn(name = "recipient_id", unique = true)
     private User recipient;
 
-    @Builder.Default
     @OneToMany(mappedBy = "floatedLetter", cascade = CascadeType.ALL)
-    private List<FloatedLetterLog> logs;
+    private List<FloatedLetterLog> logs = new ArrayList<>();
 
     public void updateRecipient(User recipient) {
         this.recipient = recipient;
