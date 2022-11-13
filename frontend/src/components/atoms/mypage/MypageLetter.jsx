@@ -91,7 +91,7 @@ export const MypageLetter = ({ letter, reload }) => {
       <LetterWordsDiv>
         <LetterTitle
           onClick={() => {
-            readLetter(mypageRouterIndex, letter.id);
+            readLetter(mypageRouterIndex, letter.letterId);
           }}
         >
           {letter.title}
