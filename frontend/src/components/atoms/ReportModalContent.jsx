@@ -37,6 +37,7 @@ const ReportModalContent = () => {
   const reportBtn = async () => {
     let reasonsString = sendingReasons.reduce((pre, cur) => pre + cur, "");
     if (reasonsString) {
+      console.log(letterId, isReply);
       const response = await reportLetter(letterId, {
         isReply: isReply,
         reason: reasonsString,

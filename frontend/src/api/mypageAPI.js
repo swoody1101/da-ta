@@ -22,9 +22,17 @@ export const receiveLetterList = async () => {
   return result;
 };
 
-export const deleteLetter = async (letter_id) => {
+export const collectDeleteLetter = async (letter_id) => {
   const result = await client
     .delete(`/letters/collection/${letter_id}`)
+    .then((response) => response)
+    .catch((error) => error);
+  return result;
+};
+
+export const replyDeleteLetter = async (letter_id) => {
+  const result = await client
+    .delete(`/letters/replies/${letter_id}`)
     .then((response) => response)
     .catch((error) => error);
   return result;
