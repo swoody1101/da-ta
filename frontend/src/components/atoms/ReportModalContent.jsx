@@ -38,6 +38,7 @@ const ReportModalContent = () => {
     let reasonsString = sendingReasons.reduce((pre, cur) => pre + cur, "");
     if (reasonsString) {
       console.log(letterId, isReply);
+      reasonsString = reasonsString.slice(0, -2);
       const response = await reportLetter(letterId, {
         isReply: isReply,
         reason: reasonsString,
