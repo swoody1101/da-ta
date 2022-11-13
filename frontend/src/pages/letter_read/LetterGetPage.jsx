@@ -21,7 +21,6 @@ const LetterGetPage = () => {
   }, []);
 
   const openBottle = async () => {
-    // 로딩스피너
     const response = await getLetter();
     if (response.status - 200 < 3 && response.status) {
       const letter = response.data;
@@ -44,6 +43,8 @@ const LetterGetPage = () => {
             src={`${process.env.PUBLIC_URL}/assets/images/common/bottle_of_letter_btn.png`}
           ></Bottle>
         </ShakerDiv>
+        <TextDiv delay="2.0s">하나둘 추억이 떠오르면</TextDiv>
+        <TextDiv delay="3.2s">많이 많이 그리워 할거야</TextDiv>
         <Button
           width={"200px"}
           height={"50px"}
@@ -71,7 +72,7 @@ const fallingBottle = keyframes`
     opacity: 0;
   }
   50% {
-    transform: rotate(-20deg);
+    transform: rotate(-15deg);
     margin-top: 0px;
     margin-bottom: 0px;
     opacity: 0.5;
@@ -97,6 +98,15 @@ const shakingBottle = keyframes`
   }
 `;
 
+const appearing = keyframes`
+  0% {
+    opacity: 0
+  }
+  100% {
+    opacity: 1
+  }
+`;
+
 const ShakerDiv = styled.div`
   animation: ${shakingBottle} 3s 2.5s linear infinite;
 `;
@@ -113,4 +123,11 @@ const Bottle = styled.img`
   animation: ${fallingBottle} 2.5s linear forwards;
 `;
 
+const TextDiv = styled.div`
+  color: #f5f5f5;
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+  opacity: 0;
+  animation: ${appearing} 1.2s ${(props) => props.delay} linear forwards;
+`;
 export default LetterGetPage;
