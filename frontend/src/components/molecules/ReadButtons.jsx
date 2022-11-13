@@ -11,6 +11,14 @@ import {
 import { collectLetter, tossLetter } from "../../api/letterReadAPI";
 import { popSuccessAlert, popErrorAlert } from "../../utils/sweetAlert";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTriangleExclamation,
+  faShare,
+  faEnvelopeOpenText,
+  faTrashCan,
+  faPaperPlane,
+} from "@fortawesome/free-solid-svg-icons";
 
 const ReadButtons = ({ index }) => {
   const letterId = useRecoilValue(readingLetterIdState);
@@ -66,6 +74,11 @@ const ReadButtons = ({ index }) => {
             mBorderRadius={"8px"}
             onClick={() => replyBtn(letterId)}
           >
+            <FontAwesomeIcon
+              icon={faPaperPlane}
+              size="lg"
+              style={{ margin: "0 5px 0 0" }}
+            />
             답장하기
           </Button>,
           <Button
@@ -77,6 +90,11 @@ const ReadButtons = ({ index }) => {
             mBorderRadius={"8px"}
             onClick={() => collectBtn(letterId)}
           >
+            <FontAwesomeIcon
+              icon={faEnvelopeOpenText}
+              size="lg"
+              style={{ margin: "0 5px 0 0" }}
+            />
             보관하기
           </Button>,
           <Button
@@ -88,6 +106,11 @@ const ReadButtons = ({ index }) => {
             mBorderRadius={"8px"}
             onClick={() => deleteBtn(letterId)}
           >
+            <FontAwesomeIcon
+              icon={faTrashCan}
+              size="lg"
+              style={{ margin: "0 5px 0 0" }}
+            />
             삭제하기
           </Button>,
         ][index]
@@ -101,6 +124,11 @@ const ReadButtons = ({ index }) => {
         mBorderRadius={"8px"}
         onClick={() => tossBtn(letterId)}
       >
+        <FontAwesomeIcon
+          icon={faShare}
+          size="lg"
+          style={{ margin: "0 5px 0 0" }}
+        />
         다시 띄우기
       </Button>
       <ReportButton
@@ -112,6 +140,11 @@ const ReadButtons = ({ index }) => {
         mBorderRadius={"8px"}
         onClick={() => setReportModal(true)}
       >
+        <FontAwesomeIcon
+          icon={faTriangleExclamation}
+          size="lg"
+          style={{ margin: "0 5px 0 0" }}
+        />
         신고하기
       </ReportButton>
     </ButtonDiv>
