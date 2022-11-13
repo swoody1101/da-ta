@@ -334,8 +334,7 @@ public class LetterService {
     }
 
     public CheckImageLetterResponse checkImageLetter(CheckImageLetterRequest checkImageLetterRequest) throws IOException {
-        DetectSafeSearchUtil.detectSafeSearch( Base64Util.decodeBase64ToBytes(checkImageLetterRequest.getImageDataUrl()));
-        return CheckImageLetterResponse.builder().build();
+        return DetectSafeSearchUtil.detectSafeSearch(Base64Util.decodeBase64ToBytes(checkImageLetterRequest.getImageDataUrl()));
     }
 
     private Letter findLetterById(Long letterId) {
