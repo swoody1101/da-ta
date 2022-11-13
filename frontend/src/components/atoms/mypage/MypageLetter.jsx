@@ -35,7 +35,7 @@ const DateToString = (writtenDate) => {
   }월 ${ToDate.getDate()}일`;
 };
 
-export const MypageLetter = ({ letter }) => {
+export const MypageLetter = ({ letter, reload }) => {
   const navigate = useNavigate();
   const setReportModal = useSetRecoilState(reportModalState);
   const setReadingLetterId = useSetRecoilState(readingLetterIdState);
@@ -71,6 +71,7 @@ export const MypageLetter = ({ letter }) => {
       const response = await collectDeleteLetter(letterId);
       if (response.status - 200 < 3 && response.status) {
         popSuccessAlert("", "수집한 편지를 삭제했습니다.");
+        reload();
       } else {
         popErrorAlert("", "요청실패");
       }

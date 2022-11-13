@@ -19,14 +19,12 @@ import {
   popErrorAlert,
   popSuccessAlert,
 } from "../../../utils/sweetAlert";
-import { useNavigate } from "react-router-dom";
 
 export const MypageSettingMobile = () => {
   const [user, setUser] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [dropDownIndex, setDropDownIndex] = useState(0);
   const itemList = LetterOptions.AGES;
-  const navigate = useNavigate();
 
   useEffect(() => {
     callUserInfo();
