@@ -17,7 +17,7 @@ public enum ErrorCode {
     ACCUSED_LETTER_NOT_FOUND("신고된 편지를 찾을 수 없습니다."),
     COLLECT_LETTER_REJECTED("편지를 수집할 수 없습니다."),
     COLLECTED_LETTER_NOT_FOUND("수집한 편지를 찾을 수 없습니다."),
-    FAILED_CHECK_IMAGE_LETTER("이미지 편지 검사에 실파하였습니다."),
+    FAILED_CHECK_IMAGE_LETTER("이미지 편지 검사에 실패하였습니다."),
     FLOATED_LETTER_NOT_FOUND("바다에 띄워진 편지를 찾을 수 없습니다."),
     IMAGE_LETTER_NOT_FOUND("이미지 편지를 찾을 수 없습니다."),
     LETTER_NOT_FOUND("편지를 찾을 수 없습니다."),
