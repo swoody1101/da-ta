@@ -11,6 +11,7 @@ export const MypageCollect = () => {
   const setSelectedIndex = useSetRecoilState(mypageRouterState);
   const [letters, setLetters] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isEmpty, setIsEmpty] = useState(false);
 
   useEffect(async () => {
     setSelectedIndex(0);
@@ -22,6 +23,9 @@ export const MypageCollect = () => {
     if (response.status - 200 < 3 && response.status) {
       setLetters(response.data.collection);
       console.log(response.data.collection);
+      if (response.data.collection.length === 0) {
+        setIsEmpty(true);
+      }
       setIsLoading(false);
     } else {
       popErrorAlert("", "수집한 편지목록 조회에 실패하였습니다.");
@@ -39,6 +43,7 @@ export const MypageCollect = () => {
               key={index}
             ></MypageLetter>
           ))}
+      {isEmpty ? "텅텅텅!" : null}
     </>
   );
 };

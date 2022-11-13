@@ -11,6 +11,7 @@ export const MypageReceive = () => {
   const setSelectedIndex = useSetRecoilState(mypageRouterState);
   const [letters, setLetters] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isEmpty, setIsEmpty] = useState(false);
 
   useEffect(async () => {
     setSelectedIndex(1);
@@ -39,6 +40,7 @@ export const MypageReceive = () => {
               reload={callReceiveLetters}
             ></MypageLetter>
           ))}
+      {isEmpty ? "텅텅텅!" : null}
     </>
   );
 };
