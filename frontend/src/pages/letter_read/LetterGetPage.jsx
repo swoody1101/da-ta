@@ -10,6 +10,7 @@ import { letterState, mypageRouterState } from "../../recoil/Atoms";
 import { useNavigate } from "react-router";
 import { useEffect } from "react";
 import { downloadFirebaseStorage } from "../../utils/firebaseStorage";
+import { popErrorAlert } from "../../utils/sweetAlert";
 
 const LetterGetPage = () => {
   const navigate = useNavigate();
@@ -29,9 +30,13 @@ const LetterGetPage = () => {
           `${letter.letterInfo.imageLetterUrl}.png`
         );
       }
-      // 얘도 예외처리
       setLetter(letter);
       navigate("/read");
+    } else if (response.status === 404) {
+      // 페이지 따로 빼야함
+      popErrorAlert("편지가 없다", "아니요 없어요");
+    } else {
+      popErrorAlert("", "편지 가져오기 요청에 실패했습니다.");
     }
   };
 
