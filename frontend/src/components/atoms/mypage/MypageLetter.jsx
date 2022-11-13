@@ -44,8 +44,8 @@ export const MypageLetter = ({ letter, reload }) => {
   const writtenTime = DateToString(letter.writtenDate);
 
   const readLetter = async (index, letterId) => {
-    console.log(letterId);
     if (index === 0) {
+      // routerIndex=0 인 경우 => 수집한 편지인 경우
       const response = await collectDetail(letterId);
       if (response.status - 200 < 3 && response.status) {
         const letter = response.data;
@@ -54,28 +54,29 @@ export const MypageLetter = ({ letter, reload }) => {
             `${letter.letterInfo.imageLetterUrl}.png`
           );
         }
-        // 얘도 예외처리
         setLetter(letter);
         navigate("/read");
       } else {
-        popErrorAlert("", "요청실패");
+        popErrorAlert("", "수집한 편지 읽기 요청실패");
       }
     } else {
+      // routerIndex=0 이 아닌 경우 => 답장받은 편지인 경우
       popErrorAlert("", "답장편지인 경우 요청하기");
     }
   };
 
   const deleteLetter = async (index, letterId) => {
-    console.log(letterId);
     if (index === 0) {
+      // routerIndex=0 인 경우 => 수집한 편지인 경우
       const response = await collectDeleteLetter(letterId);
       if (response.status - 200 < 3 && response.status) {
         popSuccessAlert("", "수집한 편지를 삭제했습니다.");
         reload();
       } else {
-        popErrorAlert("", "요청실패");
+        popErrorAlert("", "수집한 편지 삭제 요청실패");
       }
     } else {
+      // routerIndex=0 이 아닌 경우 => 답장받은 편지인 경우
       const response = await replyDeleteLetter(letterId);
       if (response.status - 200 < 3 && response.status) {
         popSuccessAlert("", "답장한 편지를 삭제했습니다.");
