@@ -51,9 +51,9 @@ const ChatBoxGroup = ({
       const response = await getTodayQuestion();
       const todayQuestion = response.data;
       setTodayQuestionQ(todayQuestion);
-      if (response.status - 200 < 3 && response.status) {
-        setTodayQuestion(todayQuestion);
-      }
+      // if (response.status - 200 < 3 && response.status) {
+      setTodayQuestion(todayQuestion);
+      // }
     };
 
     return (
