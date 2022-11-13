@@ -3,7 +3,7 @@ import { useState } from "react";
 import BackgroundVideo from "../../components/atoms/BackgroundVideo";
 import { Wrapper } from "../../styles/Wrapper";
 import Button from "../../components/atoms/Button";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { getLetter } from "../../api/letterReadAPI";
 import { useSetRecoilState } from "recoil";
 import { letterState, mypageRouterState } from "../../recoil/Atoms";
@@ -17,7 +17,7 @@ const LetterGetPage = () => {
   const setLetter = useSetRecoilState(letterState);
   let [blur, SetBlur] = useState(true);
   useEffect(() => {
-    setRouterIndex(0);
+    setRouterIndex(2);
   }, []);
 
   const openBottle = async () => {
@@ -39,10 +39,12 @@ const LetterGetPage = () => {
   return (
     <>
       <ReadWrapper>
-        나중에 애니메이션 들어갈 예정
+        <Bottle
+          src={`${process.env.PUBLIC_URL}/assets/images/common/bottle_of_letter_btn.png`}
+        ></Bottle>
         <Button
-          width={"300px"}
-          height={"150px"}
+          width={"200px"}
+          height={"50px"}
           hasBorder={true}
           onClick={async () => {
             openBottle();
@@ -59,10 +61,32 @@ const LetterGetPage = () => {
   );
 };
 
+const moveBottle = keyframes`
+  0% {
+    margin-top: -25vh;
+    margin-bottom: 25vh;
+    opacity: 0;
+  }
+  50% {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+
 const ReadWrapper = styled(Wrapper)`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+`;
+
+const Bottle = styled.img`
+  src: ${(props) => props.src};
+  height: 20vh;
+  animation: ${moveBottle} 2.5s 0.5s linear;
 `;
 
 export default LetterGetPage;

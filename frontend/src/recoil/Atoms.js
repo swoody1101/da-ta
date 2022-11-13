@@ -36,7 +36,8 @@ export const userState = atom({
  */
 export const mypageRouterState = atom({
   key: "mypageRouterState",
-  default: 0,
+  default: 2,
+  effects_UNSTABLE: [persistAtom],
 });
 
 /**
