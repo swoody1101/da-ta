@@ -88,11 +88,10 @@ export const letterNumState = atom({
  * @description 오늘의 질문
  */
 export const todayQuestionState = atom({
-  key: "userState",
+  key: "todayQuestionState",
   default: {
     date: null,
     question: null,
     todayQuestionId: null,
   },
-  effects_UNSTABLE: [persistAtom],
 });
