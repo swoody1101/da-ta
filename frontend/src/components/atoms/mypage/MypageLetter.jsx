@@ -108,7 +108,7 @@ export const MypageLetter = ({ letter, reload }) => {
           setReportModal(true);
           setReadingLetterId(letter.letterId);
           console.log(
-            `${letter.id}번 글을 쓴 글쓴이 아이디 ${letter.writerId}를 신고버튼`
+            `${letter.letterId}번 글을 쓴 글쓴이 아이디 ${letter.writerId}를 신고버튼`
           );
         }}
       />

@@ -19,10 +19,14 @@ import {
   popErrorAlert,
   popSuccessAlert,
 } from "../../../utils/sweetAlert";
+import { useSetRecoilState } from "recoil";
+import { loginState, userState } from "../../../recoil/Atoms";
 
 export const MypageSettingMobile = () => {
   const [user, setUser] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const setIsLogin = useSetRecoilState(loginState);
+  const setUserState = useSetRecoilState(userState);
   const [dropDownIndex, setDropDownIndex] = useState(0);
   const itemList = LetterOptions.AGES;
 
@@ -48,7 +52,6 @@ export const MypageSettingMobile = () => {
     } else {
       popErrorAlert("", "연령대 변경 요청 실패!");
     }
-    // 새로고침
   };
 
   const setAlert = async (body) => {
@@ -59,13 +62,29 @@ export const MypageSettingMobile = () => {
     } else {
       popErrorAlert("", "알람 요청 실패!");
     }
-    // 새로고침
   };
 
   const setCancellation = () => {
-    popConfirmAlert("", "탈퇴를 진행하시겠습니까?", "네", "아니오");
-    // 로그아웃
-    // 홈화면으로 발사
+    popConfirmAlert(
+      "",
+      "탈퇴를 진행하시겠습니까?",
+      "네",
+      "아니오",
+      async () => {
+        const response = await cancellation();
+        if (response.status - 200 < 3 && response.status) {
+          popSuccessAlert("", "회원 탈퇴 되셨습니다");
+          setUserState({});
+          sessionStorage.removeItem("ACCESS_TOKEN");
+          setTimeout(() => {
+            setIsLogin(false);
+            window.location.href = "/";
+          }, 1000);
+        } else {
+          popErrorAlert("", "회원 탈퇴 요청 실패!");
+        }
+      }
+    );
   };
 
   return (
