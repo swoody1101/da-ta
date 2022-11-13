@@ -95,7 +95,7 @@ export const MypageSettingMobile = () => {
             <SettingWordsDiv>
               <SettingTitleDiv>
                 {"회원님의 연령: "}
-                {user.ageRange}
+                {LetterOptions.VALUE_AGES[user.ageRange]}
               </SettingTitleDiv>
               <SettingExpln>
                 회원님의 연령대를 등록하거나 변경하실 수 있습니다.
