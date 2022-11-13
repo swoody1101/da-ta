@@ -8,14 +8,14 @@ import {
   readingLetterIdState,
   reportModalState,
 } from "../../recoil/Atoms";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { reportLetter } from "../../api/mypageAPI";
 import { popSuccessAlert, popErrorAlert } from "../../utils/sweetAlert";
 import { useNavigate } from "react-router-dom";
 
 const ReportModalContent = () => {
   const setReportModal = useSetRecoilState(reportModalState);
-  const letter = useRecoilValue(letterState);
+  const [letter, setLetter] = useRecoilState(letterState);
   const routerIndex = useRecoilValue(mypageRouterState);
   const letterId = useRecoilValue(readingLetterIdState);
   let isReply = false;
@@ -44,6 +44,7 @@ const ReportModalContent = () => {
       });
       setReportModal(false);
       if (response.status - 200 < 3 && response.status) {
+        setLetter({});
         popSuccessAlert("", "신고가 접수되었습니다.");
         navigate("/");
       } else {

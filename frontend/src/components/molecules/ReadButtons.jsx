@@ -3,7 +3,11 @@ import styled from "styled-components";
 import { media } from "../../utils/styleUtil";
 import Button from "../atoms/Button";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { readingLetterIdState, reportModalState } from "../../recoil/Atoms";
+import {
+  letterState,
+  readingLetterIdState,
+  reportModalState,
+} from "../../recoil/Atoms";
 import { collectLetter, tossLetter } from "../../api/letterReadAPI";
 import { popSuccessAlert, popErrorAlert } from "../../utils/sweetAlert";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 const ReadButtons = ({ index }) => {
   const letterId = useRecoilValue(readingLetterIdState);
   const setReportModal = useSetRecoilState(reportModalState);
+  const setLetter = useSetRecoilState(letterState);
   const navigate = useNavigate();
 
   const collectBtn = async (letterId) => {
@@ -18,6 +23,7 @@ const ReadButtons = ({ index }) => {
     if (response.status - 200 < 3 && response.status) {
       navigate("/");
       popSuccessAlert("", "편지를 보관함에 저장하셨습니다");
+      setLetter({});
     } else {
       popErrorAlert("", "편지 수집에 실패했습니다");
     }
@@ -32,9 +38,11 @@ const ReadButtons = ({ index }) => {
     console.log("다시 띄우기");
     const response = await tossLetter(letterId);
     // 따로 페이지로 뺄 예정
+    // 편지 날아가는? 떠내려가는? 애니메이션이 있는 페이지로 보낼 예정
     if (response.status - 200 < 3 && response.status) {
       navigate("/");
       popSuccessAlert("", "편지를 다시 띄워보냈습니다.");
+      setLetter({});
     } else {
       popErrorAlert("", "요청에 실패했습니다.");
     }
