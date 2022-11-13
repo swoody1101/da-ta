@@ -9,10 +9,13 @@ import com.da_ta.backend.letter.controller.dto.*;
 import com.da_ta.backend.letter.controller.dto.common.*;
 import com.da_ta.backend.letter.domain.entity.*;
 import com.da_ta.backend.letter.domain.repository.*;
+import com.da_ta.backend.util.Base64Util;
+import com.da_ta.backend.util.DetectSafeSearchUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.stream.Collectors;
 
 import static com.da_ta.backend.common.domain.ErrorCode.*;
@@ -332,6 +335,11 @@ public class LetterService {
         reply.deleteReplyLetter();
         replyRepository.save(reply);
         return new Message(REPLY_DELETED.getMessage());
+    }
+
+    public CheckImageLetterResponse checkImageLetter(CheckImageLetterRequest checkImageLetterRequest) throws IOException {
+        DetectSafeSearchUtil.detectSafeSearch( Base64Util.decodeBase64ToBytes(checkImageLetterRequest.getImageDataUrl()));
+        return CheckImageLetterResponse.builder().build();
     }
 
     private Letter findLetterById(Long letterId) {
