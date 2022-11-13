@@ -9,8 +9,15 @@ import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { useSetRecoilState } from "recoil";
 import { reportModalState } from "../../recoil/Atoms";
 
-const ReadLetterText = ({ info }) => {
+const ReadLetterText = ({ info, nickname }) => {
   const setReportModal = useSetRecoilState(reportModalState);
+
+  const DateToString = (writtenDate) => {
+    const ToDate = new Date(writtenDate);
+    return `${ToDate.getFullYear()}년 ${
+      ToDate.getMonth() + 1
+    }월 ${ToDate.getDate()}일`;
+  };
 
   return (
     <ContentBlock
@@ -28,7 +35,7 @@ const ReadLetterText = ({ info }) => {
       <Container
         width="96%"
         height={SizeTypes.PC_TITLE_HEIGHT}
-        padding="0.5rem 0 0.5rem 0"
+        padding="0.5rem 0 0 0"
       >
         <LetterTitle width="96%" fontSize="1.2rem" fontWeight="bold">
           {info.title}
@@ -47,6 +54,15 @@ const ReadLetterText = ({ info }) => {
           </IconReportBtn>
         </LetterTitle>
       </Container>
+      <Container
+        width="96%"
+        height={SizeTypes.PC_TITLE_HEIGHT}
+        padding="0 0 0.5rem 0"
+      >
+        <LetterTitle width="96%" fontSize="1rem" fontWeight="bold">
+          {`${DateToString(info.writtenDate)}, ${nickname}`}
+        </LetterTitle>
+      </Container>
       <LetterContent fontFamily={LetterOptions.FONTS[info.fontId]}>
         {info.content}
       </LetterContent>
@@ -55,7 +71,6 @@ const ReadLetterText = ({ info }) => {
 };
 
 const Container = styled.div`
-  display: flex;
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   padding: ${(props) => props.padding};

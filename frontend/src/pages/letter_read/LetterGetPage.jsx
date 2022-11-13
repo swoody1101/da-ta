@@ -3,7 +3,7 @@ import { useState } from "react";
 import BackgroundVideo from "../../components/atoms/BackgroundVideo";
 import { Wrapper } from "../../styles/Wrapper";
 import Button from "../../components/atoms/Button";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { getLetter } from "../../api/letterReadAPI";
 import { useSetRecoilState } from "recoil";
 import { letterState, mypageRouterState } from "../../recoil/Atoms";
@@ -17,11 +17,10 @@ const LetterGetPage = () => {
   const setLetter = useSetRecoilState(letterState);
   let [blur, SetBlur] = useState(true);
   useEffect(() => {
-    setRouterIndex(0);
+    setRouterIndex(2);
   }, []);
 
   const openBottle = async () => {
-    // 로딩스피너
     const response = await getLetter();
     if (response.status - 200 < 3 && response.status) {
       const letter = response.data;
@@ -34,31 +33,21 @@ const LetterGetPage = () => {
       setLetter(letter);
       navigate("/read");
     }
-    // setLetter({
-    //   writerId: 1111,
-    //   writerNickname: "이ㅣ",
-    //   replyOption: false,
-    //   letterInfo: {
-    //     letterId: 3,
-    //     title: null,
-    //     content: null,
-    //     imageLetterUrl:
-    //       "https://firebasestorage.googleapis.com/v0/b/da-ta-8db6c.appspot.com/o/drawings/1668043144153.png?alt=media",
-    //     backgroundId: 0,
-    //     fontId: 0,
-    //     writtenDate: new Date(),
-    //   },
-    // });
-    // navigate("/read");
   };
 
   return (
     <>
       <ReadWrapper>
-        나중에 애니메이션 들어갈 예정
+        <ShakerDiv>
+          <Bottle
+            src={`${process.env.PUBLIC_URL}/assets/images/common/bottle_of_letter_btn.png`}
+          ></Bottle>
+        </ShakerDiv>
+        <TextDiv delay="2.0s">하나둘 추억이 떠오르면</TextDiv>
+        <TextDiv delay="3.2s">많이 많이 그리워 할거야</TextDiv>
         <Button
-          width={"300px"}
-          height={"150px"}
+          width={"200px"}
+          height={"50px"}
           hasBorder={true}
           onClick={async () => {
             openBottle();
@@ -75,10 +64,70 @@ const LetterGetPage = () => {
   );
 };
 
+const fallingBottle = keyframes`
+  0% {
+    transform: rotate(0deg);
+    margin-top: -25vh;
+    margin-bottom: 25vh;
+    opacity: 0;
+  }
+  50% {
+    transform: rotate(-15deg);
+    margin-top: 0px;
+    margin-bottom: 0px;
+    opacity: 0.5;
+  }
+  100% {
+    transform: rotate(-10deg);
+    opacity: 1;
+  }
+`;
+
+const shakingBottle = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(5deg);
+  }
+  75% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+`;
+
+const appearing = keyframes`
+  0% {
+    opacity: 0
+  }
+  100% {
+    opacity: 1
+  }
+`;
+
+const ShakerDiv = styled.div`
+  animation: ${shakingBottle} 3s 2.5s linear infinite;
+`;
+
 const ReadWrapper = styled(Wrapper)`
   flex-direction: column;
   align-items: center;
   justify-content: center;
 `;
 
+const Bottle = styled.img`
+  src: ${(props) => props.src};
+  height: 20vh;
+  animation: ${fallingBottle} 2.5s linear forwards;
+`;
+
+const TextDiv = styled.div`
+  color: #f5f5f5;
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+  opacity: 0;
+  animation: ${appearing} 1.2s ${(props) => props.delay} linear forwards;
+`;
 export default LetterGetPage;

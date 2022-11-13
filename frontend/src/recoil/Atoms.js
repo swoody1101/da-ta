@@ -36,7 +36,8 @@ export const userState = atom({
  */
 export const mypageRouterState = atom({
   key: "mypageRouterState",
-  default: 0,
+  default: 2,
+  effects_UNSTABLE: [persistAtom],
 });
 
 /**
@@ -71,7 +72,7 @@ export const readingLetterIdState = atom({
  */
 export const letterState = atom({
   key: "letterState",
-  default: {},
+  default: false,
   effects_UNSTABLE: [persistAtom],
 });
 
