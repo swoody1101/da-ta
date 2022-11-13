@@ -52,3 +52,14 @@ export const saveCanvasLetter = async (options, imageLetterUrl) => {
 		.catch((error) => error.response);
 	return result;
 };
+
+/**
+ * @description 편지 답장
+ */
+export const saveReplyLetter = async (originLetterId, textLetterInfo) => {
+	const result = await client
+		.post(`/letters/replies/${originLetterId}`, { textLetterInfo: textLetterInfo })
+		.then((response) => response)
+		.catch((error) => error.response);
+	return result;
+};
