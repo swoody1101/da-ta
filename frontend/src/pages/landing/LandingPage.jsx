@@ -139,11 +139,19 @@ const LandingPage = () => {
   // 바다에 띄워진 물병 편지 전체 개수 가져오는 api용 2
   const mainGetLetterNum = async () => {
     const response = await getLetterNum();
-    const letternum = response.data;
-    setLetterCountNum(letternum);
-    if (response.status - 200 < 3 && response.status) {
-      setLetterNum(letternum);
+    console.log(response);
+    if (!response || (response.status < 200 && response.status >= 300)) {
+      //이부분 수정 -> 다른 api도 조건에 맞게 수정해놓기
+      popErrorAlert("답변 전송 오류", "답변 전송 중 오류가 발생했습니다.");
+      return;
     }
+    const letternum = response.data;
+    console.log(letternum);
+    setLetterCountNum(letternum);
+    setLetterNum(letternum);
+
+    // } //딱히 리코일 쓸데없는거는 삭제 => useState로 변경 //
+    //
   };
 
   // 오늘의 질문 가져오는 api용 1
@@ -154,11 +162,12 @@ const LandingPage = () => {
   // 오늘의 질문 가져오는 api용 2
   const mainGetQuestion = async () => {
     const response = await getTodayQuestion();
+
     const todayQuestion = response.data;
     setTodayQuestionQ(todayQuestion);
-    if (response.status - 200 < 3 && response.status) {
-      setTodayQuestion(todayQuestion);
-    }
+    // if (response.status - 200 < 3 && response.status) {
+    setTodayQuestion(todayQuestion);
+    // }
   };
 
   return (
