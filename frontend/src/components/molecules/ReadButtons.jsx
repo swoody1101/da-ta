@@ -23,7 +23,7 @@ const ReadButtons = ({ index }) => {
     if (response.status - 200 < 3 && response.status) {
       navigate("/");
       popSuccessAlert("", "편지를 보관함에 저장하셨습니다");
-      setLetter({});
+      setLetter(false);
     } else {
       popErrorAlert("", "편지 수집에 실패했습니다");
     }
@@ -42,7 +42,7 @@ const ReadButtons = ({ index }) => {
     if (response.status - 200 < 3 && response.status) {
       navigate("/");
       popSuccessAlert("", "편지를 다시 띄워보냈습니다.");
-      setLetter({});
+      setLetter(false);
     } else {
       popErrorAlert("", "요청에 실패했습니다.");
     }

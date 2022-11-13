@@ -71,6 +71,6 @@ export const readingLetterIdState = atom({
  */
 export const letterState = atom({
   key: "letterState",
-  default: {},
+  default: false,
   effects_UNSTABLE: [persistAtom],
 });
