@@ -39,9 +39,11 @@ const LetterGetPage = () => {
   return (
     <>
       <ReadWrapper>
-        <Bottle
-          src={`${process.env.PUBLIC_URL}/assets/images/common/bottle_of_letter_btn.png`}
-        ></Bottle>
+        <ShakerDiv>
+          <Bottle
+            src={`${process.env.PUBLIC_URL}/assets/images/common/bottle_of_letter_btn.png`}
+          ></Bottle>
+        </ShakerDiv>
         <Button
           width={"200px"}
           height={"50px"}
@@ -61,20 +63,42 @@ const LetterGetPage = () => {
   );
 };
 
-const moveBottle = keyframes`
+const fallingBottle = keyframes`
   0% {
+    transform: rotate(0deg);
     margin-top: -25vh;
     margin-bottom: 25vh;
     opacity: 0;
   }
   50% {
+    transform: rotate(-20deg);
     margin-top: 0px;
     margin-bottom: 0px;
     opacity: 0.5;
   }
   100% {
+    transform: rotate(-10deg);
     opacity: 1;
   }
+`;
+
+const shakingBottle = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(5deg);
+  }
+  75% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+`;
+
+const ShakerDiv = styled.div`
+  animation: ${shakingBottle} 3s 2.5s linear infinite;
 `;
 
 const ReadWrapper = styled(Wrapper)`
@@ -86,7 +110,7 @@ const ReadWrapper = styled(Wrapper)`
 const Bottle = styled.img`
   src: ${(props) => props.src};
   height: 20vh;
-  animation: ${moveBottle} 2.5s 0.5s linear;
+  animation: ${fallingBottle} 2.5s linear forwards;
 `;
 
 export default LetterGetPage;
