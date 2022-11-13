@@ -24,7 +24,7 @@ export const MypageReceive = () => {
     if (response.status - 200 < 3 && response.status) {
       setLetters(response.data.replies);
       console.log(response.data.replies);
-      if (response.data.collection.length === 0) {
+      if (response.data.replies.length === 0) {
         setIsEmpty(true);
       }
       setIsLoading(false);
