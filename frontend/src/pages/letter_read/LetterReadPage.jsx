@@ -9,6 +9,8 @@ import { useRecoilState } from "recoil";
 import ReportModal from "../../components/organisms/ReportModal";
 import { letterState, readingLetterIdState } from "../../recoil/Atoms";
 import ReadLetterPic from "../../components/molecules/ReadLetterPic";
+import { useNavigate } from "react-router-dom";
+import { popErrorAlert } from "../../utils/sweetAlert";
 
 const LetterReadPage = () => {
   const [readingLetterId, setReadingLetterId] =
@@ -16,10 +18,19 @@ const LetterReadPage = () => {
   const [letter, setLetter] = useRecoilState(letterState);
   const [isLoading, setIsLoading] = useState(false);
   const [isPicture, setIsPicture] = useState(false);
+  const navigate = useNavigate();
+
   useEffect(async () => {
-    setReadingLetterId(letter.letterInfo.letterId);
-    letter.letterInfo.imageLetterUrl ? setIsPicture(true) : setIsPicture(false);
-    setIsLoading(true);
+    if (letter) {
+      setReadingLetterId(letter.letterInfo.letterId);
+      letter.letterInfo.imageLetterUrl
+        ? setIsPicture(true)
+        : setIsPicture(false);
+      setIsLoading(true);
+    } else {
+      navigate("/");
+      popErrorAlert("", "올바른 접근이 아닙니다!");
+    }
   }, []);
 
   return (
@@ -33,7 +44,10 @@ const LetterReadPage = () => {
             </>
           ) : (
             <>
-              <ReadLetterText info={letter.letterInfo}></ReadLetterText>
+              <ReadLetterText
+                info={letter.letterInfo}
+                nickname={letter.writerNickname}
+              ></ReadLetterText>
               <ReadButtons index={letter.replyOption ? 0 : 1}></ReadButtons>
             </>
           ))}
