@@ -19,8 +19,12 @@ import {
   reportModalState,
 } from "../../../recoil/Atoms";
 import { readingLetterIdState } from "../../../recoil/Atoms";
-import { collectDetail } from "../../../api/mypageAPI";
-import { popErrorAlert } from "../../../utils/sweetAlert";
+import {
+  collectDeleteLetter,
+  collectDetail,
+  replyDeleteLetter,
+} from "../../../api/mypageAPI";
+import { popErrorAlert, popSuccessAlert } from "../../../utils/sweetAlert";
 import { downloadFirebaseStorage } from "../../../utils/firebaseStorage";
 import { useNavigate } from "react-router-dom";
 
@@ -61,6 +65,25 @@ export const MypageLetter = ({ letter }) => {
     }
   };
 
+  const deleteLetter = async (letterId) => {
+    console.log(letterId);
+    if (index === 0) {
+      const response = await collectDeleteLetter(letterId);
+      if (response.status - 200 < 3 && response.status) {
+        popSuccessAlert("", "수집한 편지를 삭제했습니다.");
+      } else {
+        popErrorAlert("", "요청실패");
+      }
+    } else {
+      const response = await replyDeleteLetter(letterId);
+      if (response.status - 200 < 3 && response.status) {
+        popSuccessAlert("", "답장한 편지를 삭제했습니다.");
+      } else {
+        popErrorAlert("", "요청실패");
+      }
+    }
+  };
+
   return (
     <LetterDiv>
       <LetterWordsDiv>
@@ -92,7 +115,7 @@ export const MypageLetter = ({ letter }) => {
         style={{ margin: "0 15px 0 0", cursor: "pointer" }}
         size="lg"
         onClick={() => {
-          console.log(`${letter.id}번 글 삭제버튼`);
+          deleteLetter(letter.letterId);
         }}
       />
     </LetterDiv>
