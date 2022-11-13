@@ -5,11 +5,11 @@ import { client } from "../utils/client";
 
 /**
  * @description 오늘의 편지 답변 쓰기
- */ //수정 예정
-export const saveTextAnswer = async (answer) => {
+ */
+export const saveTextAnswer = async (content, userId, todayQuestionId) => {
   const body = {
     textAnswerInfo: {
-      answer: answer,
+      content: content,
       userId: userId,
       todayQuestionId: todayQuestionId,
     },
