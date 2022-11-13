@@ -91,10 +91,10 @@ export const MypageLetter = ({ letter, reload }) => {
       <LetterWordsDiv>
         <LetterTitle
           onClick={() => {
-            readLetter(mypageRouterIndex, letter.letterId);
+            readLetter(mypageRouterIndex, letter.id);
           }}
         >
-          {letter.letterTitle}
+          {letter.title}
         </LetterTitle>
         <LetterDate>{`${letter.writerNickname}, ${writtenTime}`}</LetterDate>
         <LetterDateWeb>{`${letter.writerNickname}`}</LetterDateWeb>
@@ -106,9 +106,9 @@ export const MypageLetter = ({ letter, reload }) => {
         size="lg"
         onClick={() => {
           setReportModal(true);
-          setReadingLetterId(letter.letterId);
+          setReadingLetterId(letter.id);
           console.log(
-            `${letter.letterId}번 글을 쓴 글쓴이 아이디 ${letter.writerId}를 신고버튼`
+            `${letter.id}번 글을 쓴 글쓴이 아이디 ${letter.writerId}를 신고버튼`
           );
         }}
       />
@@ -117,7 +117,7 @@ export const MypageLetter = ({ letter, reload }) => {
         style={{ margin: "0 15px 0 0", cursor: "pointer" }}
         size="lg"
         onClick={() => {
-          deleteLetter(mypageRouterIndex, letter.letterId);
+          deleteLetter(mypageRouterIndex, letter.id);
         }}
       />
     </LetterDiv>

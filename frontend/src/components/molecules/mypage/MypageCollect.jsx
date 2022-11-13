@@ -21,6 +21,7 @@ export const MypageCollect = () => {
     const response = await collectLetterList();
     if (response.status - 200 < 3 && response.status) {
       setLetters(response.data.collection);
+      console.log(response.data.collection);
       setIsLoading(false);
     } else {
       popErrorAlert("", "수집한 편지목록 조회에 실패하였습니다.");
