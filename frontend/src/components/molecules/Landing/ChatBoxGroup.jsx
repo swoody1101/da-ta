@@ -1,7 +1,7 @@
 /**
  * @author chaeyoon
  */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Button from "../../atoms/Button";
 import Modal from "../../organisms/Modal";
@@ -11,9 +11,11 @@ import { MainTestText } from "../../atoms/Text";
 import QuestionProgressBar from "./QuestionProgressBar";
 import { loginState } from "../../../recoil/Atoms";
 
-//isLogin 여부 관련 import 요소들
 import { popWarningAlert } from "../../../utils/sweetAlert";
 import { useRecoilValue } from "recoil";
+import { useSetRecoilState } from "recoil";
+import { todayQuestionState } from "../../../recoil/Atoms";
+import { getTodayQuestion } from "../../../api/questionReadAPI";
 
 const ChatBoxGroup = ({
   children,
@@ -24,6 +26,8 @@ const ChatBoxGroup = ({
 }) => {
   {
     const isLogin = useRecoilValue(loginState);
+    const [todayQuestionQ, setTodayQuestionQ] = useState([]); //변하는 오늘의 질문
+    const setTodayQuestion = useSetRecoilState(todayQuestionState); //recoil
 
     const handlerClickModalA = () => {
       return isLogin
@@ -37,12 +41,29 @@ const ChatBoxGroup = ({
         : { ...popWarningAlert("", "로그인 후 이용해주세요.") };
     };
 
+    // 오늘의 질문 가져오는 api용 1
+    useEffect(() => {
+      mainGetQuestion();
+    }, []);
+
+    // 오늘의 질문 가져오는 api용 2
+    const mainGetQuestion = async () => {
+      const response = await getTodayQuestion();
+      const todayQuestion = response.data;
+      setTodayQuestionQ(todayQuestion);
+      if (response.status - 200 < 3 && response.status) {
+        setTodayQuestion(todayQuestion);
+      }
+    };
+
     return (
       <>
         <ChatBoxMolecure {...props} onClick={onClick}>
           {children}
           <TextBox>
-            <MainTestText fontWeight="500">오늘의 질문 연결 예정</MainTestText>
+            <MainTestText fontWeight="500">
+              {todayQuestionQ.question}
+            </MainTestText>
           </TextBox>
 
           <ButtonBox>

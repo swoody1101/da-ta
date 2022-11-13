@@ -17,7 +17,7 @@ import Footer from "../../components/molecules/Footer";
 import MainSeaGradient from "../../components/atoms/MainSeaGradient";
 import { MainWave2 } from "../../components/atoms/MainWave2";
 import { MainText, MainSmallText } from "../../components/atoms/Text";
-// import BottleOfLetter from "../../components/atoms/BottleOfLetter";
+
 import ScrollToTop from "react-scroll-to-top";
 import Button from "./../../components/atoms/Button";
 import { SizeTypes, SIZE_WIDE } from "./../../constants/Sizes";
@@ -33,7 +33,11 @@ import QuestionProgressBar from "../../components/molecules/landing/QuestionProg
 import { MIN_CHAR_COUNT_Q, MAX_CHAR_COUNT_Q } from "../../constants/Variables";
 
 import { saveTextAnswer } from "../../api/questionWriteAPI";
+import { getLetterNum } from "../../api/letterCountAPI";
 import { MainAnimationText } from "../../components/atoms/MainAnimationText";
+import { useSetRecoilState } from "recoil";
+import { letterNumState, todayQuestionState } from "./../../recoil/Atoms";
+import { getTodayQuestion } from "../../api/questionReadAPI";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -46,11 +50,15 @@ const LandingPage = () => {
   const [modalToggleA, setModalToggleA] = useState(false); // 답변보내기 모달창 토글
   const [modalToggleB, setModalToggleB] = useState(false); // 답변리스트 보기 모달창 토글
 
+  const setLetterNum = useSetRecoilState(letterNumState); //recoil
+  const setTodayQuestion = useSetRecoilState(todayQuestionState); //recoil
   const isLogin = useRecoilValue(loginState);
 
   const contentInput = useRef(); // 내용 ref (값 가져오기, ref)
   const unshowRef = useRef([]); // 보내기 버튼 누를 시 사라질 영역들 ref
 
+  const [letterCountNum, setLetterCountNum] = useState([]); //변하는 편지 전체 수
+  const [todayQuestionQ, setTodayQuestionQ] = useState([]); //변하는 오늘의 질문
   /**
    * @description 물병 누를 경우 chatbox visible
    */
@@ -99,7 +107,9 @@ const LandingPage = () => {
       return;
     }
 
-    const response = await saveTextAnswer(content); //API 파트
+    const response = await saveTextAnswer(content, todayQuestionId); //API 파트
+    // const response = await saveTextLetter(options, title, content);
+
     console.log(response);
     if (response.status < 200 && response.status >= 300) {
       popErrorAlert("답변 전송 오류", "답변 전송 중 오류가 발생했습니다.");
@@ -111,8 +121,6 @@ const LandingPage = () => {
     }, 1000);
   };
 
-  //오늘의 질문 받아오기 위한 const=
-
   //소개글 animation 효과 변경용 AOS
   useEffect(() => {
     AOS.init({ duration: 500, easing: "ease-in-out-back" });
@@ -123,6 +131,36 @@ const LandingPage = () => {
     setCharCount(0);
   }, [true]);
 
+  // 바다에 띄워진 물병 편지 전체 개수 가져오는 api용 1
+  useEffect(() => {
+    mainGetLetterNum();
+  }, []);
+
+  // 바다에 띄워진 물병 편지 전체 개수 가져오는 api용 2
+  const mainGetLetterNum = async () => {
+    const response = await getLetterNum();
+    const letternum = response.data;
+    setLetterCountNum(letternum);
+    if (response.status - 200 < 3 && response.status) {
+      setLetterNum(letternum);
+    }
+  };
+
+  // 오늘의 질문 가져오는 api용 1
+  useEffect(() => {
+    mainGetQuestion();
+  }, []);
+
+  // 오늘의 질문 가져오는 api용 2
+  const mainGetQuestion = async () => {
+    const response = await getTodayQuestion();
+    const todayQuestion = response.data;
+    setTodayQuestionQ(todayQuestion);
+    if (response.status - 200 < 3 && response.status) {
+      setTodayQuestion(todayQuestion);
+    }
+  };
+
   return (
     <>
       {modalToggleA && (
@@ -131,7 +169,7 @@ const LandingPage = () => {
           height="50%"
           modalToggle={modalToggleA}
           setModalToggle={setModalToggleA}
-          titleText={"오늘의질문"}
+          titleText={todayQuestionQ.question}
         >
           {/* <MainText>오늘의 질문 api 연결 예정</MainText> */}
           <AnswerBox width="80%" height="65%" margin="0 0 0 0">
@@ -186,21 +224,8 @@ const LandingPage = () => {
           data-aos-duration="500"
           data-aos="flip-up"
         >
-          [100]개의 편지가 바다에 떠 있습니다
+          {letterCountNum.letterCount}개의 편지가 바다에 떠 있습니다
         </MainSmallText>
-
-        {/* <MainText
-          margin="8vh 0 0 0"
-          mFont_size={SizeTypes.MOBILE_MAIN_TEXT_SIZE}
-        >
-          안녕하세요! 😏 <br /> 여기는 '닿다'예요
-        </MainText> */}
-        {/* <MainText
-          mFont_size={SizeTypes.MOBILE_MAIN_TEXT_SIZE}
-          margin="8vh 0 0 0"
-        >
-          안녕하세요!
-        </MainText> */}
         <MainAnimationText
           mFont_size={SizeTypes.MOBILE_MAIN_TEXT_SIZE}
           margin="8vh 0 0 0"
