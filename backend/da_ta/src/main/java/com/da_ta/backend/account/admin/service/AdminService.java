@@ -34,9 +34,9 @@ import static com.da_ta.backend.common.domain.SuccessCode.*;
 @RequiredArgsConstructor
 public class AdminService {
 
-    private final int MAX_WARNING_COUNT = 3;
-    private final static String TYPE_TEXT = "Text";
-    private final static String TYPE_IMAGE = "Image";
+    private static final int MAX_WARNING_COUNT = 3;
+    private static final String TYPE_TEXT = "Text";
+    private static final String TYPE_IMAGE = "Image";
     private final UserRepository userRepository;
     private final LetterRepository letterRepository;
     private final TextLetterRepository textLetterRepository;
