@@ -159,7 +159,12 @@ public class UserService {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        return kakaoTokenInfo.getId();
+        Long kakaoUserId = kakaoTokenInfo.getId();
+        if (kakaoUserId == null) {
+            throw new NotFoundException(KAKAO_USER_ID_NOT_FOUND);
+        } else {
+            return kakaoUserId;
+        }
     }
 
     private KakaoProfile getKakaoProfile(String accessToken) {
