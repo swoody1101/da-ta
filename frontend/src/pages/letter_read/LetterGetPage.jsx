@@ -11,6 +11,7 @@ import { useNavigate } from "react-router";
 import { useEffect } from "react";
 import { downloadFirebaseStorage } from "../../utils/firebaseStorage";
 import { popErrorAlert } from "../../utils/sweetAlert";
+import { media } from "../../utils/styleUtil";
 
 const LetterGetPage = () => {
   const navigate = useNavigate();
@@ -47,22 +48,13 @@ const LetterGetPage = () => {
           <ShakerDiv>
             <Bottle
               src={`${process.env.PUBLIC_URL}/assets/images/common/bottle_of_letter_btn.png`}
+              onClick={() => {
+                openBottle();
+              }}
             ></Bottle>
           </ShakerDiv>
           <TextDiv delay="2.0s">편지가 떠내려왔습니다.</TextDiv>
           <TextDiv delay="3.2s">클릭하셔서 열어보세요!</TextDiv>
-          <TextDiv delay="4.4s">
-            <Button
-              width={"200px"}
-              height={"50px"}
-              hasBorder={true}
-              onClick={async () => {
-                openBottle();
-              }}
-            >
-              편지 받기
-            </Button>
-          </TextDiv>
         </Contents>
       </ReadWrapper>
       <BackgroundVideo
@@ -128,8 +120,13 @@ const ReadWrapper = styled(Wrapper)`
 
 const Bottle = styled.img`
   src: ${(props) => props.src};
-  height: 20vh;
+  width: 20vw;
   animation: ${fallingBottle} 2.5s linear forwards;
+  filter: drop-shadow(0 0 1.5rem yellow);
+  cursor: pointer;
+  ${media.tablet1`
+    width: 50vw;
+  `}
 `;
 
 const TextDiv = styled.div`

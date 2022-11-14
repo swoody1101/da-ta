@@ -14,8 +14,7 @@ import { useEffect } from "react";
 const ReadLetterPic = ({ info }) => {
   const setReportModal = useSetRecoilState(reportModalState);
   const wrapRef = useRef();
-  useEffect(async () => {
-    wrapRef.current.style.height = 0;
+  const appearing = () => {
     setTimeout(() => {
       if (window.innerWidth > 480) {
         wrapRef.current.style.height = SizeTypes.PC_LETTER_HEIGHT;
@@ -23,13 +22,17 @@ const ReadLetterPic = ({ info }) => {
         wrapRef.current.style.height = SizeTypes.MOBILE_LETTER_HEIGHT;
       }
     }, 500);
+  };
+
+  useEffect(() => {
+    appearing();
   }, []);
 
   return (
     <ContentBlock
-      height={SizeTypes.PC_LETTER_HEIGHT}
+      height={0}
       mWidth={SizeTypes.MOBILE_LETTER_WIDTH}
-      mHeight={SizeTypes.MOBILE_LETTER_HEIGHT}
+      mHeight={0}
       flexDirection="column"
       optionToggle={false}
       ref={wrapRef}
