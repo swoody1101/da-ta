@@ -9,8 +9,8 @@ import java.time.LocalDateTime;
 @Builder
 public class CollectionItem {
 
-    private Long letterId;
-    private String letterTitle;
+    private Long id;
+    private String title;
     private Long writerId;
     private String writerNickname;
     private LocalDateTime writtenDate;
