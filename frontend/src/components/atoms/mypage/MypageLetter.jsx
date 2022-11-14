@@ -23,6 +23,7 @@ import {
   collectDeleteLetter,
   collectDetail,
   replyDeleteLetter,
+  replyDetail,
 } from "../../../api/mypageAPI";
 import { popErrorAlert, popSuccessAlert } from "../../../utils/sweetAlert";
 import { downloadFirebaseStorage } from "../../../utils/firebaseStorage";
@@ -61,7 +62,21 @@ export const MypageLetter = ({ letter, reload }) => {
       }
     } else {
       // routerIndex=0 이 아닌 경우 => 답장받은 편지인 경우
-      popErrorAlert("", "답장편지인 경우 요청하기");
+      const response = await replyDetail(letterId);
+      if (response.status - 200 < 3 && response.status) {
+        const letter = response.data;
+        console.log(letter);
+        if (letter.originLetterInfo.imageLetterUrl) {
+          letter.originLetterInfo.imageLetterUrl =
+            await downloadFirebaseStorage(
+              `${letter.originLetterInfo.imageLetterUrl}.png`
+            );
+        }
+        setLetter(letter);
+        navigate("/replyread");
+      } else {
+        popErrorAlert("", "답장한 편지 읽기 요청실패");
+      }
     }
   };
 
@@ -91,7 +106,7 @@ export const MypageLetter = ({ letter, reload }) => {
       <LetterWordsDiv>
         <LetterTitle
           onClick={() => {
-            readLetter(mypageRouterIndex, letter.letterId);
+            readLetter(mypageRouterIndex, letter.id);
           }}
         >
           {letter.title}
