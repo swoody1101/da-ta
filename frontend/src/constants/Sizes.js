@@ -17,25 +17,25 @@ export const SIZE_PHONE = 480;
 export const HEADER_HEIGHT = deviceWidth > SIZE_TABLET1 ? "6rem" : "4rem";
 
 export const SizeTypes = {
-	PC_LETTER_MARGIN: deviceHeight < WIDTH_LIMIT ? "1rem 0 0 0" : "2rem 0 0 0",
-	PC_LETTER_WIDTH: deviceHeight < WIDTH_LIMIT ? "20rem" : "26rem",
-	PC_LETTER_HEIGHT: deviceHeight < WIDTH_LIMIT ? "28rem" : "36.4rem",
-	MOBILE_LETTER_WIDTH: "90vw",
-	MOBILE_LETTER_HEIGHT: "126vw",
-	PC_TITLE_HEIGHT: "2rem",
-	MOBILE_TITLE_HEIGHT: "2rem",
-	PC_CONTENT_HEIGHT: deviceHeight < WIDTH_LIMIT ? "26rem" : "34.4rem",
-	MOBILE_CONTENT_HEIGHT: "calc(126vw - 2rem)",
+  PC_LETTER_MARGIN: deviceHeight < WIDTH_LIMIT ? "1rem 0 0 0" : "2rem 0 0 0",
+  PC_LETTER_WIDTH: deviceHeight < WIDTH_LIMIT ? "20rem" : "26rem",
+  PC_LETTER_HEIGHT: deviceHeight < WIDTH_LIMIT ? "28rem" : "36.4rem",
+  MOBILE_LETTER_WIDTH: "90vw",
+  MOBILE_LETTER_HEIGHT: "126vw",
+  PC_TITLE_HEIGHT: "2rem",
+  MOBILE_TITLE_HEIGHT: "2rem",
+  PC_CONTENT_HEIGHT: deviceHeight < WIDTH_LIMIT ? "26rem" : "34.4rem",
+  MOBILE_CONTENT_HEIGHT: "calc(126vw - 2rem)",
 
-	PC_MAIN_TEXT_SIZE: "1.5rem",
-	MOBILE_MAIN_TEXT_SIZE: "1.3rem",
-	PC_MAIN_BOTTLE_WIDTH: "30vw",
-	PC_MAIN_BOTTLE_HEIGHT: "30vh",
+  PC_MAIN_TEXT_SIZE: "1.5rem",
+  MOBILE_MAIN_TEXT_SIZE: "1.3rem",
+  PC_MAIN_BOTTLE_WIDTH: "30vw",
+  PC_MAIN_BOTTLE_HEIGHT: "30vh",
 
-	MOBILE_MAIN_BOTTLE_WIDTH: "4rem",
-	MOBILE_MAIN_BOTTLE_HEIGHT: "4rem",
+  MOBILE_MAIN_BOTTLE_WIDTH: "4rem",
+  MOBILE_MAIN_BOTTLE_HEIGHT: "4rem",
 
-	// 헤더 높이
-	PC_HEADER_HEIGHT: "6rem",
-	MOBILE_HEADER_HEIGHT: "5rem",
+  // 헤더 높이
+  PC_HEADER_HEIGHT: "5.5rem",
+  MOBILE_HEADER_HEIGHT: "4.5rem",
 };

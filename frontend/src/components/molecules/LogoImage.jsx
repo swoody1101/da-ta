@@ -1,13 +1,14 @@
 import React from "react";
 import styled from "styled-components";
+import { media } from "../../utils/styleUtil";
 
 const LogoImage = ({ onClick }) => {
   return (
     <Container onClick={onClick}>
-      <img
+      {/* <img
         src={`${process.env.PUBLIC_URL}/assets/logo/data_logo.png`}
         height="100%"
-      />
+      /> */}
       <LogoText>DA-TA</LogoText>
     </Container>
   );
@@ -26,9 +27,13 @@ const Container = styled.div`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+
+  ${media.phone`
+    left: 1rem;
+	`}
 `;
 
-const LogoText = styled.p`
+export const LogoText = styled.p`
   display: flex;
   font-size: 2rem;
   font-family: "다래손글씨";
