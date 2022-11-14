@@ -4,7 +4,7 @@
 /**
  * @param LetterObject
  */
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { media } from "../../../utils/styleUtil";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -28,6 +28,7 @@ import {
 import { popErrorAlert, popSuccessAlert } from "../../../utils/sweetAlert";
 import { downloadFirebaseStorage } from "../../../utils/firebaseStorage";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const DateToString = (writtenDate) => {
   const ToDate = new Date(writtenDate);
@@ -43,6 +44,7 @@ export const MypageLetter = ({ letter, reload }) => {
   const mypageRouterIndex = useRecoilValue(mypageRouterState);
   const setLetter = useSetRecoilState(letterState);
   const writtenTime = DateToString(letter.writtenDate);
+  const [display, setDisplay] = useState("block");
 
   const readLetter = async (index, letterId) => {
     if (index === 0) {
@@ -50,6 +52,7 @@ export const MypageLetter = ({ letter, reload }) => {
       const response = await collectDetail(letterId);
       if (response.status - 200 < 3 && response.status) {
         const letter = response.data;
+        setReadingLetterId(letterId);
         if (letter.letterInfo.imageLetterUrl) {
           letter.letterInfo.imageLetterUrl = await downloadFirebaseStorage(
             `${letter.letterInfo.imageLetterUrl}.png`
@@ -65,6 +68,7 @@ export const MypageLetter = ({ letter, reload }) => {
       const response = await replyDetail(letterId);
       if (response.status - 200 < 3 && response.status) {
         const letter = response.data;
+        setReadingLetterId(letterId);
         console.log(letter);
         if (letter.originLetterInfo.imageLetterUrl) {
           letter.originLetterInfo.imageLetterUrl =
@@ -79,6 +83,12 @@ export const MypageLetter = ({ letter, reload }) => {
       }
     }
   };
+
+  useEffect(() => {
+    if (mypageRouterIndex == 0) {
+      setDisplay("none");
+    }
+  }, []);
 
   const deleteLetter = async (index, letterId) => {
     if (index === 0) {
@@ -95,6 +105,7 @@ export const MypageLetter = ({ letter, reload }) => {
       const response = await replyDeleteLetter(letterId);
       if (response.status - 200 < 3 && response.status) {
         popSuccessAlert("", "답장한 편지를 삭제했습니다.");
+        reload();
       } else {
         popErrorAlert("", "요청실패");
       }
@@ -117,7 +128,12 @@ export const MypageLetter = ({ letter, reload }) => {
       </LetterWordsDiv>
       <FontAwesomeIcon
         icon={faTriangleExclamation}
-        style={{ margin: "0 15px 0 0", color: "#F44336", cursor: "pointer" }}
+        style={{
+          margin: "0 15px 0 0",
+          color: "#F44336",
+          cursor: "pointer",
+          display: display,
+        }}
         size="lg"
         onClick={() => {
           setReportModal(true);

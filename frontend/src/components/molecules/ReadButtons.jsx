@@ -20,6 +20,7 @@ import {
   faTrashCan,
   faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
+import { collectDeleteLetter } from "../../api/mypageAPI";
 
 const ReadButtons = ({ index }) => {
   const letterId = useRecoilValue(readingLetterIdState);
@@ -40,6 +41,14 @@ const ReadButtons = ({ index }) => {
   };
 
   const deleteBtn = async (letterId) => {
+    const response = await collectDeleteLetter(letterId);
+    if (response.status - 200 < 3 && response.status) {
+      navigate("/");
+      popSuccessAlert("", "수집한 편지를 삭제했습니다.");
+      setLetter(false);
+    } else {
+      popErrorAlert("", "수집한 편지 삭제 요청실패");
+    }
     console.log("삭제하기");
   };
 
@@ -176,7 +185,7 @@ const ReadButtons = ({ index }) => {
 const ButtonDiv = styled.div`
   display: flex;
   flex-wrap: wrap-reverse;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: space-between;
   height: 60px;
   width: 500px;
