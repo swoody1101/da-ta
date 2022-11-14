@@ -23,7 +23,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 import static com.da_ta.backend.common.domain.Age.*;
@@ -87,7 +87,7 @@ public class UserService {
 
     public Message reissue(HttpHeaders headers, String token) {
         try {
-            HashMap<String, String> payloadMap = JwtUtil.getPayloadByToken(token);
+            Map<String, String> payloadMap = JwtUtil.getPayloadByToken(token);
             String userId = (payloadMap.get(TOKEN_SUBJECT));
             TokenInfo refreshToken = getRefreshToken(userId);
             if (jwtTokenProvider.validateToken(refreshToken.getValue())) {

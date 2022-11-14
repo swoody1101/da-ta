@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.Duration;
 import java.util.Base64;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.Map;
 
 import static com.da_ta.backend.common.domain.ErrorCode.*;
 
@@ -86,7 +86,7 @@ public class JwtTokenProvider {
     }
 
     public Authentication getAuthentication(String token) {
-        HashMap<String, String> payloadMap = JwtUtil.getPayloadByToken(token);
+        Map<String, String> payloadMap = JwtUtil.getPayloadByToken(token);
         UserDetails userDetails = userDetailsService.loadUserByUsername(payloadMap.get(TOKEN_SUBJECT));
         return new UsernamePasswordAuthenticationToken(userDetails, token, userDetails.getAuthorities());
     }
