@@ -25,7 +25,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
             String path = request.getServletPath();
-            if (path.startsWith("/api/v1/user/login") || path.startsWith("/api/v1/user/reissue")) {
+            if (path.startsWith("/api/v1/user/login") || path.startsWith("/api/v1/user/reissue") || path.startsWith("/api/v1/today") || path.startsWith("/api/v1/letters/count")) {
                 filterChain.doFilter(request, response);
             } else {
                 String accessToken = jwtTokenProvider.resolveAccessToken(request);
