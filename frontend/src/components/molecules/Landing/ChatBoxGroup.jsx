@@ -14,8 +14,12 @@ import { loginState } from "../../../recoil/Atoms";
 import { popWarningAlert } from "../../../utils/sweetAlert";
 import { useRecoilValue } from "recoil";
 import { useSetRecoilState } from "recoil";
-import { todayQuestionState } from "../../../recoil/Atoms";
-import { getTodayQuestion } from "../../../api/questionReadAPI";
+// import { todayQuestionState } from "../../../recoil/Atoms";
+import {
+  getTodayQuestionNotLogin,
+  getTodayQuestionLogin,
+} from "../../../api/questionReadAPI";
+import { userState } from "../../../recoil/Atoms";
 
 const ChatBoxGroup = ({
   children,
@@ -27,7 +31,7 @@ const ChatBoxGroup = ({
   {
     const isLogin = useRecoilValue(loginState);
     const [todayQuestionQ, setTodayQuestionQ] = useState([]); //변하는 오늘의 질문
-    const setTodayQuestion = useSetRecoilState(todayQuestionState); //recoil
+    // const setTodayQuestion = useSetRecoilState(todayQuestionState); //recoil
 
     const handlerClickModalA = () => {
       return isLogin
@@ -48,11 +52,11 @@ const ChatBoxGroup = ({
 
     // 오늘의 질문 가져오는 api용 2
     const mainGetQuestion = async () => {
-      const response = await getTodayQuestion();
+      let response = await getTodayQuestionLogin();
+
       const todayQuestion = response.data;
       setTodayQuestionQ(todayQuestion);
       // if (response.status - 200 < 3 && response.status) {
-      setTodayQuestion(todayQuestion);
       // }
     };
 
