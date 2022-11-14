@@ -210,8 +210,8 @@ public class LetterService {
                         .stream()
                         .map(collectedLetter ->
                                 CollectionItem.builder()
-                                        .letterId(collectedLetter.getLetter().getId())
-                                        .letterTitle(collectedLetter.getLetter().getTitle())
+                                        .id(collectedLetter.getLetter().getId())
+                                        .title(collectedLetter.getLetter().getTitle())
                                         .writerId(collectedLetter.getLetter().getWriter().getId())
                                         .writerNickname(collectedLetter.getLetter().getWriter().getNickname())
                                         .writtenDate(collectedLetter.getLetter().getCreatedDate())
