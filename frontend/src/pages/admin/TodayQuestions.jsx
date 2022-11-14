@@ -23,6 +23,7 @@ import { MainSmallText } from "../../components/atoms/Text";
 import Button from "../../components/atoms/Button";
 import styled from "styled-components";
 import {
+  getAnswerList,
   getQuestion,
   getQuestionList,
   modifyQuestion,
@@ -51,6 +52,7 @@ const TodayQuestions = () => {
     date: null,
     question: null,
   });
+  const [answerList, setAnswerList] = useState([]);
 
   /** 오늘의 질문 입력값 */
   const questionRef = useRef();
@@ -80,6 +82,7 @@ const TodayQuestions = () => {
         return;
       }
       setModalContent({ ...response.data });
+      resetAnswerList(dayQuestionInfo.todayQuestionId);
     }
   }, [selectedDate]);
 
@@ -107,15 +110,30 @@ const TodayQuestions = () => {
   };
 
   /**
+   * @description 해당 일의 오늘의 질문 답변 리스트 불러오는 함수
+   * @param {number} questionId 오늘의 질문 번호
+   */
+  const resetAnswerList = async (questionId) => {
+    const response = await getAnswerList(questionId);
+
+    if (!response || response.status !== 200) {
+      setAnswerList([]);
+      return;
+    }
+
+    setAnswerList([...response.data.answers]);
+    setLoading(false);
+    setModalToggle(true);
+  };
+
+  /**
    * @description 캘린더에서 날짜 클릭 시 함수
    * @param {*} pickDate Calendar에서 선택한 날짜
    * @param {*} event
    */
   const handleClickDate = async (pickDate, event) => {
     setSelectedDate(pickDate); // -> useEffect(selectedDate)
-    setTimeout(() => {
-      setModalToggle(true);
-    }, 50);
+    setLoading(true);
   };
 
   /**
@@ -168,7 +186,7 @@ const TodayQuestions = () => {
       {modalToggle && (
         <Modal
           titleText={"질문 관리"}
-          height="36rem"
+          height="40rem"
           modalToggle={modalToggle}
           setModalToggle={setModalToggle}
         >
@@ -194,6 +212,29 @@ const TodayQuestions = () => {
                 textAlign={"center"}
                 myRef={questionRef}
               />
+            </ModalContentBox>
+            <MainSmallText color="black" fontWeight="bold" margin="2rem 0 0 0">
+              답변 목록
+            </MainSmallText>
+            <ModalContentBox
+              flexDirection="column"
+              margin="1rem 0 0 0"
+              width="80%"
+              height="11rem"
+              justifyContent="start"
+            >
+              {answerList && answerList.length > 0 ? (
+                answerList.map((item, index) => (
+                  <Answer key={index}>
+                    <AnswerWriter>{item.nickname}</AnswerWriter>
+                    <AnswerContent>{item.answer}</AnswerContent>
+                  </Answer>
+                ))
+              ) : (
+                <Answer>
+                  <AnswerWriter>목록이 비어있습니다.</AnswerWriter>
+                </Answer>
+              )}
             </ModalContentBox>
             <ButtonWrapper>
               <Button
@@ -262,6 +303,35 @@ const DateUnderline = styled.div`
   transition: 1s ease;
   transform: scale(1, 1);
   background-color: rgba(128, 128, 128, 0.8);
+`;
+
+const Answer = styled.div`
+  display: flex;
+  width: 96%;
+  padding: 0.75rem 2% 0.75rem 2%;
+`;
+
+const AnswerWriter = styled.div`
+  display: flex;
+  flex: 2;
+  height: 100%;
+  font-weight: bold;
+  white-space: normal;
+  word-break: break-all;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  color: blue;
+`;
+
+const AnswerContent = styled.div`
+  display: flex;
+  flex: 3;
+  white-space: normal;
+  word-break: break-all;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
 `;
 
 export default TodayQuestions;
