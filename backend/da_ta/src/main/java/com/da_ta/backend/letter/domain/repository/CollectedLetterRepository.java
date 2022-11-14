@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface CollectionRepository extends JpaRepository<CollectedLetter, Long> {
+public interface CollectedLetterRepository extends JpaRepository<CollectedLetter, Long> {
 
     Optional<CollectedLetter> findByLetterIdAndUserIdAndIsActiveTrue(Long letterId, Long userId);
 

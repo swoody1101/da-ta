@@ -16,7 +16,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static com.da_ta.backend.account.user.domain.Role.ADMIN;
 
 @Configuration
 @EnableWebSecurity
@@ -43,7 +42,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/admin").hasRole(String.valueOf(ADMIN))
+                .antMatchers("/api/v1/admin/**").hasRole("ADMIN")
+                .antMatchers("/api/v1/user", "/api/v1/user/reissue", "/api/v1/user/update", "/api/v1/letters/**", "/api/v1/today/answer/**").hasAnyRole("ADMIN", "USER")
                 .and()
                 .formLogin().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

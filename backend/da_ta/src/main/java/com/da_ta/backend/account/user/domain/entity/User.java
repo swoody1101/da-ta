@@ -40,7 +40,7 @@ public class User extends CommonEntity implements UserDetails {
     @NotNull
     @Enumerated(EnumType.STRING)
     @Builder.Default
-    private Role role = Role.MEMBER;
+    private Role role = Role.ROLE_USER;
 
     @NotNull
     @Builder.Default
@@ -59,7 +59,7 @@ public class User extends CommonEntity implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(this.role.getCode()));
+        authorities.add(new SimpleGrantedAuthority(this.role.toString()));
         return authorities;
     }
 
