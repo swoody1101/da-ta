@@ -3,11 +3,14 @@ package com.da_ta.backend.letter.controller;
 import com.da_ta.backend.account.jwt.JwtTokenProvider;
 import com.da_ta.backend.common.domain.Message;
 import com.da_ta.backend.letter.controller.dto.*;
+import com.da_ta.backend.letter.controller.dto.common.CheckImageLetterResponse;
 import com.da_ta.backend.letter.service.LetterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
@@ -119,5 +122,12 @@ public class LetterController {
                                                @PathVariable("replied_letter_id") Long repliedLetterId) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(letterService.deleteReply(jwtTokenProvider.findUserByToken(token), repliedLetterId));
+    }
+
+    @GetMapping("/check/2")
+    public ResponseEntity<CheckImageLetterResponse> checkImageLetterHarmfulness(@RequestHeader(AUTHORIZATION) String token,
+                                                                                @RequestBody CheckImageLetterRequest checkImageLetterRequest) throws IOException {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(letterService.checkImageLetter(token, checkImageLetterRequest));
     }
 }
