@@ -105,6 +105,7 @@ export const MypageLetter = ({ letter, reload }) => {
       const response = await replyDeleteLetter(letterId);
       if (response.status - 200 < 3 && response.status) {
         popSuccessAlert("", "답장한 편지를 삭제했습니다.");
+        reload();
       } else {
         popErrorAlert("", "요청실패");
       }
