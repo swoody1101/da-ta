@@ -145,7 +145,7 @@ const MainNav = () => {
                   width="12rem"
                   margin="0 -3.5rem 0 0"
                   color="white"
-                  bgColor="linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);"
+                  bgColor="linear-gradient(to right, #6a11cb 0%, #2575fc 100%);"
                   onMouseOver={() => setSpeechBubble(true)}
                   onMouseOut={() => setSpeechBubble(false)}
                 >

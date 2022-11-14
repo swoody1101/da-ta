@@ -87,7 +87,6 @@ const TodayQuestions = () => {
     if (dayQuestionInfo !== undefined)
       resetAnswerList(dayQuestionInfo.todayQuestionId);
     setLoading(false);
-    setModalToggle(true);
   }, [selectedDate]);
 
   useEffect(() => {
@@ -135,6 +134,7 @@ const TodayQuestions = () => {
    */
   const handleClickDate = async (pickDate, event) => {
     setAnswerList([]);
+    setModalToggle(true);
     setSelectedDate(pickDate); // -> useEffect(selectedDate)
     setLoading(true);
   };
