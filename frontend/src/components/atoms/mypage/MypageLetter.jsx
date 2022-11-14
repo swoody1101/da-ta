@@ -4,7 +4,7 @@
 /**
  * @param LetterObject
  */
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { media } from "../../../utils/styleUtil";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -28,6 +28,7 @@ import {
 import { popErrorAlert, popSuccessAlert } from "../../../utils/sweetAlert";
 import { downloadFirebaseStorage } from "../../../utils/firebaseStorage";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const DateToString = (writtenDate) => {
   const ToDate = new Date(writtenDate);
@@ -43,6 +44,7 @@ export const MypageLetter = ({ letter, reload }) => {
   const mypageRouterIndex = useRecoilValue(mypageRouterState);
   const setLetter = useSetRecoilState(letterState);
   const writtenTime = DateToString(letter.writtenDate);
+  const [display, setDisplay] = useState("block");
 
   const readLetter = async (index, letterId) => {
     if (index === 0) {
@@ -80,6 +82,12 @@ export const MypageLetter = ({ letter, reload }) => {
     }
   };
 
+  useEffect(() => {
+    if (mypageRouterIndex == 0) {
+      setDisplay("none");
+    }
+  }, []);
+
   const deleteLetter = async (index, letterId) => {
     if (index === 0) {
       // routerIndex=0 인 경우 => 수집한 편지인 경우
@@ -115,9 +123,14 @@ export const MypageLetter = ({ letter, reload }) => {
         <LetterDateWeb>{`${letter.writerNickname}`}</LetterDateWeb>
         <LetterDateWeb>{`${writtenTime}`}</LetterDateWeb>
       </LetterWordsDiv>
-      {/* <FontAwesomeIcon
+      <FontAwesomeIcon
         icon={faTriangleExclamation}
-        style={{ margin: "0 15px 0 0", color: "#F44336", cursor: "pointer" }}
+        style={{
+          margin: "0 15px 0 0",
+          color: "#F44336",
+          cursor: "pointer",
+          display: display,
+        }}
         size="lg"
         onClick={() => {
           setReportModal(true);
@@ -126,7 +139,7 @@ export const MypageLetter = ({ letter, reload }) => {
             `${letter.id}번 글을 쓴 글쓴이 아이디 ${letter.writerId}를 신고버튼`
           );
         }}
-      /> */}
+      />
       <FontAwesomeIcon
         icon={faTrashCan}
         style={{ margin: "0 15px 0 0", cursor: "pointer" }}
