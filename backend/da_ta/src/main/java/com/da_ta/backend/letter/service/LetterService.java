@@ -1,5 +1,6 @@
 package com.da_ta.backend.letter.service;
 
+import com.da_ta.backend.account.jwt.JwtTokenProvider;
 import com.da_ta.backend.account.user.domain.entity.User;
 import com.da_ta.backend.common.domain.Age;
 import com.da_ta.backend.common.domain.Message;
@@ -9,10 +10,13 @@ import com.da_ta.backend.letter.controller.dto.*;
 import com.da_ta.backend.letter.controller.dto.common.*;
 import com.da_ta.backend.letter.domain.entity.*;
 import com.da_ta.backend.letter.domain.repository.*;
+import com.da_ta.backend.util.Base64Util;
+import com.da_ta.backend.util.DetectSafeSearchUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.stream.Collectors;
 
 import static com.da_ta.backend.common.domain.ErrorCode.*;
@@ -26,6 +30,7 @@ public class LetterService {
     private final static String TYPE_TEXT = "Text";
     private final static String TYPE_IMAGE = "Image";
 
+    private final JwtTokenProvider jwtTokenProvider;
     private final CollectedLetterRepository collectedLetterRepository;
     private final FloatedLetterRepository floatedLetterRepository;
     private final FloatedLetterLogRepository floatedLetterLogRepository;
@@ -332,6 +337,11 @@ public class LetterService {
         reply.deleteReplyLetter();
         replyRepository.save(reply);
         return new Message(REPLY_DELETED.getMessage());
+    }
+
+    public CheckImageLetterResponse checkImageLetter(String token, CheckImageLetterRequest checkImageLetterRequest) throws IOException {
+        jwtTokenProvider.findUserByToken(token);
+        return DetectSafeSearchUtil.detectSafeSearch(Base64Util.decodeBase64ToBytes(checkImageLetterRequest.getImageDataUrl()));
     }
 
     private Letter findLetterById(Long letterId) {
