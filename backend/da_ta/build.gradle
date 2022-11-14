@@ -20,17 +20,6 @@ repositories {
     mavenCentral()
 }
 
-// Use the osdetector-gradle-plugin
-apply plugin: "com.google.osdetector"
-
-def tcnative_classifier = osdetector.classifier;
-// Fedora variants use a different soname for OpenSSL than other linux distributions
-// (see http://netty.io/wiki/forked-tomcat-native.html).
-if (osdetector.os == "linux" && osdetector.release.isLike("fedora")) {
-    tcnative_classifier += "-fedora";
-}
-
-
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -56,6 +45,8 @@ dependencies {
 
     implementation platform('com.google.cloud:libraries-bom:26.1.3')
     implementation 'com.google.cloud:google-cloud-vision'
+
+    implementation group: 'io.netty', name: 'netty-tcnative', version: '2.0.1.Final'
 }
 
 tasks.named('test') {
