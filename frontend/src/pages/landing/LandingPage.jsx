@@ -7,7 +7,6 @@ import { media } from "../../utils/styleUtil";
 
 import {
   popWarningAlert,
-  popConfirmAlert,
   popErrorAlert,
   popSuccessAlert,
 } from "./../../utils/sweetAlert";
@@ -34,17 +33,11 @@ import QuestionProgressBar from "../../components/molecules/landing/QuestionProg
 import { MIN_CHAR_COUNT_Q, MAX_CHAR_COUNT_Q } from "../../constants/Variables";
 
 import { saveTextAnswer } from "../../api/questionWriteAPI";
-import {
-  getLetterNumLogin,
-  getLetterNumNotLogin,
-} from "../../api/letterCountAPI";
+import { getLetterNum } from "../../api/letterCountAPI";
 import { MainAnimationText } from "../../components/atoms/MainAnimationText";
 import { useSetRecoilState } from "recoil";
 import { todayQuestionState, userState } from "./../../recoil/Atoms";
-import {
-  getTodayQuestionLogin,
-  getTodayQuestionNotLogin,
-} from "../../api/questionReadAPI";
+import { getTodayQuestion } from "../../api/questionReadAPI";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -57,7 +50,6 @@ const LandingPage = () => {
   const [modalToggleA, setModalToggleA] = useState(false); // 답변보내기 모달창 토글
   const [modalToggleB, setModalToggleB] = useState(false); // 답변리스트 보기 모달창 토글
 
-  // const setLetterNum = useSetRecoilState(letterNumState); //recoil
   const setTodayQuestion = useSetRecoilState(todayQuestionState);
 
   const user = useRecoilValue(userState); //유저 id 값 용
@@ -124,7 +116,7 @@ const LandingPage = () => {
       content,
       realUserId,
       realTodayQuestionId
-    ); //API 파트
+    );
 
     if (response.status < 200 && response.status >= 300) {
       popErrorAlert("답변 전송 오류", "답변 전송 중 오류가 발생했습니다.");
@@ -151,8 +143,7 @@ const LandingPage = () => {
 
   // 바다에 띄워진 물병 편지 전체 개수 가져오는 api용 2
   const mainGetLetterNum = async () => {
-    let response = await getLetterNumLogin();
-
+    let response = await getLetterNum();
     if (!response || (response.status < 200 && response.status >= 300)) {
       popErrorAlert("답변 전송 오류", "답변 전송 중 오류가 발생했습니다.");
       return;
@@ -163,11 +154,7 @@ const LandingPage = () => {
 
   // 오늘의 질문 가져오는 api용 2
   const mainGetQuestion = async () => {
-    let response = null;
-    if (isLogin == true) {
-      response = await getTodayQuestionLogin();
-    } else response = await getTodayQuestionNotLogin();
-
+    let response = await getTodayQuestion();
     if (!response || (response.status < 200 && response.status >= 300)) {
       popErrorAlert("답변 전송 오류", "답변 전송 중 오류가 발생했습니다.");
       return;
@@ -187,7 +174,6 @@ const LandingPage = () => {
           setModalToggle={setModalToggleA}
           titleText={todayQuestionQ.question}
         >
-          {/* <MainText>오늘의 질문 api 연결 예정</MainText> */}
           <AnswerBox width="80%" height="65%" margin="0 0 0 0">
             <QuestionTextArea
               onChange={(e) => handleQuestionAnswerWrite(e.target.value.length)}
@@ -491,55 +477,5 @@ const QuestionAnswerListArea = styled.div`
     outline: none;
   }
 `;
-
-//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-//이 아래는  현재 메인의 글자 타이핑 애니메이션용입니다.
-
-// .MainTitleWrapper {
-//   height: 100vh;
-//   /*This part is important for centering*/
-//   display: grid;
-//   place-items: center;
-// }
-
-// .typing-demo {
-//   width: 22ch;
-//   animation: typing 2s steps(22), blink .5s step-end infinite alternate;
-//   white-space: nowrap;
-//   overflow: hidden;
-//   border-right: 3px solid;
-//   font-family: monospace;
-//   font-size: 2em;
-// }
-
-// @keyframes typing {
-//   from {
-//     width: 0
-//   }
-// }
-
-// @keyframes blink {
-//   50% {
-//     border-color: transparent
-//   }
-// }
-//mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
-// const typing = keyframes`
-//   0% {
-//     background-position: 1280px;
-//   }
-//   100% {
-//     background-position: 0;
-//   }
-// `;
-
-// const blink = keyframes`
-//   0% {
-//     background-position: 1280px;
-//   }
-//   100% {
-//     background-position: 0;
-//   }
-// `;
 
 export default LandingPage;
