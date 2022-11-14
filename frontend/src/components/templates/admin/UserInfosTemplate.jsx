@@ -51,13 +51,15 @@ const UserInfosTemplate = ({
                 <ContentElement flex={flexRate[3]}>
                   <Button
                     bgColor={
-                      item.role === RoleTypes.MEMBER ? "#49C288" : "#FF6C00"
+                      item.role === RoleTypes.ROLE_USER ? "#49C288" : "#FF6C00"
                     }
                     width="90%"
                     height="70%"
                     onClick={(e) => handlePermission(item.userId, item.role, e)}
                   >
-                    {item.role === RoleTypes.MEMBER ? "권한 부여" : "권한 제거"}
+                    {item.role === RoleTypes.ROLE_USER
+                      ? "권한 부여"
+                      : "권한 제거"}
                   </Button>
                 </ContentElement>
                 <ContentElement flex={flexRate[4]}>
