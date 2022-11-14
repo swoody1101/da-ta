@@ -103,6 +103,14 @@ public class UserService {
         return new Message(TOKEN_REISSUED.getMessage());
     }
 
+    public Message logout(User user) {
+        String userId = user.getId().toString();
+        TokenInfo refreshToken = redisRepository.findById(userId)
+                .orElseThrow(() -> new WrongAccessException(UNAUTHORIZED));
+        redisRepository.delete(refreshToken);
+        return new Message(LOGOUT.getMessage());
+    }
+
     private KakaoToken getKakaoAccessToken(String authorizationCode) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders httpHeaders = new HttpHeaders();
