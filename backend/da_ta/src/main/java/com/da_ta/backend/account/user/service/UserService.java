@@ -89,8 +89,7 @@ public class UserService {
         try {
             HashMap<String, String> payloadMap = JwtUtil.getPayloadByToken(token);
             String userId = (payloadMap.get(TOKEN_SUBJECT));
-            TokenInfo refreshToken = redisRepository.findById(userId)
-                    .orElseThrow(() -> new WrongAccessException(UNAUTHORIZED));
+            TokenInfo refreshToken = getRefreshToken(userId);
             if (jwtTokenProvider.validateToken(refreshToken.getValue())) {
                 User user = userRepository.findById(Long.parseLong(userId))
                         .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
@@ -105,8 +104,7 @@ public class UserService {
 
     public Message logout(User user) {
         String userId = user.getId().toString();
-        TokenInfo refreshToken = redisRepository.findById(userId)
-                .orElseThrow(() -> new WrongAccessException(UNAUTHORIZED));
+        TokenInfo refreshToken = getRefreshToken(userId);
         redisRepository.delete(refreshToken);
         return new Message(LOGOUT.getMessage());
     }
@@ -277,5 +275,10 @@ public class UserService {
         user.deleteUser();
         userRepository.save(user);
         return new Message(USER_DELETED.getMessage());
+    }
+
+    private TokenInfo getRefreshToken(String userId) {
+        return redisRepository.findById(userId)
+                .orElseThrow(() -> new WrongAccessException(UNAUTHORIZED));
     }
 }
