@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.da_ta.backend.common.domain.ErrorCode.FAILED_CHECK_IMAGE_LETTER;
+import static com.da_ta.backend.common.domain.ErrorCode.IMAGE_LETTER_CHECK_FAILED;
 
 @Slf4j
 @Component
@@ -44,14 +44,14 @@ public class DetectSafeSearchUtil {
             for (AnnotateImageResponse res : responses) {
                 if (res.hasError()) {
                     log.info("Error: " + res.getError().getMessage());
-                    throw new CommonException(FAILED_CHECK_IMAGE_LETTER);
+                    throw new CommonException(IMAGE_LETTER_CHECK_FAILED);
                 }
                 return checkImage(res.getSafeSearchAnnotation());
             }
         } catch (IOException ioException) {
             throw new IOException(ioException.getMessage());
         }
-        throw new CommonException(FAILED_CHECK_IMAGE_LETTER);
+        throw new CommonException(IMAGE_LETTER_CHECK_FAILED);
     }
 
     private static CheckImageLetterResponse checkImage(SafeSearchAnnotation annotation) {
@@ -77,7 +77,7 @@ public class DetectSafeSearchUtil {
             message = NO_ISSUE;
         }
         return CheckImageLetterResponse.builder()
-                .harmfulness(harmfulness)
+                .isHarmful(harmfulness)
                 .message(message)
                 .build();
     }
