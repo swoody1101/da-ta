@@ -23,7 +23,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 import static com.da_ta.backend.common.domain.Age.*;
@@ -35,13 +35,13 @@ import static com.da_ta.backend.common.domain.SuccessCode.*;
 @RequiredArgsConstructor
 public class UserService {
 
-    private final String GENERATE_NICKNAME_URL = "https://nickname.hwanmoo.kr/?format=json&count=1";
-    private final String CONTENT_TYPE = "Content-type";
-    private final String CONTENT_TYPE_VALUE = "application/x-www-form-urlencoded;charset=utf-8";
-    private final String GRANT_TYPE_VALUE = "authorization_code";
-    private final String TOKEN_SUBJECT = "sub";
-    private final String DELIMITER = " ";
-    private final String TILDE = "~";
+    private static final String GENERATE_NICKNAME_URL = "https://nickname.hwanmoo.kr/?format=json&count=1";
+    private static final String CONTENT_TYPE = "Content-type";
+    private static final String CONTENT_TYPE_VALUE = "application/x-www-form-urlencoded;charset=utf-8";
+    private static final String GRANT_TYPE_VALUE = "authorization_code";
+    private static final String TOKEN_SUBJECT = "sub";
+    private static final String DELIMITER = " ";
+    private static final String TILDE = "~";
     private final JwtTokenProvider jwtTokenProvider;
     private final UserRepository userRepository;
     private final RedisRepository redisRepository;
@@ -87,7 +87,7 @@ public class UserService {
 
     public Message reissue(HttpHeaders headers, String token) {
         try {
-            HashMap<String, String> payloadMap = JwtUtil.getPayloadByToken(token);
+            Map<String, String> payloadMap = JwtUtil.getPayloadByToken(token);
             String userId = (payloadMap.get(TOKEN_SUBJECT));
             TokenInfo refreshToken = getRefreshToken(userId);
             if (jwtTokenProvider.validateToken(refreshToken.getValue())) {
@@ -133,7 +133,11 @@ public class UserService {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        return kakaoToken;
+        if (kakaoToken == null) {
+            throw new NotFoundException(KAKAO_TOKEN_NOT_FOUND);
+        } else {
+            return kakaoToken;
+        }
     }
 
     private Long getKakaoUserId(String accessToken) {
@@ -155,7 +159,12 @@ public class UserService {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        return kakaoTokenInfo.getId();
+        Long kakaoUserId = kakaoTokenInfo.getId();
+        if (kakaoUserId == null) {
+            throw new NotFoundException(KAKAO_USER_ID_NOT_FOUND);
+        } else {
+            return kakaoUserId;
+        }
     }
 
     private KakaoProfile getKakaoProfile(String accessToken) {
@@ -224,7 +233,12 @@ public class UserService {
                 nicknameRequest,
                 NicknameResponse.class
         );
-        return response.getBody().getNickname()[0];
+        String nickname = response.getBody().getNickname()[0];
+        if (nickname == null) {
+            throw new NotFoundException(NICKNAME_NOT_FOUND);
+        } else {
+            return nickname;
+        }
     }
 
     private Age mapToAge(String ageRange) {

@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.Duration;
 import java.util.Base64;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.Map;
 
 import static com.da_ta.backend.common.domain.ErrorCode.*;
 
@@ -33,9 +33,9 @@ import static com.da_ta.backend.common.domain.ErrorCode.*;
 @RequiredArgsConstructor
 public class JwtTokenProvider {
 
-    private final int BEARER_TOKEN_BEGIN_INDEX = 7;
-    private final String TOKEN_SUBJECT = "sub";
-    private final String DELIMITER = " ";
+    private static final int BEARER_TOKEN_BEGIN_INDEX = 7;
+    private static final String TOKEN_SUBJECT = "sub";
+    private static final String DELIMITER = " ";
 
     @Value("${spring.jwt.secret}")
     private String secretKey;
@@ -86,7 +86,7 @@ public class JwtTokenProvider {
     }
 
     public Authentication getAuthentication(String token) {
-        HashMap<String, String> payloadMap = JwtUtil.getPayloadByToken(token);
+        Map<String, String> payloadMap = JwtUtil.getPayloadByToken(token);
         UserDetails userDetails = userDetailsService.loadUserByUsername(payloadMap.get(TOKEN_SUBJECT));
         return new UsernamePasswordAuthenticationToken(userDetails, token, userDetails.getAuthorities());
     }
@@ -111,8 +111,9 @@ public class JwtTokenProvider {
 
     public boolean validateToken(String token) {
         try {
-            Jwts.parser()
+            Jwts.parserBuilder()
                     .setSigningKey(secretKey)
+                    .build()
                     .parseClaimsJws(token);
             return true;
         } catch (SecurityException | MalformedJwtException e) {
@@ -133,8 +134,9 @@ public class JwtTokenProvider {
 
     private Claims getAllClaims(String token) {
         try {
-            return Jwts.parser()
+            return Jwts.parserBuilder()
                     .setSigningKey(secretKey)
+                    .build()
                     .parseClaimsJws(token)
                     .getBody();
         } catch (ExpiredJwtException e) {

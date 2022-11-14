@@ -1,8 +1,7 @@
 package com.da_ta.backend.question.controller.dto;
 
-import lombok.*;
-
-import java.util.Date;
+import lombok.Builder;
+import lombok.Getter;
 
 @Getter
 @Builder
