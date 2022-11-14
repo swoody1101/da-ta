@@ -33,9 +33,9 @@ import static com.da_ta.backend.common.domain.ErrorCode.*;
 @RequiredArgsConstructor
 public class JwtTokenProvider {
 
-    private final int BEARER_TOKEN_BEGIN_INDEX = 7;
-    private final String TOKEN_SUBJECT = "sub";
-    private final String DELIMITER = " ";
+    private static final int BEARER_TOKEN_BEGIN_INDEX = 7;
+    private static final String TOKEN_SUBJECT = "sub";
+    private static final String DELIMITER = " ";
 
     @Value("${spring.jwt.secret}")
     private String secretKey;

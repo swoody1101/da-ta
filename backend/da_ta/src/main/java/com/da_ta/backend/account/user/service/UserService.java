@@ -35,13 +35,13 @@ import static com.da_ta.backend.common.domain.SuccessCode.*;
 @RequiredArgsConstructor
 public class UserService {
 
-    private final String GENERATE_NICKNAME_URL = "https://nickname.hwanmoo.kr/?format=json&count=1";
-    private final String CONTENT_TYPE = "Content-type";
-    private final String CONTENT_TYPE_VALUE = "application/x-www-form-urlencoded;charset=utf-8";
-    private final String GRANT_TYPE_VALUE = "authorization_code";
-    private final String TOKEN_SUBJECT = "sub";
-    private final String DELIMITER = " ";
-    private final String TILDE = "~";
+    private static final String GENERATE_NICKNAME_URL = "https://nickname.hwanmoo.kr/?format=json&count=1";
+    private static final String CONTENT_TYPE = "Content-type";
+    private static final String CONTENT_TYPE_VALUE = "application/x-www-form-urlencoded;charset=utf-8";
+    private static final String GRANT_TYPE_VALUE = "authorization_code";
+    private static final String TOKEN_SUBJECT = "sub";
+    private static final String DELIMITER = " ";
+    private static final String TILDE = "~";
     private final JwtTokenProvider jwtTokenProvider;
     private final UserRepository userRepository;
     private final RedisRepository redisRepository;
