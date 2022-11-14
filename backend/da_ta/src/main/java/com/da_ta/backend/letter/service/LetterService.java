@@ -26,9 +26,9 @@ import static com.da_ta.backend.common.domain.SuccessCode.*;
 @Service
 public class LetterService {
 
-    private final static int MAX_FLOAT_COUNT = 5;
-    private final static String TYPE_TEXT = "Text";
-    private final static String TYPE_IMAGE = "Image";
+    private static final int MAX_FLOAT_COUNT = 5;
+    private static final String TYPE_TEXT = "Text";
+    private static final String TYPE_IMAGE = "Image";
 
     private final JwtTokenProvider jwtTokenProvider;
     private final CollectedLetterRepository collectedLetterRepository;

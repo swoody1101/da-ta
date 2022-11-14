@@ -3,10 +3,7 @@ package com.da_ta.backend.letter.domain.entity;
 import com.da_ta.backend.account.user.domain.entity.User;
 import com.da_ta.backend.common.domain.Age;
 import com.da_ta.backend.common.domain.CommonEntity;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
@@ -15,6 +12,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @AttributeOverride(name = "id", column = @Column(name = "letter_id"))
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
