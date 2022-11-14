@@ -11,8 +11,8 @@ const LetterNonePage = () => {
         <Bottle
           src={`${process.env.PUBLIC_URL}/assets/images/common/no_letter.png`}
         ></Bottle>
-        <TextDiv>바다가 너무 깨끗합니다...</TextDiv>
-        <TextDiv>편지를 보내주세요...</TextDiv>
+        <TextDiv>떠내려온 편지가 없어요!</TextDiv>
+        <TextDiv>편지를 보내주세요</TextDiv>
       </ReadWrapper>
       <BackgroundVideo
         isBlur={true}
