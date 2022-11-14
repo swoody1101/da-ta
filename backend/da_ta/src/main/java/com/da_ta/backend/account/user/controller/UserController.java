@@ -38,6 +38,12 @@ public class UserController {
                 .body(message);
     }
 
+    @DeleteMapping("/logout")
+    public ResponseEntity<Message> logout(@RequestHeader(AUTHORIZATION) String token) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(userService.logout(jwtTokenProvider.findUserByToken(token)));
+    }
+
     @GetMapping
     public ResponseEntity<MyPageResponse> getMyPage(@RequestHeader(AUTHORIZATION) String token) {
         return ResponseEntity.status(HttpStatus.OK)
