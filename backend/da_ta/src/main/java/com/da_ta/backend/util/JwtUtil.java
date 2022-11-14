@@ -6,13 +6,14 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.Base64;
 import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 public class JwtUtil {
 
     private static final String REGEX = "\\.";
 
-    public static HashMap<String, String> getPayloadByToken(String token) {
+    public static Map<String, String> getPayloadByToken(String token) {
         try {
             String[] splitJwt = token.split(REGEX);
             Base64.Decoder decoder = Base64.getDecoder();
