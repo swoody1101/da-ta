@@ -7,6 +7,6 @@ import lombok.Getter;
 @Builder
 public class CheckImageLetterResponse {
 
-    private boolean harmfulness;
+    private Boolean isHarmful;
     private String message;
 }
