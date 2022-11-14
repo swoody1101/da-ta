@@ -1,5 +1,6 @@
 #FROM openjdk:8-jdk-alpine AS builder
-FROM openjdk:8 AS builder
+#FROM openjdk:8 AS builder
+FROM koosiedemoer/netty-tcnative-alpine
 COPY gradlew .
 COPY gradle gradle
 COPY build.gradle .
