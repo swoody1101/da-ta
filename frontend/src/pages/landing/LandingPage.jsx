@@ -36,8 +36,15 @@ import { saveTextAnswer } from "../../api/questionWriteAPI";
 import { getLetterNum } from "../../api/letterCountAPI";
 import { MainAnimationText } from "../../components/atoms/MainAnimationText";
 import { useSetRecoilState } from "recoil";
-import { todayQuestionState, userState } from "./../../recoil/Atoms";
-import { getTodayQuestion } from "../../api/questionReadAPI";
+import {
+  todayQuestionState,
+  userState,
+  todayAnswerState,
+} from "./../../recoil/Atoms";
+import {
+  getTodayQuestion,
+  getTodayAnswerList,
+} from "../../api/questionReadAPI";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -51,16 +58,21 @@ const LandingPage = () => {
   const [modalToggleB, setModalToggleB] = useState(false); // 답변리스트 보기 모달창 토글
 
   const setTodayQuestion = useSetRecoilState(todayQuestionState);
+  const setTodayAnswer = useSetRecoilState(todayAnswerState);
 
   const user = useRecoilValue(userState); //유저 id 값 용
   const todayQuestion = useRecoilValue(todayQuestionState); //오늘의 질문 id 값 용
   const isLogin = useRecoilValue(loginState);
+  const todayAnswer = useRecoilValue(todayAnswerState);
 
   const contentInput = useRef(); // 내용 ref (값 가져오기, ref)
   const unshowRef = useRef([]); // 보내기 버튼 누를 시 사라질 영역들 ref
 
   const [letterCountNum, setLetterCountNum] = useState([]); //변하는 편지 전체 수
-  const [todayQuestionQ, setTodayQuestionQ] = useState([]); //변하는 오늘의 질문
+  const [todayQuestionQ, setTodayQuestionQ] = useState([]); //오늘의 질문 1
+  const [todayAnswerA, setTodayAnswerA] = useState([]); //오늘의 질문 관련 데이터 뽑아내기 용도
+
+  const [answers, setAnswers] = useState([]); //답변 리스트 뽑아내는 용도
 
   const realUserId = user.userId;
   const realTodayQuestionId = todayQuestion.todayQuestionId;
@@ -134,6 +146,7 @@ const LandingPage = () => {
   useEffect(() => {
     mainGetLetterNum();
     mainGetQuestion();
+    mainGetAnswer();
   }, []);
 
   //오늘의 질문 답변보내기 입력때 사용하는 글자 수 카운트
@@ -162,6 +175,25 @@ const LandingPage = () => {
     const todayQuestions = response.data;
     setTodayQuestionQ(todayQuestions);
     setTodayQuestion(todayQuestions);
+  };
+
+  // 오늘의 질문 답변 가져오는 api용 2
+  const mainGetAnswer = async () => {
+    let response = await getTodayAnswerList();
+    if (!response || (response.status < 200 && response.status >= 300)) {
+      popErrorAlert(
+        "답변 목록 오류",
+        "답변을 받아오는 중에 오류가 발생했습니다."
+      );
+      return;
+    }
+    console.log(response);
+    console.log("답변가져오는 api");
+
+    const todayAnswers = response.data;
+
+    console.log(todayAnswers.todayAnswerId);
+    setTodayAnswer(todayAnswers); //리코일
   };
 
   return (
@@ -209,10 +241,19 @@ const LandingPage = () => {
           height="50%"
           modalToggle={modalToggleB}
           setModalToggle={setModalToggleB}
-          titleText={"오늘의 질문 답변 모음"}
+          titleText={"답변 목록"}
         >
           <AnswerBox width="80%" height="70%" margin="2rem 0 0 0">
-            <QuestionAnswerListArea />
+            <QuestionAnswerListArea>
+              {answers.map((answer, userId) => (
+                <ContentElement>
+                  <hr />
+                  <div>{(answer = todayAnswer.answer)}</div>
+                  <div>{(userId = todayAnswer.userId)}</div>
+                  <hr />
+                </ContentElement>
+              ))}
+            </QuestionAnswerListArea>
           </AnswerBox>
         </Modal>
       )}
