@@ -52,6 +52,7 @@ export const MypageLetter = ({ letter, reload }) => {
       const response = await collectDetail(letterId);
       if (response.status - 200 < 3 && response.status) {
         const letter = response.data;
+        setReadingLetterId(letterId);
         if (letter.letterInfo.imageLetterUrl) {
           letter.letterInfo.imageLetterUrl = await downloadFirebaseStorage(
             `${letter.letterInfo.imageLetterUrl}.png`
@@ -67,6 +68,7 @@ export const MypageLetter = ({ letter, reload }) => {
       const response = await replyDetail(letterId);
       if (response.status - 200 < 3 && response.status) {
         const letter = response.data;
+        setReadingLetterId(letterId);
         console.log(letter);
         if (letter.originLetterInfo.imageLetterUrl) {
           letter.originLetterInfo.imageLetterUrl =
