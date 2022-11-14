@@ -82,8 +82,12 @@ const TodayQuestions = () => {
         return;
       }
       setModalContent({ ...response.data });
-      resetAnswerList(dayQuestionInfo.todayQuestionId);
     }
+
+    if (dayQuestionInfo !== undefined)
+      resetAnswerList(dayQuestionInfo.todayQuestionId);
+    setLoading(false);
+    setModalToggle(true);
   }, [selectedDate]);
 
   useEffect(() => {
@@ -122,8 +126,6 @@ const TodayQuestions = () => {
     }
 
     setAnswerList([...response.data.answers]);
-    setLoading(false);
-    setModalToggle(true);
   };
 
   /**
@@ -132,6 +134,7 @@ const TodayQuestions = () => {
    * @param {*} event
    */
   const handleClickDate = async (pickDate, event) => {
+    setAnswerList([]);
     setSelectedDate(pickDate); // -> useEffect(selectedDate)
     setLoading(true);
   };
