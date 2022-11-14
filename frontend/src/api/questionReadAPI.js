@@ -6,9 +6,9 @@ import { client } from "../utils/client";
 /**
  * @description 오늘의 질문 답변모음 받아오기
  */
-export const getTodayQuestionAnswerList = async (listType) => {
+export const getTodayAnswerList = async () => {
   const result = await client
-    .get(`/today/answer/${listType}`)
+    .get(`/today/answer`)
     .then((response) => response)
     .catch((error) => error.response);
   return result;

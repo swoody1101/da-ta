@@ -87,3 +87,16 @@ export const todayQuestionState = atom({
     todayQuestionId: null,
   },
 });
+
+/**
+ * @description 오늘의 질문 답변
+ */
+export const todayAnswerState = atom({
+  key: "todayAnswerState",
+  default: {
+    todayAnswerId: null,
+    answer: null,
+    userId: null,
+    todayQuestionId: null,
+  },
+});
