@@ -3,6 +3,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
     id "org.sonarqube" version "3.4.0.2513"
+    id "com.google.osdetector" version "1.4.0"
 }
 
 group = 'com.da_ta'
