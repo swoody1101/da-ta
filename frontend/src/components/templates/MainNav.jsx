@@ -74,7 +74,6 @@ const MainNav = () => {
         <>
           <MobileLogo
             src={`${process.env.PUBLIC_URL}/assets/logo/data_logo.png`}
-            width="75vw"
             onClick={() => navigate("/")}
           />
         </>
@@ -141,13 +140,12 @@ const MainNav = () => {
             {isLogin ? (
               <>
                 <Button
-                  hoverBgOpacity="0.3"
                   fontSize="1rem"
-                  height="3rem"
-                  width="11rem"
+                  height="3.5rem"
+                  width="12rem"
                   margin="0 -3.5rem 0 0"
                   color="white"
-                  bgColor="#1A9459b5"
+                  bgColor="linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);"
                   onMouseOver={() => setSpeechBubble(true)}
                   onMouseOut={() => setSpeechBubble(false)}
                 >
@@ -177,8 +175,8 @@ const MobileLogo = styled.img`
   display: flex;
   flex-direction: row;
   position: absolute;
-  left: 1rem;
-  padding: 1rem;
+  left: 1.25rem;
+  height: 100%;
   cursor: pointer;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -228,10 +226,9 @@ const HamburgerButtonWrapper = styled.div`
 const SpeechBubble = styled.div`
   display: flex;
   position: absolute;
-  // top: ${(props) => (props.act ? "0rem" : "-3rem")};
   top: 0rem;
-  width: 11rem;
-  height: 3rem;
+  width: 12rem;
+  height: 3.5rem;
   background-color: white;
   border-radius: 8px;
   filter: drop-shadow(0 8px 16px #5778ec);
@@ -241,7 +238,8 @@ const SpeechBubble = styled.div`
   color: #383838;
   font-size: 1.2rem;
   font-weight: bold;
-  transform: ${(props) => (props.act ? `scale(1)` : `scale(0)`)};
+  transform: ${(props) => (props.act ? `scaleY(1)` : `scaleY(0)`)};
+  transform-origin: 0 0;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
 `;
 
