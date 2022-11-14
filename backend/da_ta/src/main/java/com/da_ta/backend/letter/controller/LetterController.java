@@ -5,8 +5,6 @@ import com.da_ta.backend.common.domain.Message;
 import com.da_ta.backend.letter.controller.dto.*;
 import com.da_ta.backend.letter.controller.dto.common.CheckImageLetterResponse;
 import com.da_ta.backend.letter.service.LetterService;
-import com.da_ta.backend.util.Base64Util;
-import com.da_ta.backend.util.DetectSafeSearchUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -127,10 +125,9 @@ public class LetterController {
     }
 
     @GetMapping("/check/2")
-    public ResponseEntity<CheckImageLetterResponse> checkImageLetterHarmfulness (@RequestHeader(AUTHORIZATION) String token,
-                                                                                 @RequestBody CheckImageLetterRequest checkImageLetterRequest) throws IOException {
-        jwtTokenProvider.findUserByToken(token);
+    public ResponseEntity<CheckImageLetterResponse> checkImageLetterHarmfulness(@RequestHeader(AUTHORIZATION) String token,
+                                                                                @RequestBody CheckImageLetterRequest checkImageLetterRequest) throws IOException {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(letterService.checkImageLetter(checkImageLetterRequest));
+                .body(letterService.checkImageLetter(token, checkImageLetterRequest));
     }
 }
