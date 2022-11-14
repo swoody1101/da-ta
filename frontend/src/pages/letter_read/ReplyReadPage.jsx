@@ -6,7 +6,7 @@ import styled from "styled-components";
 import ReadLetterText from "../../components/molecules/ReadLetterText";
 import { useRecoilState } from "recoil";
 import ReportModal from "../../components/organisms/ReportModal";
-import { letterState, readingLetterIdState } from "../../recoil/Atoms";
+import { letterState } from "../../recoil/Atoms";
 import ReadLetterPic from "../../components/molecules/ReadLetterPic";
 import { useNavigate } from "react-router-dom";
 import { popErrorAlert } from "../../utils/sweetAlert";
@@ -14,9 +14,6 @@ import { media } from "../../utils/styleUtil";
 import ReadReplyButtons from "../../components/molecules/ReadReplyButtons";
 
 const ReplyReadPage = () => {
-  //편지 들어올때 잡고 들어와야댐
-  const [readingLetterId, setReadingLetterId] =
-    useRecoilState(readingLetterIdState);
   const [letter, setLetter] = useRecoilState(letterState);
   const [isLoading, setIsLoading] = useState(false);
   const [isPicture, setIsPicture] = useState(false);
@@ -33,9 +30,6 @@ const ReplyReadPage = () => {
       navigate("/");
       popErrorAlert("", "올바른 접근이 아닙니다!");
     }
-    setTimeout(() => {
-      setFlip(true);
-    }, 2000);
   }, []);
 
   return (
@@ -66,7 +60,7 @@ const ReplyReadPage = () => {
               nickname={letter.replyInfo.writerNickname}
             ></ReadLetterText>
           </FlipBackDiv>
-          <ReadReplyButtons />
+          <ReadReplyButtons flip={flip} setFlip={setFlip} />
         </CenterWrap>
         <ReportModal />
       </ReadWrapper>

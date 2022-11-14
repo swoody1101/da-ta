@@ -9,27 +9,15 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faShare,
-  faTrashCan,
+  faRepeat,
   faTriangleExclamation,
 } from "@fortawesome/free-solid-svg-icons";
-import { replyDeleteLetter } from "../../api/mypageAPI";
 
-const ReadReplyButtons = () => {
-  const letterId = useRecoilValue(readingLetterIdState);
-  const setLetter = useSetRecoilState(letterState);
+const ReadReplyButtons = ({ flip, setFlip }) => {
   const navigate = useNavigate();
 
-  const deleteBtn = async (letterId) => {
-    const response = await replyDeleteLetter(letterId);
-    if (!response || (response.status != 200 && response.status != 201)) {
-      console.log(letterId);
-      console.log(response);
-      popErrorAlert("", "편지 삭제에 실패했습니다.");
-      return;
-    }
-    navigate("/");
-    popSuccessAlert("", "답장받은 편지를 삭제했습니다.");
-    setLetter(false);
+  const deleteBtn = () => {
+    flip ? setFlip(false) : setFlip(true);
   };
 
   return (
@@ -41,14 +29,14 @@ const ReadReplyButtons = () => {
         mWidth={"40%"}
         mHeight={"40px"}
         mBorderRadius={"8px"}
-        onClick={() => deleteBtn(letterId)}
+        onClick={() => deleteBtn()}
       >
         <FontAwesomeIcon
-          icon={faTrashCan}
+          icon={faRepeat}
           size="lg"
           style={{ margin: "0 5px 0 0" }}
         />
-        삭제하기
+        뒤집기
       </Button>
       <Button
         width={"120px"}
