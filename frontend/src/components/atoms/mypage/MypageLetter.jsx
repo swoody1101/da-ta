@@ -115,7 +115,7 @@ export const MypageLetter = ({ letter, reload }) => {
         <LetterDateWeb>{`${letter.writerNickname}`}</LetterDateWeb>
         <LetterDateWeb>{`${writtenTime}`}</LetterDateWeb>
       </LetterWordsDiv>
-      <FontAwesomeIcon
+      {/* <FontAwesomeIcon
         icon={faTriangleExclamation}
         style={{ margin: "0 15px 0 0", color: "#F44336", cursor: "pointer" }}
         size="lg"
@@ -126,7 +126,7 @@ export const MypageLetter = ({ letter, reload }) => {
             `${letter.id}번 글을 쓴 글쓴이 아이디 ${letter.writerId}를 신고버튼`
           );
         }}
-      />
+      /> */}
       <FontAwesomeIcon
         icon={faTrashCan}
         style={{ margin: "0 15px 0 0", cursor: "pointer" }}
