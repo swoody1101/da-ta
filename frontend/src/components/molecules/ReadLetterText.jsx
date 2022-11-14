@@ -22,9 +22,7 @@ const ReadLetterText = ({ info, nickname }) => {
     }월 ${ToDate.getDate()}일`;
   };
 
-  useEffect(() => {
-    setShowContent(info.content.replaceAll("\n", "<br/>"));
-    wrapRef.current.style.height = 0;
+  const appearing = () => {
     for (let e of appearingRef.current) {
       e.style.opacity = 0;
     }
@@ -40,13 +38,19 @@ const ReadLetterText = ({ info, nickname }) => {
         e.style.opacity = 1;
       }
     }, 1000);
+  };
+
+  useEffect(() => {
+    setShowContent(info.content.replaceAll("\n", "<br/>"));
+    wrapRef.current.style.height = 0;
+    appearing();
   }, []);
 
   return (
     <ContentBlock
-      height={SizeTypes.PC_LETTER_HEIGHT}
+      height={0}
       mWidth={SizeTypes.MOBILE_LETTER_WIDTH}
-      mHeight={SizeTypes.MOBILE_LETTER_HEIGHT}
+      mHeight={0}
       flexDirection="column"
       optionToggle={false}
       ref={wrapRef}
