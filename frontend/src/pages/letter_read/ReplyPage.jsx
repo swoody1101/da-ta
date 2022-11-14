@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { useNavigate } from "react-router-dom";
-import { letterState } from "./../../recoil/Atoms";
+import { letterState, loadingState } from "./../../recoil/Atoms";
 import { MAX_CHAR_COUNT, MIN_CHAR_COUNT } from "./../../constants/Variables";
 import BackgroundVideo from "../../components/atoms/BackgroundVideo";
 import { RowCenterWrapper } from "../../styles/Wrapper";
@@ -23,8 +23,9 @@ const ReplyPage = () => {
 	const [charCount, setCharCount] = useState(0); // 글자 수 카운트
 	const [charCountWarning, setCharCountWarning] = useState(true); // 글자수 미만 또는 초과로 인한 경고 표시
 	const [flip, setFlip] = useState(false);
-	const [isPicture, setIsPicture] = useState(false);
+	const [isPicture, setIsPicture] = useState(true);
 	const originLetter = useRecoilValue(letterState);
+	const [loading, setLoading] = useRecoilState(loadingState);
 
 	const titleInput = useRef(); // 제목 ref (값 가져오기, focus)
 	const contentInput = useRef(); // 내용 ref (값 가져오기, ref)
@@ -36,10 +37,13 @@ const ReplyPage = () => {
 	useEffect(() => {
 		if (originLetter) {
 			originLetter.letterInfo.imageLetterUrl ? setIsPicture(true) : setIsPicture(false);
+			setLoading(true);
 		} else {
 			navigate("/");
 			popErrorAlert("", "올바른 접근이 아닙니다!");
 		}
+
+		setLoading(false);
 	}, []);
 
 	useEffect(() => {
@@ -81,8 +85,8 @@ const ReplyPage = () => {
 
 		// 2. 답장 요청 전송
 		const response = await saveReplyLetter(originLetter.letterInfo.letterId, {
-			title: originLetter.letterInfo.title,
-			content: originLetter.letterInfo.title === null ? "" : originLetter.letterInfo.title,
+			title: titleInput.current.value,
+			content: contentInput.current.value,
 			backgroundId: originLetter.letterInfo.backgroundId,
 			fontId: originLetter.letterInfo.fontId === null ? 0 : originLetter.letterInfo.fontId,
 		});
@@ -148,15 +152,16 @@ const ReplyPage = () => {
 					</FlipFrontWrapper>
 					<FlipBackWrapper actFlip={flip} ref={(el) => (unshowRef.current[2] = el)}>
 						<LetterImg src={`${process.env.PUBLIC_URL}/assets/images/letter/${LetterOptions.PAPERS[originLetter.letterInfo.backgroundId]}.png`} />
-						{isPicture ? (
-							<>
-								<ReadLetterPic info={originLetter.letterInfo}></ReadLetterPic>
-							</>
-						) : (
-							<>
-								<ReadLetterText info={originLetter.letterInfo} nickname={originLetter.writerNickname} />
-							</>
-						)}
+						{loading &&
+							(isPicture ? (
+								<>
+									<ReadLetterPic info={originLetter.letterInfo} />
+								</>
+							) : (
+								<>
+									<ReadLetterText info={originLetter.letterInfo} nickname={originLetter.writerNickname} />
+								</>
+							))}
 					</FlipBackWrapper>
 				</ContentBlock>
 

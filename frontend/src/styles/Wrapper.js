@@ -21,6 +21,7 @@ export const RowCenterWrapper = styled(Wrapper)`
 	position: relative;
 	align-items: center;
 	flex-direction: column;
+	overflow-y: scroll;
 `;
 
 export const AdminWrapper = styled.div`
