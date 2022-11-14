@@ -233,7 +233,12 @@ public class UserService {
                 nicknameRequest,
                 NicknameResponse.class
         );
-        return response.getBody().getNickname()[0];
+        String nickname = response.getBody().getNickname()[0];
+        if (nickname == null) {
+            throw new NotFoundException(NICKNAME_NOT_FOUND);
+        } else {
+            return nickname;
+        }
     }
 
     private Age mapToAge(String ageRange) {
