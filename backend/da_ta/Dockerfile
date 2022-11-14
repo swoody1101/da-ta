@@ -12,5 +12,6 @@ RUN ls -la /src/main/resources/
 FROM openjdk:8-jdk-alpine
 COPY --from=builder build/libs/da_ta-0.0.1-SNAPSHOT.jar app.jar
 ARG ENVIRONMENT
-ENV GOOGLE_APPLICATION_CREDENTIALS=/src/main/resources/da-ta-368201-c65a6e7dc0b9.json
+#ENV GOOGLE_APPLICATION_CREDENTIALS=/src/main/resources/da-ta-368201-c65a6e7dc0b9.json
+ENV GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_DA_TA}
 ENTRYPOINT ["java","-jar","/app.jar"]
