@@ -1,14 +1,12 @@
 import axios from "axios";
 import { reissue } from "../api/authAPI";
 import { popErrorAlert } from "./sweetAlert";
-import { useCookies, Cookies } from "react-cookie";
 
 const BASE_URL = process.env.REACT_APP_REST_API_DOMAIN;
-// const BASE_URL = "http://localhost:8080/api/v1";
 
 export const client = axios.create({
   baseURL: BASE_URL,
-  // timeout: 5000,
+  timeout: 5000,
 });
 
 /**
@@ -60,7 +58,7 @@ client.interceptors.response.use(
         return;
       }
 
-      // // 2. 요청 후 받은 응답에서 access token을 추출해 localstorage에 저장한다.
+      // 2. 요청 후 받은 응답에서 access token을 추출해 localstorage에 저장한다.
       const accessToken = response.headers["authorization"];
       sessionStorage.setItem("ACCESS_TOKEN", accessToken);
 

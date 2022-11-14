@@ -25,8 +25,6 @@ import LetterCanvasArea from "./../../components/atoms/letter/LetterCanvasArea";
 import CanvasOptionBar from "../../components/molecules/letter/CanvasOptionBar";
 import { popErrorAlert, popWarningAlert } from "./../../utils/sweetAlert";
 import { saveTextLetter } from "../../api/letterWriteAPI";
-import { useRecoilValue } from "recoil";
-import { userState } from "../../recoil/Atoms";
 import { useNavigate } from "react-router-dom";
 
 const LetterWritePage = () => {
@@ -52,7 +50,6 @@ const LetterWritePage = () => {
   const [charCountWarning, setCharCountWarning] = useState(true); // 글자수 미만 또는 초과로 인한 경고 표시
   const [sizeX, setSizeX] = useState(window.innerWidth); // 브라우저 너비 측정
   const [canvasSaveTrigger, setCanvasSaveTrigger] = useState(false); // 도화지 그린 그림 저장 트리거
-  const user = useRecoilValue(userState);
 
   const titleInput = useRef(); // 제목 ref (값 가져오기, focus)
   const contentInput = useRef(); // 내용 ref (값 가져오기, ref)

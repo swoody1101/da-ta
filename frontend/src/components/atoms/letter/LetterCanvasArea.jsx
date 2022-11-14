@@ -4,17 +4,10 @@
  */
 import styled from "styled-components";
 import React, { useEffect, useRef, useState } from "react";
-import { firebaseStorage } from "../../../firebase-config";
-import {
-  downloadFirebaseStorage,
-  uploadFirebaseStorage,
-} from "../../../utils/firebaseStorage";
+import { uploadFirebaseStorage } from "../../../utils/firebaseStorage";
 import { saveCanvasLetter } from "../../../api/letterWriteAPI";
 import { popErrorAlert } from "../../../utils/sweetAlert";
-import { popSuccessAlert } from "./../../../utils/sweetAlert";
 import { useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-import { userState } from "../../../recoil/Atoms";
 import { SIZE_PHONE } from "./../../../constants/Sizes";
 
 /**
@@ -39,7 +32,6 @@ const LetterCanvasArea = ({
 
   const [ctx, setCtx] = useState();
   const [isDrawing, setIsDrawing] = useState(false);
-  const user = useRecoilValue(userState);
 
   // 캔버스 초기화용 useEffect
   useEffect(() => {

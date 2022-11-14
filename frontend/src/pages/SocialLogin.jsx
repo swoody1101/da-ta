@@ -8,7 +8,6 @@ import { Wrapper } from "./../styles/Wrapper";
 import { popErrorAlert, popSuccessAlert } from "./../utils/sweetAlert";
 import { useNavigate } from "react-router-dom";
 import { RoleTypes } from "./../constants/Roles";
-import { useRecoilState } from "recoil";
 import { loadingState, loginState, userState } from "../recoil/Atoms";
 import { popWarningAlert } from "./../utils/sweetAlert";
 import { useSetRecoilState } from "recoil";
@@ -16,8 +15,8 @@ import { useSetRecoilState } from "recoil";
 const SocialLogin = () => {
   const navigate = useNavigate();
 
-  const [isLogin, setIsLogin] = useRecoilState(loginState);
-  const [accountState, setAccountState] = useRecoilState(userState);
+  const setIsLogin = useSetRecoilState(loginState);
+  const setAccountState = useSetRecoilState(userState);
   const setLoading = useSetRecoilState(loadingState);
 
   const storeToken = (headers) => {

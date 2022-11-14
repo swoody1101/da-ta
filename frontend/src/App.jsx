@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import styled from "styled-components";
 import "./App.css";
 import LandingPage from "./pages/landing/LandingPage";
 import TestPage from "./pages/TestPage";
@@ -19,9 +18,8 @@ import Receive from "./pages/mypage/Receive";
 import Setting from "./pages/mypage/Setting";
 import { GlobalFonts } from "./styles/fonts/fonts";
 import Loading from "./components/molecules/Loading";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { loadingState, loginState, userState } from "./recoil/Atoms";
-import { firestore } from "./firebase-config";
 import LetterWriteSuccessPage from "./pages/letter_write/LetterWriteSuccessPage";
 import AdminPage from "./pages/admin/AdminPage";
 import Reports from "./pages/admin/Reports";
@@ -33,9 +31,9 @@ import ReplyPage from "./pages/letter_read/ReplyPage";
 import ReplyReadPage from "./pages/letter_read/ReplyReadPage";
 
 function App() {
-  const [loading, setLoading] = useRecoilState(loadingState);
+  const loading = useRecoilValue(loadingState);
   const [isLogin, setIsLogin] = useRecoilState(loginState);
-  const [user, setUser] = useRecoilState(userState);
+  const setUser = useSetRecoilState(userState);
 
   useEffect(() => {
     if (isLogin && !sessionStorage.getItem("ACCESS_TOKEN")) {
