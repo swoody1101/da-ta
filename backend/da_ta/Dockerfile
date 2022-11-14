@@ -8,6 +8,7 @@ RUN chmod +x /gradlew
 RUN ./gradlew bootJar
 RUN pwd
 RUN ls -la
+RUN ls -la /src/main/resources/
 FROM openjdk:8-jdk-alpine
 COPY --from=builder build/libs/da_ta-0.0.1-SNAPSHOT.jar app.jar
 ARG ENVIRONMENT
