@@ -12,6 +12,7 @@ import {
   faTrashCan,
   faTriangleExclamation,
 } from "@fortawesome/free-solid-svg-icons";
+import { replyDeleteLetter } from "../../api/mypageAPI";
 
 const ReadReplyButtons = () => {
   const letterId = useRecoilValue(readingLetterIdState);
@@ -19,7 +20,16 @@ const ReadReplyButtons = () => {
   const navigate = useNavigate();
 
   const deleteBtn = async (letterId) => {
-    console.log("삭제하기");
+    const response = await replyDeleteLetter(letterId);
+    if (!response || (response.status != 200 && response.status != 201)) {
+      console.log(letterId);
+      console.log(response);
+      popErrorAlert("", "편지 삭제에 실패했습니다.");
+      return;
+    }
+    navigate("/");
+    popSuccessAlert("", "답장받은 편지를 삭제했습니다.");
+    setLetter(false);
   };
 
   return (
