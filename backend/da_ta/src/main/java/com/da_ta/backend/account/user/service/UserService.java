@@ -133,7 +133,11 @@ public class UserService {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        return kakaoToken;
+        if (kakaoToken == null) {
+            throw new NotFoundException(KAKAO_TOKEN_NOT_FOUND);
+        } else {
+            return kakaoToken;
+        }
     }
 
     private Long getKakaoUserId(String accessToken) {

@@ -8,6 +8,7 @@ import lombok.Getter;
 public enum ErrorCode {
 
     ACCESS_TOKEN_EXPIRED("만료된 Access Token 입니다."),
+    KAKAO_TOKEN_NOT_FOUND("kakao Token을 찾을 수 없습니다."),
     REFRESH_TOKEN_EXPIRED("만료된 Refresh Token 입니다."),
     UNAUTHORIZED("권한이 없습니다."),
     USER_NOT_FOUND("사용자를 찾을 수 없습니다."),
