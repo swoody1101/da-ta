@@ -4,17 +4,11 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Button from "../../atoms/Button";
-import Modal from "../../organisms/Modal";
 import { media } from "../../../utils/styleUtil";
-import { QuestionTextArea } from "../../atoms/TextArea";
 import { MainTestText } from "../../atoms/Text";
-import QuestionProgressBar from "./QuestionProgressBar";
 import { loginState } from "../../../recoil/Atoms";
-
 import { popWarningAlert } from "../../../utils/sweetAlert";
 import { useRecoilValue } from "recoil";
-import { useSetRecoilState } from "recoil";
-import { todayQuestionState } from "../../../recoil/Atoms";
 import { getTodayQuestion } from "../../../api/questionReadAPI";
 
 const ChatBoxGroup = ({
@@ -27,7 +21,6 @@ const ChatBoxGroup = ({
   {
     const isLogin = useRecoilValue(loginState);
     const [todayQuestionQ, setTodayQuestionQ] = useState([]); //변하는 오늘의 질문
-    const setTodayQuestion = useSetRecoilState(todayQuestionState); //recoil
 
     const handlerClickModalA = () => {
       return isLogin
@@ -48,12 +41,9 @@ const ChatBoxGroup = ({
 
     // 오늘의 질문 가져오는 api용 2
     const mainGetQuestion = async () => {
-      const response = await getTodayQuestion();
+      let response = await getTodayQuestion();
       const todayQuestion = response.data;
       setTodayQuestionQ(todayQuestion);
-      // if (response.status - 200 < 3 && response.status) {
-      setTodayQuestion(todayQuestion);
-      // }
     };
 
     return (
