@@ -9,8 +9,9 @@ import {
   popWarningAlert,
   popConfirmAlert,
   popErrorAlert,
+  popSuccessAlert,
 } from "./../../utils/sweetAlert";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useRecoilState } from "recoil";
 import { loginState } from "./../../recoil/Atoms";
 
 import Footer from "../../components/molecules/Footer";
@@ -33,11 +34,17 @@ import QuestionProgressBar from "../../components/molecules/landing/QuestionProg
 import { MIN_CHAR_COUNT_Q, MAX_CHAR_COUNT_Q } from "../../constants/Variables";
 
 import { saveTextAnswer } from "../../api/questionWriteAPI";
-import { getLetterNum } from "../../api/letterCountAPI";
+import {
+  getLetterNumLogin,
+  getLetterNumNotLogin,
+} from "../../api/letterCountAPI";
 import { MainAnimationText } from "../../components/atoms/MainAnimationText";
 import { useSetRecoilState } from "recoil";
-import { letterNumState, todayQuestionState } from "./../../recoil/Atoms";
-import { getTodayQuestion } from "../../api/questionReadAPI";
+import { todayQuestionState, userState } from "./../../recoil/Atoms";
+import {
+  getTodayQuestionLogin,
+  getTodayQuestionNotLogin,
+} from "../../api/questionReadAPI";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -50,8 +57,11 @@ const LandingPage = () => {
   const [modalToggleA, setModalToggleA] = useState(false); // 답변보내기 모달창 토글
   const [modalToggleB, setModalToggleB] = useState(false); // 답변리스트 보기 모달창 토글
 
-  const setLetterNum = useSetRecoilState(letterNumState); //recoil
-  const setTodayQuestion = useSetRecoilState(todayQuestionState); //recoil
+  // const setLetterNum = useSetRecoilState(letterNumState); //recoil
+  const setTodayQuestion = useSetRecoilState(todayQuestionState);
+
+  const user = useRecoilValue(userState); //유저 id 값 용
+  const todayQuestion = useRecoilValue(todayQuestionState); //오늘의 질문 id 값 용
   const isLogin = useRecoilValue(loginState);
 
   const contentInput = useRef(); // 내용 ref (값 가져오기, ref)
@@ -59,6 +69,9 @@ const LandingPage = () => {
 
   const [letterCountNum, setLetterCountNum] = useState([]); //변하는 편지 전체 수
   const [todayQuestionQ, setTodayQuestionQ] = useState([]); //변하는 오늘의 질문
+
+  const realUserId = user.userId;
+  const realTodayQuestionId = todayQuestion.todayQuestionId;
   /**
    * @description 물병 누를 경우 chatbox visible
    */
@@ -100,74 +113,68 @@ const LandingPage = () => {
     //유효성 검사
     const content = contentInput.current.value;
     if (content.length < MIN_CHAR_COUNT_Q) {
-      popWarningAlert(`편지 내용을 ${MIN_CHAR_COUNT_Q}자 이상 입력해주세요.`);
+      popWarningAlert(`답변 내용을 ${MIN_CHAR_COUNT_Q}자 이상 입력해주세요.`);
       return;
     } else if (content.length > MAX_CHAR_COUNT_Q) {
-      popWarningAlert(`편지 내용을 ${MAX_CHAR_COUNT_Q}자 이하 입력해주세요.`);
+      popWarningAlert(`답변 내용을 ${MAX_CHAR_COUNT_Q}자 이하 입력해주세요.`);
       return;
     }
 
-    const response = await saveTextAnswer(content, todayQuestionId); //API 파트
-    // const response = await saveTextLetter(options, title, content);
+    const response = await saveTextAnswer(
+      content,
+      realUserId,
+      realTodayQuestionId
+    ); //API 파트
 
-    console.log(response);
     if (response.status < 200 && response.status >= 300) {
       popErrorAlert("답변 전송 오류", "답변 전송 중 오류가 발생했습니다.");
       return;
+    } else if (response.status >= 200 && response.status < 300) {
+      popSuccessAlert("답변 전송 완료", "오늘의 질문 답변이 전송되었습니다.");
+      return;
     }
-
-    setTimeout(() => {
-      navigate("/");
-    }, 1000);
   };
 
-  //소개글 animation 효과 변경용 AOS
   useEffect(() => {
-    AOS.init({ duration: 500, easing: "ease-in-out-back" });
+    AOS.init({ duration: 500, easing: "ease-in-out-back" }); //소개글 animation 효과 변경용 AOS
   });
+
+  useEffect(() => {
+    mainGetLetterNum();
+    mainGetQuestion();
+  }, []);
 
   //오늘의 질문 답변보내기 입력때 사용하는 글자 수 카운트
   useEffect(() => {
     setCharCount(0);
   }, [true]);
 
-  // 바다에 띄워진 물병 편지 전체 개수 가져오는 api용 1
-  useEffect(() => {
-    mainGetLetterNum();
-  }, []);
-
   // 바다에 띄워진 물병 편지 전체 개수 가져오는 api용 2
   const mainGetLetterNum = async () => {
-    const response = await getLetterNum();
-    console.log(response);
+    let response = await getLetterNumLogin();
+
     if (!response || (response.status < 200 && response.status >= 300)) {
-      //이부분 수정 -> 다른 api도 조건에 맞게 수정해놓기
       popErrorAlert("답변 전송 오류", "답변 전송 중 오류가 발생했습니다.");
       return;
     }
     const letternum = response.data;
-    console.log(letternum);
     setLetterCountNum(letternum);
-    setLetterNum(letternum);
-
-    // } //딱히 리코일 쓸데없는거는 삭제 => useState로 변경 //
-    //
   };
-
-  // 오늘의 질문 가져오는 api용 1
-  useEffect(() => {
-    mainGetQuestion();
-  }, []);
 
   // 오늘의 질문 가져오는 api용 2
   const mainGetQuestion = async () => {
-    const response = await getTodayQuestion();
+    let response = null;
+    if (isLogin == true) {
+      response = await getTodayQuestionLogin();
+    } else response = await getTodayQuestionNotLogin();
 
-    const todayQuestion = response.data;
-    setTodayQuestionQ(todayQuestion);
-    // if (response.status - 200 < 3 && response.status) {
-    setTodayQuestion(todayQuestion);
-    // }
+    if (!response || (response.status < 200 && response.status >= 300)) {
+      popErrorAlert("답변 전송 오류", "답변 전송 중 오류가 발생했습니다.");
+      return;
+    }
+    const todayQuestions = response.data;
+    setTodayQuestionQ(todayQuestions);
+    setTodayQuestion(todayQuestions);
   };
 
   return (
