@@ -77,15 +77,6 @@ export const letterState = atom({
 });
 
 /**
- * @description 받은 편지 수 (새로고침 대응하기)
- * @return {object}
- */
-export const letterNumState = atom({
-  key: "letterNumState",
-  default: null,
-});
-
-/**
  * @description 오늘의 질문
  */
 export const todayQuestionState = atom({
