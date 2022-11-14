@@ -15,6 +15,7 @@ import javax.validation.constraints.NotNull;
 public class TextLetter extends Letter {
 
     @NotNull
+    @Column(columnDefinition = "LONGTEXT")
     private String content;
 
     @NotNull
