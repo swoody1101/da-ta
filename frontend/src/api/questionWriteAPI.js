@@ -21,14 +21,3 @@ export const saveTextAnswer = async (
     .catch((error) => error.response);
   return result;
 };
-
-// export const saveQuestion = async (question, date) => {
-// 	const result = await client
-// 		.post(`/admin/question`, {
-// 			question: question,
-// 			date: date,
-// 		})
-// 		.then((res) => res)
-// 		.catch((error) => error.response);
-// 	return result;
-// };
