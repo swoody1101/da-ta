@@ -40,14 +40,16 @@ const BG = styled.div`
 	position: absolute;
 	z-index: 1.5;
 	animation: ${(props) => (props.isRight ? moveBottle : moveBottle)} 1.5s linear 0s infinite alternate;
-	top: 0rem;
+	top: 2rem;
 	left: 50%;
 	transform: translate(-50%, -50%);
 
 	${media.phone`
-  width: ${(props) => props.mWidth};
-  height: ${(props) => props.mHeight};
-`}
+		top: -5rem;
+		transform: translate(-50%, 0%);
+  	width: ${(props) => props.mWidth};
+  	height: ${(props) => props.mHeight};
+	`}
 `;
 
 export default BottleOfLetter;

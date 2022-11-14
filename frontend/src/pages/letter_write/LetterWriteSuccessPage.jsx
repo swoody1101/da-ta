@@ -7,7 +7,6 @@ import Button from "../../components/atoms/Button";
 import { MainText } from "../../components/atoms/Text";
 import { CenterWrapper } from "./../../styles/Wrapper";
 import { useNavigate } from "react-router-dom";
-import { media } from "../../utils/styleUtil";
 
 const LetterWriteSuccessPage = () => {
 	const navigate = useNavigate();
@@ -24,7 +23,7 @@ const LetterWriteSuccessPage = () => {
 					<br />
 					바다에 띄워졌습니다.
 				</MainText>
-				<Button margin="2rem 0 0 0" fontSize="1.5rem" width="10rem" height="5rem" mWidth="70%" hoverBgOpacity="0.5" onClick={() => navigate("/")}>
+				<Button margin="2rem 0 0 0" fontSize="1.5rem" width="10rem" height="5rem" mWidth="80%" hoverBgOpacity="0.5" onClick={() => navigate("/")}>
 					메인으로
 				</Button>
 			</Container>
