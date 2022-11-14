@@ -7,6 +7,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum SuccessCode {
 
+    ACCUSED_ANSWER_DELETED("답변 신고가 반려되었습니다."),
+    ACCUSED_ANSWER_SOLVED("답변 신고 처리가 완료되었습니다."),
+    ACCUSED_LETTER_DELETED("편지 신고가 반려되었습니다."),
     ACCUSED_LETTER_SOLVED("편지 신고 처리가 완료되었습니다."),
     AGE_RANGE_UPDATED("연령대 수정이 완료되었습니다."),
     ALERT_OPTION_UPDATED("알림 활성 여부 수정이 완료되었습니다."),
@@ -25,7 +28,11 @@ public enum SuccessCode {
     REPLY_SENT("답장을 발송하였습니다."),
     TEXT_LETTER_FLOATED("텍스트 편지를 바다에 띄웠습니다."),
 
-    TODAY_ANSWER_CREATED("답변을 성공적으로 작성하였습니다.");
+    ANSWER_ACCUSED("답변 신고가 완료되었습니다."),
+    TODAY_ANSWER_CREATED("답변을 성공적으로 작성하였습니다."),
+    TODAY_QUESTION_CREATED("오늘의 질문 등록이 완료되었습니다."),
+    TODAY_QUESTION_UPDATED("오늘의 질문 수정이 완료되었습니다."),
+    TODAY_QUESTION_DELETED("오늘의 질문이 삭제되었습니다.");
 
     private final String message;
 }
