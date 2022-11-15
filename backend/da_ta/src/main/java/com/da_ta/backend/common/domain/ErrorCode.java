@@ -17,6 +17,7 @@ public enum ErrorCode {
     WRONG_TOKEN("유효하지 않은 토큰 값입니다."),
     WRONG_AUTHENTICATION_TYPE("잘못된 인증 타입입니다."),
 
+    BAD_WORDS_DUMMY_NOT_FOUND("나쁜말 더미를 찾을 수 없습니다."),
     COLLECT_LETTER_REJECTED("편지를 수집할 수 없습니다."),
     COLLECTED_LETTER_NOT_FOUND("수집한 편지를 찾을 수 없습니다."),
     FLOATED_LETTER_NOT_FOUND("바다에 띄워진 편지를 찾을 수 없습니다."),
