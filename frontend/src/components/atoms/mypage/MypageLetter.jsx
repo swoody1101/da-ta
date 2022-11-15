@@ -29,7 +29,6 @@ import { popErrorAlert, popSuccessAlert } from "../../../utils/sweetAlert";
 import { downloadFirebaseStorage } from "../../../utils/firebaseStorage";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { keyframes } from "styled-components";
 
 const DateToString = (writtenDate) => {
   const ToDate = new Date(writtenDate);
@@ -71,7 +70,6 @@ export const MypageLetter = ({ letter, reload }) => {
       if (response.status - 200 < 3 && response.status) {
         const letter = response.data;
         setReadingLetterId(letterId);
-        console.log(letter);
         if (letter.originLetterInfo.imageLetterUrl) {
           letter.originLetterInfo.imageLetterUrl =
             await downloadFirebaseStorage(
@@ -139,19 +137,16 @@ export const MypageLetter = ({ letter, reload }) => {
           cursor: "pointer",
           display: display,
         }}
-        size="lg"
+        size="2x"
         onClick={() => {
           setReportModal(true);
           setReadingLetterId(letter.id);
-          console.log(
-            `${letter.id}번 글을 쓴 글쓴이 아이디 ${letter.writerId}를 신고버튼`
-          );
         }}
       />
       <FontAwesomeIcon
         icon={faTrashCan}
         style={{ margin: "0 15px 0 0", cursor: "pointer" }}
-        size="lg"
+        size="2x"
         onClick={() => {
           deleteLetter(mypageRouterIndex, letter.id);
         }}
@@ -169,6 +164,7 @@ const LetterDiv = styled.div`
   background-color: #ffffff;
   border-radius: 5px;
   margin-bottom: 24px;
+  filter: drop-shadow(0px 2px 2px #999);
 
   ${media.tablet1`
     width: 90%;
@@ -194,7 +190,7 @@ const LetterWordsDiv = styled.div`
 const LetterTitle = styled.div`
   display: flex;
   font-size: 20px;
-  width: 100%;
+  width: 90%;
   height: 20px;
   text-align: start;
   cursor: pointer;
@@ -205,7 +201,7 @@ const LetterTitle = styled.div`
 
 const LetterDate = styled.p`
   font-size: 14px;
-  width: 100%;
+  width: 90%;
   height: 17px;
   color: #8f8f8f;
   margin-top: 5px;
@@ -224,22 +220,9 @@ const LetterDateWeb = styled(LetterDate)`
   `}
 `;
 
-const shaking = keyframes`
-  0% {
-    margin-top: 2px;
-  }
-  50% {
-    margin-top: 6px;
-  }
-  100% {
-    margin-top: 2px;
-  }
-`;
-
 const IsNewSpan = styled.div`
   margin-left: 10px;
   font-size: 10px;
   color: red;
   display: ${(props) => (props.isNew ? null : "none")};
-  animation: ${shaking} 3s linear infinite;
 `;

@@ -5,7 +5,6 @@ import LandingPage from "./pages/landing/LandingPage";
 import TestPage from "./pages/TestPage";
 import TestPageYoon from "./pages/TestPageYoon";
 import Background from "./styles/Background";
-import TestBoyeon from "./pages/TestBoyeon";
 import MainNav from "./components/templates/MainNav";
 import LetterWritePage from "./pages/letter_write/LetterWritePage";
 import NotFound from "./pages/error/NotFound";
@@ -54,7 +53,6 @@ function App() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/test" element={<TestPage />} />
             <Route path="/testyoon" element={<TestPageYoon />} />
-            <Route path="/bytest" element={<TestBoyeon />} />
             <Route path="/auth/oauth" element={<SocialLogin />} />
             <Route
               path="/admin"

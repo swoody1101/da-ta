@@ -52,7 +52,6 @@ export const MypageSettingWeb = () => {
   };
 
   const setAge = async (body) => {
-    console.log(body);
     const response = await setUserAge(body);
     if (response.status - 200 < 3 && response.status) {
       popSuccessAlert("", "연령대를 수정하였습니다");
@@ -95,8 +94,6 @@ export const MypageSettingWeb = () => {
         }
       }
     );
-    // 로그아웃
-    // 홈화면으로 발사
   };
 
   return (
@@ -183,6 +180,7 @@ const SettingDiv = styled.div`
   background-color: #ffffff;
   border-radius: 5px;
   margin-bottom: 24px;
+  filter: drop-shadow(0px 2px 2px #999);
 
   ${media.tablet1`
     display: none;
