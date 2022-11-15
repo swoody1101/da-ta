@@ -40,7 +40,7 @@ export const MainTestText = styled.p`
 
 export const MainSmallText = styled.p`
   display: flex;
-  font-size: 1.3rem;
+  font-size: ${(props) => props.fontSize || "1.3rem"};
   color: ${(props) => props.color || "white"};
   width: 100%;
   text-align: center;
