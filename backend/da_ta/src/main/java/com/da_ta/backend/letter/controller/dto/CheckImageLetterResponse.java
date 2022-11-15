@@ -1,4 +1,4 @@
-package com.da_ta.backend.letter.controller.dto.common;
+package com.da_ta.backend.letter.controller.dto;
 
 import lombok.Builder;
 import lombok.Getter;
