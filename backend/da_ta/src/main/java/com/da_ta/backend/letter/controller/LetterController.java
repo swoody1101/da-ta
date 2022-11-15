@@ -3,7 +3,7 @@ package com.da_ta.backend.letter.controller;
 import com.da_ta.backend.account.jwt.JwtTokenProvider;
 import com.da_ta.backend.common.domain.Message;
 import com.da_ta.backend.letter.controller.dto.*;
-import com.da_ta.backend.letter.controller.dto.common.CheckImageLetterResponse;
+import com.da_ta.backend.letter.controller.dto.CheckImageLetterResponse;
 import com.da_ta.backend.letter.service.LetterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

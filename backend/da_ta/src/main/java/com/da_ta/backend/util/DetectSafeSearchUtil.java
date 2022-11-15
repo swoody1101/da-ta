@@ -1,7 +1,7 @@
 package com.da_ta.backend.util;
 
 import com.da_ta.backend.common.domain.exception.CommonException;
-import com.da_ta.backend.letter.controller.dto.common.CheckImageLetterResponse;
+import com.da_ta.backend.letter.controller.dto.CheckImageLetterResponse;
 import com.google.cloud.vision.v1.*;
 import com.google.protobuf.ByteString;
 import lombok.extern.slf4j.Slf4j;
