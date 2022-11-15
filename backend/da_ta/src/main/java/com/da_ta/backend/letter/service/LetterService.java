@@ -363,12 +363,12 @@ public class LetterService {
         for(String badWord:RedisUtil.getSet(BAD_WORDS_KEY)) {
             if (KMPUtil.KMP(checkTextLetterRequest.getContent(), badWord)) {
                 return CheckTextLetterResponse.builder()
-                        .isBad(true)
+                        .isHarmful(true)
                         .build();
             }
         }
         return CheckTextLetterResponse.builder()
-                .isBad(false)
+                .isHarmful(false)
                 .build();
     }
 
