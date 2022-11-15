@@ -29,6 +29,7 @@ import { popErrorAlert, popSuccessAlert } from "../../../utils/sweetAlert";
 import { downloadFirebaseStorage } from "../../../utils/firebaseStorage";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { keyframes } from "styled-components";
 
 const DateToString = (writtenDate) => {
   const ToDate = new Date(writtenDate);
@@ -43,6 +44,7 @@ export const MypageLetter = ({ letter, reload }) => {
   const setReadingLetterId = useSetRecoilState(readingLetterIdState);
   const mypageRouterIndex = useRecoilValue(mypageRouterState);
   const setLetter = useSetRecoilState(letterState);
+  const [isNew, setIsNew] = useState(false);
   const writtenTime = DateToString(letter.writtenDate);
   const [display, setDisplay] = useState("block");
 
@@ -88,6 +90,9 @@ export const MypageLetter = ({ letter, reload }) => {
     if (mypageRouterIndex == 0) {
       setDisplay("none");
     }
+    if (letter.read === false) {
+      setIsNew(true);
+    }
   }, []);
 
   const deleteLetter = async (index, letterId) => {
@@ -120,7 +125,7 @@ export const MypageLetter = ({ letter, reload }) => {
             readLetter(mypageRouterIndex, letter.id);
           }}
         >
-          {letter.title}
+          {letter.title} <IsNewSpan isNew={isNew}>NEW</IsNewSpan>
         </LetterTitle>
         <LetterDate>{`${letter.writerNickname}, ${writtenTime}`}</LetterDate>
         <LetterDateWeb>{`${letter.writerNickname}`}</LetterDateWeb>
@@ -186,7 +191,8 @@ const LetterWordsDiv = styled.div`
   `}
 `;
 
-const LetterTitle = styled.p`
+const LetterTitle = styled.div`
+  display: flex;
   font-size: 20px;
   width: 100%;
   height: 20px;
@@ -216,4 +222,24 @@ const LetterDateWeb = styled(LetterDate)`
   ${media.tablet1`
     display: inline;
   `}
+`;
+
+const shaking = keyframes`
+  0% {
+    margin-top: 2px;
+  }
+  50% {
+    margin-top: 6px;
+  }
+  100% {
+    margin-top: 2px;
+  }
+`;
+
+const IsNewSpan = styled.div`
+  margin-left: 10px;
+  font-size: 10px;
+  color: red;
+  display: ${(props) => (props.isNew ? null : "none")};
+  animation: ${shaking} 3s linear infinite;
 `;
