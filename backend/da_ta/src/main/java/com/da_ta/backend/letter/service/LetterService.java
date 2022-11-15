@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 
@@ -347,7 +348,7 @@ public class LetterService {
     public Message createBadWordRedisSet(String token, CreateBadWordsRequest createBadWordsRequest) {
         jwtTokenProvider.findUserByToken(token);
         StringTokenizer stringTokenizer = new StringTokenizer(createBadWordsRequest.getBadWords(), ",");
-        ArrayList<String> badWords = new ArrayList<>();
+        List<String> badWords = new ArrayList<>();
         while (stringTokenizer.hasMoreTokens()) {
             badWords.add(stringTokenizer.nextToken());
         }
@@ -360,7 +361,7 @@ public class LetterService {
 
     public CheckTextLetterResponse checkTextLetter(String token, CheckTextLetterRequest checkTextLetterRequest) {
         jwtTokenProvider.findUserByToken(token);
-        for(String badWord:RedisUtil.getSet(BAD_WORDS_KEY)) {
+        for (String badWord : RedisUtil.getSet(BAD_WORDS_KEY)) {
             if (KMPUtil.KMP(checkTextLetterRequest.getContent(), badWord)) {
                 return CheckTextLetterResponse.builder()
                         .isHarmful(true)
