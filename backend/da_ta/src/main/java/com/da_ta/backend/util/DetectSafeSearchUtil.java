@@ -17,11 +17,11 @@ import static com.da_ta.backend.common.domain.ErrorCode.IMAGE_LETTER_CHECK_FAILE
 @Component
 public class DetectSafeSearchUtil {
 
-    public static final String DETECTED_ADULT = "성인용 콘텐츠의 가능성이 감지되었습니다.";
-    public static final String DETECTED_SPOOF = "스푸핑 가능성이 감지되었습니다.";
-    public static final String DETECTED_MEDICAL = "의료 이미지일 가능성이 감지되었습니다.";
-    public static final String DETECTED_VIOLENCE = "폭력적인 콘텐츠의 가능성이 감지되었습니다.";
-    public static final String DETECTED_RACY = "선정적인 콘텐츠의 가능성이 감지되었습니다.";
+    public static final String DETECTED_ADULT = "성인용 콘텐츠";
+    public static final String DETECTED_SPOOF = "스푸핑";
+    public static final String DETECTED_MEDICAL = "의료 이미지";
+    public static final String DETECTED_VIOLENCE = "폭력적인 콘텐츠";
+    public static final String DETECTED_RACY = "선정적인 콘텐츠";
     public static final String NO_ISSUE = "유해성 검사에 통과하였습니다.";
 
     public static CheckImageLetterResponse detectSafeSearch(byte[] imageDataUrl) throws IOException {
