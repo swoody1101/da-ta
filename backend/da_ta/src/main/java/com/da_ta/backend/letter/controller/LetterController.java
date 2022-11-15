@@ -132,10 +132,10 @@ public class LetterController {
     }
 
     @PostMapping("/check/1")
-    public ResponseEntity<CheckTextLetterResponse> checkTextLetterHarmfulness(@RequestHeader(AUTHORIZATION) String token,
-                                                                               @RequestBody CheckTextLetterRequest checkTextLetterRequest) {
+    public ResponseEntity<CheckTextHarmfulnessResponse> checkTextHarmfulness(@RequestHeader(AUTHORIZATION) String token,
+                                                                             @RequestBody CheckTextHarmfulnessRequest checkTextHarmfulnessRequest) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(letterService.checkTextLetter(token, checkTextLetterRequest));
+                .body(letterService.checkTextHarmfulness(token, checkTextHarmfulnessRequest));
     }
 
     @PostMapping("/check/2")
