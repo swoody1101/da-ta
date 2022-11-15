@@ -12,11 +12,15 @@ import com.da_ta.backend.letter.domain.entity.*;
 import com.da_ta.backend.letter.domain.repository.*;
 import com.da_ta.backend.util.Base64Util;
 import com.da_ta.backend.util.DetectSafeSearchUtil;
+import com.da_ta.backend.util.KMPUtil;
+import com.da_ta.backend.util.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 
 import static com.da_ta.backend.common.domain.ErrorCode.*;
@@ -29,6 +33,7 @@ public class LetterService {
     private static final int MAX_FLOAT_COUNT = 5;
     private static final String TYPE_TEXT = "Text";
     private static final String TYPE_IMAGE = "Image";
+    private static final String BAD_WORDS_KEY = "Bad words";
 
     private final JwtTokenProvider jwtTokenProvider;
     private final CollectedLetterRepository collectedLetterRepository;
@@ -337,6 +342,34 @@ public class LetterService {
         reply.deleteReplyLetter();
         replyRepository.save(reply);
         return new Message(REPLY_DELETED.getMessage());
+    }
+
+    public Message createBadWordRedisSet(String token, CreateBadWordsRequest createBadWordsRequest) {
+        jwtTokenProvider.findUserByToken(token);
+        StringTokenizer stringTokenizer = new StringTokenizer(createBadWordsRequest.getBadWords(), ",");
+        ArrayList<String> badWords = new ArrayList<>();
+        while (stringTokenizer.hasMoreTokens()) {
+            badWords.add(stringTokenizer.nextToken());
+        }
+        if (badWords.isEmpty()) {
+            throw new NotFoundException(BAD_WORDS_DUMMY_NOT_FOUND);
+        }
+        RedisUtil.createSet(BAD_WORDS_KEY, badWords.toArray(new String[badWords.size()]));
+        return new Message(BAD_WORD_SET_CREATED.getMessage());
+    }
+
+    public CheckTextLetterResponse checkTextLetter(String token, CheckTextLetterRequest checkTextLetterRequest) {
+        jwtTokenProvider.findUserByToken(token);
+        for(String badWord:RedisUtil.getSet(BAD_WORDS_KEY)) {
+            if (KMPUtil.KMP(checkTextLetterRequest.getContent(), badWord)) {
+                return CheckTextLetterResponse.builder()
+                        .isBad(true)
+                        .build();
+            }
+        }
+        return CheckTextLetterResponse.builder()
+                .isBad(false)
+                .build();
     }
 
     public CheckImageLetterResponse checkImageLetter(String token, CheckImageLetterRequest checkImageLetterRequest) throws IOException {

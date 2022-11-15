@@ -124,7 +124,21 @@ public class LetterController {
                 .body(letterService.deleteReply(jwtTokenProvider.findUserByToken(token), repliedLetterId));
     }
 
-    @GetMapping("/check/2")
+    @PostMapping("/bad-words")
+    public ResponseEntity<Message> createBadWords(@RequestHeader(AUTHORIZATION) String token,
+                                                  @RequestBody CreateBadWordsRequest createBadWordsRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(letterService.createBadWordRedisSet(token, createBadWordsRequest));
+    }
+
+    @PostMapping("/check/1")
+    public ResponseEntity<CheckTextLetterResponse> checkTextLetterHarmfulness(@RequestHeader(AUTHORIZATION) String token,
+                                                                               @RequestBody CheckTextLetterRequest checkTextLetterRequest) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(letterService.checkTextLetter(token, checkTextLetterRequest));
+    }
+
+    @PostMapping("/check/2")
     public ResponseEntity<CheckImageLetterResponse> checkImageLetterHarmfulness(@RequestHeader(AUTHORIZATION) String token,
                                                                                 @RequestBody CheckImageLetterRequest checkImageLetterRequest) throws IOException {
         return ResponseEntity.status(HttpStatus.OK)
