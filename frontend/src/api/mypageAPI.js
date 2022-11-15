@@ -93,3 +93,11 @@ export const replyDetail = async (letterId) => {
     .catch((error) => error);
   return result;
 };
+
+export const replyCheck = async () => {
+  const result = await client
+    .get(`letters/replies/check`)
+    .then((response) => response)
+    .catch((error) => error);
+  return result;
+};
