@@ -3,7 +3,7 @@ package com.da_ta.backend.letter.controller;
 import com.da_ta.backend.account.jwt.JwtTokenProvider;
 import com.da_ta.backend.common.domain.Message;
 import com.da_ta.backend.letter.controller.dto.*;
-import com.da_ta.backend.letter.controller.dto.common.CheckImageLetterResponse;
+import com.da_ta.backend.letter.controller.dto.CheckImageLetterResponse;
 import com.da_ta.backend.letter.service.LetterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -124,7 +124,21 @@ public class LetterController {
                 .body(letterService.deleteReply(jwtTokenProvider.findUserByToken(token), repliedLetterId));
     }
 
-    @GetMapping("/check/2")
+    @PostMapping("/bad-words")
+    public ResponseEntity<Message> createBadWords(@RequestHeader(AUTHORIZATION) String token,
+                                                  @RequestBody CreateBadWordsRequest createBadWordsRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(letterService.createBadWordRedisSet(token, createBadWordsRequest));
+    }
+
+    @PostMapping("/check/1")
+    public ResponseEntity<CheckTextHarmfulnessResponse> checkTextHarmfulness(@RequestHeader(AUTHORIZATION) String token,
+                                                                             @RequestBody CheckTextHarmfulnessRequest checkTextHarmfulnessRequest) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(letterService.checkTextHarmfulness(token, checkTextHarmfulnessRequest));
+    }
+
+    @PostMapping("/check/2")
     public ResponseEntity<CheckImageLetterResponse> checkImageLetterHarmfulness(@RequestHeader(AUTHORIZATION) String token,
                                                                                 @RequestBody CheckImageLetterRequest checkImageLetterRequest) throws IOException {
         return ResponseEntity.status(HttpStatus.OK)

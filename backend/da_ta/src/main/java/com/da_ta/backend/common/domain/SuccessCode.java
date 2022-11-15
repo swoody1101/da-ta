@@ -19,6 +19,7 @@ public enum SuccessCode {
     ROLE_UPDATED("회원 권한 수정이 완료되었습니다."),
     WARNING_COUNT_UPDATED("회원 신고 처리가 완료되었습니다."),
 
+    BAD_WORD_SET_CREATED("나쁜 말 목록이 성공적으로 생성되었습니다."),
     COLLECTED_LETTER_DELETED("편지가 보관함에서 삭제되었습니다."),
     IMAGE_LETTER_FLOATED("이미지 편지를 바다에 띄웠습니다."),
     LETTER_ACCUSED("편지 신고가 완료되었습니다."),
