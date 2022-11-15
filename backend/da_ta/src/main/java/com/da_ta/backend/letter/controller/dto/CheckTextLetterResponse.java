@@ -7,5 +7,5 @@ import lombok.Getter;
 @Builder
 public class CheckTextLetterResponse {
 
-    private Boolean isBad;
+    private Boolean isHarmful;
 }
