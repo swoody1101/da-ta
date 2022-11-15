@@ -52,7 +52,6 @@ export const MypageSettingWeb = () => {
   };
 
   const setAge = async (body) => {
-    console.log(body);
     const response = await setUserAge(body);
     if (response.status - 200 < 3 && response.status) {
       popSuccessAlert("", "연령대를 수정하였습니다");

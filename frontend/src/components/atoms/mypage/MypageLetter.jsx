@@ -70,7 +70,6 @@ export const MypageLetter = ({ letter, reload }) => {
       if (response.status - 200 < 3 && response.status) {
         const letter = response.data;
         setReadingLetterId(letterId);
-        console.log(letter);
         if (letter.originLetterInfo.imageLetterUrl) {
           letter.originLetterInfo.imageLetterUrl =
             await downloadFirebaseStorage(
@@ -142,9 +141,6 @@ export const MypageLetter = ({ letter, reload }) => {
         onClick={() => {
           setReportModal(true);
           setReadingLetterId(letter.id);
-          console.log(
-            `${letter.id}번 글을 쓴 글쓴이 아이디 ${letter.writerId}를 신고버튼`
-          );
         }}
       />
       <FontAwesomeIcon

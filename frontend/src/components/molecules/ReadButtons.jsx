@@ -49,11 +49,9 @@ const ReadButtons = ({ index }) => {
     } else {
       popErrorAlert("", "수집한 편지 삭제 요청실패");
     }
-    console.log("삭제하기");
   };
 
   const tossBtn = async (letterId) => {
-    console.log("다시 띄우기");
     const response = await tossLetter(letterId);
     if (response.status - 200 < 3 && response.status) {
       navigate("/");
@@ -62,11 +60,9 @@ const ReadButtons = ({ index }) => {
     } else {
       popErrorAlert("", "요청에 실패했습니다.");
     }
-    console.log(response);
   };
 
   const replyBtn = async (letterId) => {
-    console.log("답장버튼 딸깍");
     navigate("/reply");
   };
 
