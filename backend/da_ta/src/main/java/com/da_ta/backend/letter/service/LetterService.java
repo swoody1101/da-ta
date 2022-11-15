@@ -359,16 +359,16 @@ public class LetterService {
         return new Message(BAD_WORD_SET_CREATED.getMessage());
     }
 
-    public CheckTextLetterResponse checkTextLetter(String token, CheckTextLetterRequest checkTextLetterRequest) {
+    public CheckTextHarmfulnessResponse checkTextHarmfulness(String token, CheckTextHarmfulnessRequest checkTextHarmfulnessRequest) {
         jwtTokenProvider.findUserByToken(token);
         for (String badWord : RedisUtil.getSet(BAD_WORDS_KEY)) {
-            if (KMPUtil.KMP(checkTextLetterRequest.getContent(), badWord)) {
-                return CheckTextLetterResponse.builder()
+            if (KMPUtil.KMP(checkTextHarmfulnessRequest.getContent(), badWord)) {
+                return CheckTextHarmfulnessResponse.builder()
                         .isHarmful(true)
                         .build();
             }
         }
-        return CheckTextLetterResponse.builder()
+        return CheckTextHarmfulnessResponse.builder()
                 .isHarmful(false)
                 .build();
     }

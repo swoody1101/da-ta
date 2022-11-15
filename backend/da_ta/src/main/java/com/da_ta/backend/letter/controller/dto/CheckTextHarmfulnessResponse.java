@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class CheckTextLetterResponse {
+public class CheckTextHarmfulnessResponse {
 
     private Boolean isHarmful;
 }
