@@ -23,7 +23,6 @@ export const MypageCollect = () => {
     const response = await collectLetterList();
     if (response.status - 200 < 3 && response.status) {
       setLetters(response.data.collection);
-      console.log(response.data.collection);
       if (response.data.collection.length === 0) {
         setIsEmpty(true);
       }
