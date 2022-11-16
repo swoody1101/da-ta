@@ -5,7 +5,10 @@
 import styled from "styled-components";
 import React, { useEffect, useRef, useState } from "react";
 import { uploadFirebaseStorage } from "../../../utils/firebaseStorage";
-import { saveCanvasLetter } from "../../../api/letterWriteAPI";
+import {
+  checkHarmCanvasLetter,
+  saveCanvasLetter,
+} from "../../../api/letterWriteAPI";
 import { popErrorAlert } from "../../../utils/sweetAlert";
 import { useNavigate } from "react-router-dom";
 import { SIZE_PHONE } from "./../../../constants/Sizes";
@@ -127,9 +130,25 @@ const LetterCanvasArea = ({
     const image = canvasRef.current.toDataURL("image/png"); // 그린 그림 png로 추출
     const imagePath = uploadFirebaseStorage(image, "drawings/");
 
-    // # 유해성 검사
+    // 1. 유해성 검사
+    const harmResponse = await checkHarmCanvasLetter({ imageDataUrl: image });
+    console.log(harmResponse);
+    if (
+      !harmResponse ||
+      (harmResponse.status !== 200 && harmResponse.status !== 201)
+    ) {
+      popErrorAlert("편지 전송 오류", "유해성 검사 중 오류가 발생했습니다.");
+      return;
+    }
+    if (harmResponse.data && harmResponse.data.isHarmful) {
+      popWarningAlert(
+        "부적절한 그림 감지",
+        "부적절한 그림이 포함된 편지는 전송할 수 없습니다."
+      );
+      return;
+    }
 
-    // api 요청 보내자...
+    // 2. 성공 시 편지 전송
     const response = await saveCanvasLetter(options, imagePath);
 
     if (!response || response.status < 200 || response.status >= 300) {
@@ -204,7 +223,6 @@ const LetterCanvasArea = ({
 
   /** 터치 시 그리기 끝 */
   const touchEnd = () => {
-    console.log("good");
     document.body.style.overflow = "overlay";
     setIsDrawing(false);
   };

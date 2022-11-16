@@ -2,8 +2,6 @@
  * @author mingyu
  */
 import { client } from "../utils/client";
-import { useRecoilValue } from "recoil";
-import { userState } from "../recoil/Atoms";
 import { LetterOptions } from "./../constants/Options";
 
 /**

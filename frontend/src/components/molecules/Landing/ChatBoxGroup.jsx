@@ -120,6 +120,8 @@ const ButtonBox = styled.div`
 
 const TextBox = styled.div`
   display: flex;
+  width: 80%;
+  height: auto;
   position: absolute;
   flex-direction: row;
   justify-content: center;
