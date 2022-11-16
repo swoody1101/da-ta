@@ -54,21 +54,9 @@ export const MypageSettingWeb = () => {
   const setAge = async (body) => {
     const response = await setUserAge(body);
     if (response.status - 200 < 3 && response.status) {
-      popSuccessAlert("", "연령대를 수정하였습니다");
       callUserInfo();
     } else {
       popErrorAlert("", "연령대 변경 요청 실패!");
-    }
-    // 새로고침
-  };
-
-  const setAlert = async (body) => {
-    const response = await setUserAlert(body);
-    if (response.status - 200 < 3 && response.status) {
-      popSuccessAlert("", "알람 설정을 변경하였습니다.");
-      callUserInfo();
-    } else {
-      popErrorAlert("", "알람 요청 실패!");
     }
     // 새로고침
   };
@@ -104,8 +92,9 @@ export const MypageSettingWeb = () => {
             <MypagePngs width={"80px"} height={"80px"} name={"calendar"} />
             <SettingWordsDiv>
               <SettingExpln>
-                <p>회원님의 연령 정보를 등록하거나 변경하실 수 있습니다.</p>
-                <p>공감대가 맞는 사람들과 소통해보세요</p>
+                회원님의 연령 정보를 등록하거나 변경하실 수 있습니다.
+                <br />
+                공감대가 맞는 사람들과 소통해보세요
               </SettingExpln>
               <SettingChange>
                 <Span>현재 회원님의 나이대 : </Span>
@@ -123,36 +112,10 @@ export const MypageSettingWeb = () => {
             </SettingWordsDiv>
           </SettingDiv>
           <SettingDiv>
-            <MypagePngs width={"80px"} height={"80px"} name={"kakao"} />
-            <SettingWordsDiv>
-              <SettingExpln>
-                <p>연동된 계정으로 실시간 알람을 보내드립니다.</p>
-                <p>
-                  회원님의 편지에 대한 답장이 도착하면 바로 확인하실 수
-                  있습니다.
-                </p>
-              </SettingExpln>
-              <SettingChange>
-                <Checkbox
-                  text={"실시간 알림을 받습니다"}
-                  tagname={"알림설정"}
-                  checked={user.isAlertActive}
-                  onCheckHandler={(e) => {
-                    setAlert({ isAlertActive: e.target.checked });
-                  }}
-                />
-                <div style={{ width: "290px" }}></div>
-              </SettingChange>
-            </SettingWordsDiv>
-          </SettingDiv>
-          <SettingDiv>
             <MypagePngs width={"80px"} height={"80px"} name={"exit"} />
             <SettingWordsDiv>
               <SettingExpln>
-                <p>저희 서비스를 당분간 사용하지 않으실 계획이신가요?</p>
-                <p>
-                  계정을 비활성화 하실 수 있습니다. 나중에 다시 뵙길 바래요!
-                </p>
+                회원 탈퇴를 진행하시면 작성한 모든 활동 내역이 사라집니다.
               </SettingExpln>
               <SettingChange>
                 <ClickableSpan
@@ -198,10 +161,14 @@ const SettingWordsDiv = styled.div`
 `;
 
 const SettingExpln = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
   font-size: 18px;
   width: 100%;
   height: 40px;
-  text-align: start;
+  text-align: left;
   color: #444444;
 `;
 

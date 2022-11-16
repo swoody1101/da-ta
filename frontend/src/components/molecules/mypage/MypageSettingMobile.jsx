@@ -46,20 +46,9 @@ export const MypageSettingMobile = () => {
   const setAge = async (body) => {
     const response = await setUserAge(body);
     if (response.status - 200 < 3 && response.status) {
-      popSuccessAlert("", "연령대를 수정하였습니다");
       callUserInfo();
     } else {
       popErrorAlert("", "연령대 변경 요청 실패!");
-    }
-  };
-
-  const setAlert = async (body) => {
-    const response = await setUserAlert(body);
-    if (response.status - 200 < 3 && response.status) {
-      popSuccessAlert("", "알람 설정을 변경하였습니다.");
-      callUserInfo();
-    } else {
-      popErrorAlert("", "알람 요청 실패!");
     }
   };
 
@@ -116,35 +105,9 @@ export const MypageSettingMobile = () => {
           </SettingDiv>
           <SettingDiv>
             <SettingWordsDiv>
-              <SettingTitleDiv>카카오톡 알림 설정</SettingTitleDiv>
-              <SettingExpln>
-                보낸 편지에 대한 답장의 실시간 알림을 받으실 수 있습니다.
-              </SettingExpln>
-            </SettingWordsDiv>
-            <SettingButtonDiv>
-              <ClickableSpan
-                isHide={user.isAlertActive}
-                onClick={() => {
-                  setAlert({ isAlertActive: true });
-                }}
-              >
-                OFF
-              </ClickableSpan>
-              <ClickableSpan
-                isHide={!user.isAlertActive}
-                onClick={() => {
-                  setAlert({ isAlertActive: false });
-                }}
-              >
-                ON
-              </ClickableSpan>
-            </SettingButtonDiv>
-          </SettingDiv>
-          <SettingDiv>
-            <SettingWordsDiv>
               <SettingTitleDiv>계정 비활성화</SettingTitleDiv>
               <SettingExpln>
-                현재 접속한 계정의 정보를 비활성화 합니다.
+                회원 탈퇴를 진행하시면 작성한 모든 활동 내역이 사라집니다.
               </SettingExpln>
             </SettingWordsDiv>
             <SettingButtonDiv>
@@ -208,6 +171,10 @@ const SettingTitleDiv = styled.div`
 `;
 
 const SettingExpln = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
   height: 34px;
   width: 90%;
   text-align: left;
