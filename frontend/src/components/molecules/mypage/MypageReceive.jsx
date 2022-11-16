@@ -23,7 +23,6 @@ export const MypageReceive = () => {
     const response = await receiveLetterList();
     if (response.status - 200 < 3 && response.status) {
       setLetters(response.data.replies);
-      console.log(response.data.replies);
       if (response.data.replies.length === 0) {
         setIsEmpty(true);
       }
