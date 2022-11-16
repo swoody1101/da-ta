@@ -19,9 +19,20 @@ export const getReportList = async (listType) => {
 /**
  * @description 유저 신고 처리 [편지, 오늘의 답변]
  */
-export const accuseUser = async (letterAccusationId, listType) => {
+export const accuseUser = async (accuseId, listType) => {
   const result = await client
-    .post(`/admin/accusation/${listType}/${letterAccusationId}`)
+    .post(`/admin/accusation/${listType}/${accuseId}`)
+    .then((res) => res)
+    .catch((error) => error.response);
+  return result;
+};
+
+/**
+ * @description 유저 반려 처리 [편지, 오늘의 답변]
+ */
+export const accuseCancelUser = async (accuseId, listType) => {
+  const result = await client
+    .delete(`/admin/accusation/${listType}/${accuseId}`)
     .then((res) => res)
     .catch((error) => error.response);
   return result;

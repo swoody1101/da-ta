@@ -17,6 +17,7 @@ const ReportsTemplate = ({
   itemList,
   handleModal,
   handleAccuse,
+  handleAccuseCancel,
   flexRate,
 }) => {
   return (
@@ -68,9 +69,19 @@ const ReportsTemplate = ({
                     bgColor={item.isSolved ? "#d9d9d9" : "#FF6C00"}
                     width="90%"
                     height="70%"
-                    onClick={(e) => handleAccuse(item, e)}
+                    onClick={() => handleAccuse(item)}
                   >
                     {item.isSolved ? "완료" : "처리"}
+                  </Button>
+                </ContentElement>
+                <ContentElement flex={flexRate[7]}>
+                  <Button
+                    bgColor={item.isSolved ? "#d9d9d9" : "#29B6F6"}
+                    width="90%"
+                    height="70%"
+                    onClick={() => handleAccuseCancel(item)}
+                  >
+                    {item.isSolved ? "완료" : "반려"}
                   </Button>
                 </ContentElement>
               </ContentLine>

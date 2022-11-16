@@ -9,111 +9,87 @@ import { MainTestText } from "../../atoms/Text";
 import { loginState } from "../../../recoil/Atoms";
 import { popWarningAlert } from "../../../utils/sweetAlert";
 import { useRecoilValue } from "recoil";
-import { getTodayQuestion } from "../../../api/questionReadAPI";
 
 const ChatBoxGroup = ({
-  children,
-  onClick,
   handleModalA,
   handleModalB,
+  todayQuestion,
   ...props
 }) => {
-  {
-    const isLogin = useRecoilValue(loginState);
-    const [todayQuestionQ, setTodayQuestionQ] = useState([]); //변하는 오늘의 질문
+  const isLogin = useRecoilValue(loginState);
 
-    const handlerClickModalA = () => {
-      return isLogin
-        ? handleModalA()
-        : { ...popWarningAlert("", "로그인 후 이용해주세요.") };
-    };
+  const handlerClickModalA = () => {
+    return isLogin
+      ? handleModalA()
+      : { ...popWarningAlert("", "로그인 후 이용해주세요.") };
+  };
 
-    const handlerClickModalB = () => {
-      return isLogin
-        ? handleModalB()
-        : { ...popWarningAlert("", "로그인 후 이용해주세요.") };
-    };
+  const handlerClickModalB = () => {
+    return isLogin
+      ? handleModalB()
+      : { ...popWarningAlert("", "로그인 후 이용해주세요.") };
+  };
 
-    // 오늘의 질문 가져오는 api용 1
-    useEffect(() => {
-      mainGetQuestion();
-    }, []);
+  // 오늘의 질문 가져오는 api용 1
+  useEffect(() => {}, []);
 
-    // 오늘의 질문 가져오는 api용 2
-    const mainGetQuestion = async () => {
-      let response = await getTodayQuestion();
-      const todayQuestion = response.data;
-      setTodayQuestionQ(todayQuestion);
-    };
+  return (
+    <>
+      <ChatBoxMolecure {...props}>
+        <TextBox>
+          <MainTestText fontWeight="500">{todayQuestion}</MainTestText>
+        </TextBox>
+        <ButtonBox>
+          <Button
+            fontSize="1.1rem"
+            height="3rem"
+            width="9rem"
+            margin="0 2.5% 0 2.5%"
+            shadow={true}
+            color="#5F0EB0"
+            borderStyle="2px solid #5F0EB0"
+            hasBorder={false}
+            hoverBgOpacity="0.25"
+            onClick={() => handlerClickModalA()}
+          >
+            답변하기
+          </Button>
 
-    return (
-      <>
-        <ChatBoxMolecure {...props} onClick={onClick}>
-          {children}
-          <TextBox>
-            <MainTestText fontWeight="500">
-              {todayQuestionQ.question}
-            </MainTestText>
-          </TextBox>
-
-          <ButtonBox>
-            <Button
-              fontSize="1.2rem"
-              height="3rem"
-              width="9rem"
-              margin="1% 0 0 2%"
-              shadow={true}
-              color="#5F0EB0"
-              borderStyle="2px solid #5F0EB0"
-              hasBorder={false}
-              onClick={() => handlerClickModalA()}
-            >
-              답변하기
-            </Button>
-
-            <Button
-              fontSize="1.2rem"
-              height="3rem"
-              width="9rem"
-              margin="1% 2% 0 9%"
-              shadow={true}
-              color="#5F0EB0"
-              borderStyle="2px solid #5F0EB0"
-              hasBorder={false}
-              onClick={() => handlerClickModalB()}
-            >
-              다른 답변보기
-            </Button>
-          </ButtonBox>
-        </ChatBoxMolecure>
-      </>
-    );
-  }
+          <Button
+            fontSize="1.1rem"
+            height="3rem"
+            width="9rem"
+            margin="0 2.5% 0 2.5%"
+            shadow={true}
+            color="#5F0EB0"
+            borderStyle="2px solid #5F0EB0"
+            hasBorder={false}
+            hoverBgOpacity="0.25"
+            onClick={() => handlerClickModalB()}
+          >
+            다른 답변보기
+          </Button>
+        </ButtonBox>
+      </ChatBoxMolecure>
+    </>
+  );
 };
 
-const ChatBoxMolecure = styled(
-  styled.div({
-    width: "40%",
-    minWidth: "300px",
-    height: "200px",
-    padding: "0px",
-    background: "#FFFFFF",
-    // -webkit-border-radius: "25px",
-    webkitBorderRadius: "25px",
-    // -moz-border-radius: "25px",
-    mozBorderRadius: "25px",
-    // border-radius: "25px",
-    borderRadius: "25px",
-    display: "flex",
-    position: "absolute",
-    flexDirection: "column",
-    justifyContent: "center",
-    top: "30%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    alignItems: "center",
-  })
-)`
+const ChatBoxMolecure = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  align-items: center;
+  justify-content: center;
+  width: 440px;
+  height: 200px;
+  padding: 0.1rem;
+  background: #ffffff;
+  border-radius: 16px;
+
   &::after {
     content: "";
     display: flex;
@@ -125,6 +101,10 @@ const ChatBoxMolecure = styled(
     bottom: -34px;
     left: 46.8%;
   }
+
+  ${media.phone`
+    width: 90vw;
+  `};
 `;
 
 const ButtonBox = styled.div`
@@ -149,52 +129,4 @@ const TextBox = styled.div`
   transform: translate(-50%, -50%);
 `;
 
-const AnswerBox = styled.div`
-  display: flex;
-  background-color: none;
-  margin: ${(props) => props.margin};
-  padding: ${(props) => props.padding};
-  width: ${(props) => props.width};
-  height: ${(props) => props.height};
-  font-size: ${(props) => props.fontSize};
-  filter: ${(props) =>
-    props.shadow ? "drop-shadow(4px 8px 12px rgba(38,38,38,0.5))" : ""};
-  cursor: pointer;
-  border: ${(props) =>
-    props.hasBorder ? "2px solid black" : props.borderStyle};
-  border-radius: ${(props) => props.borderRadius};
-  color: ${(props) => props.color || "black"};
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  font-weight: bold;
-  z-index: ${(props) => props.zIndex};
-
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  transition: all 0.2s ease-in;
-
-  ${media.phone`
-           width: ${(props) => (props.mWidth ? props.mWidth : props.width)};
-       `}
-`;
-
 export default ChatBoxGroup;
-
-// import React from "react";
-// import { popWarningAlert } from "./../../utils/sweetAlert";
-
-// import { useRecoilValue } from "recoil";
-// import { loginState } from "./../../recoil/Atoms";
-
-// const PrivateModalRoute = ({ component: Component }) => {
-//   const isLogin = useRecoilValue(loginState);
-//   return isLogin
-//     ? Component
-//     : { ...popWarningAlert("", "로그인 후 이용해주세요.") };
-// };
-
-// export default PrivateModalRoute;
