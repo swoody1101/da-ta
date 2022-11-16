@@ -1,11 +1,12 @@
 import React from "react";
 import styled from "styled-components";
+import { MAX_CHAR_COUNT } from "../../../constants/Variables";
 import { ColorTypes } from "./../../../constants/Colors";
 
 const LetterProgressBar = ({ charCount, charCountWarning, myRef }) => {
   return (
     <Container charCountWarning={charCountWarning} ref={myRef}>
-      {charCount}자 / 1000자
+      {charCount}자 / {MAX_CHAR_COUNT}자
     </Container>
   );
 };
