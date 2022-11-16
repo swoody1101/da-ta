@@ -99,7 +99,6 @@ public class AdminService {
                                     .reportedNickname(reportedUser.getNickname())
                                     .reason(accusedLetter.getReason())
                                     .content(content)
-                                    .isSolved(accusedLetter.isSolved())
                                     .build();
                         })
                         .collect(Collectors.toList()))
@@ -110,7 +109,7 @@ public class AdminService {
     public Message updateAccusedLetter(String token, Long letterAccusationId) {
         jwtTokenProvider.findUserByToken(token);
         LetterAccusation letterAccusation = findLetterAccusationById(letterAccusationId);
-        letterAccusation.updateIsSolved();
+        letterAccusation.updateLetterAccusation();
         User reportedUser = findUserById(findLetterById(letterAccusation.getLetter().getId()).getWriter().getId());
         reportedUser.getBanStatus().updateWarningCount();
         checkWarningCount(reportedUser);
@@ -143,7 +142,6 @@ public class AdminService {
                                     .reportedNickname(reportedUser.getNickname())
                                     .reason(accusedAnswer.getReason())
                                     .answer(todayAnswer.getAnswer())
-                                    .isSolved(accusedAnswer.isSolved())
                                     .build();
                         })
                         .collect(Collectors.toList()))
@@ -154,9 +152,8 @@ public class AdminService {
     public Message updateAccusedAnswer(String token, Long answerAccusationId) {
         jwtTokenProvider.findUserByToken(token);
         AnswerAccusation answerAccusation = findAnswerAccusationById(answerAccusationId);
-        answerAccusation.updateIsSolved();
         TodayAnswer todayAnswer = answerAccusation.getTodayAnswer();
-        todayAnswer.deleteTodayAnswer();
+        answerAccusation.updateAnswerAccusation();
         User reportedUser = findUserById(findTodayAnswerById(todayAnswer.getId()).getUser().getId());
         reportedUser.getBanStatus().updateWarningCount();
         checkWarningCount(reportedUser);
@@ -224,7 +221,7 @@ public class AdminService {
     public FindTodayAnswersResponse findTodayAnswers(String token, Long questionId) {
         jwtTokenProvider.findUserByToken(token);
         return FindTodayAnswersResponse.builder()
-                .answers(todayAnswerRepository.findAllByTodayQuestionId(questionId)
+                .answers(todayAnswerRepository.findAllByIsActiveTrueAndTodayQuestionId(questionId)
                         .stream()
                         .map(todayAnswer -> {
                             User user = todayAnswer.getUser();
