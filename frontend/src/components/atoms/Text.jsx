@@ -32,6 +32,7 @@ export const MainTestText = styled.p`
   margin: ${(props) => props.margin};
   font-weight: ${(props) => props.fontWeight};
   z-index: 20;
+  word-break: keep-all;
 
   ${media.phone`
   font-size: ${(props) => props.mFont_size};

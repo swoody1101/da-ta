@@ -12,8 +12,8 @@ import {
   popErrorAlert,
   popSuccessAlert,
 } from "./../../utils/sweetAlert";
-import { useRecoilValue } from "recoil";
-import { loginState } from "./../../recoil/Atoms";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { loginState, reportModalState } from "./../../recoil/Atoms";
 
 import Footer from "../../components/molecules/Footer";
 import MainSeaGradient from "../../components/atoms/MainSeaGradient";
@@ -46,6 +46,10 @@ import TranslucentBackground from "./../../components/atoms/TranslucentBackgroun
 import Title from "../../components/atoms/Title";
 import Slider from "react-slick";
 import SlickArrow from "../../components/atoms/landing/SlickArrow";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
+import ReportModal from "../../components/organisms/ReportModal";
+import ReportAnswerModal from "../../components/organisms/ReportAnswerModal";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -61,9 +65,11 @@ const LandingPage = () => {
   const [answerList, setAnswerList] = useState([]); // 오늘의 질문 답변 리스트
   const [letterCountNum, setLetterCountNum] = useState(0); // 바다에 떠 있는 편지 개수
   const [clickPosY, setClickPosY] = useState(0); // 병 클릭한 마우스 Y좌표
+  const [currentAnswerId, setCurrentAnswerId] = useState(0);
 
   const isLogin = useRecoilValue(loginState); // Recoil 로그인 정보
   const user = useRecoilValue(userState); // Recoil 유저 정보
+  const [reportModalToggle, setReportModalToggle] = useState(false);
 
   const contentInput = useRef(); // 오늘의질문 답변 작성 내용 ref (값 가져오기, ref)
 
@@ -74,6 +80,10 @@ const LandingPage = () => {
     mainGetAnswer();
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    setCurrentAnswerId(Math.floor(Math.random() * answerList.length));
+  }, [answerList]);
 
   /**
    * @description 답변 작성 모달 open 시 글자 수 초기화
@@ -108,7 +118,6 @@ const LandingPage = () => {
    * @description [오늘의질문] 답변 모음창 열기
    * */
   const handleModalB = () => {
-    console.log(answerList);
     setChatBoxVisible(false);
     setModalToggleB(true);
   };
@@ -160,6 +169,7 @@ const LandingPage = () => {
     setChatBoxVisible(false);
     setCharCount(0);
     popSuccessAlert("답변 전송 완료", "오늘의 질문 답변이 전송되었습니다.");
+    navigate("/");
   };
 
   /**
@@ -198,6 +208,14 @@ const LandingPage = () => {
     setAnswerList(response.data);
   };
 
+  /**
+   * @description 오늘의 질문 답변 신고
+   */
+  const handleReportAnswer = async () => {
+    setModalToggleB(false);
+    setReportModalToggle(true);
+  };
+
   return (
     <>
       {/* 파도 위 바다 배경 Gradient */}
@@ -226,6 +244,15 @@ const LandingPage = () => {
             todayQuestion={todayQuestionInfo.question}
           />
         </ChatBoxWrapper>
+      )}
+
+      {/* 오늘의질문 답변 신고 모달 */}
+      {reportModalToggle && (
+        <ReportAnswerModal
+          modalToggle={reportModalToggle}
+          setModalToggle={setReportModalToggle}
+          answerId={currentAnswerId}
+        />
       )}
 
       {/* 오늘의질문 답변 작성하는 모달 */}
@@ -283,15 +310,28 @@ const LandingPage = () => {
           </Title>
           <AnswerBox width="95%" height="75%" margin="1rem 0 0 0">
             <QuestionAnswerListArea>
+              <AnswerReportButton onClick={handleReportAnswer}>
+                <FontAwesomeIcon
+                  icon={faTriangleExclamation}
+                  style={{
+                    color: "#F44336",
+                  }}
+                  size="2x"
+                />
+              </AnswerReportButton>
               <StyledSlider
                 dots={false}
                 infinite={false}
-                speed={250}
+                speed={150}
                 slidesToShow={1}
                 slidesToScroll={1}
                 prevArrow={<SlickArrow direction={"prev"} />}
+                l
                 nextArrow={<SlickArrow direction={"next"} />}
-                initialSlide={Math.floor(Math.random() * answerList.length)}
+                initialSlide={currentAnswerId}
+                afterChange={(index) => {
+                  setCurrentAnswerId(answerList[index].todayAnswerId);
+                }}
               >
                 {answerList.map((item, index) => (
                   <SliderContent key={index}>{item.answer}</SliderContent>
@@ -549,6 +589,22 @@ const SliderContent = styled.div`
   white-space: normal;
   word-wrap: break-all;
   word-break: break-all;
+`;
+
+const AnswerReportButton = styled.button`
+  display: flex;
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 2rem;
+  height: 2rem;
+  padding: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  z-index: 500;
 `;
 
 export default LandingPage;

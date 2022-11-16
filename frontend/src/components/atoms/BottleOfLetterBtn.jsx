@@ -11,7 +11,7 @@ const BottleOfLetterBtn = ({ onClick, ...props }) => {
     <StyledBtn {...props} onClick={onClick}>
       <BlinkWrapper>
         <MainSmallText fontSize="1.0rem" mFont_size="1.1rem">
-          &nbsp;클릭!
+          &nbsp;Click!
         </MainSmallText>
         <MainSmallText fontSize="1.75rem" mFont_size="1.3rem">
           ⇙
