@@ -13,7 +13,7 @@ const BottleOfLetterBtn = ({ onClick, ...props }) => {
         <MainSmallText fontSize="1.0rem" mFont_size="1.1rem">
           &nbsp;클릭!
         </MainSmallText>
-        <MainSmallText fontSize="1.2rem" mFont_size="1.3rem">
+        <MainSmallText fontSize="1.75rem" mFont_size="1.3rem">
           ⇙
         </MainSmallText>
       </BlinkWrapper>

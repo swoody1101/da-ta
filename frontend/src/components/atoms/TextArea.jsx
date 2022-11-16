@@ -29,7 +29,7 @@ export const LetterTextArea = styled.textarea`
 export const QuestionTextArea = styled.textarea`
   display: flex;
   resize: none;
-  border: 1px solid black;
+  border: 1px solid #d9d9d9;
   border-radius: 1em;
   z-index: 10;
   width: 100%;

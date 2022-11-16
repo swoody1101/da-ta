@@ -7,7 +7,11 @@ import "../../styles/slick.css";
 import "../../styles/slick-theme.css";
 import { media } from "../../utils/styleUtil";
 
-import { popWarningAlert, popErrorAlert, popSuccessAlert } from "./../../utils/sweetAlert";
+import {
+  popWarningAlert,
+  popErrorAlert,
+  popSuccessAlert,
+} from "./../../utils/sweetAlert";
 import { useRecoilValue } from "recoil";
 import { loginState } from "./../../recoil/Atoms";
 
@@ -34,422 +38,468 @@ import { saveTextAnswer } from "../../api/questionWriteAPI";
 import { getLetterNum } from "../../api/letterCountAPI";
 import { MainAnimationText } from "../../components/atoms/MainAnimationText";
 import { userState } from "./../../recoil/Atoms";
-import { getTodayQuestion, getTodayAnswerList } from "../../api/questionReadAPI";
+import {
+  getTodayQuestion,
+  getTodayAnswerList,
+} from "../../api/questionReadAPI";
 import TranslucentBackground from "./../../components/atoms/TranslucentBackground";
 import Title from "../../components/atoms/Title";
 import Slider from "react-slick";
 import SlickArrow from "../../components/atoms/landing/SlickArrow";
 
 const LandingPage = () => {
-	const navigate = useNavigate();
+  const navigate = useNavigate();
 
-	const [chatboxVisible, setChatBoxVisible] = useState(false); // 물병 클릭시 뜨는 말풍선 토글
+  const [chatboxVisible, setChatBoxVisible] = useState(false); // 물병 클릭시 뜨는 말풍선 토글
 
-	const [charCount, setCharCount] = useState(0); // 오늘의 질문 답변 글자 수
+  const [charCount, setCharCount] = useState(0); // 오늘의 질문 답변 글자 수
 
-	const [modalToggleA, setModalToggleA] = useState(false); // 답변보내기 모달창 토글
-	const [modalToggleB, setModalToggleB] = useState(false); // 답변리스트 보기 모달창 토글
+  const [modalToggleA, setModalToggleA] = useState(false); // 답변보내기 모달창 토글
+  const [modalToggleB, setModalToggleB] = useState(false); // 답변리스트 보기 모달창 토글
 
-	const [todayQuestionInfo, setTodayQuestionInfo] = useState({}); // 오늘의 질문 정보 (날짜, 내용, id)
-	const [answerList, setAnswerList] = useState([]); // 오늘의 질문 답변 리스트
-	const [letterCountNum, setLetterCountNum] = useState(0); // 바다에 떠 있는 편지 개수
-	const [clickPosY, setClickPosY] = useState(0); // 병 클릭한 마우스 Y좌표
+  const [todayQuestionInfo, setTodayQuestionInfo] = useState({}); // 오늘의 질문 정보 (날짜, 내용, id)
+  const [answerList, setAnswerList] = useState([]); // 오늘의 질문 답변 리스트
+  const [letterCountNum, setLetterCountNum] = useState(0); // 바다에 떠 있는 편지 개수
+  const [clickPosY, setClickPosY] = useState(0); // 병 클릭한 마우스 Y좌표
 
-	const isLogin = useRecoilValue(loginState); // Recoil 로그인 정보
-	const user = useRecoilValue(userState); // Recoil 유저 정보
+  const isLogin = useRecoilValue(loginState); // Recoil 로그인 정보
+  const user = useRecoilValue(userState); // Recoil 유저 정보
 
-	const contentInput = useRef(); // 오늘의질문 답변 작성 내용 ref (값 가져오기, ref)
+  const contentInput = useRef(); // 오늘의질문 답변 작성 내용 ref (값 가져오기, ref)
 
-	useEffect(() => {
-		AOS.init({ duration: 500, easing: "ease-in-out-back" }); //소개글 animation 효과 변경용 AOS
-		mainGetLetterNum();
-		mainGetQuestion();
-		mainGetAnswer();
-		window.scrollTo(0, 0);
-	}, []);
+  useEffect(() => {
+    AOS.init({ duration: 500, easing: "ease-in-out-back" }); //소개글 animation 효과 변경용 AOS
+    mainGetLetterNum();
+    mainGetQuestion();
+    mainGetAnswer();
+    window.scrollTo(0, 0);
+  }, []);
 
-	/**
-	 * @description 답변 작성 모달 open 시 글자 수 초기화
-	 */
-	useEffect(() => {
-		setCharCount(0);
-	}, [modalToggleA]);
+  /**
+   * @description 답변 작성 모달 open 시 글자 수 초기화
+   */
+  useEffect(() => {
+    setCharCount(0);
+  }, [modalToggleA]);
 
-	/**
-	 * @description 유리병 클릭 좌표 설정 시 말풍선 visible
-	 */
-	useEffect(() => {
-		setChatBoxVisible(true);
-	}, [clickPosY]);
+  /**
+   * @description 유리병 클릭 좌표 설정 시 말풍선 visible
+   */
+  useEffect(() => {
+    setChatBoxVisible(true);
+  }, [clickPosY]);
 
-	/**
-	 * @description 유리병 클릭 시 클릭한 좌표 설정
-	 */
-	const handleClickBottle = (e) => {
-		setClickPosY(e.clientY);
-	};
+  /**
+   * @description 유리병 클릭 시 클릭한 좌표 설정
+   */
+  const handleClickBottle = (e) => {
+    setClickPosY(e.clientY);
+  };
 
-	/**
-	 * @description [오늘의질문] 답변 입력창 열기
-	 * */
-	const handleModalA = () => {
-		setChatBoxVisible(false);
-		setModalToggleA(true);
-	};
+  /**
+   * @description [오늘의질문] 답변 입력창 열기
+   * */
+  const handleModalA = () => {
+    setChatBoxVisible(false);
+    setModalToggleA(true);
+  };
 
-	/**
-	 * @description [오늘의질문] 답변 모음창 열기
-	 * */
-	const handleModalB = () => {
-		console.log(answerList);
-		setChatBoxVisible(false);
-		setModalToggleB(true);
-	};
+  /**
+   * @description [오늘의질문] 답변 모음창 열기
+   * */
+  const handleModalB = () => {
+    console.log(answerList);
+    setChatBoxVisible(false);
+    setModalToggleB(true);
+  };
 
-	/**
-	 * @description 메인 하단의 물병 던지기 Button의 isLogin 확인 및 navigate
-	 */
-	const handleIsLoginCheck = () => {
-		return isLogin ? navigate("/write") : popWarningAlert("", "로그인 후 이용해주세요.");
-	};
+  /**
+   * @description 메인 하단의 물병 던지기 Button의 isLogin 확인 및 navigate
+   */
+  const handleIsLoginCheck = () => {
+    return isLogin
+      ? navigate("/write")
+      : popWarningAlert("", "로그인 후 이용해주세요.");
+  };
 
-	/**
-	 * @description 오늘의 질문 답변 입력 시 이벤트
-	 * @param {number} length
-	 */
-	const handleQuestionAnswerWrite = (length) => {
-		setCharCount(length);
-	};
+  /**
+   * @description 오늘의 질문 답변 입력 시 이벤트
+   * @param {number} length
+   */
+  const handleQuestionAnswerWrite = (length) => {
+    setCharCount(length);
+  };
 
-	/**
-	 * @description "보내기" 버튼 눌렀을 시 이벤트
-	 */
-	const handleAnswerSend = async () => {
-		//유효성 검사
-		const content = contentInput.current.value;
-		if (content.length < MIN_CHAR_COUNT_Q) {
-			popWarningAlert(`답변 내용을 ${MIN_CHAR_COUNT_Q}자 이상 입력해주세요.`);
-			return;
-		} else if (content.length > MAX_CHAR_COUNT_Q) {
-			popWarningAlert(`답변 내용을 ${MAX_CHAR_COUNT_Q}자 이하 입력해주세요.`);
-			return;
-		}
+  /**
+   * @description "보내기" 버튼 눌렀을 시 이벤트
+   */
+  const handleAnswerSend = async () => {
+    //유효성 검사
+    const content = contentInput.current.value;
+    if (content.length < MIN_CHAR_COUNT_Q) {
+      popWarningAlert(`답변 내용을 ${MIN_CHAR_COUNT_Q}자 이상 입력해주세요.`);
+      return;
+    } else if (content.length > MAX_CHAR_COUNT_Q) {
+      popWarningAlert(`답변 내용을 ${MAX_CHAR_COUNT_Q}자 이하 입력해주세요.`);
+      return;
+    }
 
-		const response = await saveTextAnswer(content, user.userId, todayQuestionInfo.todayQuestionId);
+    const response = await saveTextAnswer(
+      content,
+      user.userId,
+      todayQuestionInfo.todayQuestionId
+    );
 
-		if (!response || (response.status !== 200 && response.status !== 201)) {
-			popErrorAlert("답변 전송 오류", "답변 전송 중 오류가 발생했습니다.");
-			return;
-		}
+    if (!response || (response.status !== 200 && response.status !== 201)) {
+      popErrorAlert("답변 전송 오류", "답변 전송 중 오류가 발생했습니다.");
+      return;
+    }
 
-		setModalToggleA(false);
-		setModalToggleB(false);
-		setChatBoxVisible(false);
-		setCharCount(0);
-		popSuccessAlert("답변 전송 완료", "오늘의 질문 답변이 전송되었습니다.");
-	};
+    setModalToggleA(false);
+    setModalToggleB(false);
+    setChatBoxVisible(false);
+    setCharCount(0);
+    popSuccessAlert("답변 전송 완료", "오늘의 질문 답변이 전송되었습니다.");
+  };
 
-	/**
-	 * @description 바다에 띄워진 편지 개수 호출
-	 */
-	const mainGetLetterNum = async () => {
-		const response = await getLetterNum();
-		if (!response || (response.status !== 200 && response.status !== 201)) {
-			setLetterCountNum("-");
-			return;
-		}
-		setLetterCountNum(response.data.letterCount);
-	};
+  /**
+   * @description 바다에 띄워진 편지 개수 호출
+   */
+  const mainGetLetterNum = async () => {
+    const response = await getLetterNum();
+    if (!response || (response.status !== 200 && response.status !== 201)) {
+      setLetterCountNum("-");
+      return;
+    }
+    setLetterCountNum(response.data.letterCount);
+  };
 
-	/**
-	 * @description 오늘의 질문 조회 및 저장
-	 */
-	const mainGetQuestion = async () => {
-		const response = await getTodayQuestion();
-		if (!response || (response.status !== 200 && response.status !== 201)) {
-			setTodayQuestionInfo("-");
-			return;
-		}
-		setTodayQuestionInfo(response.data);
-	};
+  /**
+   * @description 오늘의 질문 조회 및 저장
+   */
+  const mainGetQuestion = async () => {
+    const response = await getTodayQuestion();
+    if (!response || (response.status !== 200 && response.status !== 201)) {
+      setTodayQuestionInfo("-");
+      return;
+    }
+    setTodayQuestionInfo(response.data);
+  };
 
-	/**
-	 * @description 오늘의 질문 답변 리스트 조회 및 저장
-	 */
-	const mainGetAnswer = async () => {
-		const response = await getTodayAnswerList();
-		if (!response || (response.status !== 200 && response.status !== 201)) {
-			setAnswerList([]);
-			return;
-		}
-		setAnswerList(response.data);
-	};
+  /**
+   * @description 오늘의 질문 답변 리스트 조회 및 저장
+   */
+  const mainGetAnswer = async () => {
+    const response = await getTodayAnswerList();
+    if (!response || (response.status !== 200 && response.status !== 201)) {
+      setAnswerList([]);
+      return;
+    }
+    setAnswerList(response.data);
+  };
 
-	return (
-		<>
-			{/* 파도 위 바다 배경 Gradient */}
-			<BackgroundGradient start={"E2AAFD"} end={"FFDFC2"} />
+  return (
+    <>
+      {/* 파도 위 바다 배경 Gradient */}
+      <BackgroundGradient start={"E2AAFD"} end={"FFDFC2"} />
 
-			{/* 파도 아래 바다 배경 Gradient */}
-			<MainSeaGradient />
+      {/* 파도 아래 바다 배경 Gradient */}
+      <MainSeaGradient />
 
-			{/* 떠 있는 물병 */}
-			<BottleOfLetterBtn onClick={(e) => handleClickBottle(e)} />
+      {/* 떠 있는 물병 */}
+      <BottleOfLetterBtn onClick={(e) => handleClickBottle(e)} />
 
-			{/* 물병 클릭 시 떠 있는 투명 배경 */}
-			{chatboxVisible && <TranslucentBackground bgColor={"transparent"} onClick={() => setChatBoxVisible(false)} />}
+      {/* 물병 클릭 시 떠 있는 투명 배경 */}
+      {chatboxVisible && (
+        <TranslucentBackground
+          bgColor={"transparent"}
+          onClick={() => setChatBoxVisible(false)}
+        />
+      )}
 
-			{/* 물병 클릭 시 나타나는 말풍선 */}
-			{clickPosY > 10 && chatboxVisible && (
-				<ChatBoxWrapper clickPosY={clickPosY} chatboxVisible={chatboxVisible}>
-					<ChatBoxGroup handleModalA={handleModalA} handleModalB={handleModalB} todayQuestion={todayQuestionInfo.question} />
-				</ChatBoxWrapper>
-			)}
+      {/* 물병 클릭 시 나타나는 말풍선 */}
+      {clickPosY > 10 && chatboxVisible && (
+        <ChatBoxWrapper clickPosY={clickPosY} chatboxVisible={chatboxVisible}>
+          <ChatBoxGroup
+            handleModalA={handleModalA}
+            handleModalB={handleModalB}
+            todayQuestion={todayQuestionInfo.question}
+          />
+        </ChatBoxWrapper>
+      )}
 
-			{/* 오늘의질문 답변 작성하는 모달 */}
-			{modalToggleA && (
-				<Modal
-					width="440px"
-					height="400px"
-					modalToggle={modalToggleA}
-					setModalToggle={setModalToggleA}
-					titleText={"질문 답변"}
-					flexDirection={"column"}
-				>
-					<Title fontSize="1.2rem" color="black">
-						Q. {todayQuestionInfo.question}
-					</Title>
-					<AnswerBox width="90%" height="33%" margin="1rem 0 0 0">
-						<QuestionTextArea
-							onChange={(e) => handleQuestionAnswerWrite(e.target.value.length)}
-							placeholder="답변을 입력해주세요."
-							ref={contentInput}
-						/>
-						<QuestionProgressBar charCount={charCount} />
-					</AnswerBox>
-					<ButtonBox>
-						<Button
-							margin="0 0 0 0"
-							fontSize="1.1rem"
-							height="3rem"
-							width="9rem"
-							shadow={true}
-							color="#5F0EB0"
-							borderStyle="2px solid #5F0EB0"
-							hoverBgOpacity="0.25"
-							hasBorder={false}
-							onClick={() => handleAnswerSend()}
-						>
-							답변 보내기
-						</Button>
-					</ButtonBox>
-				</Modal>
-			)}
+      {/* 오늘의질문 답변 작성하는 모달 */}
+      {modalToggleA && (
+        <Modal
+          width="440px"
+          height="360px"
+          modalToggle={modalToggleA}
+          setModalToggle={setModalToggleA}
+          titleText={"질문 답변"}
+          flexDirection={"column"}
+        >
+          <Title fontSize="1.2rem" color="black">
+            Q. {todayQuestionInfo.question}
+          </Title>
+          <AnswerBox width="90%" height="50%" margin="2rem 0 2rem 0">
+            <QuestionTextArea
+              onChange={(e) => handleQuestionAnswerWrite(e.target.value.length)}
+              placeholder="답변을 입력해주세요."
+              ref={contentInput}
+            />
+            <QuestionProgressBar charCount={charCount} />
+          </AnswerBox>
+          <ButtonBox>
+            <Button
+              margin="0 0 1rem 0"
+              fontSize="1.1rem"
+              height="3rem"
+              width="9rem"
+              shadow={true}
+              color="#5F0EB0"
+              borderStyle="2px solid #5F0EB0"
+              hoverBgOpacity="0.25"
+              hasBorder={false}
+              onClick={() => handleAnswerSend()}
+            >
+              답변 보내기
+            </Button>
+          </ButtonBox>
+        </Modal>
+      )}
 
-			{/* '다른 답변 보기' 클릭 시 나타나는 모달 */}
-			{modalToggleB && (
-				<Modal
-					width="440px"
-					height="400px"
-					modalToggle={modalToggleB}
-					setModalToggle={setModalToggleB}
-					titleText={"답변 목록"}
-					flexDirection={"column"}
-				>
-					<AnswerBox width="95%" height="66%" margin="1rem 0 0 0">
-						<QuestionAnswerListArea>
-							<StyledSlider
-								dots={false}
-								infinite={false}
-								speed={250}
-								slidesToShow={1}
-								slidesToScroll={1}
-								prevArrow={<SlickArrow direction={"prev"} />}
-								nextArrow={<SlickArrow direction={"next"} />}
-							>
-								{answerList.map((item, index) => (
-									<SliderContent key={index}>{item.answer}</SliderContent>
-								))}
-							</StyledSlider>
-						</QuestionAnswerListArea>
-					</AnswerBox>
-				</Modal>
-			)}
+      {/* '다른 답변 보기' 클릭 시 나타나는 모달 */}
+      {modalToggleB && (
+        <Modal
+          width="440px"
+          height="400px"
+          modalToggle={modalToggleB}
+          setModalToggle={setModalToggleB}
+          titleText={"답변 목록"}
+          flexDirection={"column"}
+        >
+          <Title fontSize="1.2rem" color="black">
+            Q. {todayQuestionInfo.question}
+          </Title>
+          <AnswerBox width="95%" height="75%" margin="1rem 0 0 0">
+            <QuestionAnswerListArea>
+              <StyledSlider
+                dots={false}
+                infinite={false}
+                speed={250}
+                slidesToShow={1}
+                slidesToScroll={1}
+                prevArrow={<SlickArrow direction={"prev"} />}
+                nextArrow={<SlickArrow direction={"next"} />}
+                initialSlide={Math.floor(Math.random() * answerList.length)}
+              >
+                {answerList.map((item, index) => (
+                  <SliderContent key={index}>{item.answer}</SliderContent>
+                ))}
+              </StyledSlider>
+            </QuestionAnswerListArea>
+          </AnswerBox>
+        </Modal>
+      )}
 
-			{/* 스크롤 내릴 시 나타나는 문구들 */}
-			<TextWrapper>
-				<MainSmallText margin="15vh 0 0 0" data-aos-duration="500" data-aos="flip-up">
-					{letterCountNum}개의 편지가 바다에 떠 있습니다
-				</MainSmallText>
-				<MainAnimationText mFont_size={SizeTypes.MOBILE_MAIN_TEXT_SIZE} margin="8vh 0 0 0">
-					안녕하세요! 😏 여기는 '닿다'예요
-				</MainAnimationText>
+      {/* 스크롤 내릴 시 나타나는 문구들 */}
+      <TextWrapper>
+        <MainSmallText
+          margin="calc(6rem + 5vh) 0 0 0"
+          data-aos-duration="500"
+          data-aos="flip-up"
+        >
+          {letterCountNum}개의 편지가 바다에 떠 있습니다
+        </MainSmallText>
+        <MainAnimationText
+          mFont_size={SizeTypes.MOBILE_MAIN_TEXT_SIZE}
+          margin="8vh 0 0 0"
+        >
+          안녕하세요! 😏 여기는 '닿다'예요
+        </MainAnimationText>
 
-				<div data-aos="zoom-in-up" data-aos-anchor-placement="bottom-bottom">
-					<MainText margin="90vh 0 0 0" mFont_size={SizeTypes.MOBILE_MAIN_TEXT_SIZE}>
-						여기선 익명으로 <br />
-						마음을 털어놓을 수 있어요
-					</MainText>
-				</div>
-				<div data-aos="zoom-in-up" data-aos-anchor-placement="bottom-bottom">
-					<MainText margin="65vh 0 0 0" mFont_size={SizeTypes.MOBILE_MAIN_TEXT_SIZE}>
-						아무에게도 말하지 못했던 것들을
-						<br />
-						적어서 보내보세요
-					</MainText>
-				</div>
-				<div data-aos="zoom-in-up" data-aos-anchor-placement="bottom-bottom">
-					<MainText margin="65vh 0 0 0" mFont_size={SizeTypes.MOBILE_MAIN_TEXT_SIZE}>
-						혹시 몰라요! <br /> 누군가에게 답을 받을 수도 있겠죠?
-					</MainText>
-				</div>
-				<div data-aos="zoom-in-up" data-aos-anchor-placement="bottom-bottom">
-					<MainText margin="65vh 0 0 0" mFont_size={SizeTypes.MOBILE_MAIN_TEXT_SIZE}>
-						당신의 물병을 '닿다'에 던져보세요!
-					</MainText>
-				</div>
+        <div data-aos="zoom-in-up" data-aos-anchor-placement="bottom-bottom">
+          <MainText
+            margin="90vh 0 0 0"
+            mFont_size={SizeTypes.MOBILE_MAIN_TEXT_SIZE}
+          >
+            여기선 익명으로 <br />
+            마음을 털어놓을 수 있어요
+          </MainText>
+        </div>
+        <div data-aos="zoom-in-up" data-aos-anchor-placement="bottom-bottom">
+          <MainText
+            margin="65vh 0 0 0"
+            mFont_size={SizeTypes.MOBILE_MAIN_TEXT_SIZE}
+          >
+            아무에게도 말하지 못했던 것들을
+            <br />
+            적어서 보내보세요
+          </MainText>
+        </div>
+        <div data-aos="zoom-in-up" data-aos-anchor-placement="bottom-bottom">
+          <MainText
+            margin="65vh 0 0 0"
+            mFont_size={SizeTypes.MOBILE_MAIN_TEXT_SIZE}
+          >
+            혹시 몰라요! <br /> 누군가에게 답을 받을 수도 있겠죠?
+          </MainText>
+        </div>
+        <div data-aos="zoom-in-up" data-aos-anchor-placement="bottom-bottom">
+          <MainText
+            margin="65vh 0 0 0"
+            mFont_size={SizeTypes.MOBILE_MAIN_TEXT_SIZE}
+          >
+            당신의 물병을 '닿다'에 던져보세요!
+          </MainText>
+        </div>
 
-				<br />
-				<div data-aos="zoom-in-up" data-aos-duration="1000" data-aos-anchor-placement="bottom-bottom">
-					<Button
-						hoverBgOpacity="0.5"
-						fontSize="1.4rem"
-						height="3rem"
-						width="18rem"
-						margin="1% 0 0 0"
-						shadow={true}
-						onClick={() => handleIsLoginCheck()}
-					>
-						💌 &nbsp; 물병 던지기 &nbsp; 💌
-					</Button>
-				</div>
-			</TextWrapper>
+        <br />
+        <div
+          data-aos="zoom-in-up"
+          data-aos-duration="1000"
+          data-aos-anchor-placement="bottom-bottom"
+        >
+          <Button
+            hoverBgOpacity="0.5"
+            fontSize="1.4rem"
+            height="3rem"
+            width="18rem"
+            margin="1% 0 0 0"
+            shadow={true}
+            onClick={() => handleIsLoginCheck()}
+          >
+            💌 &nbsp; 물병 던지기 &nbsp; 💌
+          </Button>
+        </div>
+      </TextWrapper>
 
-			{/* 아래 스크롤 안내 arrow */}
-			<MouseScrollDownArrowWrapper>
-				<MouseScrollDownArrowGroup />
-			</MouseScrollDownArrowWrapper>
+      {/* 아래 스크롤 안내 arrow */}
+      <MouseScrollDownArrowWrapper>
+        <MouseScrollDownArrowGroup />
+      </MouseScrollDownArrowWrapper>
 
-			{/* 파도 모음 */}
-			<MainWave2 opacity={0.4} frequency={16} isRight={false} zIndex="6" />
-			<MainWave2 opacity={0.6} frequency={13} isRight={false} zIndex="7" />
-			<MainWave2 opacity={0.6} frequency={20} isRight={false} zIndex="4" />
-			<MainWave2 opacity={0.6} frequency={20} isRight={true} zIndex="8" />
-			<MainWave2 opacity={0.4} frequency={16} isRight={true} zIndex="2" />
-			<MainWave2 opacity={0.3} frequency={13} isRight={true} zIndex="3" />
-			<MainWave2 opacity={0.7} frequency={20} isRight={true} zIndex="5" />
+      {/* 파도 모음 */}
+      <MainWave2 opacity={0.4} frequency={16} isRight={false} zIndex="6" />
+      <MainWave2 opacity={0.6} frequency={13} isRight={false} zIndex="7" />
+      <MainWave2 opacity={0.6} frequency={20} isRight={false} zIndex="4" />
+      <MainWave2 opacity={0.6} frequency={20} isRight={true} zIndex="8" />
+      <MainWave2 opacity={0.4} frequency={16} isRight={true} zIndex="2" />
+      <MainWave2 opacity={0.3} frequency={13} isRight={true} zIndex="3" />
+      <MainWave2 opacity={0.7} frequency={20} isRight={true} zIndex="5" />
 
-			{/* 맨 위로 버튼 */}
-			<ScrollToTop
-				smooth
-				color="#ffffff"
-				width="30px"
-				height="30px"
-				strokeWidth="px"
-				style={{
-					backgroundColor: "rgba( 255, 255, 255, 0.4 )",
-					borderRadius: "100%",
-					border: "4px solid #ffffff",
-					width: "5rem",
-					height: "5rem",
-					marginRight: "0.5rem",
-					marginBottom: "0.5rem",
-					// strokeWidth: "7",
-				}}
-			/>
+      {/* 맨 위로 버튼 */}
+      <ScrollToTop
+        smooth
+        color="#ffffff"
+        width="30px"
+        height="30px"
+        strokeWidth="px"
+        style={{
+          backgroundColor: "rgba( 255, 255, 255, 0.4 )",
+          borderRadius: "100%",
+          border: "4px solid #ffffff",
+          width: "5rem",
+          height: "5rem",
+          marginRight: "0.5rem",
+          marginBottom: "0.5rem",
+          // strokeWidth: "7",
+        }}
+      />
 
-			{/* 푸터 */}
-			<Footer />
-		</>
-	);
+      {/* 푸터 */}
+      <Footer />
+    </>
+  );
 };
 
 const TextWrapper = styled.div`
-	display: flex;
-	position: absolute;
-	width: 100vw;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+  display: flex;
+  position: absolute;
+  width: 100vw;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const MouseScrollDownArrowWrapper = styled.div`
-	display: flex;
-	position: absolute;
-	justify-content: center;
-	align-items: center;
-	z-index: 10;
-	bottom: 20vh;
-	left: 50%;
-	background-color: yellow;
-	opacity: 0.7;
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  bottom: 20vh;
+  left: 50%;
+  background-color: yellow;
+  opacity: 0.7;
 
-	${media.phone`
+  ${media.phone`
   	top: 65%;
 	`};
 `;
 
 const ChatBoxWrapper = styled.div`
-	display: flex;
-	position: absolute;
-	justify-content: center;
-	align-items: center;
-	top: calc(${(props) => props.clickPosY}px - 180px);
-	left: 50%;
-	z-index: 1001;
-	outline: none;
-	-webkit-tap-highlight-color: transparent;
-	transform: ${(props) => (props.chatboxVisible ? `scaleY(1)` : `scaleY(0)`)};
-	transition: 3s ease;
-	transition-delay: 5s;
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  top: calc(${(props) => props.clickPosY}px - 180px);
+  left: 50%;
+  z-index: 1001;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  transform: ${(props) => (props.chatboxVisible ? `scaleY(1)` : `scaleY(0)`)};
+  transition: 3s ease;
+  transition-delay: 5s;
 
-	${media.tablet1`
+  ${media.tablet1`
   top: 20rem;
 `};
-	${media.phone`
+  ${media.phone`
   top: 12rem;
 `};
 `;
 
 const AnswerBox = styled.div`
-	display: flex;
-	background-color: transparent;
-	margin: ${(props) => props.margin};
-	padding: ${(props) => props.padding};
-	width: ${(props) => props.width};
-	height: ${(props) => props.height};
-	font-size: ${(props) => props.fontSize};
-	filter: ${(props) => (props.shadow ? "drop-shadow(4px 8px 12px rgba(38,38,38,0.5))" : "")};
-	border: ${(props) => (props.hasBorder ? "2px solid black" : props.borderStyle)};
-	border-radius: ${(props) => props.borderRadius};
-	color: ${(props) => props.color || "black"};
-	align-items: center;
-	justify-content: center;
-	text-align: center;
-	font-weight: bold;
-	z-index: ${(props) => props.zIndex};
+  display: flex;
+  background-color: transparent;
+  margin: ${(props) => props.margin};
+  padding: ${(props) => props.padding};
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+  font-size: ${(props) => props.fontSize};
+  filter: ${(props) =>
+    props.shadow ? "drop-shadow(4px 8px 12px rgba(38,38,38,0.5))" : ""};
+  border: ${(props) =>
+    props.hasBorder ? "2px solid black" : props.borderStyle};
+  border-radius: ${(props) => props.borderRadius};
+  color: ${(props) => props.color || "black"};
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: bold;
+  z-index: ${(props) => props.zIndex};
 
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 0%);
 
-	transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
 
-	${media.phone`
+  ${media.phone`
       width: ${(props) => (props.mWidth ? props.mWidth : props.width)};
   `}
 `;
 
 const ButtonBox = styled.div`
-	display: flex;
-	position: absolute;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
-	bottom: 1rem;
-	left: 50%;
-	transform: translate(-50%, 0%);
+  display: flex;
+  position: absolute;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  bottom: 1rem;
+  left: 50%;
+  transform: translate(-50%, 0%);
 `;
 
 const QuestionAnswerListArea = styled.div`
@@ -469,35 +519,36 @@ const QuestionAnswerListArea = styled.div`
 `;
 
 const StyledSlider = styled(Slider)`
-	display: flex;
-	border: 1px solid #d9d9d9;
-	width: 100%;
-	height: 90%;
-	padding: 0.5rem;
-	margin: 0 auto;
-	align-items: center;
-	justify-content: center;
-	text-align: center;
+  display: flex;
+  border: 1px solid #d9d9d9;
+  border-radius: 16px;
+  width: 100%;
+  height: 90%;
+  padding: 0.5rem;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 
-	.slack-list {
-		width: 100%;
-		margin: 0 auto;
-	}
+  .slack-list {
+    width: 100%;
+    margin: 0 auto;
+  }
 `;
 
 const SliderContent = styled.div`
-	display: flex;
-	width: 80%;
-	height: auto;
-	padding: 0rem;
-	box-sizing: border-box;
-	align-items: center;
-	justify-content: center;
-	text-align: center;
-	font-size: 1.2rem;
-	white-space: normal;
-	word-wrap: break-all;
-	word-break: break-all;
+  display: flex;
+  width: 80%;
+  height: auto;
+  padding: 0rem;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 1.2rem;
+  white-space: normal;
+  word-wrap: break-all;
+  word-break: break-all;
 `;
 
 export default LandingPage;
