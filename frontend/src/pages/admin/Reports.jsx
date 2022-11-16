@@ -5,7 +5,11 @@ import Modal from "./../../components/organisms/Modal";
 import { MainSmallText } from "./../../components/atoms/Text";
 import { useSetRecoilState } from "recoil";
 import { loadingState } from "../../recoil/Atoms";
-import { accuseUser, getReportList } from "./../../api/adminAPI";
+import {
+  accuseCancelUser,
+  accuseUser,
+  getReportList,
+} from "./../../api/adminAPI";
 import {
   popWarningAlert,
   popSuccessAlert,
@@ -18,7 +22,7 @@ const Reports = () => {
   const [searchParams] = useSearchParams();
   const listType = searchParams.get("listType");
 
-  const flexRate = [2, 4, 5, 5, 4, 2, 2];
+  const flexRate = [2, 4, 4, 4, 4, 2, 2, 2];
   const categoryList = [
     "번호",
     "신고 날짜",
@@ -27,6 +31,7 @@ const Reports = () => {
     "신고 사유",
     "내용",
     "신고 처리",
+    "신고 반려",
   ];
 
   const [modalToggle, setModalToggle] = useState(false);
@@ -47,7 +52,7 @@ const Reports = () => {
     setItemList([]);
     const response = await getReportList(listType);
     setLoading(false);
-    if (!response || response.status !== 200) {
+    if (!response || (response.status !== 200 && response.status !== 201)) {
       popErrorAlert(
         "목록 불러올 수 없음",
         "신고 목록을 불러오던 중 문제가 발생했습니다."
@@ -66,26 +71,26 @@ const Reports = () => {
   const handleModal = (item) => {
     setModalContent({
       reportedNickname: item.reportedNickname,
-      content: item.content,
+      content: listType === "letter" ? item.content : item.answer,
     });
     setModalToggle(true);
   };
 
   /** [편지, 오늘의질문 답변]신고 처리 */
-  const handleAccuse = async (item, e) => {
+  const handleAccuse = async (item) => {
     if (item.isSolved) {
-      popWarningAlert("신고 처리 실패", "이미 경고처리된 신고입니다.");
+      popWarningAlert("신고 처리 실패", "이미 처리된 신고입니다.");
       return;
     }
 
     setLoading(true);
     const response = await accuseUser(
-      listType === "letter" ? item.accusedLetterId : item.answerAccusationId,
+      listType === "letter" ? item.accusedLetterId : item.accusedAnswerId,
       listType
     );
     setLoading(false);
 
-    if (response.status !== 200 && response.status !== 201) {
+    if (!response || (response.status !== 200 && response.status !== 201)) {
       popWarningAlert("신고 처리 실패", "신고 처리 중 문제가 발생했습니다.");
       return;
     }
@@ -97,11 +102,39 @@ const Reports = () => {
     initList();
   };
 
+  /** [편지, 오늘의질문 답변]반려 처리 */
+  const handleAccuseCancel = async (item) => {
+    console.log(item);
+    if (item.isSolved) {
+      popWarningAlert("신고 처리 실패", "이미 처리된 신고입니다.");
+      return;
+    }
+
+    setLoading(true);
+    const response = await accuseCancelUser(
+      listType === "letter" ? item.accusedLetterId : item.accusedAnswerId,
+      listType
+    );
+    setLoading(false);
+
+    if (!response || (response.status !== 200 && response.status !== 201)) {
+      popWarningAlert("반려 처리 실패", "반려 처리 중 문제가 발생했습니다.");
+      return;
+    }
+
+    popSuccessAlert(
+      "반려 처리 성공",
+      "신고에 대한 반려 처리가 완료되었습니다."
+    );
+    initList();
+  };
+
   return (
     <>
       {modalToggle && (
         <Modal
-          titleText={"내용"}
+          height={"36rem"}
+          titleText={"신고 내용"}
           modalToggle={modalToggle}
           setModalToggle={setModalToggle}
         >
@@ -131,6 +164,7 @@ const Reports = () => {
         itemList={itemList}
         handleModal={handleModal}
         handleAccuse={handleAccuse}
+        handleAccuseCancel={handleAccuseCancel}
         flexRate={flexRate}
       />
     </>

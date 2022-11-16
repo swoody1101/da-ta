@@ -3,12 +3,13 @@
  */
 import React from "react";
 import styled from "styled-components";
+import { MAX_CHAR_COUNT_Q } from "../../../constants/Variables";
 import { ColorTypes } from "./../../../constants/Colors";
 
 const QuestionProgressBar = ({ charCount, charCountWarning, myRef }) => {
   return (
     <Container charCountWarning={charCountWarning} ref={myRef}>
-      {charCount}자 / 150자
+      {charCount}자 / {MAX_CHAR_COUNT_Q}자
     </Container>
   );
 };
@@ -16,7 +17,7 @@ const QuestionProgressBar = ({ charCount, charCountWarning, myRef }) => {
 const Container = styled.div`
   display: flex;
   position: absolute;
-  bottom: 2.5rem;
+  bottom: 0.5rem;
   right: 1rem;
   align-items: center;
   justify-content: center;
