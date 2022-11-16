@@ -347,7 +347,7 @@ public class LetterService {
 
     public Message createBadWordRedisSet(String token, CreateBadWordsRequest createBadWordsRequest) {
         jwtTokenProvider.findUserByToken(token);
-        StringTokenizer stringTokenizer = new StringTokenizer(createBadWordsRequest.getBadWords(), ",");
+        StringTokenizer stringTokenizer = new StringTokenizer(createBadWordsRequest.getBadWords(), ", ");
         List<String> badWords = new ArrayList<>();
         while (stringTokenizer.hasMoreTokens()) {
             badWords.add(stringTokenizer.nextToken());
@@ -363,6 +363,7 @@ public class LetterService {
         jwtTokenProvider.findUserByToken(token);
         for (String badWord : RedisUtil.getSet(BAD_WORDS_KEY)) {
             if (KMPUtil.KMP(checkTextHarmfulnessRequest.getContent(), badWord)) {
+                System.out.println(badWord);
                 return CheckTextHarmfulnessResponse.builder()
                         .isHarmful(true)
                         .build();
