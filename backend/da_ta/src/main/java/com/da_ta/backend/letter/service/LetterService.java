@@ -363,7 +363,6 @@ public class LetterService {
         jwtTokenProvider.findUserByToken(token);
         for (String badWord : RedisUtil.getSet(BAD_WORDS_KEY)) {
             if (KMPUtil.KMP(checkTextHarmfulnessRequest.getContent(), badWord)) {
-                System.out.println(badWord);
                 return CheckTextHarmfulnessResponse.builder()
                         .isHarmful(true)
                         .build();
