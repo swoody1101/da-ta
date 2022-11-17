@@ -236,7 +236,7 @@ const SpeechBubble = styled.div`
   background-color: white;
   border-radius: 8px;
   filter: drop-shadow(0 4px 8px #5778ec);
-  transition: 0.2s ease;
+  transition: 0.1s ease;
   justify-content: center;
   align-items: center;
   color: #383838;
