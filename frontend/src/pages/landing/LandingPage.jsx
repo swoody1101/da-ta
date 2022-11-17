@@ -12,8 +12,8 @@ import {
   popErrorAlert,
   popSuccessAlert,
 } from "./../../utils/sweetAlert";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { loginState, reportModalState } from "./../../recoil/Atoms";
+import { useRecoilValue } from "recoil";
+import { loginState } from "./../../recoil/Atoms";
 
 import Footer from "../../components/molecules/Footer";
 import MainSeaGradient from "../../components/atoms/MainSeaGradient";
@@ -22,7 +22,7 @@ import { MainText, MainSmallText } from "../../components/atoms/Text";
 
 import ScrollToTop from "react-scroll-to-top";
 import Button from "./../../components/atoms/Button";
-import { SizeTypes, SIZE_WIDE } from "./../../constants/Sizes";
+import { SizeTypes } from "./../../constants/Sizes";
 import BackgroundGradient from "../../components/atoms/BackgroundGradient";
 import MouseScrollDownArrowGroup from "../../components/molecules/MouseScrollDownArrowGroup";
 
