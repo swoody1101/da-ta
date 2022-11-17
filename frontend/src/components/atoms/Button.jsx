@@ -29,7 +29,7 @@ Button.defaultProps = {
 const StyledButton = styled.button`
   display: flex;
   background-color: rgba(217, 217, 217, ${(props) => props.bgOpacity});
-  background-color: ${(props) => props.bgColor};
+  background: ${(props) => props.bgColor};
   margin: ${(props) => props.margin};
   padding: ${(props) => props.padding};
   width: ${(props) => props.width};

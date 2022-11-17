@@ -10,7 +10,7 @@ import Header from "../atoms/Header";
 import TranslucentBackground from "../atoms/TranslucentBackground";
 import SlideMenu from "../organisms/SlideMenu";
 import Button from "./../atoms/Button";
-import LogoImage from "./../molecules/LogoImage";
+import LogoImage, { LogoText } from "./../molecules/LogoImage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { useRecoilState, useSetRecoilState } from "recoil";
@@ -72,11 +72,7 @@ const MainNav = () => {
     <Header headerShow={headerShow}>
       {headerMobileMode ? (
         <>
-          <MobileLogo
-            src={`${process.env.PUBLIC_URL}/assets/logo/data_logo.png`}
-            width="75vw"
-            onClick={() => navigate("/")}
-          />
+          <LogoImage onClick={() => navigate("/")}>DA-TA</LogoImage>
         </>
       ) : (
         <>
@@ -141,13 +137,11 @@ const MainNav = () => {
             {isLogin ? (
               <>
                 <Button
-                  hoverBgOpacity="0.3"
                   fontSize="1rem"
+                  width="12.5rem"
                   height="3rem"
-                  width="11rem"
-                  margin="0 -3.5rem 0 0"
-                  color="white"
-                  bgColor="#1A9459b5"
+                  color="#1F2247"
+                  bgOpacity="0.7"
                   onMouseOver={() => setSpeechBubble(true)}
                   onMouseOut={() => setSpeechBubble(false)}
                 >
@@ -159,9 +153,17 @@ const MainNav = () => {
               </>
             ) : (
               <>
-                <Button onClick={handleLogin}>
+                <Button
+                  width="12.5rem"
+                  height="3rem"
+                  hasBorder={false}
+                  borderStyle={"0px"}
+                  onClick={handleLogin}
+                >
                   <img
                     src={`${process.env.PUBLIC_URL}/assets/images/auth/kakao_login.png`}
+                    width="100%"
+                    height="100%"
                   />
                 </Button>
               </>
@@ -172,19 +174,6 @@ const MainNav = () => {
     </Header>
   );
 };
-
-const MobileLogo = styled.img`
-  display: flex;
-  flex-direction: row;
-  position: absolute;
-  left: 1rem;
-  padding: 1rem;
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-`;
 
 const HeaderContents = styled.div`
   display: flex;
@@ -212,7 +201,7 @@ const HeaderContent = styled.div`
 const AuthWrapper = styled.div`
   display: flex;
   position: absolute;
-  right: 12rem;
+  right: 8rem;
   align-items: center;
   justify-content: center;
 `;
@@ -228,20 +217,20 @@ const HamburgerButtonWrapper = styled.div`
 const SpeechBubble = styled.div`
   display: flex;
   position: absolute;
-  // top: ${(props) => (props.act ? "0rem" : "-3rem")};
   top: 0rem;
-  width: 11rem;
+  width: 12.5rem;
   height: 3rem;
   background-color: white;
   border-radius: 8px;
-  filter: drop-shadow(0 8px 16px #5778ec);
-  transition: 0.2s ease;
+  filter: drop-shadow(0 4px 8px #5778ec);
+  transition: 0.1s ease;
   justify-content: center;
   align-items: center;
   color: #383838;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: bold;
-  transform: ${(props) => (props.act ? `scale(1)` : `scale(0)`)};
+  transform: ${(props) => (props.act ? `scaleY(1)` : `scaleY(0)`)};
+  transform-origin: 0 0;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
 `;
 

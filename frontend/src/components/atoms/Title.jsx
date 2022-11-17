@@ -18,6 +18,7 @@ const TitleText = styled.h1`
   font-size: ${(props) => props.fontSize};
   font-weight: ${(props) => props.fontWeight};
   color: ${(props) => props.color};
+  word-break: keep-all;
 `;
 
 export default Title;

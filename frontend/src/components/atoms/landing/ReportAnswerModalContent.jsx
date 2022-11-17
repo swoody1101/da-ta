@@ -1,45 +1,27 @@
+import React from "react";
 import styled from "styled-components";
-import { media } from "../../utils/styleUtil";
-import Checkbox from "./Checkbox";
-import Button from "./Button";
-import {
-  letterState,
-  mypageRouterState,
-  readingLetterIdState,
-  reportModalState,
-} from "../../recoil/Atoms";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { reportLetter } from "../../api/mypageAPI";
-import { popSuccessAlert, popErrorAlert } from "../../utils/sweetAlert";
-import { useNavigate } from "react-router-dom";
-import { REPORT_REASONS } from "../../constants/Variables";
+import { REPORT_REASONS } from "../../../constants/Variables";
+import { media } from "../../../utils/styleUtil";
+import { popErrorAlert, popSuccessAlert } from "../../../utils/sweetAlert";
+import Button from "../Button";
+import Checkbox from "../Checkbox";
+import { todayAnswerAccusation } from "./../../../api/questionAccusationAPI";
 
-const ReportModalContent = () => {
-  const setReportModal = useSetRecoilState(reportModalState);
-  const [letter, setLetter] = useRecoilState(letterState);
-  const routerIndex = useRecoilValue(mypageRouterState);
-  const letterId = useRecoilValue(readingLetterIdState);
-  let isReply = false;
-  const navigate = useNavigate();
-  if (routerIndex === 1) {
-    isReply = true;
-  }
+const ReportAnswerModalContent = ({ setModalToggle, answerId }) => {
   let sendingReasons = ["", "", "", "", "", "", ""];
 
-  const reportBtn = async () => {
+  const handleReportAnswer = async () => {
     let reasonsString = sendingReasons.reduce((pre, cur) => pre + cur, "");
     if (reasonsString) {
       reasonsString = reasonsString.slice(0, -2);
-      const response = await reportLetter(letterId, {
-        isReply: isReply,
+      const response = await todayAnswerAccusation(answerId, {
         reason: reasonsString,
       });
+      console.log(response);
 
-      if (response.status - 200 < 3 && response.status) {
-        setLetter({});
+      if (response && response.status - 200 < 3) {
         popSuccessAlert("", "신고가 접수되었습니다.");
-        setReportModal(false);
-        navigate("/");
+        setModalToggle(false);
       } else {
         popErrorAlert("", "신고내역 전송에 실패했습니다.");
       }
@@ -52,7 +34,7 @@ const ReportModalContent = () => {
     <ReportModal>
       <ReportModalTitle>신고하기</ReportModalTitle>
       <hr />
-      <ReportModalWebText>불쾌한 내용의 편지를 읽으셨나요?</ReportModalWebText>
+      <ReportModalWebText>불쾌한 내용의 답변을 읽으셨나요?</ReportModalWebText>
       <ReportModalWebText>
         해당하는 신고 내용을 모두 체크해 주세요.
       </ReportModalWebText>
@@ -81,7 +63,7 @@ const ReportModalContent = () => {
       <ReportModalBtnDiv>
         <Button
           onClick={() => {
-            reportBtn();
+            handleReportAnswer(answerId);
           }}
           width={"30%"}
           height={"30px"}
@@ -93,7 +75,7 @@ const ReportModalContent = () => {
         </Button>
         <Button
           onClick={() => {
-            setReportModal(false);
+            setModalToggle(false);
           }}
           width={"30%"}
           height={"30px"}
@@ -107,6 +89,7 @@ const ReportModalContent = () => {
     </ReportModal>
   );
 };
+
 const ReportModal = styled.div`
   width: 90%;
   overflow-y: auto;
@@ -153,4 +136,4 @@ const InputDiv = styled.div`
   margin: 15px 0 20px 0;
 `;
 
-export default ReportModalContent;
+export default ReportAnswerModalContent;

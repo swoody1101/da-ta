@@ -32,6 +32,7 @@ export const MainTestText = styled.p`
   margin: ${(props) => props.margin};
   font-weight: ${(props) => props.fontWeight};
   z-index: 20;
+  word-break: keep-all;
 
   ${media.phone`
   font-size: ${(props) => props.mFont_size};
@@ -40,7 +41,7 @@ export const MainTestText = styled.p`
 
 export const MainSmallText = styled.p`
   display: flex;
-  font-size: 1.3rem;
+  font-size: ${(props) => props.fontSize || "1.3rem"};
   color: ${(props) => props.color || "white"};
   width: 100%;
   text-align: center;

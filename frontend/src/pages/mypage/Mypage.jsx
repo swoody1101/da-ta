@@ -50,6 +50,7 @@ const MypageWebContents = styled.div`
   background-color: #f5f5f5;
   z-index: 1;
   border-radius: 20px;
+  filter: drop-shadow(0px 0px 8px #777);
 
   ${media.tablet1`
     margin-top: 0px;

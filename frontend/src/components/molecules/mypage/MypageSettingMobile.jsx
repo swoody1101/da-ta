@@ -19,49 +19,60 @@ import {
   popErrorAlert,
   popSuccessAlert,
 } from "../../../utils/sweetAlert";
-import { useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
+import { loginState, userState } from "../../../recoil/Atoms";
 
 export const MypageSettingMobile = () => {
   const [user, setUser] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const setIsLogin = useSetRecoilState(loginState);
+  const setUserState = useSetRecoilState(userState);
   const [dropDownIndex, setDropDownIndex] = useState(0);
   const itemList = LetterOptions.AGES;
-  const navigate = useNavigate();
 
-  useEffect(async () => {
+  useEffect(() => {
+    callUserInfo();
+  }, []);
+
+  const callUserInfo = async () => {
     const response = await userInfo();
     if (response.status === 200) {
       setUser(response.data);
       setDropDownIndex(parseInt(response.data.ageRange[4]) + 1);
       setIsLoading(false);
     }
-  }, []);
+  };
 
   const setAge = async (body) => {
-    console.log(body);
     const response = await setUserAge(body);
     if (response.status - 200 < 3 && response.status) {
-      popSuccessAlert("", "연령대를 수정하였습니다");
+      callUserInfo();
     } else {
       popErrorAlert("", "연령대 변경 요청 실패!");
     }
-    // 새로고침
-  };
-
-  const setAlert = async (body) => {
-    const response = await setUserAlert(body);
-    if (response.status - 200 < 3 && response.status) {
-      popSuccessAlert("", "알람 설정을 변경하였습니다.");
-    } else {
-      popErrorAlert("", "알람 요청 실패!");
-    }
-    // 새로고침
   };
 
   const setCancellation = () => {
-    popConfirmAlert("", "탈퇴를 진행하시겠습니까?", "네", "아니오");
-    // 로그아웃
-    // 홈화면으로 발사
+    popConfirmAlert(
+      "",
+      "탈퇴를 진행하시겠습니까?",
+      "네",
+      "아니오",
+      async () => {
+        const response = await cancellation();
+        if (response.status - 200 < 3 && response.status) {
+          popSuccessAlert("", "회원 탈퇴 되셨습니다");
+          setUserState({});
+          sessionStorage.removeItem("ACCESS_TOKEN");
+          setTimeout(() => {
+            setIsLogin(false);
+            window.location.href = "/";
+          }, 1000);
+        } else {
+          popErrorAlert("", "회원 탈퇴 요청 실패!");
+        }
+      }
+    );
   };
 
   return (
@@ -72,7 +83,7 @@ export const MypageSettingMobile = () => {
             <SettingWordsDiv>
               <SettingTitleDiv>
                 {"회원님의 연령: "}
-                {user.ageRange}
+                {LetterOptions.VALUE_AGES[user.ageRange]}
               </SettingTitleDiv>
               <SettingExpln>
                 회원님의 연령대를 등록하거나 변경하실 수 있습니다.
@@ -94,35 +105,9 @@ export const MypageSettingMobile = () => {
           </SettingDiv>
           <SettingDiv>
             <SettingWordsDiv>
-              <SettingTitleDiv>카카오톡 알림 설정</SettingTitleDiv>
-              <SettingExpln>
-                보낸 편지에 대한 답장의 실시간 알림을 받으실 수 있습니다.
-              </SettingExpln>
-            </SettingWordsDiv>
-            <SettingButtonDiv>
-              <ClickableSpan
-                isHide={user.isAlertActive}
-                onClick={() => {
-                  setAlert({ isAlertActive: true });
-                }}
-              >
-                OFF
-              </ClickableSpan>
-              <ClickableSpan
-                isHide={!user.isAlertActive}
-                onClick={() => {
-                  setAlert({ isAlertActive: false });
-                }}
-              >
-                ON
-              </ClickableSpan>
-            </SettingButtonDiv>
-          </SettingDiv>
-          <SettingDiv>
-            <SettingWordsDiv>
               <SettingTitleDiv>계정 비활성화</SettingTitleDiv>
               <SettingExpln>
-                현재 접속한 계정의 정보를 비활성화 합니다.
+                회원 탈퇴를 진행하시면 작성한 모든 활동 내역이 사라집니다.
               </SettingExpln>
             </SettingWordsDiv>
             <SettingButtonDiv>
@@ -150,6 +135,7 @@ const SettingDiv = styled.div`
   background-color: #ffffff;
   border-radius: 5px;
   margin-bottom: 24px;
+  filter: drop-shadow(0px 2px 2px #999);
 
   @media screen and (min-width: 1024px) {
     display: none;
@@ -185,6 +171,10 @@ const SettingTitleDiv = styled.div`
 `;
 
 const SettingExpln = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
   height: 34px;
   width: 90%;
   text-align: left;
