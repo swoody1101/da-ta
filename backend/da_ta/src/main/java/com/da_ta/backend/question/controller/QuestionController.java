@@ -39,10 +39,10 @@ public class QuestionController {
                 .body(answerService.createTodayAnswer(createTodayAnswerRequest, jwtTokenProvider.findUserByToken(token)));
     }
 
-    @GetMapping("/answer")
-    public ResponseEntity<List<TodayAnswerResponse>> findAnswers() {
+    @GetMapping("/answer/{today_question_id}")
+    public ResponseEntity<List<TodayAnswerResponse>> findAnswers(@PathVariable("today_question_id") Long todayQuestionId) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(answerService.findTodayAnswers());
+                .body(answerService.findTodayAnswers(todayQuestionId));
     }
 
     @PostMapping("/answer/accusation/{today_answer_id}")

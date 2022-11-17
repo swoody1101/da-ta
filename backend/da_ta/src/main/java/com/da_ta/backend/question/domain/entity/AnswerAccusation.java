@@ -21,16 +21,13 @@ public class AnswerAccusation extends CommonEntity {
     @NotNull
     private String reason;
 
-    @NotNull
-    @Builder.Default
-    private boolean isSolved = false;
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "today_answer_id")
     private TodayAnswer todayAnswer;
 
-    public void updateIsSolved() {
-        this.isSolved = true;
+    public void updateAnswerAccusation() {
+        super.delete();
+        todayAnswer.deleteTodayAnswer();
     }
 
     public void deleteAnswerAccusation() {

@@ -41,8 +41,8 @@ public class TodayAnswerService {
         return new Message(TODAY_ANSWER_CREATED.getMessage());
     }
 
-    public List<TodayAnswerResponse> findTodayAnswers() {
-        return todayAnswerRepository.findAllUnaccusedAnswers()
+    public List<TodayAnswerResponse> findTodayAnswers(Long todayQuestionId) {
+        return todayAnswerRepository.findAllByIsActiveTrueAndTodayQuestionId(todayQuestionId)
                 .stream()
                 .map(todayAnswer -> TodayAnswerResponse.builder()
                         .todayAnswerId(todayAnswer.getId())

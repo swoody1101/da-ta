@@ -17,5 +17,4 @@ public class AccusedAnswer {
     private String reportedNickname;
     private String reason;
     private String answer;
-    private Boolean isSolved;
 }

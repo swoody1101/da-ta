@@ -20,7 +20,7 @@ public class TodayQuestionService {
 
     public TodayQuestionResponse findTodayQuestion() {
         LocalDate nowTime = LocalDate.now();
-        TodayQuestion todayQuestion = todayQuestionRepository.findByDate(nowTime)
+        TodayQuestion todayQuestion = todayQuestionRepository.findByDateAndIsActiveTrue(nowTime)
                 .orElseThrow(() -> new NotFoundException(TODAY_QUESTION_NOT_FOUND));
         return TodayQuestionResponse.builder()
                 .todayQuestionId(todayQuestion.getId())
