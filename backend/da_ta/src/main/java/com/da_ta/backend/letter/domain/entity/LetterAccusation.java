@@ -2,7 +2,6 @@ package com.da_ta.backend.letter.domain.entity;
 
 import com.da_ta.backend.common.domain.CommonEntity;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -23,16 +22,13 @@ public class LetterAccusation extends CommonEntity {
     @NotNull
     private String reason;
 
-    @NotNull
-    @Builder.Default
-    private boolean isSolved = false;
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "letter_id")
     private Letter letter;
 
-    public void updateIsSolved() {
-        this.isSolved = true;
+    public void updateLetterAccusation() {
+        super.delete();
+        letter.deleteLetter();
     }
 
     public void deleteLetterAccusation() {

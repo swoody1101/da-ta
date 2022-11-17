@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface TodayQuestionRepository extends JpaRepository<TodayQuestion, Long> {
 
-    Optional<TodayQuestion> findByDate(LocalDate date);
+    Optional<TodayQuestion> findByDateAndIsActiveTrue(LocalDate date);
 
     @Query(value = "select * " +
             "from today_question " +

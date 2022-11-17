@@ -31,7 +31,7 @@ import static com.da_ta.backend.common.domain.SuccessCode.*;
 @Service
 public class LetterService {
 
-    private static final int MAX_FLOAT_COUNT = 5;
+    private static final int MAX_FLOAT_COUNT = 10;
     private static final String TYPE_TEXT = "Text";
     private static final String TYPE_IMAGE = "Image";
     private static final String BAD_WORDS_KEY = "Bad words";
