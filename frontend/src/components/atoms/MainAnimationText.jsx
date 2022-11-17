@@ -41,8 +41,9 @@ const AnimationText = styled.p`
   text-align: center;
   margin: ${(props) => props.margin};
   font-weight: ${(props) => props.fontWeight};
-  animation: ${(props) => (props.isRight_1 ? typing : 0)} 2s steps(16),
+  animation: ${(props) => (props.isRight_1 ? typing : 0)} 0.1s steps(16),
     ${(props) => (props.isRight_2 ? blink : 0)} 0.5s step-end infinite alternate;
+  animation-delay: 0.1s;
   overflow: hidden;
 
   border-right: 3px solid;
@@ -52,17 +53,3 @@ const AnimationText = styled.p`
   font-size: ${(props) => props.mFont_size};
 `}
 `;
-//폰사이즈일 경우, 애니메이션 사이즈도 동시에 변경되어야한다.
-
-// animation: ${(props) => (props.isRight_1 ? typing : 0)} 2s steps(5);
-// ${(props) => (props.isRight_2 ? blink : 0)} 0.5s step-end infinite alternate
-
-// .typing-demo {
-//   width: 22ch;
-//   animation: typing 2s steps(22), blink .5s step-end infinite alternate;
-//   white-space: nowrap;
-//   overflow: hidden;
-//   border-right: 3px solid;
-//   font-family: monospace;
-//   font-size: 2em;
-// }
