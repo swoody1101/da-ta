@@ -28,7 +28,7 @@ export const SizeTypes = {
 	MOBILE_CONTENT_HEIGHT: "calc(126vw - 2rem)",
 
 	PC_MAIN_TEXT_SIZE: "1.5rem",
-	MOBILE_MAIN_TEXT_SIZE: "1.3rem",
+	MOBILE_MAIN_TEXT_SIZE: "1.2rem",
 	PC_MAIN_BOTTLE_WIDTH: "30vw",
 	PC_MAIN_BOTTLE_HEIGHT: "30vh",
 
@@ -36,6 +36,6 @@ export const SizeTypes = {
 	MOBILE_MAIN_BOTTLE_HEIGHT: "4rem",
 
 	// 헤더 높이
-	PC_HEADER_HEIGHT: "6rem",
-	MOBILE_HEADER_HEIGHT: "5rem",
+	PC_HEADER_HEIGHT: "5.5rem",
+	MOBILE_HEADER_HEIGHT: "4.5rem",
 };
