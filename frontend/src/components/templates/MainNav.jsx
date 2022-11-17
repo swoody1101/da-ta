@@ -175,19 +175,6 @@ const MainNav = () => {
   );
 };
 
-const MobileLogo = styled.img`
-  display: flex;
-  flex-direction: row;
-  position: absolute;
-  left: 1.25rem;
-  height: 100%;
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-`;
-
 const HeaderContents = styled.div`
   display: flex;
   justify-content: center;

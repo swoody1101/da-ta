@@ -77,9 +77,12 @@ const LandingPage = () => {
     AOS.init({ duration: 500, easing: "ease-in-out-back" }); //소개글 animation 효과 변경용 AOS
     mainGetLetterNum();
     mainGetQuestion();
-    mainGetAnswerList();
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    mainGetAnswerList(todayQuestionInfo.todayQuestionId);
+  }, [todayQuestionInfo.todayQuestionId]);
 
   useEffect(() => {
     setCurrentAnswerId(Math.floor(Math.random() * answerList.length));
@@ -110,7 +113,7 @@ const LandingPage = () => {
    * @description [오늘의질문] 답변 입력창 열기
    * */
   const handleModalA = () => {
-    if (todayQuestionInfo.questionId >= 0) {
+    if (todayQuestionInfo.todayQuestionId >= 0) {
       setChatBoxVisible(false);
       setModalToggleA(true);
     } else {
@@ -211,8 +214,8 @@ const LandingPage = () => {
   /**
    * @description 오늘의 질문 답변 리스트 조회 및 저장
    */
-  const mainGetAnswerList = async () => {
-    const response = await getTodayAnswerList();
+  const mainGetAnswerList = async (qId) => {
+    const response = await getTodayAnswerList(qId);
     if (!response || (response.status !== 200 && response.status !== 201)) {
       setAnswerList([]);
       return;
