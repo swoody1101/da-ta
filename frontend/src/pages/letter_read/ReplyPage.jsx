@@ -13,7 +13,7 @@ import Input from "./../../components/atoms/Input";
 import { LetterTextArea } from "./../../components/atoms/TextArea";
 import LetterProgressBar from "./../../components/molecules/letter/LetterProgressBar";
 import Button from "./../../components/atoms/Button";
-import { saveReplyLetter } from "./../../api/letterWriteAPI";
+import { checkHarmTextLetter, saveReplyLetter } from "./../../api/letterWriteAPI";
 import { popErrorAlert, popWarningAlert } from "./../../utils/sweetAlert";
 import styled from "styled-components";
 import ReadLetterPic from "../../components/molecules/ReadLetterPic";
@@ -25,7 +25,7 @@ const ReplyPage = () => {
 	const [flip, setFlip] = useState(false);
 	const [isPicture, setIsPicture] = useState(true);
 	const originLetter = useRecoilValue(letterState);
-	const [loading, setLoading] = useRecoilState(loadingState);
+	const [showLoading, setShowLoading] = useState(false);
 
 	const titleInput = useRef(); // 제목 ref (값 가져오기, focus)
 	const contentInput = useRef(); // 내용 ref (값 가져오기, ref)
@@ -37,13 +37,11 @@ const ReplyPage = () => {
 	useEffect(() => {
 		if (originLetter) {
 			originLetter.letterInfo.imageLetterUrl ? setIsPicture(true) : setIsPicture(false);
-			setLoading(true);
+			setShowLoading(true);
 		} else {
 			navigate("/");
 			popErrorAlert("", "올바른 접근이 아닙니다!");
 		}
-
-		setLoading(false);
 	}, []);
 
 	useEffect(() => {
@@ -83,7 +81,18 @@ const ReplyPage = () => {
 			return;
 		}
 
-		// 2. 답장 요청 전송
+		// 2. 유해성 검사
+		const harmResponse = await checkHarmTextLetter({ content: content });
+		if (!harmResponse || (harmResponse.status !== 200 && harmResponse.status !== 201)) {
+			popErrorAlert("편지 전송 오류", "유해성 검사 중 오류가 발생했습니다.");
+			return;
+		}
+		if (harmResponse.data && harmResponse.data.isHarmful) {
+			popWarningAlert("부적절한 언어 감지", "부적절한 언어가 포함된 편지는 전송할 수 없습니다.");
+			return;
+		}
+
+		// 3. 답장 요청 전송
 		const response = await saveReplyLetter(originLetter.letterInfo.letterId, {
 			title: titleInput.current.value,
 			content: contentInput.current.value,
@@ -152,7 +161,7 @@ const ReplyPage = () => {
 					</FlipFrontWrapper>
 					<FlipBackWrapper actFlip={flip} ref={(el) => (unshowRef.current[2] = el)}>
 						<LetterImg src={`${process.env.PUBLIC_URL}/assets/images/letter/${LetterOptions.PAPERS[originLetter.letterInfo.backgroundId]}.png`} />
-						{loading &&
+						{showLoading &&
 							(isPicture ? (
 								<>
 									<ReadLetterPic info={originLetter.letterInfo} />
