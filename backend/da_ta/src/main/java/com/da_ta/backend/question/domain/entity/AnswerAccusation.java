@@ -26,8 +26,8 @@ public class AnswerAccusation extends CommonEntity {
     private TodayAnswer todayAnswer;
 
     public void updateAnswerAccusation() {
-        todayAnswer.deleteTodayAnswer();
         super.delete();
+        todayAnswer.deleteTodayAnswer();
     }
 
     public void deleteAnswerAccusation() {
