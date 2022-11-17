@@ -81,6 +81,7 @@ const LandingPage = () => {
   }, []);
 
   useEffect(() => {
+    if (todayQuestionInfo.todayQuestionId === undefined) return;
     mainGetAnswerList(todayQuestionInfo.todayQuestionId);
   }, [todayQuestionInfo.todayQuestionId]);
 
