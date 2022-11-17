@@ -5,13 +5,22 @@ import React from "react";
 import styled from "styled-components";
 import { media } from "../../../utils/styleUtil";
 import { useNavigate } from "react-router-dom";
-//TODO: 새로 온 메일이 있을 경우 받은 답장에 빨간 점 표시
-//      선택된 메뉴에 파란 줄 표시
+import { useEffect } from "react";
+import { replyCheck } from "../../../api/mypageAPI";
+import { useState } from "react";
 
 export const MypageMenu = ({ ...props }) => {
   let isSelected = false;
   props.selectedIndex === props.menuIndex ? (isSelected = true) : null;
   const navigate = useNavigate();
+  const [isNewLetter, setIsNewLetter] = useState(false);
+  useEffect(async () => {
+    const response = await replyCheck();
+    if (!response || (response.status != 200 && response.status != 201)) {
+      return;
+    }
+    setIsNewLetter(response.data.unreadReply);
+  }, []);
 
   return [
     <MenuDiv onClick={() => navigate("/mypage/collect")}>
@@ -25,6 +34,7 @@ export const MypageMenu = ({ ...props }) => {
       <MenuName isSelected={isSelected}>수집한 편지</MenuName>
     </MenuDiv>,
     <MenuDiv onClick={() => navigate("/mypage/receive")}>
+      <RedDot isNewLetter={isNewLetter} />
       <IconDiv>
         <Icon
           src={process.env.PUBLIC_URL + "/assets/images/mypage/postbox.png"}
@@ -84,4 +94,16 @@ const MenuName = styled.p`
   text-align: center;
   align-items: center;
   justify-content: center;
+`;
+
+const RedDot = styled.div`
+  position: relative;
+  margin: 0;
+  width: 5px;
+  height: 5px;
+  background-color: red;
+  border-radius: 50%;
+  top: 50%;
+  left: calc(50% + 50px);
+  display: ${(props) => (props.isNewLetter ? null : "none")};
 `;

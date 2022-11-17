@@ -11,7 +11,7 @@ import Title from "../atoms/Title";
 import TranslucentBackground from "./../atoms/TranslucentBackground";
 import { useEffect } from "react";
 
-const Modal = ({ children, modalToggle, setModalToggle, onModalClick, titleText, height, width, maxWidth }) => {
+const Modal = ({ children, modalToggle, setModalToggle, titleText, height, width, maxWidth, flexDirection }) => {
 	useEffect(() => {
 		document.body.style.cssText = `
       position: absolute; 
@@ -40,7 +40,7 @@ const Modal = ({ children, modalToggle, setModalToggle, onModalClick, titleText,
 							{titleText}
 						</Title>
 						{/* 모달 Content */}
-						<ContentArea>{children}</ContentArea>
+						<ContentArea flexDirection={flexDirection}>{children}</ContentArea>
 					</ModalContainer>
 				</>
 			)}
@@ -87,12 +87,13 @@ const FaWrapper = styled.div`
 	transition: 0.25s ease-out;
 
 	&:hover {
-		background-color: rgba(38, 38, 38, 0.5);
+		background-color: rgba(38, 38, 38, 0.25);
 	}
 `;
 
 const ContentArea = styled.div`
 	display: flex;
+	flex-direction: ${(props) => props.flexDirection || "row"};
 	margin: 1.5rem 0 0 0;
 	width: 100%;
 	height: 85%;

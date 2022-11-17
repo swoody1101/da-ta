@@ -36,7 +36,8 @@ export const userState = atom({
  */
 export const mypageRouterState = atom({
   key: "mypageRouterState",
-  default: 0,
+  default: 2,
+  effects_UNSTABLE: [persistAtom],
 });
 
 /**
@@ -71,6 +72,31 @@ export const readingLetterIdState = atom({
  */
 export const letterState = atom({
   key: "letterState",
-  default: {},
+  default: false,
   effects_UNSTABLE: [persistAtom],
+});
+
+/**
+ * @description 오늘의 질문
+ */
+export const todayQuestionState = atom({
+  key: "todayQuestionState",
+  default: {
+    date: null,
+    question: null,
+    todayQuestionId: null,
+  },
+});
+
+/**
+ * @description 오늘의 질문 답변
+ */
+export const todayAnswerState = atom({
+  key: "todayAnswerState",
+  default: {
+    todayAnswerId: null,
+    answer: null,
+    userId: null,
+    todayQuestionId: null,
+  },
 });

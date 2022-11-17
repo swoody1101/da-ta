@@ -4,7 +4,6 @@ import HANBatang from "./HANBatang.ttf";
 import PretendardMedium from "./Pretendard-Medium.ttf";
 import SUIT from "./SUIT-Medium.ttf";
 import drfont from "./drfont_daraehand_Basic.ttf";
-import DalseoHealingMedium from "./DalseoHealingMedium.ttf";
 
 export const GlobalFonts = createGlobalStyle`
   @font-face {
@@ -66,7 +65,7 @@ export const GlobalFonts = createGlobalStyle`
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/RIDIBatang.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-}
+  }
 
 `;
 

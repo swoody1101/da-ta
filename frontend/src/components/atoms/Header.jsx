@@ -37,7 +37,8 @@ const StyledHeader = styled.header`
 
 	height: ${(props) => (props.height || window.innerWidth > SIZE_PHONE ? SizeTypes.PC_HEADER_HEIGHT : SizeTypes.MOBILE_HEADER_HEIGHT)};
 	background-color: ${(props) => props.bgColor || "transparent"};
-	border-bottom: ${(props) => props.borderBottom || "1px solid rgba(255,255,255,0.5)"};
+	// border-bottom: ${(props) => props.borderBottom || "1px solid rgba(255,255,255,0.5)"};
+	box-shadow: rgba(9, 30, 66, 0.05) 0px 5px 5px 0px;
 
 	-webkit-user-select: none;
 	-moz-user-select: none;

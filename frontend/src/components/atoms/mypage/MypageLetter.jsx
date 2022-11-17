@@ -2,10 +2,9 @@
  * @author boyeon
  */
 /**
- * @param LetterObject //ToDo: API명세서 보고 변수양식 맞추기
+ * @param LetterObject
  */
-// 나중에 API로 받아온 친구들을 props 해줘야함
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { media } from "../../../utils/styleUtil";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,9 +12,23 @@ import {
   faTriangleExclamation,
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
-import { useSetRecoilState } from "recoil";
-import { reportModalState } from "../../../recoil/Atoms";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  letterState,
+  mypageRouterState,
+  reportModalState,
+} from "../../../recoil/Atoms";
 import { readingLetterIdState } from "../../../recoil/Atoms";
+import {
+  collectDeleteLetter,
+  collectDetail,
+  replyDeleteLetter,
+  replyDetail,
+} from "../../../api/mypageAPI";
+import { popErrorAlert, popSuccessAlert } from "../../../utils/sweetAlert";
+import { downloadFirebaseStorage } from "../../../utils/firebaseStorage";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const DateToString = (writtenDate) => {
   const ToDate = new Date(writtenDate);
@@ -24,37 +37,118 @@ const DateToString = (writtenDate) => {
   }월 ${ToDate.getDate()}일`;
 };
 
-export const MypageLetter = ({ letter }) => {
-  const setModalToggle = useSetRecoilState(reportModalState);
+export const MypageLetter = ({ letter, reload }) => {
+  const navigate = useNavigate();
+  const setReportModal = useSetRecoilState(reportModalState);
   const setReadingLetterId = useSetRecoilState(readingLetterIdState);
+  const mypageRouterIndex = useRecoilValue(mypageRouterState);
+  const setLetter = useSetRecoilState(letterState);
+  const [isNew, setIsNew] = useState(false);
   const writtenTime = DateToString(letter.writtenDate);
+  const [display, setDisplay] = useState("block");
+
+  const readLetter = async (index, letterId) => {
+    if (index === 0) {
+      // routerIndex=0 인 경우 => 수집한 편지인 경우
+      const response = await collectDetail(letterId);
+      if (response.status - 200 < 3 && response.status) {
+        const letter = response.data;
+        setReadingLetterId(letterId);
+        if (letter.letterInfo.imageLetterUrl) {
+          letter.letterInfo.imageLetterUrl = await downloadFirebaseStorage(
+            `${letter.letterInfo.imageLetterUrl}.png`
+          );
+        }
+        setLetter(letter);
+        navigate("/read");
+      } else {
+        popErrorAlert("", "수집한 편지 읽기 요청실패");
+      }
+    } else {
+      // routerIndex=0 이 아닌 경우 => 답장받은 편지인 경우
+      const response = await replyDetail(letterId);
+      if (response.status - 200 < 3 && response.status) {
+        const letter = response.data;
+        setReadingLetterId(letterId);
+        if (letter.originLetterInfo.imageLetterUrl) {
+          letter.originLetterInfo.imageLetterUrl =
+            await downloadFirebaseStorage(
+              `${letter.originLetterInfo.imageLetterUrl}.png`
+            );
+        }
+        setLetter(letter);
+        navigate("/replyread");
+      } else {
+        popErrorAlert("", "답장한 편지 읽기 요청실패");
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (mypageRouterIndex == 0) {
+      setDisplay("none");
+    }
+    if (letter.read === false) {
+      setIsNew(true);
+    }
+  }, []);
+
+  const deleteLetter = async (index, letterId) => {
+    if (index === 0) {
+      // routerIndex=0 인 경우 => 수집한 편지인 경우
+      const response = await collectDeleteLetter(letterId);
+      if (response.status - 200 < 3 && response.status) {
+        popSuccessAlert("", "수집한 편지를 삭제했습니다.");
+        reload();
+      } else {
+        popErrorAlert("", "수집한 편지 삭제 요청실패");
+      }
+    } else {
+      // routerIndex=0 이 아닌 경우 => 답장받은 편지인 경우
+      const response = await replyDeleteLetter(letterId);
+      if (response.status - 200 < 3 && response.status) {
+        popSuccessAlert("", "답장한 편지를 삭제했습니다.");
+        reload();
+      } else {
+        popErrorAlert("", "요청실패");
+      }
+    }
+  };
 
   return (
     <LetterDiv>
       <LetterWordsDiv>
-        <LetterTitle>{letter.letterTitle}</LetterTitle>
+        <LetterTitle
+          onClick={() => {
+            readLetter(mypageRouterIndex, letter.id);
+          }}
+        >
+          {letter.title} <IsNewSpan isNew={isNew}>NEW</IsNewSpan>
+        </LetterTitle>
         <LetterDate>{`${letter.writerNickname}, ${writtenTime}`}</LetterDate>
         <LetterDateWeb>{`${letter.writerNickname}`}</LetterDateWeb>
         <LetterDateWeb>{`${writtenTime}`}</LetterDateWeb>
       </LetterWordsDiv>
       <FontAwesomeIcon
         icon={faTriangleExclamation}
-        style={{ margin: "0 15px 0 0", color: "#F44336", cursor: "pointer" }}
-        size="lg"
+        style={{
+          margin: "0 15px 0 0",
+          color: "#F44336",
+          cursor: "pointer",
+          display: display,
+        }}
+        size="2x"
         onClick={() => {
-          setModalToggle(true);
-          setReadingLetterId(letter.letterId);
-          console.log(
-            `${letter.id}번 글을 쓴 글쓴이 아이디 ${letter.writerId}를 신고버튼`
-          );
+          setReportModal(true);
+          setReadingLetterId(letter.id);
         }}
       />
       <FontAwesomeIcon
         icon={faTrashCan}
         style={{ margin: "0 15px 0 0", cursor: "pointer" }}
-        size="lg"
+        size="2x"
         onClick={() => {
-          console.log(`${letter.id}번 글 삭제버튼`);
+          deleteLetter(mypageRouterIndex, letter.id);
         }}
       />
     </LetterDiv>
@@ -70,6 +164,7 @@ const LetterDiv = styled.div`
   background-color: #ffffff;
   border-radius: 5px;
   margin-bottom: 24px;
+  filter: drop-shadow(0px 2px 2px #999);
 
   ${media.tablet1`
     width: 90%;
@@ -92,9 +187,10 @@ const LetterWordsDiv = styled.div`
   `}
 `;
 
-const LetterTitle = styled.p`
+const LetterTitle = styled.div`
+  display: flex;
   font-size: 20px;
-  width: 100%;
+  width: 90%;
   height: 20px;
   text-align: start;
   cursor: pointer;
@@ -105,7 +201,7 @@ const LetterTitle = styled.p`
 
 const LetterDate = styled.p`
   font-size: 14px;
-  width: 100%;
+  width: 90%;
   height: 17px;
   color: #8f8f8f;
   margin-top: 5px;
@@ -122,4 +218,11 @@ const LetterDateWeb = styled(LetterDate)`
   ${media.tablet1`
     display: inline;
   `}
+`;
+
+const IsNewSpan = styled.div`
+  margin-left: 10px;
+  font-size: 10px;
+  color: red;
+  display: ${(props) => (props.isNew ? null : "none")};
 `;

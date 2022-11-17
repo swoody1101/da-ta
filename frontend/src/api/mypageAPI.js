@@ -22,9 +22,17 @@ export const receiveLetterList = async () => {
   return result;
 };
 
-export const deleteLetter = async (letter_id) => {
+export const collectDeleteLetter = async (letter_id) => {
   const result = await client
     .delete(`/letters/collection/${letter_id}`)
+    .then((response) => response)
+    .catch((error) => error);
+  return result;
+};
+
+export const replyDeleteLetter = async (letter_id) => {
+  const result = await client
+    .delete(`/letters/replies/${letter_id}`)
     .then((response) => response)
     .catch((error) => error);
   return result;
@@ -47,9 +55,6 @@ export const userInfo = async () => {
 };
 
 export const setUserAge = async (body) => {
-  // const body = {
-  //   age: "string",
-  // };
   const result = await client
     .put("/user/update/1", body)
     .then((response) => response)
@@ -58,9 +63,6 @@ export const setUserAge = async (body) => {
 };
 
 export const setUserAlert = async (body) => {
-  // const body = {
-  //   isAlertActive: input,
-  // };
   const result = await client
     .put("/user/update/2", body)
     .then((response) => response)
@@ -71,6 +73,30 @@ export const setUserAlert = async (body) => {
 export const cancellation = async () => {
   const result = await client
     .delete("/user")
+    .then((response) => response)
+    .catch((error) => error);
+  return result;
+};
+
+export const collectDetail = async (letterId) => {
+  const result = await client
+    .get(`/letters/collection/detail/${letterId}`)
+    .then((response) => response)
+    .catch((error) => error);
+  return result;
+};
+
+export const replyDetail = async (letterId) => {
+  const result = await client
+    .get(`/letters/replies/detail/${letterId}`)
+    .then((response) => response)
+    .catch((error) => error);
+  return result;
+};
+
+export const replyCheck = async () => {
+  const result = await client
+    .get(`letters/replies/check`)
     .then((response) => response)
     .catch((error) => error);
   return result;

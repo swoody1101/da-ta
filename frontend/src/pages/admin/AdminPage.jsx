@@ -16,7 +16,7 @@ const AdminPage = () => {
   const user = useRecoilValue(userState);
 
   useEffect(() => {
-    const isAdmin = user.role === RoleTypes.ADMIN;
+    const isAdmin = user.role === RoleTypes.ROLE_ADMIN;
 
     if (!isAdmin) {
       popWarningAlert(
