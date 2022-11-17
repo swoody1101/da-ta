@@ -9,7 +9,7 @@ import {
   checkHarmCanvasLetter,
   saveCanvasLetter,
 } from "../../../api/letterWriteAPI";
-import { popErrorAlert } from "../../../utils/sweetAlert";
+import { popErrorAlert, popWarningAlert } from "../../../utils/sweetAlert";
 import { useNavigate } from "react-router-dom";
 import { SIZE_PHONE } from "./../../../constants/Sizes";
 

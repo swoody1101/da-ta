@@ -5,10 +5,6 @@ import { media } from "../../utils/styleUtil";
 const LogoImage = ({ onClick }) => {
   return (
     <Container onClick={onClick}>
-      {/* <img
-        src={`${process.env.PUBLIC_URL}/assets/logo/data_logo.png`}
-        height="100%"
-      /> */}
       <LogoText>DA-TA</LogoText>
     </Container>
   );
@@ -39,14 +35,15 @@ export const LogoText = styled.p`
   font-family: "다래손글씨";
   line-height: 64px;
   font-weight: bold;
-  background: linear-gradient(
-    90deg,
-    rgba(37, 120, 236, 1) 0%,
-    rgba(87, 120, 236, 1) 35%,
-    rgba(50, 56, 53, 1) 100%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  // background: linear-gradient(
+  //   90deg,
+  //   rgba(37, 120, 236, 1) 0%,
+  //   rgba(87, 120, 236, 1) 35%,
+  //   rgba(50, 56, 53, 1) 100%
+  // );
+  // -webkit-background-clip: text;
+  // -webkit-text-fill-color: transparent;
+  color: rgba(37, 120, 236, 1);
   margin-left: 8px;
 `;
 
