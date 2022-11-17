@@ -17,5 +17,4 @@ public class AccusedLetter {
     private String reportedNickname;
     private String reason;
     private String content;
-    private Boolean isSolved;
 }
