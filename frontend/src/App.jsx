@@ -2,8 +2,6 @@ import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import LandingPage from "./pages/landing/LandingPage";
-import TestPage from "./pages/TestPage";
-import TestPageYoon from "./pages/TestPageYoon";
 import Background from "./styles/Background";
 import MainNav from "./components/templates/MainNav";
 import LetterWritePage from "./pages/letter_write/LetterWritePage";
@@ -30,90 +28,51 @@ import ReplyPage from "./pages/letter_read/ReplyPage";
 import ReplyReadPage from "./pages/letter_read/ReplyReadPage";
 
 function App() {
-  const loading = useRecoilValue(loadingState);
-  const [isLogin, setIsLogin] = useRecoilState(loginState);
-  const setUser = useSetRecoilState(userState);
+	const loading = useRecoilValue(loadingState);
+	const [isLogin, setIsLogin] = useRecoilState(loginState);
+	const setUser = useSetRecoilState(userState);
 
-  useEffect(() => {
-    if (isLogin && !sessionStorage.getItem("ACCESS_TOKEN")) {
-      setUser({});
-      setIsLogin(false);
-      window.location.href = "/";
-    }
-  }, []);
+	useEffect(() => {
+		if (isLogin && !sessionStorage.getItem("ACCESS_TOKEN")) {
+			setUser({});
+			setIsLogin(false);
+			window.location.href = "/";
+		}
+	}, []);
 
-  return (
-    <div className="App">
-      <GlobalFonts />
-      {loading && <Loading />}
-      <Background>
-        <BrowserRouter>
-          <MainNav />
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/test" element={<TestPage />} />
-            <Route path="/testyoon" element={<TestPageYoon />} />
-            <Route path="/auth/oauth" element={<SocialLogin />} />
-            <Route
-              path="/admin"
-              element={<PrivateRoute component={<AdminPage />} />}
-            >
-              <Route
-                index
-                path="reports"
-                element={<PrivateRoute component={<Reports />} />}
-              />
-              <Route
-                path="userinfos"
-                element={<PrivateRoute component={<UserInfos />} />}
-              />
-              <Route
-                path="todayquestions"
-                element={<PrivateRoute component={<TodayQuestions />} />}
-              />
-            </Route>
-            <Route
-              path="/write"
-              element={<PrivateRoute component={<LetterWritePage />} />}
-            />
-            <Route
-              path="/writesuccess"
-              element={<PrivateRoute component={<LetterWriteSuccessPage />} />}
-            />
-            <Route
-              path="/get"
-              element={<PrivateRoute component={<LetterGetPage />} />}
-            />
-            <Route
-              path="/read"
-              element={<PrivateRoute component={<LetterReadPage />} />}
-            />
-            <Route
-              path="/reply"
-              element={<PrivateRoute component={<ReplyPage />} />}
-            />
-            <Route
-              path="/noletter"
-              element={<PrivateRoute component={<LetterNonePage />} />}
-            />
-            <Route
-              path="/replyread"
-              element={<PrivateRoute component={<ReplyReadPage />} />}
-            />
-            <Route
-              path="/mypage"
-              element={<PrivateRoute component={<Mypage />} />}
-            >
-              <Route index path="collect" element={<Collect />} />
-              <Route path="receive" element={<Receive />} />
-              <Route path="setting" element={<Setting />} />
-            </Route>
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </Background>
-    </div>
-  );
+	return (
+		<div className="App">
+			<GlobalFonts />
+			{loading && <Loading />}
+			<Background>
+				<BrowserRouter>
+					<MainNav />
+					<Routes>
+						<Route path="/" element={<LandingPage />} />
+						<Route path="/auth/oauth" element={<SocialLogin />} />
+						<Route path="/admin" element={<PrivateRoute component={<AdminPage />} />}>
+							<Route index path="reports" element={<PrivateRoute component={<Reports />} />} />
+							<Route path="userinfos" element={<PrivateRoute component={<UserInfos />} />} />
+							<Route path="todayquestions" element={<PrivateRoute component={<TodayQuestions />} />} />
+						</Route>
+						<Route path="/write" element={<PrivateRoute component={<LetterWritePage />} />} />
+						<Route path="/writesuccess" element={<PrivateRoute component={<LetterWriteSuccessPage />} />} />
+						<Route path="/get" element={<PrivateRoute component={<LetterGetPage />} />} />
+						<Route path="/read" element={<PrivateRoute component={<LetterReadPage />} />} />
+						<Route path="/reply" element={<PrivateRoute component={<ReplyPage />} />} />
+						<Route path="/noletter" element={<PrivateRoute component={<LetterNonePage />} />} />
+						<Route path="/replyread" element={<PrivateRoute component={<ReplyReadPage />} />} />
+						<Route path="/mypage" element={<PrivateRoute component={<Mypage />} />}>
+							<Route index path="collect" element={<Collect />} />
+							<Route path="receive" element={<Receive />} />
+							<Route path="setting" element={<Setting />} />
+						</Route>
+						<Route path="*" element={<NotFound />} />
+					</Routes>
+				</BrowserRouter>
+			</Background>
+		</div>
+	);
 }
 
 export default App;
