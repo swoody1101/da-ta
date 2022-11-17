@@ -77,7 +77,7 @@ const LandingPage = () => {
     AOS.init({ duration: 500, easing: "ease-in-out-back" }); //소개글 animation 효과 변경용 AOS
     mainGetLetterNum();
     mainGetQuestion();
-    mainGetAnswer();
+    mainGetAnswerList();
     window.scrollTo(0, 0);
   }, []);
 
@@ -110,16 +110,24 @@ const LandingPage = () => {
    * @description [오늘의질문] 답변 입력창 열기
    * */
   const handleModalA = () => {
-    setChatBoxVisible(false);
-    setModalToggleA(true);
+    if (todayQuestionInfo.questionId >= 0) {
+      setChatBoxVisible(false);
+      setModalToggleA(true);
+    } else {
+      popWarningAlert("", "등록된 질문이 없습니다.");
+    }
   };
 
   /**
    * @description [오늘의질문] 답변 모음창 열기
    * */
   const handleModalB = () => {
-    setChatBoxVisible(false);
-    setModalToggleB(true);
+    if (answerList.length > 0) {
+      setChatBoxVisible(false);
+      setModalToggleB(true);
+    } else {
+      popWarningAlert("", "등록된 답변 목록이 없습니다.");
+    }
   };
 
   /**
@@ -190,7 +198,11 @@ const LandingPage = () => {
   const mainGetQuestion = async () => {
     const response = await getTodayQuestion();
     if (!response || (response.status !== 200 && response.status !== 201)) {
-      setTodayQuestionInfo("-");
+      setTodayQuestionInfo({
+        questionId: -1,
+        question: "등록된 질문이 없습니다.",
+        date: new Date(),
+      });
       return;
     }
     setTodayQuestionInfo(response.data);
@@ -199,7 +211,7 @@ const LandingPage = () => {
   /**
    * @description 오늘의 질문 답변 리스트 조회 및 저장
    */
-  const mainGetAnswer = async () => {
+  const mainGetAnswerList = async () => {
     const response = await getTodayAnswerList();
     if (!response || (response.status !== 200 && response.status !== 201)) {
       setAnswerList([]);
