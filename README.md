@@ -236,55 +236,55 @@
 
 ```
 frontend
-├─public
-│  └─assets
-│      ├─images
-│      │  ├─auth
-│      │  ├─common
-│      │  ├─letter
-│      │  ├─mainpage
-│      │  └─mypage
-│      ├─logo
-│      └─video
-├─src
-│  ├─api
-│  ├─components
-│  │  ├─atoms
-│  │  │  ├─landing
-│  │  │  ├─letter
-│  │  │  └─mypage
-│  │  ├─molecules
-│  │  │  ├─landing
-│  │  │  ├─letter
-│  │  │  └─mypage
-│  │  ├─organisms
-│  │  │  ├─landing
-│  │  │  └─mypage
-│  │  └─templates
-│  │      └─admin
-│  ├─constants
-│  ├─pages
-│  │  ├─admin
-│  │  ├─error
-│  │  ├─landing
-│  │  ├─letter_read
-│  │  ├─letter_write
-│  │  └─mypage
-│  ├─recoil
-│  ├─styles
-│  │  └─fonts
-│  └─utils
-│      └─validation
-├─.env
-├─.firebaserc
-├─.gitignore
-├─Dockerfile
-├─firebase.json
-├─firestore.indexes.json
-├─nginx.conf
-├─package-lock.json
-├─package.json
-└─storage.rules
+├─📦public
+│  └─📂assets
+│      ├─📂images
+│      │  ├─📂auth
+│      │  ├─📂common
+│      │  ├─📂letter
+│      │  ├─📂mainpage
+│      │  └─📂mypage
+│      ├─📂logo
+│      └─📂video
+├─📦src
+│  ├─📂api
+│  ├─📂components
+│  │  ├─📂atoms
+│  │  │  ├─📂landing
+│  │  │  ├─📂letter
+│  │  │  └─📂mypage
+│  │  ├─📂molecules
+│  │  │  ├─📂landing
+│  │  │  ├─📂letter
+│  │  │  └─📂mypage
+│  │  ├─📂organisms
+│  │  │  ├─📂landing
+│  │  │  └─📂mypage
+│  │  └─📂templates
+│  │      └─📂admin
+│  ├─📂constants
+│  ├─📂pages
+│  │  ├─📂admin
+│  │  ├─📂error
+│  │  ├─📂landing
+│  │  ├─📂letter_read
+│  │  ├─📂letter_write
+│  │  └─📂mypage
+│  ├─📂recoil
+│  ├─📂styles
+│  │  └─📂fonts
+│  └─📂utils
+│      └─📂validation
+├─📜.env
+├─📜.firebaserc
+├─📜.gitignore
+├─📜Dockerfile
+├─📜firebase.json
+├─📜firestore.indexes.json
+├─📜nginx.conf
+├─📜package-lock.json
+├─📜package.json
+└─📜storage.rules
 ```
 
 ### Backend
