@@ -56,11 +56,7 @@ const SocialLogin = () => {
 
 		popSuccessAlert("로그인 성공", `안녕하세요 <b>${response.data.nickname}</b>님!`);
 
-		if (response.data.role === RoleTypes.ROLE_USER) {
-			navigate("/");
-		} else if (response.data.role === RoleTypes.ROLE_ADMIN) {
-			navigate("/admin");
-		}
+		navigate("/");
 	}, []);
 	return (
 		<>
