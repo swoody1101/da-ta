@@ -10,7 +10,7 @@ const Header = ({ children, headerShow, height, borderBottom }) => {
 	const [bgColor, setBgColor] = useState("transparent");
 
 	useEffect(() => {
-		window.scrollY > 0 ? setBgColor("#958dd6") : setBgColor("transparent");
+		window.scrollY > 0 ? setBgColor("linear-gradient(to bottom right, #958dd6, #5778ec)") : setBgColor("transparent");
 	}, [window.scrollY]);
 
 	return (
@@ -36,7 +36,7 @@ const StyledHeader = styled.header`
 	transition: 0.3s ease;
 
 	height: ${(props) => (props.height || window.innerWidth > SIZE_PHONE ? SizeTypes.PC_HEADER_HEIGHT : SizeTypes.MOBILE_HEADER_HEIGHT)};
-	background-color: ${(props) => props.bgColor || "transparent"};
+	background: ${(props) => props.bgColor || "transparent"};
 	// border-bottom: ${(props) => props.borderBottom || "1px solid rgba(255,255,255,0.5)"};
 	box-shadow: rgba(9, 30, 66, 0.05) 0px 5px 5px 0px;
 

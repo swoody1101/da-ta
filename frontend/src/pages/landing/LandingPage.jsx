@@ -69,6 +69,7 @@ const LandingPage = () => {
 		AOS.init({ duration: 500, easing: "ease-in-out-back" }); //소개글 animation 효과 변경용 AOS
 		mainGetLetterNum();
 		mainGetQuestion();
+		setChatBoxVisible(false);
 		window.scrollTo(0, 0);
 	}, []);
 
@@ -230,7 +231,7 @@ const LandingPage = () => {
 			<BottleOfLetterBtn onClick={(e) => handleClickBottle(e)} />
 
 			{/* 물병 클릭 시 떠 있는 투명 배경 */}
-			{chatboxVisible && <TranslucentBackground bgColor={"transparent"} onClick={() => setChatBoxVisible(false)} />}
+			{clickPosY > 10 && chatboxVisible && <TranslucentBackground bgColor={"transparent"} onClick={() => setChatBoxVisible(false)} />}
 
 			{/* 물병 클릭 시 나타나는 말풍선 */}
 			{clickPosY > 10 && chatboxVisible && (
