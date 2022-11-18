@@ -116,7 +116,7 @@
 
 ## 📂 프로젝트 아키텍쳐
 
-<img src="https://user-images.githubusercontent.com/64128134/202647655-25cef0c8-8704-47e4-9105-e03e19188499.png" alt="시스템 아키텍처" width="1152px" height="576px" />
+![image](https://user-images.githubusercontent.com/64128134/202652959-7220d048-2874-4fdd-8258-f2d79addf326.png)
 
 ---
 
