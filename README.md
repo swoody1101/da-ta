@@ -1,4 +1,4 @@
- <p align="center"><img src="https://user-images.githubusercontent.com/64128134/202623762-f4c8a60f-422b-4234-a42d-f4c60f4131d2.png" width="900px" height="240px"/></p>
+ <p align="center"><img src="https://user-images.githubusercontent.com/64128134/202651932-42df142e-9e29-4380-a9fc-22cb19f8579c.png" width="1280px" height="400px"/></p>
 
 # 🌊🐋 닿다 DA-TA 🐋🌊
 
