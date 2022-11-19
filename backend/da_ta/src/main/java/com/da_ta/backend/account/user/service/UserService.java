@@ -192,9 +192,8 @@ public class UserService {
     private User getUser(String accessToken) {
         Long kakaoUserId = getKakaoUserId(accessToken);
         KakaoProfile kakaoProfile = getKakaoProfile(accessToken);
-        User user = userRepository.findByKakaoUserIdAndIsActiveTrue(kakaoUserId)
+        return userRepository.findByKakaoUserIdAndIsActiveTrue(kakaoUserId)
                 .orElseGet(() -> signUp(kakaoUserId, kakaoProfile));
-        return user;
     }
 
     private User signUp(Long kakaoUserId, KakaoProfile kakaoProfile) {

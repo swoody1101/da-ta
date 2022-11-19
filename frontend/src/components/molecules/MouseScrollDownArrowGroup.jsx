@@ -4,6 +4,8 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
 import MouseScrollDownArrow from "../atoms/MouseScrollDownArrow";
+import MouseScrollDownMouse from "../atoms/MainScrollDownMouse";
+import { MainText } from "../atoms/Text";
 
 //화살표 관련 keyframe
 const arrow_down = keyframes`
@@ -19,44 +21,38 @@ const arrow_down = keyframes`
 `;
 
 const MouseScrollDownArrowGroup = ({ ...props }) => {
-  return (
-    <S1_arrow {...props}>
-      <MouseScrollDownArrow
-        width="2vh"
-        height="2vh"
-        animation_delay="0.1s"
-      ></MouseScrollDownArrow>
-      <MouseScrollDownArrow
-        width="2vh"
-        height="2vh"
-        margin_top="1vh"
-        animation_delay="0.3s"
-      ></MouseScrollDownArrow>
-      <MouseScrollDownArrow
-        width="2vh"
-        height="2vh"
-        margin_top="1vh"
-        animation_delay="0.5s"
-      ></MouseScrollDownArrow>
-    </S1_arrow>
-  );
+	return (
+		<S1_arrow {...props}>
+			<MouseScrollDownMouse></MouseScrollDownMouse>
+			<ArrowWrapper marginTop="2rem">
+				<MouseScrollDownArrow width="2rem" height="2rem" animation_delay="0.1s" margin="0 0 0 0" padding="0 0 0 0"></MouseScrollDownArrow>
+			</ArrowWrapper>
+		</S1_arrow>
+	);
 };
 
 MouseScrollDownArrowGroup.defaultProps = {
-  isRight: "1",
-  margin_top: "90vh",
+	isRight: "1",
 };
 
 const S1_arrow = styled.div`
-  display: flex;
-  position: absolute;
-  width: 10vw;
-  height: 20vh;
-  margin-top: ${(props) => props.margin_top};
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  animation: ${(props) => (props.isRight ? arrow_down : 0)} 1.5s infinite;
+	display: flex;
+	position: absolute;
+	width: auto;
+	height: 20vh;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	animation: ${(props) => (props.isRight ? arrow_down : 0)} 1.5s infinite;
+`;
+
+const ArrowWrapper = styled.div`
+	display: flex;
+	position: absolute;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-top: ${(props) => props.marginTop};
 `;
 
 export default MouseScrollDownArrowGroup;

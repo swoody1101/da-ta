@@ -8,12 +8,12 @@
  * @param frequency 반복 주기 number
  */
 
- import React from "react";
- import styled, { keyframes } from "styled-components";
- 
- export const MainWave2 = ({ ...props }) => <StyledDiv {...props}></StyledDiv>;
- 
- const moveRight = keyframes`
+import React from "react";
+import styled, { keyframes } from "styled-components";
+
+export const MainWave2 = ({ ...props }) => <StyledDiv {...props}></StyledDiv>;
+
+const moveRight = keyframes`
    0% {
      background-position: 0;
    }
@@ -21,8 +21,8 @@
      background-position: 1280px;
    }
  `;
- 
- const moveLeft = keyframes`
+
+const moveLeft = keyframes`
    0% {
      background-position: 1280px; 
    }
@@ -30,23 +30,21 @@
      background-position: 0;
    }
  `;
- 
- MainWave2.defaultProps = {
-   opacity: "0.5",
-   height: "320px"
- };
- 
- const StyledDiv = styled.div`
-   position: absolute;
-   width: 100vw;
-   height: ${(props) => props.height};
-   bottom: 0;
-   left: 0;
-   overflow: hidden;
-   background: url("/assets/images/common/mainwave2.png");
-   opacity: ${(props) => props.opacity};
-   animation: ${(props) => (props.isRight ? moveRight : moveLeft)}
-     ${(props) => props.frequency}s linear infinite;
-   z-index: 2; 
- `;
- 
+
+MainWave2.defaultProps = {
+	opacity: "0.5",
+	height: "320px",
+};
+
+const StyledDiv = styled.div`
+	position: absolute;
+	width: 100vw;
+	height: ${(props) => props.height};
+	bottom: 0;
+	left: 0;
+	overflow: hidden;
+	z-index: ${(props) => props.zIndex};
+	background: url("/assets/images/common/mainwave2.png");
+	opacity: ${(props) => props.opacity};
+	animation: ${(props) => (props.isRight ? moveRight : moveLeft)} ${(props) => props.frequency}s linear infinite;
+`;

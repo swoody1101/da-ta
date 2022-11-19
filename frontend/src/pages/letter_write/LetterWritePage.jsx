@@ -1,9 +1,5 @@
 import React, { useRef, useState } from "react";
-import {
-  CenterWrapper,
-  RowCenterWrapper,
-  Wrapper,
-} from "./../../styles/Wrapper";
+import { RowCenterWrapper } from "./../../styles/Wrapper";
 import LetterToggleButton from "./../../components/atoms/letter/LetterToggleButton";
 import styled from "styled-components";
 import Button from "./../../components/atoms/Button";
@@ -25,13 +21,26 @@ import Modal from "./../../components/organisms/Modal";
 import LetterDesignChoice from "../../components/molecules/letter/LetterDesignChoice";
 import ContentBlock from "./../../components/atoms/letter/ContentBlock";
 import LetterImg from "./../../components/atoms/letter/LetterImg";
+import LetterCanvasArea from "./../../components/atoms/letter/LetterCanvasArea";
+import CanvasOptionBar from "../../components/molecules/letter/CanvasOptionBar";
+import { popErrorAlert, popWarningAlert } from "./../../utils/sweetAlert";
+import { checkHarmTextLetter, saveTextLetter } from "../../api/letterWriteAPI";
+import { useNavigate } from "react-router-dom";
 
 const LetterWritePage = () => {
   const [options, setOptions] = useState({
+    // 편지지 옵션
     paper: LetterOptions.PAPERS[0],
     font: LetterOptions.FONTS[0],
     age: LetterOptions.AGES[0],
     allowReply: false,
+  });
+  // 캔버스 옵션
+  const [canvasOptions, setCanvasOptions] = useState({
+    color: "#000000",
+    stroke: 1,
+    drawMode: true,
+    initTrigger: false,
   });
 
   const [act, setAct] = useState(true); // [편지지,도화지] 토글
@@ -40,8 +49,14 @@ const LetterWritePage = () => {
   const [charCount, setCharCount] = useState(0); // 편지 글자 수
   const [charCountWarning, setCharCountWarning] = useState(true); // 글자수 미만 또는 초과로 인한 경고 표시
   const [sizeX, setSizeX] = useState(window.innerWidth); // 브라우저 너비 측정
+  const [canvasSaveTrigger, setCanvasSaveTrigger] = useState(false); // 도화지 그린 그림 저장 트리거
+
   const titleInput = useRef(); // 제목 ref (값 가져오기, focus)
   const contentInput = useRef(); // 내용 ref (값 가져오기, ref)
+  const wrapRef = useRef(); // 편지지 영역 ref
+  const unshowRef = useRef([]); // 보내기 버튼 누를 시 사라질 영역들 ref
+
+  const navigate = useNavigate();
 
   /**
    * @description 편지지 텍스트 입력 시 이벤트
@@ -55,7 +70,14 @@ const LetterWritePage = () => {
    * @description "지우기" 버튼 클릭 시 내용 지우는 이벤트
    */
   const handleDeleteContent = () => {
-    contentInput.current.value = "";
+    if (act) {
+      contentInput.current.value = "";
+    } else {
+      setCanvasOptions({
+        ...canvasOptions,
+        initTrigger: !canvasOptions.initTrigger,
+      });
+    }
   };
 
   /**
@@ -71,15 +93,97 @@ const LetterWritePage = () => {
    * @description 편지지 선택 시 이벤트
    */
   const handleSelectPaper = (e) => {
-    console.log(e.target);
-    console.log(e.target.name);
     setOptions({ ...options, paper: e.target.name });
     setModalToggle(false);
   };
 
-  useEffect(() => {
-    setCharCount(0);
-  }, [act]);
+  /**
+   * @description "보내기" 버튼 눌렀을 시 이벤트
+   */
+  const handleLetterSend = async () => {
+    // 편지지
+    if (act) {
+      // 1. 유효성 검사
+      const title = titleInput.current.value;
+      const content = contentInput.current.value;
+      if (title.length < 1) {
+        popWarningAlert("제목을 입력해주세요.");
+        return;
+      } else if (content.length < MIN_CHAR_COUNT) {
+        popWarningAlert(`편지 내용을 ${MIN_CHAR_COUNT}자 이상 입력해주세요.`);
+        return;
+      } else if (content.length > MAX_CHAR_COUNT) {
+        popWarningAlert(`편지 내용을 ${MAX_CHAR_COUNT}자 이하 입력해주세요.`);
+        return;
+      }
+
+      // 2. 유해성 검사 - 제목
+      const harmResponseTitle = await checkHarmTextLetter({ content: title });
+      if (
+        !harmResponseTitle ||
+        (harmResponseTitle.status !== 200 && harmResponseTitle.status !== 201)
+      ) {
+        popErrorAlert("편지 전송 오류", "유해성 검사 중 오류가 발생했습니다.");
+        return;
+      }
+      if (harmResponseTitle.data && harmResponseTitle.data.isHarmful) {
+        popWarningAlert(
+          "부적절한 언어 감지",
+          "부적절한 언어가 포함된 편지는 전송할 수 없습니다."
+        );
+        return;
+      }
+
+      // 2. 유해성 검사 - 내용
+      const harmResponse = await checkHarmTextLetter({ content: content });
+      if (
+        !harmResponse ||
+        (harmResponse.status !== 200 && harmResponse.status !== 201)
+      ) {
+        popErrorAlert("편지 전송 오류", "유해성 검사 중 오류가 발생했습니다.");
+        return;
+      }
+      if (harmResponse.data && harmResponse.data.isHarmful) {
+        popWarningAlert(
+          "부적절한 언어 감지",
+          "부적절한 언어가 포함된 편지는 전송할 수 없습니다."
+        );
+        return;
+      }
+
+      // 3. 성공 시 전송
+      const response = await saveTextLetter(options, title, content);
+      if (!response || (response.status !== 200 && response.status !== 201)) {
+        popErrorAlert("편지 전송 오류", "편지 전송 중 오류가 발생했습니다.");
+        return;
+      }
+
+      // 편지 보내는 애니메이션
+      for (let r of unshowRef.current) {
+        r.style.opacity = 0;
+      }
+
+      setTimeout(() => {
+        wrapRef.current.style.margin = "-2rem 0 0 0";
+      }, 500);
+      setTimeout(() => {
+        titleInput.current.style.opacity = 0;
+        contentInput.current.style.opacity = 0;
+        wrapRef.current.style.height = 0;
+      }, 1000);
+      setTimeout(() => {
+        wrapRef.current.style.margin = "2rem 0 0 0";
+      }, 1500);
+
+      setTimeout(() => {
+        navigate("/writesuccess");
+      }, 2500);
+    }
+    // 도화지
+    else {
+      setCanvasSaveTrigger(true);
+    }
+  };
 
   useEffect(() => {
     window.addEventListener("resize", handleResize);
@@ -89,6 +193,10 @@ const LetterWritePage = () => {
   }, []);
 
   useEffect(() => {
+    setCharCount(0);
+  }, [act]);
+
+  useEffect(() => {
     charCount < MIN_CHAR_COUNT || charCount > MAX_CHAR_COUNT
       ? setCharCountWarning(true)
       : setCharCountWarning(false);
@@ -96,12 +204,14 @@ const LetterWritePage = () => {
 
   return (
     <>
-      <BackgroundGradient start={"E2AAFD"} end={"FFDFC2"} />
+      <BackgroundGradient start={"E2AAFD"} end={"FFDFC2"} height={"100%"} />
+
       <RowCenterWrapper>
         <ContentBlock
           margin={SizeTypes.PC_LETTER_MARGIN}
           mWidth={SizeTypes.MOBILE_LETTER_WIDTH}
           optionToggle={optionToggle}
+          ref={(el) => (unshowRef.current[0] = el)}
         >
           <LetterToggleButton
             category="write"
@@ -123,6 +233,7 @@ const LetterWritePage = () => {
         <ContentBlock
           mWidth={SizeTypes.MOBILE_LETTER_WIDTH}
           optionToggle={optionToggle}
+          ref={(el) => (unshowRef.current[1] = el)}
         >
           <Spacer act={act} />
         </ContentBlock>
@@ -132,6 +243,7 @@ const LetterWritePage = () => {
           mHeight={SizeTypes.MOBILE_LETTER_HEIGHT}
           flexDirection="column"
           optionToggle={optionToggle}
+          ref={wrapRef}
         >
           <LetterImg
             src={`${process.env.PUBLIC_URL}/assets/images/letter/${options.paper}.png`}
@@ -157,11 +269,26 @@ const LetterWritePage = () => {
               <LetterProgressBar
                 charCount={charCount}
                 charCountWarning={charCountWarning}
+                myRef={(el) => (unshowRef.current[2] = el)}
               />
             </>
           ) : (
             <>
-              <h1 style={{ backgroundColor: "black" }}>도화지 들어갈 부분</h1>
+              <CanvasOptionBar
+                canvasOptions={canvasOptions}
+                setCanvasOptions={setCanvasOptions}
+              />
+              <LetterCanvasArea
+                color="black"
+                stroke="5"
+                wrap={wrapRef.current}
+                canvasOptions={canvasOptions}
+                canvasSaveTrigger={canvasSaveTrigger}
+                setCanvasSaveTrigger={setCanvasSaveTrigger}
+                options={options}
+              >
+                이 브라우저는 캔버스를 지원하지 않습니다.
+              </LetterCanvasArea>
             </>
           )}
         </ContentBlock>
@@ -171,6 +298,7 @@ const LetterWritePage = () => {
           justifyContent="space-between"
           mWidth={SizeTypes.MOBILE_LETTER_WIDTH}
           optionToggle={optionToggle}
+          ref={(el) => (unshowRef.current[3] = el)}
         >
           <Button
             hoverBgOpacity="0.2"
@@ -190,7 +318,7 @@ const LetterWritePage = () => {
             width="8rem"
             margin="0 8% 0 0"
             shadow={true}
-            onClick={() => contentInput.current.focus()}
+            onClick={() => handleLetterSend()}
           >
             보내기
           </Button>

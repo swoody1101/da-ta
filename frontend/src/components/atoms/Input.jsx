@@ -34,8 +34,8 @@ const InputArea = styled.input`
   box-sizing: border-box;
   padding: 0.6rem 0.4rem;
   transition: 0.2s ease;
-
-  &:focus {
+  text-align: ${(props) => props.textAlign};
+  l &:focus {
     outline: none;
     border-bottom: 3px solid #5778ec;
   }
