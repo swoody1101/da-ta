@@ -168,10 +168,10 @@ const LetterCanvasArea = ({
     if (ctx && !canvasOptions.drawMode) {
       if (isDrawing) {
         ctx.clearRect(
-          offsetX - canvasOptions.stroke / 2 - 5,
-          offsetY - canvasOptions.stroke / 2 - 5,
-          canvasOptions.stroke + 10,
-          canvasOptions.stroke + 10
+          offsetX - canvasOptions.stroke / 2 - 2,
+          offsetY - canvasOptions.stroke / 2 - 2,
+          canvasOptions.stroke + 2,
+          canvasOptions.stroke + 2
         );
       }
       return;
