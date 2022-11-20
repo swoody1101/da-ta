@@ -41,18 +41,12 @@ const ReadLetterText = ({ info, nickname }) => {
   };
 
   useEffect(() => {
-    console.log("info 정보");
-    console.log(info);
     if (info.content !== null) {
       setShowContent(info.content.replaceAll("\n", "<br/>"));
     }
     wrapRef.current.style.height = 0;
     appearing();
   }, []);
-
-  useEffect(() => {
-    console.log(info);
-  }, [info]);
 
   return (
     <ContentBlock

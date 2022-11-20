@@ -35,7 +35,6 @@ const ReportModalContent = () => {
         reason: reasonsString,
       });
 
-      console.log(response);
       if (response && response.status - 200 < 3 && response.status) {
         popSuccessAlert("", "신고가 접수되었습니다.");
         setReportModal(false);
