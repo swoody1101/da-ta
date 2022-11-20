@@ -37,10 +37,10 @@ const ReportModalContent = () => {
 
       console.log(response);
       if (response && response.status - 200 < 3 && response.status) {
-        setLetter({});
         popSuccessAlert("", "신고가 접수되었습니다.");
         setReportModal(false);
         navigate("/");
+        setLetter({});
       } else {
         popErrorAlert("", "신고내역 전송에 실패했습니다.");
       }

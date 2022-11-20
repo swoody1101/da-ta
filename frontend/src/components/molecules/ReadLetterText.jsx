@@ -41,6 +41,8 @@ const ReadLetterText = ({ info, nickname }) => {
   };
 
   useEffect(() => {
+    console.log("info 정보");
+    console.log(info);
     if (info.content !== null) {
       setShowContent(info.content.replaceAll("\n", "<br/>"));
     }
@@ -63,7 +65,7 @@ const ReadLetterText = ({ info, nickname }) => {
     >
       <LetterImg
         src={`${process.env.PUBLIC_URL}/assets/images/letter/${
-          LetterOptions.PAPERS[info.backgroundId]
+          LetterOptions.PAPERS[info ? info.backgroundId : 0]
         }.png`}
       />
       <Container
@@ -73,7 +75,7 @@ const ReadLetterText = ({ info, nickname }) => {
         ref={(el) => (appearingRef.current[0] = el)}
       >
         <LetterTitle width="96%" fontSize="1.2rem" fontWeight="bold">
-          {info.title}
+          {info ? info.title : ""}
           <IconReportBtn>
             <FontAwesomeIcon
               icon={faTriangleExclamation}
@@ -96,7 +98,7 @@ const ReadLetterText = ({ info, nickname }) => {
         ref={(el) => (appearingRef.current[1] = el)}
       >
         <LetterTitle width="96%" fontSize="1rem" fontWeight="bold">
-          {`${DateToString(info.writtenDate)}, ${nickname}`}
+          {`${DateToString(info && info.writtenDate)}, ${nickname}`}
         </LetterTitle>
       </Container>
       <LetterContent
@@ -104,7 +106,8 @@ const ReadLetterText = ({ info, nickname }) => {
         ref={(el) => (appearingRef.current[2] = el)}
       >
         <div style={{ flexDirection: "column" }}>
-          {info.content &&
+          {info &&
+            info.content &&
             info.content.split("\n").map((line, index) => {
               return (
                 <span key={index}>

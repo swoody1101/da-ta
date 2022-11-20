@@ -9,6 +9,7 @@ import { useRecoilState } from "recoil";
 import { useEffect } from "react";
 import { mypageRouterState } from "../../../recoil/Atoms";
 import { useNavigate } from "react-router-dom";
+import { SizeTypes } from "../../../constants/Sizes";
 
 export const MypageMenuBar = () => {
   const [selectedIndex, setSelectedIndex] = useRecoilState(mypageRouterState);
@@ -57,7 +58,7 @@ const MenuBarDiv = styled.div`
   ${media.tablet1`
     width: 100%;
     flex-direction: row;
-    margin-top: 6rem;
+    margin-top: calc(${SizeTypes.MOBILE_HEADER_HEIGHT} + 0.5rem);
     height: 44px;
     background-color: #ffffff;
     border-bottom: 2px solid #d9d9d9;
