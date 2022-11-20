@@ -132,7 +132,6 @@ const LetterCanvasArea = ({
 
     // 1. 유해성 검사
     const harmResponse = await checkHarmCanvasLetter({ imageDataUrl: image });
-    console.log(harmResponse);
 
     if (
       !harmResponse ||
