@@ -23,7 +23,7 @@ export const MainText = styled.p`
 
 export const MainTestText = styled.p`
   display: flex;
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   color: black;
   width: 100%;
   text-align: center;
