@@ -345,7 +345,6 @@ const LandingPage = () => {
                 slidesToShow={1}
                 slidesToScroll={1}
                 prevArrow={<SlickArrow direction={"prev"} />}
-                l
                 nextArrow={<SlickArrow direction={"next"} />}
                 initialSlide={currentAnswerId}
                 afterChange={(index) => {
