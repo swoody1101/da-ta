@@ -71,7 +71,6 @@
 | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: |
 |                                                                                        Styled-Component                                                                                         |                                           Axios                                           |
 
-
 ### **Back-end**
 
 | <div align="center"><img src="https://profilinator.rishav.dev/skills-assets/java-original-wordmark.svg" alt="Java" width="50px" height="50px" /></div> | <div align="center"><img src="https://www.seekpng.com/png/full/8-80775_spring-logo-png-transparent-spring-java.png" alt="Spring-Boot" width="50px" height="50px" /></div> | <div align="center"><img src="https://user-images.githubusercontent.com/46440898/185340935-0d35ed10-a892-48ec-819c-92aa989cb60b.png" alt="SpringSecurity" width="50px" height="50px" /></div> | <div align="center"><img src="https://media.vlpt.us/images/2012monk/post/86ce779f-a08b-438d-836c-8dbe6e5a8cc0/hibernate_icon_whitebkg.svg" alt="Hibernate" width="50px" height="50px" /></div> |
@@ -82,13 +81,11 @@
 | :--------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: |
 |                                                                           Redis                                                                            |                                                                           Firebase                                                                            |                                                             MySQL                                                              |
 
-
 ### **DevOps**
 
 | <img src="https://profilinator.rishav.dev/skills-assets/nginx-original.svg" alt="NGiNX" width="100px" height="50px" /> | <img src="https://pbs.twimg.com/profile_images/1351702967561252865/aXfcETIt_400x400.jpg" alt="aws" width="50px" height="50px" /> | <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Jenkins_logo.svg/1200px-Jenkins_logo.svg.png" alt="Jenkins" width="50px" height="50px" /> | <img src="https://profilinator.rishav.dev/skills-assets/docker-original-wordmark.svg" alt="docker" width="50px" height="50px" /> | <div align="center"><img src="https://user-images.githubusercontent.com/64128134/202525118-6c553ae0-e38b-490f-bbb4-cca9dbe5ea70.png" alt="sonarqube" width="50px" height="50px" /></div> |
 | :--------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 |                                                         NGiNX                                                          |                                                               aws                                                                |                                                                            Jenkins                                                                            |                                                              docker                                                              |                                                                                        SonarQube                                                                                         |
-
 
 ### **Frontend Libraries & Tools**
 
@@ -329,5 +326,57 @@ frontend
 ### Backend
 
 ```
-
+backend
+└─📦da_ta
+   ├─📦gradle/wrapper
+   ├─📦src
+   │  ├─📂main
+   │  │  ├─📂java
+   │  │  └─📂com/da_ta/backend
+   │  │  │     ├─📂account
+   │  │  │     │  ├─📂admin
+   │  │  │     │  │  ├─📂controller
+   │  │  │     │  │  │  └─📂dto
+   │  │  │     │  │  └─📂service
+   │  │  │     │  ├─📂jwt
+   │  │  │     │  └─📂user
+   │  │  │     │     ├─📂controller
+   │  │  │     │     │  └─📂dto
+   │  │  │     │     ├─📂domain
+   │  │  │     │     │  ├─📂entity
+   │  │  │     │     │  └─📂repository
+   │  │  │     │     └─📂service
+   │  │  │     ├─📂common
+   │  │  │     │  ├─📂config
+   │  │  │     │  ├─📂controller
+   │  │  │     │  └─📂domain
+   │  │  │     │     └─📂exception
+   │  │  │     ├─📂config
+   │  │  │     ├─📂letter
+   │  │  │     │  ├─📂controller
+   │  │  │     │  │  └─📂dto
+   │  │  │     │  ├─📂domain
+   │  │  │     │  │  ├─📂entity
+   │  │  │     │  │  └─📂repository
+   │  │  │     │  └─📂service
+   │  │  │     ├─📂question
+   │  │  │     │  ├─📂controller
+   │  │  │     │  │  └─📂dto
+   │  │  │     │  ├─📂domain
+   │  │  │     │  │  ├─📂entity
+   │  │  │     │  │  └─📂repository
+   │  │  │     │  └─📂service
+   │  │  │     └─📂util
+   │  │  └─📂resources
+   │  │     ├─📜application.oauth.properties
+   │  │     ├─📜application.properties
+   │  │     ├─📜env.properties
+   │  |     └─📜data.sql
+   │  └─📂test/java/com/da_ta/backend
+   ├─📜build.gradle
+   ├─📜Dockefile
+   ├─📜gradlew
+   ├─📜gradlew.bat
+   ├─📜Jenkinsfile
+   └─📜setting.gradle
 ```
