@@ -278,16 +278,16 @@ const LandingPage = () => {
       {modalToggleA && (
         <Modal
           width="440px"
-          height="360px"
+          height="440px"
           modalToggle={modalToggleA}
           setModalToggle={setModalToggleA}
           titleText={"질문 답변"}
           flexDirection={"column"}
         >
-          <Title fontSize="1.2rem" color="black">
+          <Title fontSize="1rem" color="#383838">
             Q. {todayQuestionInfo.question}
           </Title>
-          <AnswerBox width="90%" height="50%" margin="2rem 0 2rem 0">
+          <AnswerBox width="90%" height="40%" margin="2rem 0 2rem 0">
             <QuestionTextArea
               onChange={(e) => handleQuestionAnswerWrite(e.target.value.length)}
               placeholder="답변을 입력해주세요."
@@ -297,7 +297,7 @@ const LandingPage = () => {
           </AnswerBox>
           <ButtonBox>
             <Button
-              margin="0 0 1rem 0"
+              margin="0 0 0.25rem 0"
               fontSize="1.1rem"
               height="3rem"
               width="9rem"
@@ -318,13 +318,13 @@ const LandingPage = () => {
       {modalToggleB && (
         <Modal
           width="440px"
-          height="400px"
+          height="440px"
           modalToggle={modalToggleB}
           setModalToggle={setModalToggleB}
           titleText={"답변 목록"}
           flexDirection={"column"}
         >
-          <Title fontSize="1.2rem" color="black">
+          <Title fontSize="1.1rem" color="#383838">
             Q. {todayQuestionInfo.question}
           </Title>
           <AnswerBox width="95%" height="75%" margin="1rem 0 0 0">
@@ -456,8 +456,8 @@ const LandingPage = () => {
           backgroundColor: "rgba( 255, 255, 255, 0.4 )",
           borderRadius: "100%",
           border: "4px solid #ffffff",
-          width: "5rem",
-          height: "5rem",
+          width: "4rem",
+          height: "4rem",
           margin: "0 1% 1% 0",
           // strokeWidth: "7",
         }}
@@ -601,7 +601,7 @@ const SliderContent = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1rem;
   white-space: normal;
   word-wrap: break-all;
   word-break: break-all;
