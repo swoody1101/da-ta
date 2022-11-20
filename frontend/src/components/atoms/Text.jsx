@@ -7,7 +7,7 @@ import { media } from "../../utils/styleUtil";
 
 export const MainText = styled.p`
   display: flex;
-  font-size: 1.8rem;
+  font-size: ${(props) => props.fontSize || "1.8rem"};
   color: white;
   width: 100%;
   text-align: center;
