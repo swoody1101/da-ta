@@ -9,6 +9,7 @@ import ReportModal from "../../components/organisms/ReportModal";
 import { useEffect } from "react";
 import { letterState } from "../../recoil/Atoms";
 import { useSetRecoilState } from "recoil";
+import { SizeTypes } from "../../constants/Sizes";
 
 const Mypage = () => {
   const setLetter = useSetRecoilState(letterState);
@@ -44,7 +45,7 @@ const MypageWebContents = styled.div`
   display: flex;
   height: 70%;
   width: 900px;
-  margin-top: 6rem;
+  margin-top: ${SizeTypes.PC_HEADER_HEIGHT};
   justify-content: center;
   align-items: center;
   background-color: #f5f5f5;

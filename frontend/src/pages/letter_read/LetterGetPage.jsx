@@ -58,7 +58,7 @@ const LetterGetPage = () => {
         </Contents>
       </ReadWrapper>
       <BackgroundVideo
-        isBlur={blur}
+        blurOpacity={4}
         path={`${process.env.PUBLIC_URL}/assets/video/bg2.mp4`}
       />
     </>
