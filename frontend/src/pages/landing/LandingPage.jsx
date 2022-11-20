@@ -382,7 +382,7 @@ const LandingPage = () => {
             margin="90vh 0 0 0"
             mFont_size={SizeTypes.MOBILE_MAIN_TEXT_SIZE}
           >
-            여기선 익명으로 <br />
+            DA-TA에서는 익명으로 <br />
             마음을 털어놓을 수 있어요
           </MainText>
         </div>

@@ -49,7 +49,7 @@ export const MypageReceive = () => {
             <Bottle
               src={`${process.env.PUBLIC_URL}/assets/images/common/emptybox.png`}
             ></Bottle>
-            <TextDiv>답장받은 편지가 없어요..</TextDiv>
+            <TextDiv>답장받은 편지가 없어요</TextDiv>
           </div>
         </EmptyDiv>
       ) : null}

@@ -49,7 +49,7 @@ export const MypageCollect = () => {
             <Bottle
               src={`${process.env.PUBLIC_URL}/assets/images/common/emptybox.png`}
             ></Bottle>
-            <TextDiv>수집한 편지 목록이 비어있어요..</TextDiv>
+            <TextDiv>수집한 편지 목록이 비어있어요</TextDiv>
           </div>
         </EmptyDiv>
       ) : null}
