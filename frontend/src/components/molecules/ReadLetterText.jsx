@@ -104,7 +104,12 @@ const ReadLetterText = ({ info, nickname }) => {
             info.content &&
             info.content.split("\n").map((line, index) => {
               return (
-                <span key={index}>
+                <span
+                  key={index}
+                  style={{
+                    fontFamily: LetterOptions.FONTS[info ? info.fontId : 0],
+                  }}
+                >
                   {line}
                   <br />
                 </span>

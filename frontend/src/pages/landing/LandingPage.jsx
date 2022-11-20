@@ -87,8 +87,6 @@ const LandingPage = () => {
 
   useEffect(() => {
     let seq = Math.floor(Math.random() * answerList.length);
-    console.log("answerlist length : " + answerList.length);
-    console.log("seq : " + seq);
     setCurrentAnswerId(seq);
   }, [answerList]);
 
