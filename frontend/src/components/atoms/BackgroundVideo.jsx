@@ -8,10 +8,10 @@ import styled from "styled-components";
  * @param path 비디오 경로
  * @param isBlur 블러 여부
  */
-const BackgroundVideo = ({ path, isBlur }) => {
+const BackgroundVideo = ({ path, blurOpacity }) => {
   return (
     <BG>
-      <VD loop autoPlay muted playsInline isBlur={isBlur}>
+      <VD loop autoPlay muted playsInline blurOpacity={blurOpacity}>
         <source src={path} />
       </VD>
     </BG>
@@ -35,7 +35,8 @@ const VD = styled.video`
   width: 100%;
   object-fit: cover;
   height: 99.5vh;
-  ${(props) => (props.isBlur ? "-webkit-filter: blur(15px)" : "")};
+  ${(props) =>
+    props.blurOpacity && `-webkit-filter: blur(${props.blurOpacity}px) `};
 `;
 
 export default BackgroundVideo;
