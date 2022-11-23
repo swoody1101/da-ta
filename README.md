@@ -13,6 +13,8 @@
 
 **[🔗 서비스 소개 영상 바로가기 Click !](https://www.youtube.com/watch?v=bfIJXaTw7JY)** 👈
 
+**[🔗 시연 시나리오 바로가기 Click !](https://drive.google.com/drive/folders/1q6c_VsLZNapoe-tZ-uRbLmQPGt7_TNy_?usp=share_link)** 👈
+
 > 새 창 열기 방법 : CTRL+click (on Windows and Linux) | CMD+click (on MacOS)
 
 <br />
