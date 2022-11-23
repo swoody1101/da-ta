@@ -17,6 +17,5 @@ FROM openjdk:8
 #FROM koosiedemoer/netty-tcnative-alpine
 COPY --from=builder build/libs/da_ta-0.0.1-SNAPSHOT.jar app.jar
 ARG ENVIRONMENT
-ENV GOOGLE_APPLICATION_CREDENTIALS=/home/ubuntu/da-ta-368201-c65a6e7dc0b9.json
-#ENV GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_DA_TA}
+ENV GOOGLE_APPLICATION_CREDENTIALS={GOOGLE_API_KEY}
 ENTRYPOINT ["java","-jar","/app.jar"]
